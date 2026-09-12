@@ -4,8 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>متابعة الصفقات الشاملة - Muharraqi | Pro Edition</title>
+
+<!-- Chart.js CDN للميزات الجديدة -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
 <style>
+/* ============================================================
+   🎨 CSS الأصلي (الكود الأول - محفوظ بالكامل)
+   ============================================================ */
 :root {
 --bg-color: #f4f6f9;
 --section-bg: #ffffff;
@@ -129,6 +135,12 @@
 --estimate-border: #ffa726;
 --estimate-text: #ffcc80;
 }
+
+/* ============================================================
+   🆕 CSS جديد - الميزات الإضافية (20 ميزة)
+   ============================================================ */
+
+/* 🎯 1. شريط المتحدث (Crypto Ticker) */
 .crypto-ticker-wrap {
 background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
 overflow: hidden;
@@ -142,10 +154,11 @@ box-shadow: 0 2px 10px var(--shadow-color);
 display: flex;
 gap: 30px;
 padding: 10px 20px;
-animation: tickerScroll 60s linear infinite;
+animation: tickerScroll 40s linear infinite;
 white-space: nowrap;
 width: max-content;
 }
+.ticker-scroll:hover { animation-play-state: paused; }
 @keyframes tickerScroll {
 0% { transform: translateX(0); }
 100% { transform: translateX(-50%); }
@@ -173,7 +186,8 @@ transform: translateY(-2px);
 .ticker-change { font-size: 0.85em; padding: 2px 6px; border-radius: 10px; }
 .ticker-change.up { background: rgba(25, 135, 84, 0.3); color: #4ade80; }
 .ticker-change.down { background: rgba(220, 53, 69, 0.3); color: #f87171; }
-.news-ticker-wrap { display: none !important; }
+
+/* 📊 3. مؤشرات السوق (Market Insights) */
 .market-insights-section {
 background: var(--section-bg);
 padding: 20px 25px;
@@ -237,9 +251,16 @@ margin-top: 5px;
 }
 .mi-change.up { background: rgba(25, 135, 84, 0.15); color: var(--positive-color); }
 .mi-change.down { background: rgba(220, 53, 69, 0.15); color: var(--negative-color); }
-.mi-sparkline { margin-top: 10px; height: 40px; }
+.mi-sparkline {
+margin-top: 10px;
+height: 40px;
+}
 .mi-sparkline svg { width: 100%; height: 100%; }
-.mi-fng-gauge { position: relative; height: 100px; margin-top: 10px; }
+.mi-fng-gauge {
+position: relative;
+height: 100px;
+margin-top: 10px;
+}
 .mi-fng-center {
 position: absolute;
 top: 50%;
@@ -249,7 +270,12 @@ text-align: center;
 }
 .mi-fng-value { font-size: 1.8em; font-weight: bold; color: var(--text-color); }
 .mi-fng-label { font-size: 0.85em; color: var(--text-muted); }
-.mi-scale { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.mi-scale {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-top: 10px;
+}
 .mi-scale-track {
 flex: 1;
 height: 8px;
@@ -268,6 +294,8 @@ border: 3px solid var(--primary-color);
 border-radius: 50%;
 box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
+
+/* 👤 4. البروفايل (Profile Modal) */
 .profile-modal-overlay {
 position: fixed;
 top: 0; left: 0; right: 0; bottom: 0;
@@ -319,61 +347,6 @@ box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 .profile-name { font-size: 1.4em; font-weight: bold; margin-bottom: 5px; }
 .profile-subtitle { font-size: 0.9em; opacity: 0.9; }
-.profile-name-edit-btn {
-background: rgba(255,255,255,0.2);
-border: 1px solid rgba(255,255,255,0.3);
-color: white;
-padding: 5px 14px;
-border-radius: 20px;
-cursor: pointer;
-font-size: 0.8em;
-margin-top: 10px;
-transition: all 0.2s ease;
-}
-.profile-name-edit-btn:hover {
-background: rgba(255,255,255,0.3);
-transform: translateY(-1px);
-}
-.profile-name-edit-form {
-display: none;
-flex-direction: column;
-gap: 8px;
-margin-top: 12px;
-padding: 12px;
-background: rgba(255,255,255,0.15);
-border-radius: 10px;
-}
-.profile-name-edit-form input {
-padding: 10px 14px;
-border: 1px solid rgba(255,255,255,0.3);
-border-radius: 8px;
-background: rgba(255,255,255,0.9);
-color: #212529;
-font-size: 0.95em;
-text-align: center;
-font-family: inherit;
-}
-.profile-name-edit-form input:focus {
-outline: none;
-border-color: white;
-background: white;
-box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
-}
-.profile-name-edit-form .form-btns { display: flex; gap: 8px; }
-.profile-name-edit-form button {
-flex: 1;
-padding: 8px 14px;
-border: none;
-border-radius: 8px;
-cursor: pointer;
-font-weight: 600;
-font-size: 0.85em;
-transition: all 0.2s ease;
-}
-.profile-name-edit-form .save-btn { background: white; color: var(--primary-color); }
-.profile-name-edit-form .save-btn:hover { background: #f0f0f0; }
-.profile-name-edit-form .cancel-btn { background: rgba(255,255,255,0.2); color: white; }
-.profile-name-edit-form .cancel-btn:hover { background: rgba(255,255,255,0.35); }
 .profile-stats {
 display: grid;
 grid-template-columns: repeat(3, 1fr);
@@ -394,7 +367,11 @@ font-weight: bold;
 color: var(--primary-color);
 font-family: 'Roboto Mono', monospace;
 }
-.profile-stat-label { font-size: 0.75em; color: var(--text-muted); margin-top: 3px; }
+.profile-stat-label {
+font-size: 0.75em;
+color: var(--text-muted);
+margin-top: 3px;
+}
 .profile-menu { padding: 15px; }
 .profile-menu-item {
 display: flex;
@@ -411,7 +388,10 @@ width: 100%;
 text-align: right;
 font-size: 0.95em;
 }
-.profile-menu-item:hover { background: var(--hover-bg); transform: translateX(-5px); }
+.profile-menu-item:hover {
+background: var(--hover-bg);
+transform: translateX(-5px);
+}
 .profile-menu-item .icon {
 width: 36px;
 height: 36px;
@@ -438,6 +418,8 @@ font-size: 1.2em;
 transition: all 0.2s ease;
 }
 .profile-close:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
+
+/* 🐛 5. نافذة الإبلاغ عن الأخطاء (Bug Report) */
 .bug-report-modal {
 background: var(--section-bg);
 border-radius: 16px;
@@ -500,6 +482,8 @@ background: rgba(0, 86, 179, 0.1);
 color: var(--primary-color);
 font-weight: 600;
 }
+
+/* 💰 6. نافذة الدعم (Donate Modal) */
 .donate-modal {
 background: var(--section-bg);
 border-radius: 20px;
@@ -516,7 +500,11 @@ color: white;
 text-align: center;
 border-radius: 20px 20px 0 0;
 }
-.donate-icon { font-size: 3em; margin-bottom: 10px; animation: heartBeat 1.5s ease-in-out infinite; }
+.donate-icon {
+font-size: 3em;
+margin-bottom: 10px;
+animation: heartBeat 1.5s ease-in-out infinite;
+}
 @keyframes heartBeat {
 0%, 100% { transform: scale(1); }
 50% { transform: scale(1.1); }
@@ -573,72 +561,8 @@ width: 100%;
 transition: all 0.2s ease;
 }
 .donate-copy-btn:hover { background: var(--secondary-color); }
-.contact-modal {
-background: var(--section-bg);
-border-radius: 20px;
-max-width: 450px;
-width: 100%;
-box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-overflow: hidden;
-}
-.contact-header {
-background: linear-gradient(135deg, #0088cc, #00a0dc);
-padding: 30px;
-text-align: center;
-color: white;
-}
-.contact-avatar {
-width: 100px;
-height: 100px;
-border-radius: 50%;
-background: white;
-margin: 0 auto 15px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 3em;
-border: 4px solid white;
-box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-.contact-body { padding: 25px; text-align: center; }
-.contact-name { font-size: 1.4em; font-weight: bold; margin-bottom: 5px; }
-.contact-handle {
-color: var(--primary-color);
-font-family: 'Roboto Mono', monospace;
-direction: ltr;
-margin-bottom: 15px;
-}
-.contact-btn {
-display: inline-flex;
-align-items: center;
-gap: 10px;
-background: linear-gradient(135deg, #0088cc, #00a0dc);
-color: white;
-padding: 12px 30px;
-border-radius: 30px;
-text-decoration: none;
-font-weight: bold;
-transition: all 0.3s ease;
-box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
-}
-.contact-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 6px 20px rgba(0, 136, 204, 0.5);
-}
-.tadawul-modal {
-background: var(--section-bg);
-border-radius: 20px;
-max-width: 450px;
-width: 100%;
-box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-overflow: hidden;
-}
-.tadawul-header {
-background: linear-gradient(135deg, #667eea, #764ba2);
-padding: 30px;
-text-align: center;
-color: white;
-}
+
+/* 🔔 9. مركز التنبيهات (Notification Center) */
 .notification-center {
 position: fixed;
 top: 80px;
@@ -667,7 +591,10 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 }
-.notif-tabs { display: flex; border-bottom: 1px solid var(--border-color); }
+.notif-tabs {
+display: flex;
+border-bottom: 1px solid var(--border-color);
+}
 .notif-tab {
 flex: 1;
 padding: 12px;
@@ -683,8 +610,15 @@ border-top: none;
 border-left: none;
 border-right: none;
 }
-.notif-tab.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
-.notif-list { max-height: 350px; overflow-y: auto; padding: 10px; }
+.notif-tab.active {
+color: var(--primary-color);
+border-bottom-color: var(--primary-color);
+}
+.notif-list {
+max-height: 350px;
+overflow-y: auto;
+padding: 10px;
+}
 .notif-item {
 padding: 12px;
 border-radius: 10px;
@@ -693,12 +627,37 @@ background: var(--bg-color);
 border: 1px solid var(--border-color);
 transition: all 0.2s ease;
 }
-.notif-item:hover { border-color: var(--primary-color); transform: translateX(-3px); }
-.notif-item.unread { background: rgba(0, 86, 179, 0.05); border-right: 3px solid var(--primary-color); }
-.notif-title { font-weight: 600; margin-bottom: 4px; color: var(--text-color); font-size: 0.9em; }
-.notif-message { font-size: 0.8em; color: var(--text-muted); margin-bottom: 4px; }
-.notif-time { font-size: 0.7em; color: var(--text-muted); }
-.notif-empty { text-align: center; padding: 40px 20px; color: var(--text-muted); font-style: italic; }
+.notif-item:hover {
+border-color: var(--primary-color);
+transform: translateX(-3px);
+}
+.notif-item.unread {
+background: rgba(0, 86, 179, 0.05);
+border-right: 3px solid var(--primary-color);
+}
+.notif-title {
+font-weight: 600;
+margin-bottom: 4px;
+color: var(--text-color);
+font-size: 0.9em;
+}
+.notif-message {
+font-size: 0.8em;
+color: var(--text-muted);
+margin-bottom: 4px;
+}
+.notif-time {
+font-size: 0.7em;
+color: var(--text-muted);
+}
+.notif-empty {
+text-align: center;
+padding: 40px 20px;
+color: var(--text-muted);
+font-style: italic;
+}
+
+/* 🔔 10. تنبيهات الأسعار (Price Alerts) */
 .price-alerts-modal {
 background: var(--section-bg);
 border-radius: 16px;
@@ -718,7 +677,12 @@ justify-content: space-between;
 align-items: center;
 }
 .alert-form { padding: 20px; }
-.alert-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
+.alert-form-row {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+margin-bottom: 15px;
+}
 .alert-list-item {
 display: flex;
 justify-content: space-between;
@@ -729,11 +693,18 @@ border: 1px solid var(--border-color);
 border-radius: 10px;
 margin-bottom: 8px;
 }
-.alert-badge { padding: 3px 10px; border-radius: 12px; font-size: 0.75em; font-weight: bold; }
+.alert-badge {
+padding: 3px 10px;
+border-radius: 12px;
+font-size: 0.75em;
+font-weight: bold;
+}
 .alert-badge.above { background: rgba(25, 135, 84, 0.15); color: var(--positive-color); }
 .alert-badge.below { background: rgba(220, 53, 69, 0.15); color: var(--negative-color); }
 .alert-badge.tp { background: rgba(0, 86, 179, 0.15); color: var(--primary-color); }
 .alert-badge.sl { background: rgba(220, 53, 69, 0.15); color: var(--negative-color); }
+
+/* ⚙️ 11. إعدادات المنصات (Exchange Settings) */
 .exchange-modal {
 background: var(--section-bg);
 border-radius: 16px;
@@ -765,9 +736,14 @@ transition: all 0.2s ease;
 background: var(--bg-color);
 }
 .exchange-option:hover { border-color: var(--primary-color); }
-.exchange-option.selected { border-color: var(--primary-color); background: rgba(0, 86, 179, 0.1); }
+.exchange-option.selected {
+border-color: var(--primary-color);
+background: rgba(0, 86, 179, 0.1);
+}
 .exchange-option-icon { font-size: 2em; margin-bottom: 5px; }
 .exchange-option-name { font-weight: 600; font-size: 0.85em; }
+
+/* 🔄 12. نافذة التحديث (Update Popup) */
 .update-popup {
 position: fixed;
 top: 20px;
@@ -801,11 +777,30 @@ justify-content: center;
 font-size: 2em;
 color: white;
 }
-.update-popup-title { text-align: center; font-size: 1.2em; font-weight: bold; margin-bottom: 8px; color: var(--text-color); }
-.update-popup-version { text-align: center; color: var(--text-muted); font-size: 0.9em; margin-bottom: 15px; }
-.update-popup-notes { background: var(--bg-color); border-radius: 10px; padding: 12px; margin-bottom: 15px; font-size: 0.85em; }
+.update-popup-title {
+text-align: center;
+font-size: 1.2em;
+font-weight: bold;
+margin-bottom: 8px;
+color: var(--text-color);
+}
+.update-popup-version {
+text-align: center;
+color: var(--text-muted);
+font-size: 0.9em;
+margin-bottom: 15px;
+}
+.update-popup-notes {
+background: var(--bg-color);
+border-radius: 10px;
+padding: 12px;
+margin-bottom: 15px;
+font-size: 0.85em;
+}
 .update-popup-notes ul { margin: 0; padding-right: 20px; }
 .update-popup-notes li { margin-bottom: 5px; }
+
+/* 👁️ 13. Financial Privacy Mode */
 .financial-privacy-toggle {
 position: fixed;
 bottom: 20px;
@@ -825,10 +820,43 @@ font-size: 0.85em;
 transition: all 0.3s ease;
 color: var(--text-color);
 }
-.financial-privacy-toggle:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow-color); }
-.financial-privacy-toggle.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
-body.financial-privacy .sensitive-value { filter: blur(8px); user-select: none; transition: filter 0.3s ease; }
-body.financial-privacy .sensitive-value:hover { filter: blur(0); }
+.financial-privacy-toggle:hover {
+transform: translateY(-3px);
+box-shadow: 0 6px 20px var(--shadow-color);
+}
+.financial-privacy-toggle.active {
+background: var(--primary-color);
+color: white;
+border-color: var(--primary-color);
+}
+body.financial-privacy .sensitive-value {
+filter: blur(8px);
+user-select: none;
+transition: filter 0.3s ease;
+}
+body.financial-privacy .sensitive-value:hover {
+filter: blur(0);
+}
+
+/* 💎 14. Skeleton Loading */
+.skeleton {
+background: linear-gradient(90deg,
+var(--bg-color) 0%,
+var(--hover-bg) 50%,
+var(--bg-color) 100%);
+background-size: 200% 100%;
+animation: skeletonShimmer 1.5s ease-in-out infinite;
+border-radius: 6px;
+}
+@keyframes skeletonShimmer {
+0% { background-position: 200% 0; }
+100% { background-position: -200% 0; }
+}
+.skeleton-text { height: 16px; margin-bottom: 8px; }
+.skeleton-title { height: 24px; width: 60%; margin-bottom: 12px; }
+.skeleton-chart { height: 200px; }
+
+/* 📊 15. تحليلات المحفظة المتقدمة (Advanced Charts) */
 .advanced-charts-section {
 background: var(--section-bg);
 padding: 25px;
@@ -851,7 +879,9 @@ border-radius: 12px;
 padding: 20px;
 transition: all 0.3s ease;
 }
-.chart-card:hover { box-shadow: 0 6px 20px var(--shadow-color); }
+.chart-card:hover {
+box-shadow: 0 6px 20px var(--shadow-color);
+}
 .chart-card-header {
 display: flex;
 justify-content: space-between;
@@ -860,9 +890,20 @@ margin-bottom: 15px;
 padding-bottom: 12px;
 border-bottom: 1px solid var(--border-color);
 }
-.chart-card-title { font-size: 1.1em; font-weight: bold; color: var(--text-color); }
-.chart-card-subtitle { font-size: 0.8em; color: var(--text-muted); margin-top: 3px; }
-.chart-ranges { display: flex; gap: 5px; flex-wrap: wrap; }
+.chart-card-title {
+font-size: 1.1em;
+font-weight: bold;
+color: var(--text-color);
+}
+.chart-card-subtitle {
+font-size: 0.8em;
+color: var(--text-muted);
+margin-top: 3px;
+}
+.chart-ranges {
+display: flex;
+gap: 5px;
+}
 .chart-range-btn {
 padding: 5px 12px;
 border: 1px solid var(--border-color);
@@ -875,8 +916,17 @@ color: var(--text-muted);
 transition: all 0.2s ease;
 }
 .chart-range-btn:hover { border-color: var(--primary-color); }
-.chart-range-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
-.chart-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-top: 15px; }
+.chart-range-btn.active {
+background: var(--primary-color);
+color: white;
+border-color: var(--primary-color);
+}
+.chart-metrics {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+gap: 10px;
+margin-top: 15px;
+}
 .chart-metric {
 text-align: center;
 padding: 10px;
@@ -906,109 +956,37 @@ transform: translate(-50%, -50%);
 text-align: center;
 pointer-events: none;
 }
-.donut-center-label { font-size: 0.75em; color: var(--text-muted); }
+.donut-center-label {
+font-size: 0.75em;
+color: var(--text-muted);
+}
 .donut-center-value {
 font-size: 1.4em;
 font-weight: bold;
 color: var(--text-color);
 font-family: 'Roboto Mono', monospace;
 }
-.chart-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; justify-content: center; }
-.legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.8em; color: var(--text-color); }
-.legend-color { width: 12px; height: 12px; border-radius: 3px; }
-.capital-management-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-gap: 12px;
-margin-bottom: 20px;
-padding-bottom: 20px;
-border-bottom: 2px dashed var(--border-color);
-}
-.capital-stat-box {
-background: linear-gradient(135deg, var(--bg-color) 0%, var(--section-bg) 100%);
-border: 1px solid var(--border-color);
-border-radius: 10px;
-padding: 14px;
-text-align: center;
-position: relative;
-overflow: hidden;
-transition: all 0.2s ease;
-}
-.capital-stat-box:hover { transform: translateY(-2px); box-shadow: 0 4px 12px var(--shadow-color); }
-.capital-stat-box::before {
-content: '';
-position: absolute;
-top: 0;
-right: 0;
-width: 100%;
-height: 3px;
-background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-}
-.capital-stat-box label {
-display: block;
-font-size: 0.8em;
-color: var(--text-muted);
-margin-bottom: 6px;
-font-weight: 600;
-}
-.capital-stat-box .value {
-font-size: 1.2em;
-font-weight: bold;
-font-family: 'Roboto Mono', monospace;
-direction: ltr;
-color: var(--primary-color);
-transition: color 0.3s ease;
-}
-.capital-management-actions {
+.chart-legend {
 display: flex;
 flex-wrap: wrap;
 gap: 10px;
-margin-bottom: 20px;
-padding-bottom: 20px;
-border-bottom: 2px dashed var(--border-color);
-align-items: flex-end;
+margin-top: 15px;
+justify-content: center;
 }
-.capital-management-actions .capital-input-group {
-flex: 1 1 100%;
+.legend-item {
 display: flex;
-gap: 10px;
-align-items: flex-end;
+align-items: center;
+gap: 6px;
+font-size: 0.8em;
+color: var(--text-color);
 }
-.capital-management-actions .capital-input-group > div { flex: 1; display: flex; flex-direction: column; }
-.capital-management-actions .capital-input-group label {
-margin-bottom: 6px;
-font-weight: 600;
-color: var(--text-muted);
-font-size: 0.9em;
+.legend-color {
+width: 12px;
+height: 12px;
+border-radius: 3px;
 }
-.capital-management-actions button {
-flex: 1 1 auto;
-min-width: 150px;
-padding: 10px 16px;
-border: none;
-border-radius: 6px;
-cursor: pointer;
-font-weight: 600;
-font-size: 0.9em;
-transition: all 0.2s ease;
-color: white;
-}
-.capital-management-actions button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px var(--shadow-color); }
-.capital-btn-set { background-color: var(--primary-color); }
-.capital-btn-set:hover { background-color: var(--secondary-color); }
-.capital-btn-add { background-color: var(--positive-color); }
-.capital-btn-add:hover { background-color: #146c43; }
-.capital-btn-withdraw { background-color: var(--negative-color); }
-.capital-btn-withdraw:hover { background-color: #c82333; }
-.capital-btn-transfer { background-color: var(--positive-color); }
-.capital-btn-transfer:hover { background-color: #146c43; }
-.capital-btn-reset { background-color: var(--cancel-color); color: #000; }
-.capital-btn-reset:hover { background-color: var(--cancel-hover-color); }
-@media (max-width: 768px) {
-.capital-management-actions { flex-direction: column; align-items: stretch; }
-.capital-management-actions .capital-input-group { flex-direction: column; align-items: stretch; }
-.capital-management-actions button { width: 100%; }
-}
+
+/* 🚀 16. Quick Actions (العمليات السريعة) */
 .quick-actions-bar {
 position: fixed;
 bottom: 80px;
@@ -1034,7 +1012,15 @@ transition: all 0.3s ease;
 color: var(--text-color);
 position: relative;
 }
-.quick-action-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 6px 20px var(--shadow-color); }
+.quick-action-btn:hover {
+transform: scale(1.1) rotate(5deg);
+box-shadow: 0 6px 20px var(--shadow-color);
+}
+.quick-action-btn.primary {
+background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+color: white;
+border-color: transparent;
+}
 .quick-action-tooltip {
 position: absolute;
 right: 60px;
@@ -1048,7 +1034,12 @@ opacity: 0;
 pointer-events: none;
 transition: all 0.2s ease;
 }
-.quick-action-btn:hover .quick-action-tooltip { opacity: 1; right: 65px; }
+.quick-action-btn:hover .quick-action-tooltip {
+opacity: 1;
+right: 65px;
+}
+
+/* 🦶 17. Footer احترافي */
 .pro-footer {
 background: linear-gradient(135deg, var(--dark-header-bg), #1a1a1a);
 color: white;
@@ -1064,6 +1055,7 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 gap: 30px;
 margin-bottom: 30px;
 }
+.footer-brand { }
 .footer-logo {
 font-size: 1.8em;
 font-weight: bold;
@@ -1073,8 +1065,17 @@ background: linear-gradient(135deg, #4dabf7, #74c0fc);
 -webkit-text-fill-color: transparent;
 background-clip: text;
 }
-.footer-tagline { color: #adb5bd; font-size: 0.9em; line-height: 1.6; margin-bottom: 15px; }
-.footer-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.footer-tagline {
+color: #adb5bd;
+font-size: 0.9em;
+line-height: 1.6;
+margin-bottom: 15px;
+}
+.footer-chips {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+}
 .footer-chip {
 background: rgba(255,255,255,0.1);
 padding: 5px 12px;
@@ -1089,7 +1090,11 @@ color: white;
 border-bottom: 1px solid rgba(255,255,255,0.1);
 padding-bottom: 8px;
 }
-.footer-links { list-style: none; padding: 0; margin: 0; }
+.footer-links {
+list-style: none;
+padding: 0;
+margin: 0;
+}
 .footer-links li { margin-bottom: 8px; }
 .footer-links a {
 color: #adb5bd;
@@ -1100,7 +1105,10 @@ display: inline-flex;
 align-items: center;
 gap: 8px;
 }
-.footer-links a:hover { color: white; transform: translateX(-5px); }
+.footer-links a:hover {
+color: white;
+transform: translateX(-5px);
+}
 .footer-bottom {
 text-align: center;
 padding-top: 20px;
@@ -1108,6 +1116,8 @@ border-top: 1px solid rgba(255,255,255,0.1);
 color: #adb5bd;
 font-size: 0.85em;
 }
+
+/* 🎨 18. Profile Button في الـ Top Bar */
 .profile-btn {
 background: rgba(255,255,255,0.1);
 border: 1px solid rgba(255,255,255,0.2);
@@ -1122,7 +1132,10 @@ transition: all 0.2s ease;
 font-size: 0.85em;
 font-weight: 600;
 }
-.profile-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+.profile-btn:hover {
+background: rgba(255,255,255,0.2);
+transform: translateY(-1px);
+}
 .profile-btn-avatar {
 width: 28px;
 height: 28px;
@@ -1134,6 +1147,8 @@ justify-content: center;
 font-size: 0.85em;
 font-weight: bold;
 }
+
+/* 🔔 19. Notification Bell */
 .notification-bell {
 position: relative;
 background: rgba(255,255,255,0.1);
@@ -1149,7 +1164,10 @@ color: white;
 font-size: 1em;
 transition: all 0.2s ease;
 }
-.notification-bell:hover { background: rgba(255,255,255,0.2); transform: rotate(15deg); }
+.notification-bell:hover {
+background: rgba(255,255,255,0.2);
+transform: rotate(15deg);
+}
 .notification-badge {
 position: absolute;
 top: -5px;
@@ -1171,6 +1189,8 @@ animation: badgePulse 2s ease-in-out infinite;
 0%, 100% { transform: scale(1); }
 50% { transform: scale(1.1); }
 }
+
+/* 💫 20. Donate FAB */
 .donate-fab {
 position: fixed;
 bottom: 20px;
@@ -1195,21 +1215,38 @@ animation: fabPulse 3s ease-in-out infinite;
 0%, 100% { box-shadow: 0 4px 20px rgba(232, 62, 140, 0.4); }
 50% { box-shadow: 0 4px 30px rgba(232, 62, 140, 0.7); }
 }
-.donate-fab:hover { transform: scale(1.1) rotate(10deg); }
-.dark-mode .crypto-ticker-wrap { background: linear-gradient(135deg, #1e3a5f, #2c5282); }
-.dark-mode .ticker-item { background: rgba(255,255,255,0.1); }
-.dark-mode .market-insight-card { background: linear-gradient(135deg, #1e1e1e, #2a2a2a); }
+.donate-fab:hover {
+transform: scale(1.1) rotate(10deg);
+}
+
+/* 🌙 Dark Mode للميزات الجديدة */
+.dark-mode .crypto-ticker-wrap {
+background: linear-gradient(135deg, #1e3a5f, #2c5282);
+}
+.dark-mode .ticker-item {
+background: rgba(255,255,255,0.1);
+}
+.dark-mode .market-insight-card {
+background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+}
 .dark-mode .profile-header,
 .dark-mode .bug-header,
 .dark-mode .alerts-header,
-.dark-mode .exchange-header { filter: brightness(0.9); }
-.dark-mode .capital-stat-box { background: linear-gradient(135deg, #1e1e1e, #2a2a2a); }
+.dark-mode .exchange-header {
+filter: brightness(0.9);
+}
+
+/* 📱 Responsive للميزات الجديدة */
 @media (max-width: 768px) {
 .crypto-ticker-wrap { padding: 0 10px; }
 .ticker-scroll { gap: 15px; padding: 8px 10px; }
 .ticker-item { padding: 4px 10px; font-size: 0.75em; }
 .market-insights-grid { grid-template-columns: 1fr; }
-.notification-center { width: calc(100% - 40px); left: 20px; right: 20px; }
+.notification-center {
+width: calc(100% - 40px);
+left: 20px;
+right: 20px;
+}
 .charts-grid { grid-template-columns: 1fr; }
 .quick-actions-bar { bottom: 70px; left: 10px; }
 .quick-action-btn { width: 45px; height: 45px; font-size: 1.1em; }
@@ -1220,6 +1257,10 @@ animation: fabPulse 3s ease-in-out infinite;
 .profile-stats { grid-template-columns: 1fr; }
 .exchange-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ============================================================
+   🎨 باقي CSS الأصلي (محفوظ بالكامل)
+   ============================================================ */
 .floating-refresh-btn {
 position: fixed;
 top: 90px;
@@ -1239,13 +1280,21 @@ display: none;
 align-items: center;
 justify-content: center;
 }
-.floating-refresh-btn.visible { display: flex; animation: floatIn 0.4s ease-out; }
+.floating-refresh-btn.visible {
+display: flex;
+animation: floatIn 0.4s ease-out;
+}
 @keyframes floatIn {
 from { opacity: 0; transform: translateX(-20px) scale(0.8); }
 to { opacity: 1; transform: translateX(0) scale(1); }
 }
-.floating-refresh-btn:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(25, 135, 84, 0.6); }
-.floating-refresh-btn:hover .refresh-icon { animation: spin 0.8s ease-in-out; }
+.floating-refresh-btn:hover {
+transform: scale(1.1);
+box-shadow: 0 6px 20px rgba(25, 135, 84, 0.6);
+}
+.floating-refresh-btn:hover .refresh-icon {
+animation: spin 0.8s ease-in-out;
+}
 @keyframes spin {
 from { transform: rotate(0deg); }
 to { transform: rotate(360deg); }
@@ -1329,6 +1378,16 @@ h3 { font-size: 1.2em; color: var(--primary-color); margin-bottom: 15px; margin-
 .settings-theme-toggle button:hover { background-color: var(--hover-bg); }
 .settings-theme-toggle button.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
 .section-custom { transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+.portfolio-distribution-section { background-color: var(--section-bg); padding: 20px 25px; margin-bottom: 25px; border-radius: 10px; box-shadow: 0 4px 12px var(--shadow-color); border: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+.portfolio-chart-container { display: flex; flex-direction: column; gap: 20px; margin-top: 15px; }
+.chart-row { display: flex; align-items: center; gap: 15px; padding: 10px 0; border-bottom: 1px solid var(--border-color); }
+.chart-row:last-child { border-bottom: none; }
+.coin-name { min-width: 100px; font-weight: var(--font-weight-semibold); }
+.chart-bar-container { flex: 1; height: 24px; background-color: var(--output-field-bg); border-radius: 12px; overflow: hidden; position: relative; }
+.chart-bar { height: 100%; border-radius: 12px; transition: width 0.5s ease; position: relative; }
+.chart-bar-value { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 0.85em; font-weight: var(--font-weight-bold); color: var(--text-light); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
+.percentage-display { min-width: 60px; text-align: left; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; font-weight: var(--font-weight-bold); }
+.no-data-chart { text-align: center; padding: 40px 20px; color: var(--text-muted); font-style: italic; }
 .cash-section { background-color: var(--section-bg); padding: 20px 25px; margin-bottom: 25px; border-radius: 10px; box-shadow: 0 4px 12px var(--shadow-color); border: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; }
 .section-header h2 { margin-bottom: 0; border-bottom: none; flex: 1; }
@@ -1344,7 +1403,10 @@ h3 { font-size: 1.2em; color: var(--primary-color); margin-bottom: 15px; margin-
 .cash-display-box .value.cash-sales { color: var(--cash-color); }
 .cash-display-box .value.cash-total { color: var(--positive-color); }
 .cash-display-box .value.cash-total.zero { color: var(--negative-color); }
-.cash-input { padding: 10px 14px; border: 2px solid var(--cash-input-border); border-radius: 6px; font-size: 1.1em; background-color: var(--cash-input-bg); color: var(--text-color); font-weight: var(--font-weight-bold); text-align: center; transition: all 0.3s ease; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; width: 100%; box-sizing: border-box; }
+.cash-input-container { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+.cash-input-group { display: flex; flex-direction: column; flex: 1; min-width: 200px; }
+.cash-input-group label { margin-bottom: 8px; font-weight: var(--font-weight-semibold); color: var(--text-muted); font-size: 0.9em; }
+.cash-input { padding: 10px 14px; border: 2px solid var(--cash-input-border); border-radius: 6px; font-size: 1.1em; background-color: var(--cash-input-bg); color: var(--text-color); font-weight: var(--font-weight-bold); text-align: center; transition: all 0.3s ease; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; }
 .cash-input.zero { border-color: var(--cash-zero-border); background-color: var(--cash-zero-bg); animation: pulse 1.5s infinite; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); } }
 .cash-warning { color: var(--negative-color); font-weight: var(--font-weight-bold); text-align: center; margin-top: 10px; padding: 8px; border-radius: 4px; background-color: rgba(220, 53, 69, 0.1); display: none; }
@@ -1614,11 +1676,18 @@ label { font-size: 0.85em; margin-bottom: 5px; }
 .cash-display-container { grid-template-columns: 1fr; gap: 10px; }
 .cash-display-box { padding: 12px; }
 .cash-display-box .value { font-size: 1.2em; }
+.cash-input-container { flex-direction: column; align-items: stretch; gap: 10px; }
+.cash-input-group { min-width: 100%; }
 .cash-input { padding: 10px; font-size: 1em; }
 .history-record { flex-direction: column; align-items: flex-start; gap: 6px; padding: 8px; }
 .history-amount { margin: 3px 0; font-size: 0.95em; }
 .history-actions { align-self: flex-end; }
 .history-content { max-height: 250px; }
+.portfolio-chart-container { gap: 12px; }
+.chart-row { flex-direction: column; align-items: flex-start; gap: 5px; padding: 8px 0; }
+.coin-name { min-width: auto; font-size: 0.9em; }
+.chart-bar-container { width: 100%; }
+.percentage-display { font-size: 0.9em; }
 .risk-calculator-grid { grid-template-columns: 1fr; gap: 15px; }
 .risk-output-item { flex-direction: column; gap: 3px; }
 .summary-totals { grid-template-columns: 1fr 1fr; gap: 10px; padding: 12px; }
@@ -1681,23 +1750,31 @@ h2 { font-size: 1.05em; }
 </head>
 <body>
 
+<!-- ============================================================
+     🆕 شريط المتحدث (Crypto Ticker) - الميزة #1
+     ============================================================ -->
 <div class="crypto-ticker-wrap">
 <div class="ticker-scroll" id="cryptoTicker">
 <!-- سيتم تعبئتها ديناميكياً من JavaScript -->
 </div>
 </div>
 
+<!-- ============================================================
+     🎨 Top Bar الأصلي (محفوظ بالكامل)
+     ============================================================ -->
 <div class="settings-top-bar">
-<div class="brand">📊 <span>Muharraqi</span> - متابعة الصفقات <span style="font-size:0.7em;opacity:0.7;">| Pro Edition</span></div>
+<div class="brand">📊 <span id="brandUsername">Muharraqi</span> - متابعة الصفقات <span style="font-size:0.7em;opacity:0.7;">| Pro Edition</span></div>
 <div class="settings-actions">
+<!-- 🆕 أزرار جديدة -->
 <button class="profile-btn" onclick="openProfileModal()" title="الملف الشخصي">
-<div class="profile-btn-avatar" id="topBarAvatar">م</div>
+<div class="profile-btn-avatar">م</div>
 <span>الملف الشخصي</span>
 </button>
 <button class="notification-bell" onclick="toggleNotificationCenter()" title="التنبيهات">
 🔔
 <span class="notification-badge" id="notifBadge" style="display:none;">0</span>
 </button>
+<!-- الأزرار الأصلية -->
 <button class="settings-btn" onclick="openColorSettings()" title="إعدادات الألوان والثيم">⚙️ الإعدادات</button>
 <button class="theme-btn" id="topThemeBtn" onclick="toggleThemeFromTop()" title="تبديل الوضع">🌙</button>
 <button class="print-btn" onclick="printReport()" title="طباعة التقرير">🖨️ طباعة</button>
@@ -1711,6 +1788,9 @@ h2 { font-size: 1.05em; }
 نسألكم الدعاء بظهر الغيب
 </div>
 
+<!-- ============================================================
+     🆕 مركز التنبيهات (Notification Center) - الميزة #9
+     ============================================================ -->
 <div class="notification-center" id="notificationCenter">
 <div class="notif-header">
 <div>
@@ -1735,6 +1815,9 @@ h2 { font-size: 1.05em; }
 <div class="container">
 <h1>متابعة الصفقات الشاملة <span style="font-size:0.6em;color:var(--text-muted);">| Pro Edition</span></h1>
 
+<!-- ============================================================
+     🆕 مؤشرات السوق (Market Insights) - الميزة #3
+     ============================================================ -->
 <section class="market-insights-section card-hover section-custom" id="section-marketInsights">
 <div class="section-header">
 <h2>📊 مؤشرات السوق</h2>
@@ -1742,6 +1825,7 @@ h2 { font-size: 1.05em; }
 </div>
 <div class="section-content" id="marketInsightsSectionContent">
 <div class="market-insights-grid">
+<!-- Market Cap -->
 <div class="market-insight-card">
 <div class="mi-head">
 <span>💰 القيمة السوقية</span>
@@ -1755,6 +1839,7 @@ h2 { font-size: 1.05em; }
 </svg>
 </div>
 </div>
+<!-- Fear & Greed -->
 <div class="market-insight-card">
 <div class="mi-head">
 <span>😨 مؤشر الخوف والطمع</span>
@@ -1768,6 +1853,7 @@ h2 { font-size: 1.05em; }
 </div>
 </div>
 </div>
+<!-- Altcoin Season -->
 <div class="market-insight-card">
 <div class="mi-head">
 <span>🪙 موسم العملات البديلة</span>
@@ -1787,6 +1873,9 @@ h2 { font-size: 1.05em; }
 </div>
 </section>
 
+<!-- ============================================================
+     📈 تحليلات المحفظة المتقدمة (Advanced Charts) - تم نقلها مكان توزيع المحفظة
+     ============================================================ -->
 <section class="advanced-charts-section card-hover section-custom" id="section-advancedCharts">
 <div class="section-header">
 <h2>📈 تحليلات المحفظة المتقدمة</h2>
@@ -1794,6 +1883,7 @@ h2 { font-size: 1.05em; }
 </div>
 <div class="section-content" id="advancedChartsSectionContent">
 <div class="charts-grid">
+<!-- Donut Chart -->
 <div class="chart-card">
 <div class="chart-card-header">
 <div>
@@ -1810,6 +1900,7 @@ h2 { font-size: 1.05em; }
 </div>
 <div class="chart-legend" id="donutLegend"></div>
 </div>
+<!-- Trend Chart -->
 <div class="chart-card">
 <div class="chart-card-header">
 <div>
@@ -1817,8 +1908,8 @@ h2 { font-size: 1.05em; }
 <div class="chart-card-subtitle">تاريخ قيمة المحفظة</div>
 </div>
 <div class="chart-ranges">
-<button class="chart-range-btn" data-range="4H" onclick="changeTrendRange('4H', this)">4 ساعات</button>
-<button class="chart-range-btn" data-range="1D" onclick="changeTrendRange('1D', this)">يوم</button>
+<button class="chart-range-btn" data-range="4H" onclick="changeTrendRange('4H', this)">4H</button>
+<button class="chart-range-btn" data-range="1D" onclick="changeTrendRange('1D', this)">1D</button>
 <button class="chart-range-btn" data-range="1W" onclick="changeTrendRange('1W', this)">1W</button>
 <button class="chart-range-btn" data-range="1M" onclick="changeTrendRange('1M', this)">1M</button>
 <button class="chart-range-btn" data-range="3M" onclick="changeTrendRange('3M', this)">3M</button>
@@ -1851,45 +1942,15 @@ h2 { font-size: 1.05em; }
 </div>
 </section>
 
+<!-- ============================================================
+     📊 الأقسام الأصلية (محفوظة بالكامل)
+     ============================================================ -->
 <section class="cash-section card-hover section-custom" id="section-cash">
 <div class="section-header">
-<h2>💰 إدارة رأس المال والكاش</h2>
+<h2>كم الكاش لديك</h2>
 <button class="toggle-btn" onclick="toggleSection('cash')">طي</button>
 </div>
 <div class="section-content" id="cashSectionContent">
-
-<div class="capital-management-grid">
-<div class="capital-stat-box">
-<label>💼 رأس المال الأساسي</label>
-<div class="value sensitive-value" id="capitalBaseValue">0.00 $</div>
-</div>
-<div class="capital-stat-box">
-<label>📈 إجمالي الأصول</label>
-<div class="value sensitive-value" id="capitalTotalAssets">0.00 $</div>
-</div>
-<div class="capital-stat-box">
-<label>💹 القيمة السوقية الحالية</label>
-<div class="value sensitive-value" id="capitalMarketValue">0.00 $</div>
-</div>
-<div class="capital-stat-box">
-<label>📊 صافي الربح / الخسارة</label>
-<div class="value sensitive-value" id="capitalNetPnl">0.00 $</div>
-</div>
-</div>
-
-<div class="capital-management-actions">
-<div class="capital-input-group">
-<div>
-<label for="cashInput">أدخل الكاش المتاح بالدولار:</label>
-<input type="text" id="cashInput" class="cash-input" placeholder="0.00" oninput="validateNumberInput(this)" onblur="formatInputWithCommas(this)" onfocus="removeCommasFromInput(this)" inputmode="decimal">
-</div>
-</div>
-<button class="capital-btn-add btn-pulse" onclick="addCashToWallet()" title="إضافة كاش">➕ إضافة كاش</button>
-<button class="capital-btn-withdraw btn-pulse" onclick="withdrawCashFromWallet()" title="سحب كاش">➖ سحب كاش</button>
-<button class="capital-btn-transfer" onclick="transferProfitsToCapital()" title="نقل الأرباح من 💵 الكاش من البيع إلى رأس المال">📈 نقل الأرباح إلى رأس المال</button>
-<button class="capital-btn-reset" onclick="resetLossesToCapital()" title="إعادة تعيين الخسائر">🔄 إعادة تعيين الخسائر</button>
-</div>
-
 <div class="cash-display-container">
 <div class="cash-display-box">
 <label>💰 كاش مدخل يدوياً</label>
@@ -1903,6 +1964,14 @@ h2 { font-size: 1.05em; }
 <label>💎 إجمالي الكاش المتاح</label>
 <div class="value cash-total sensitive-value" id="cashTotalDisplay">0.00 $</div>
 </div>
+</div>
+<div class="cash-input-container">
+<div class="cash-input-group">
+<label for="cashInput">أدخل الكاش المتاح بالدولار:</label>
+<input type="text" id="cashInput" class="cash-input" placeholder="0.00" oninput="validateNumberInput(this)" onblur="formatInputWithCommas(this)" onfocus="removeCommasFromInput(this)" inputmode="decimal">
+</div>
+<button onclick="addCashToWallet()" style="align-self: flex-end; margin-bottom: 8px;" class="btn-pulse">إضافة كاش</button>
+<button onclick="withdrawCashFromWallet()" style="align-self: flex-end; margin-bottom: 8px; background-color: var(--negative-color);" class="btn-pulse">سحب كاش</button>
 </div>
 <div class="cash-warning" id="cashWarning">⚠️ ليس لديك كاش كافٍ لإضافة هذه الصفقة!</div>
 <div class="cash-explanation" id="cashExplanation">ملاحظة: سيتم خصم الكاش فقط عند النقر على زر "💾 حفظ الصفقة" بعد إدخال البيانات.</div>
@@ -2155,6 +2224,9 @@ h2 { font-size: 1.05em; }
 
 </div>
 
+<!-- ============================================================
+     🆕 Footer احترافي - الميزة #4
+     ============================================================ -->
 <footer class="pro-footer">
 <div class="footer-content">
 <div class="footer-brand">
@@ -2168,7 +2240,7 @@ h2 { font-size: 1.05em; }
 </div>
 </div>
 <div class="footer-group">
-<h3>💖 الدعم</h3>
+<h3>👥 المجتمع والدعم</h3>
 <ul class="footer-links">
 <li><a href="#" onclick="openDonateModal(); return false;">💖 ادعم المشروع</a></li>
 <li><a href="#" onclick="openBugReportModal(); return false;">🐛 الإبلاغ عن مشكلة</a></li>
@@ -2203,6 +2275,9 @@ h2 { font-size: 1.05em; }
 </div>
 </footer>
 
+<!-- ============================================================
+     🆕 الأزرار العائمة (FABs) - الميزات #16, #20
+     ============================================================ -->
 <div class="quick-actions-bar">
 <button class="quick-action-btn" onclick="openPriceAlertsModal()" title="تنبيهات الأسعار">
 🔔
@@ -2214,30 +2289,29 @@ h2 { font-size: 1.05em; }
 </button>
 </div>
 
+<!-- 👁️ Financial Privacy Toggle - الميزة #13 -->
 <button class="financial-privacy-toggle" id="privacyToggle" onclick="toggleFinancialPrivacy()">
 <span id="privacyIcon">👁️</span>
 <span id="privacyLabel">إخفاء الأموال</span>
 </button>
 
+<!-- 💖 Donate FAB - الميزة #20 -->
 <button class="donate-fab" onclick="openDonateModal()" title="ادعم المشروع">
 💖
 </button>
 
+<!-- ============================================================
+     🆕 النوافذ المنبثقة الجديدة (Modals)
+     ============================================================ -->
+
+<!-- 👤 Profile Modal - الميزة #4 -->
 <div class="profile-modal-overlay" id="profileModal">
 <div class="profile-modal">
 <div class="profile-header">
 <button class="profile-close" onclick="closeProfileModal()">✕</button>
-<div class="profile-avatar" id="profileAvatar">م</div>
-<div class="profile-name" id="profileDisplayName">مستخدم Muharraqi</div>
+<div class="profile-avatar">م</div>
+<div class="profile-name">مستخدم Muharraqi</div>
 <div class="profile-subtitle">حساب شخصي محفوظ محلياً</div>
-<button class="profile-name-edit-btn" onclick="toggleNameEdit()">✏️ تعديل الاسم</button>
-<div class="profile-name-edit-form" id="profileNameEditForm">
-<input type="text" id="profileNameInput" placeholder="اسم المستخدم الجديد" maxlength="30">
-<div class="form-btns">
-<button class="save-btn" onclick="saveProfileName()">💾 حفظ</button>
-<button class="cancel-btn" onclick="cancelNameEdit()">✗ إلغاء</button>
-</div>
-</div>
 </div>
 <div class="profile-stats">
 <div class="profile-stat">
@@ -2252,6 +2326,19 @@ h2 { font-size: 1.05em; }
 <div class="profile-stat-value sensitive-value" id="profileTotalPnl">$0</div>
 <div class="profile-stat-label">صافي الربح/الخسارة</div>
 </div>
+</div>
+<!-- 🆕 قسم تعديل اسم المستخدم واسم المحفظة -->
+<div style="padding:15px 20px;border-bottom:1px solid var(--border-color);background:var(--bg-color);">
+<div style="font-weight:700;margin-bottom:12px;color:var(--primary-color);font-size:0.95em;">✏️ تعديل بيانات الملف الشخصي</div>
+<div class="bug-form-group" style="margin-bottom:10px;">
+<label>👤 اسم المستخدم</label>
+<input type="text" id="profileUsernameInput" placeholder="مثال: Muharraqi" maxlength="30">
+</div>
+<div class="bug-form-group" style="margin-bottom:10px;">
+<label>💼 اسم المحفظة</label>
+<input type="text" id="profileWalletNameInput" placeholder="مثال: محفظتي الرئيسية" maxlength="40">
+</div>
+<button onclick="saveProfileSettings()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;transition:all 0.2s ease;" class="btn-pulse">💾 حفظ التعديلات</button>
 </div>
 <div class="profile-menu">
 <button class="profile-menu-item" onclick="closeProfileModal();openExchangeSettingsModal();">
@@ -2282,6 +2369,7 @@ h2 { font-size: 1.05em; }
 </div>
 </div>
 
+<!-- 🐛 Bug Report Modal - الميزة #5 -->
 <div class="popup-overlay" id="bugReportPopup">
 <div class="bug-report-modal">
 <div class="bug-header">
@@ -2326,6 +2414,7 @@ h2 { font-size: 1.05em; }
 </div>
 </div>
 
+<!-- 💰 Donate Modal - الميزة #6 -->
 <div class="popup-overlay" id="donatePopup">
 <div class="donate-modal">
 <div class="donate-header">
@@ -2374,46 +2463,7 @@ h2 { font-size: 1.05em; }
 </div>
 </div>
 
-<div class="popup-overlay" id="contactPopup">
-<div class="contact-modal">
-<div class="contact-header">
-<div class="contact-avatar">👨‍💻</div>
-<div style="font-size:1.3em;font-weight:bold;">التواصل مع المطور</div>
-<div style="font-size:0.85em;opacity:0.9;margin-top:5px;">متاح للملاحظات والاقتراحات</div>
-</div>
-<div class="contact-body">
-<div class="contact-name">Muharraqi</div>
-<div class="contact-handle">@Muharraqi_Dev</div>
-<p style="color:var(--text-muted);margin-bottom:20px;line-height:1.6;">
-للدعم الفني، الملاحظات، أو اقتراحات تطوير التطبيق، يمكنك التواصل معي مباشرة عبر تيليغرام.
-</p>
-<a href="https://t.me/Muharraqi_Dev" target="_blank" class="contact-btn">
-✈️ مراسلتي على تيليغرام
-</a>
-<button onclick="closeContactModal()" style="margin-top:20px;padding:10px 25px;background:var(--text-muted);color:white;border:none;border-radius:8px;cursor:pointer;">إغلاق</button>
-</div>
-</div>
-</div>
-
-<div class="popup-overlay" id="tadawulPopup">
-<div class="tadawul-modal">
-<div class="tadawul-header">
-<div style="font-size:3em;margin-bottom:10px;">📢</div>
-<div style="font-size:1.5em;font-weight:bold;">قناة تداولجي</div>
-<div style="font-size:0.9em;opacity:0.9;margin-top:5px;">توصيات يومية وتحليلات احترافية</div>
-</div>
-<div style="padding:25px;text-align:center;">
-<p style="color:var(--text-muted);margin-bottom:20px;line-height:1.6;">
-قناة تهتم بالعملات الرقمية، كل ما يذكر هو معلومات عامة ليست نصيحة بالبيع أو الشراء.
-</p>
-<a href="https://t.me/TadawulGY" target="_blank" class="contact-btn" style="margin-top:20px;">
-✈️ زيارة القناة
-</a>
-<button onclick="closeTadawulModal()" style="margin-top:15px;padding:10px 25px;background:var(--text-muted);color:white;border:none;border-radius:8px;cursor:pointer;">إغلاق</button>
-</div>
-</div>
-</div>
-
+<!-- 🔔 Price Alerts Modal - الميزة #10 -->
 <div class="popup-overlay" id="priceAlertsPopup">
 <div class="price-alerts-modal">
 <div class="alerts-header">
@@ -2460,6 +2510,7 @@ h2 { font-size: 1.05em; }
 </div>
 </div>
 
+<!-- ⚙️ Exchange Settings Modal - الميزة #11 -->
 <div class="popup-overlay" id="exchangeSettingsPopup">
 <div class="exchange-modal">
 <div class="exchange-header">
@@ -2538,6 +2589,7 @@ h2 { font-size: 1.05em; }
 </div>
 </div>
 
+<!-- 🔄 Update Popup - الميزة #12 -->
 <div class="update-popup" id="updatePopup">
 <div class="update-popup-icon">✓</div>
 <div class="update-popup-title">🎉 أنت على أحدث إصدار!</div>
@@ -2550,12 +2602,15 @@ h2 { font-size: 1.05em; }
 <li>👤 بروفايل المستخدم</li>
 <li>💎 وضع الخصوصية المالية</li>
 <li>⚙️ إعدادات المنصات المتعددة</li>
-<li>💰 إدارة رأس المال المتقدمة</li>
+<li>📰 شريط الأخبار المباشر</li>
 </ul>
 </div>
 <button onclick="closeUpdatePopup()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">ممتاز!</button>
 </div>
 
+<!-- ============================================================
+     🎨 باقي HTML الأصلي (محفوظ بالكامل)
+     ============================================================ -->
 <button class="floating-refresh-btn" id="floatingRefreshBtn" onclick="handleFloatingRefreshClick()" title="تحديث الأسعار والصفحة">
 <span class="refresh-icon">🔄</span>
 </button>
@@ -2596,6 +2651,9 @@ h2 { font-size: 1.05em; }
 <div id="printReport" style="display: none;"></div>
 <input type="file" id="importTxtFile" accept=".txt" style="display: none;">
 
+<!-- ============================================================
+     🎨 JavaScript الأصلي (محفوظ بالكامل)
+     ============================================================ -->
 <script>
 function generateUniqueId() {
 return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
@@ -2630,7 +2688,7 @@ if (id.includes('Percent') || id.includes('percentage') || id.includes('riskPerT
 decimals = 2;
 } else if (id.includes('Price') || id.includes('price') || id.includes('Entry') || id.includes('stopLoss')) {
 decimals = 8;
-} else if (id.includes('Amount') || id.includes('amount') || id.includes('Capital') || id.includes('cash') || id.includes('capital')) {
+} else if (id.includes('Amount') || id.includes('amount') || id.includes('Capital') || id.includes('cash')) {
 decimals = 2;
 } else if (id.includes('Qty') || id.includes('qty') || id.includes('sold')) {
 decimals = 8;
@@ -2642,7 +2700,7 @@ if (!input) return;
 input.value = input.value.replace(/,/g, '');
 }
 const sectionConfigs = [
-{ id: 'section-cash', name: 'إدارة رأس المال والكاش', defaultColor: '#ffffff' },
+{ id: 'section-cash', name: 'كم الكاش لديك', defaultColor: '#ffffff' },
 { id: 'section-coinActive', name: 'العملة النشطة', defaultColor: '#ffffff' },
 { id: 'section-entryDetails', name: 'تفاصيل الدخول', defaultColor: '#ffffff' },
 { id: 'section-currentStatus', name: 'الوضع الحالي والأهداف', defaultColor: '#ffffff' },
@@ -2784,8 +2842,6 @@ localStorage.removeItem('cryptoTrackerUniversal_v41_estimate_prices');
 localStorage.removeItem('muharraqi_pro_settings');
 localStorage.removeItem('muharraqi_price_alerts');
 localStorage.removeItem('muharraqi_notifications');
-localStorage.removeItem('muharraqi_capital');
-localStorage.removeItem('muharraqi_profile_name');
 location.reload();
 },
 null
@@ -2942,8 +2998,6 @@ const LS_KEY_CASH_HISTORY = 'cryptoTrackerUniversal_v41_cash_history';
 const LS_KEY_SALES_CASH_HISTORY = 'cryptoTrackerUniversal_v41_sales_cash_history';
 const LS_KEY_EXPANDED_COINS = 'cryptoTrackerUniversal_v41_expanded_coins';
 const LS_KEY_ESTIMATE_PRICES = 'cryptoTrackerUniversal_v41_estimate_prices';
-const LS_KEY_CAPITAL = 'muharraqi_capital';
-const LS_KEY_PROFILE_NAME = 'muharraqi_profile_name';
 let allCoinData = {};
 let currentMarketPrices = {};
 let activeCoinSymbol = null;
@@ -2952,137 +3006,6 @@ let cashHistory = { deposits: [], withdrawals: [] };
 let salesCashHistory = { deposits: [], withdrawals: [] };
 let expandedCoins = new Set();
 let savedEstimatePrices = {};
-let capitalData = { baseCapital: 0 };
-
-function loadCapitalData() {
-try {
-const saved = localStorage.getItem(LS_KEY_CAPITAL);
-if (saved) {
-capitalData = JSON.parse(saved);
-if (typeof capitalData.baseCapital !== 'number') capitalData.baseCapital = 0;
-}
-} catch (e) { capitalData = { baseCapital: 0 }; }
-}
-function saveCapitalData() {
-try { localStorage.setItem(LS_KEY_CAPITAL, JSON.stringify(capitalData)); } catch (e) {}
-}
-function updateCapitalDisplay() {
-const { totals } = calculateSummaryData();
-const totalSalesCash = salesCashHistory.deposits.reduce((sum, r) => sum + r.amount, 0) -
-salesCashHistory.withdrawals.reduce((sum, r) => sum + r.amount, 0);
-const totalCash = availableCash + Math.max(0, totalSalesCash);
-const totalAssets = totals.currentValue + totalCash;
-const netPnl = totalAssets - capitalData.baseCapital;
-
-const baseEl = document.getElementById('capitalBaseValue');
-const assetsEl = document.getElementById('capitalTotalAssets');
-const marketEl = document.getElementById('capitalMarketValue');
-const pnlEl = document.getElementById('capitalNetPnl');
-if (baseEl) baseEl.textContent = formatWithCommas(capitalData.baseCapital, 2) + ' $';
-if (assetsEl) assetsEl.textContent = formatWithCommas(totalAssets, 2) + ' $';
-if (marketEl) marketEl.textContent = formatWithCommas(totals.currentValue, 2) + ' $';
-if (pnlEl) {
-pnlEl.textContent = formatWithCommas(netPnl, 2) + ' $';
-pnlEl.className = 'value ' + (netPnl > 0 ? 'pnl-positive' : (netPnl < 0 ? 'pnl-negative' : ''));
-}
-}
-function setBaseCapital() {
-const input = document.getElementById('capitalInput');
-const amount = parseFormattedNumber(input?.value);
-if (amount < 0) { showError('يرجى إدخال مبلغ صحيح'); return; }
-capitalData.baseCapital = amount;
-saveCapitalData();
-updateCapitalDisplay();
-if (input) input.value = '';
-showSuccess('تم تعيين رأس المال الأساسي: ' + formatWithCommas(amount, 2) + ' $');
-}
-function transferProfitsToCapital() {
-const netSalesCash = Math.max(0, getNetSalesCash());
-
-if (netSalesCash <= 0.0001) {
-showError('لا توجد أرباح في 💵 الكاش من البيع لنقلها إلى رأس المال');
-return;
-}
-
-capitalData.baseCapital += netSalesCash;
-saveCapitalData();
-
-const withdrawalRecord = {
-id: Date.now(),
-amount: netSalesCash,
-date: new Date().toLocaleString('ar-EG'),
-type: 'withdrawal',
-note: '📈 نقل إلى رأس المال الأساسي'
-};
-salesCashHistory.withdrawals.push(withdrawalRecord);
-saveSalesCashHistory();
-
-updateSalesCashHistoryDisplay();
-updateCashDisplay();
-updateSummaryTable();
-updateCapitalDisplay();
-
-showSuccess('✅ تم نقل ' + formatWithCommas(netSalesCash, 2) + ' $ من 💵 الكاش من البيع إلى رأس المال الأساسي');
-}
-
-function resetLossesToCapital() {
-const { totals } = calculateSummaryData();
-const totalSalesCash = salesCashHistory.deposits.reduce((sum, r) => sum + r.amount, 0) -
-salesCashHistory.withdrawals.reduce((sum, r) => sum + r.amount, 0);
-const totalCash = availableCash + Math.max(0, totalSalesCash);
-const totalAssets = totals.currentValue + totalCash;
-const loss = totalAssets - capitalData.baseCapital;
-if (loss >= -0.0001) { showError('لا توجد خسائر لإعادة تعيينها'); return; }
-capitalData.baseCapital = totalAssets;
-saveCapitalData();
-updateCapitalDisplay();
-showSuccess('تم إعادة تعيين الخسائر وتحديث رأس المال إلى ' + formatWithCommas(totalAssets, 2) + ' $');
-}
-
-function loadProfileName() {
-try {
-const saved = localStorage.getItem(LS_KEY_PROFILE_NAME);
-if (saved && saved.trim()) {
-const name = saved.trim();
-const displayEl = document.getElementById('profileDisplayName');
-const avatarEl = document.getElementById('profileAvatar');
-const topAvatarEl = document.getElementById('topBarAvatar');
-if (displayEl) displayEl.textContent = name;
-if (avatarEl) avatarEl.textContent = name.charAt(0).toUpperCase();
-if (topAvatarEl) topAvatarEl.textContent = name.charAt(0).toUpperCase();
-}
-} catch (e) {}
-}
-function toggleNameEdit() {
-const form = document.getElementById('profileNameEditForm');
-const input = document.getElementById('profileNameInput');
-const currentName = document.getElementById('profileDisplayName')?.textContent || '';
-if (input) input.value = currentName;
-if (form) form.style.display = (form.style.display === 'flex') ? 'none' : 'flex';
-if (form && form.style.display === 'flex' && input) input.focus();
-}
-function saveProfileName() {
-const input = document.getElementById('profileNameInput');
-const name = (input?.value || '').trim();
-if (!name) { showError('يرجى إدخال اسم صحيح'); return; }
-if (name.length > 30) { showError('الاسم طويل جداً (الحد الأقصى 30 حرف)'); return; }
-try { localStorage.setItem(LS_KEY_PROFILE_NAME, name); } catch (e) {}
-const displayEl = document.getElementById('profileDisplayName');
-const avatarEl = document.getElementById('profileAvatar');
-const topAvatarEl = document.getElementById('topBarAvatar');
-const firstChar = name.charAt(0).toUpperCase();
-if (displayEl) displayEl.textContent = name;
-if (avatarEl) avatarEl.textContent = firstChar;
-if (topAvatarEl) topAvatarEl.textContent = firstChar;
-const form = document.getElementById('profileNameEditForm');
-if (form) form.style.display = 'none';
-showSuccess('✅ تم حفظ الاسم بنجاح');
-}
-function cancelNameEdit() {
-const form = document.getElementById('profileNameEditForm');
-if (form) form.style.display = 'none';
-}
-
 function updateCashDisplay() {
 const totalSalesCash = salesCashHistory.deposits.reduce((sum, record) => sum + record.amount, 0) -
 salesCashHistory.withdrawals.reduce((sum, record) => sum + record.amount, 0);
@@ -3101,7 +3024,6 @@ cashInput.classList.add('zero');
 cashInput.classList.remove('zero');
 }
 updateProfileStats();
-updateCapitalDisplay();
 updateAdvancedCharts();
 }
 function addCashToWallet() {
@@ -3706,7 +3628,6 @@ sellBtn.textContent = '💰 بيع جزئي';
 updateActiveCoinDataInMemory();
 saveAllDataToLocalStorage();
 calculateAndDisplay();
-updateCashDisplay();
 showSuccess('تم إضافة البيع بنجاح: ' + formatNumber(soldQty, 4) + ' بسعر ' + formatNumber(soldPrice, 8));
 }
 function sellAllInitial() {
@@ -3795,7 +3716,6 @@ allCoinData[activeCoinSymbol].initialSales = updatedSales;
 updateActiveCoinDataInMemory();
 saveAllDataToLocalStorage();
 calculateAndDisplay();
-updateCashDisplay();
 showSuccess('تم بيع الكل بنجاح:\n• الكمية: ' + formatNumber(remainingQty, 8) + '\n• السعر: ' + formatNumber(sellPrice, 8) + '\n• المبلغ: ' + formatWithCommas(saleAmount, 2) + ' $');
 }
 function removeInitialSale(saleIndex) {
@@ -4290,7 +4210,6 @@ if (sellBtn) sellBtn.textContent = 'بيع';
 saveAllDataToLocalStorage();
 updateSummaryTable();
 calculateAndDisplay();
-updateCashDisplay();
 showSuccess('تم إضافة البيع بنجاح: ' + formatNumber(soldQty, 4) + ' بسعر ' + formatNumber(soldPrice, 8));
 }
 function sellAllDCA(symbol, index) {
@@ -4338,7 +4257,6 @@ rp.sales[saleIndex].cashRecordId = cashRecordId;
 saveAllDataToLocalStorage();
 updateSummaryTable();
 calculateAndDisplay();
-updateCashDisplay();
 showSuccess('تم بيع الكل بنجاح: ' + formatNumber(remainingQty, 4) + ' بسعر ' + formatNumber(sellPrice, 8));
 }
 function removeDCASale(symbol, repurchaseIndex, saleIndex) {
@@ -4534,7 +4452,6 @@ if (summaryRows.length === 0) {
 summaryTableBody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 30px; font-weight: normal; color: var(--text-muted);">لا توجد عملات مضافة حالياً.</td></tr>';
 resetTotals();
 updateSellAllGlobalBtnText();
-updateCapitalDisplay();
 return;
 }
 summaryRows.forEach(item => {
@@ -4582,7 +4499,6 @@ totalPnlPercentSummaryEl.className = totals.pnlPercent > 0 ? 'totals-positive' :
 totalCurrentValueSummaryEl.className = totals.pnlAmount >= 0 ? 'totals-positive' : 'totals-negative';
 totalCashFromSalesSummaryEl.className = totals.cashFromSales > 0 ? 'cash-positive' : '';
 updateSellAllGlobalBtnText();
-updateCapitalDisplay();
 }
 function resetTotals() {
 totalInvestedSummaryEl.textContent = '0.00 $';
@@ -4705,6 +4621,7 @@ marketPriceDisplay.classList.add('error');
 }
 calculateActiveCoinDetails();
 updateSummaryTable();
+updatePortfolioChart();
 updateCryptoTicker();
 updateAdvancedCharts();
 checkPriceAlerts();
@@ -4829,7 +4746,6 @@ const totalSalesCash = salesCashHistory.deposits.reduce((sum, record) => sum + r
 salesCashHistory.withdrawals.reduce((sum, record) => sum + record.amount, 0);
 content += "الكاش من البيع: " + formatWithCommas(Math.max(0, totalSalesCash), 2) + " $\n";
 content += "إجمالي الكاش المتاح: " + formatWithCommas(availableCash + Math.max(0, totalSalesCash), 2) + " $\n";
-content += "رأس المال الأساسي: " + formatWithCommas(capitalData.baseCapital, 2) + " $\n";
 if (cashHistory.deposits.length > 0) {
 content += "--- سجل إيداعات الكاش ---\n";
 cashHistory.deposits.forEach(record => {
@@ -4954,14 +4870,6 @@ localStorage.setItem(LS_KEY_CASH, availableCash.toString());
 updateCashDisplay();
 }
 }
-if (line.startsWith('رأس المال الأساسي:')) {
-const amount = parseFloat(line.split(':')[1].replace('$', '').replace(/,/g, '').trim());
-if (!isNaN(amount)) {
-capitalData.baseCapital = amount;
-saveCapitalData();
-updateCapitalDisplay();
-}
-}
 }
 if (currentSection.includes('بيانات العملات') && symbol) {
 if (line.startsWith('سعر الدخول:')) {
@@ -5051,6 +4959,7 @@ saveAllDataToLocalStorage();
 saveEstimatePrices();
 updateCoinSelector();
 updateSummaryTable();
+updatePortfolioChart();
 showSuccess("تم استيراد البيانات بنجاح. اختر عملة لعرض تفاصيلها.");
 };
 reader.readAsText(file);
@@ -5071,7 +4980,7 @@ function printReport() {
 const { summaryRows, totals } = calculateSummaryData();
 const totalSalesCash = salesCashHistory.deposits.reduce((sum, record) => sum + record.amount, 0) -
 salesCashHistory.withdrawals.reduce((sum, record) => sum + record.amount, 0);
-let reportHTML = '<div class="print-header"><h1>تقرير الصفقات الشاملة</h1><p>تم إنشاء بواسطة: المهندس [Muharraqi]</p><p>تاريخ التقرير: ' + new Date().toLocaleString('ar-EG') + '</p></div><div class="print-section"><h2>ملخص عام</h2><div class="print-totals"><div><span>إجمالي المبلغ المستثمر:</span> <span>' + formatWithCommas(totals.invested, 2) + ' $</span></div><div><span>إجمالي القيمة الحالية:</span> <span>' + formatWithCommas(totals.currentValue, 2) + ' $</span></div><div><span>إجمالي الربح/الخسارة:</span> <span class="' + (totals.pnlAmount > 0 ? 'positive' : totals.pnlAmount < 0 ? 'negative' : '') + '">' + formatWithCommas(totals.pnlAmount, 2) + ' $</span></div><div><span>إجمالي الربح/الخسارة %:</span> <span class="' + (totals.pnlPercent > 0 ? 'positive' : totals.pnlPercent < 0 ? 'negative' : '') + '">' + formatNumber(totals.pnlPercent, 2) + ' %</span></div><div><span>إجمالي الكاش من البيع:</span> <span>' + formatWithCommas(totals.cashFromSales, 2) + ' $</span></div><div><span>الكاش المدخل يدوياً:</span> <span>' + formatWithCommas(availableCash, 2) + ' $</span></div><div><span>الكاش المتاح الكلي:</span> <span>' + formatWithCommas(availableCash + Math.max(0, totalSalesCash), 2) + ' $</span></div><div><span>رأس المال الأساسي:</span> <span>' + formatWithCommas(capitalData.baseCapital, 2) + ' $</span></div></div></div><div class="print-section"><h2>تفاصيل العملات</h2>';
+let reportHTML = '<div class="print-header"><h1>تقرير الصفقات الشاملة</h1><p>تم إنشاء بواسطة: المهندس [Muharraqi]</p><p>تاريخ التقرير: ' + new Date().toLocaleString('ar-EG') + '</p></div><div class="print-section"><h2>ملخص عام</h2><div class="print-totals"><div><span>إجمالي المبلغ المستثمر:</span> <span>' + formatWithCommas(totals.invested, 2) + ' $</span></div><div><span>إجمالي القيمة الحالية:</span> <span>' + formatWithCommas(totals.currentValue, 2) + ' $</span></div><div><span>إجمالي الربح/الخسارة:</span> <span class="' + (totals.pnlAmount > 0 ? 'positive' : totals.pnlAmount < 0 ? 'negative' : '') + '">' + formatWithCommas(totals.pnlAmount, 2) + ' $</span></div><div><span>إجمالي الربح/الخسارة %:</span> <span class="' + (totals.pnlPercent > 0 ? 'positive' : totals.pnlPercent < 0 ? 'negative' : '') + '">' + formatNumber(totals.pnlPercent, 2) + ' %</span></div><div><span>إجمالي الكاش من البيع:</span> <span>' + formatWithCommas(totals.cashFromSales, 2) + ' $</span></div><div><span>الكاش المدخل يدوياً:</span> <span>' + formatWithCommas(availableCash, 2) + ' $</span></div><div><span>الكاش المتاح الكلي:</span> <span>' + formatWithCommas(availableCash + Math.max(0, totalSalesCash), 2) + ' $</span></div></div></div><div class="print-section"><h2>تفاصيل العملات</h2>';
 if (summaryRows.length === 0) {
 reportHTML += '<p>لا توجد عملات مضافة حالياً.</p>';
 } else {
@@ -5095,6 +5004,36 @@ setTimeout(() => {
 printReportDiv.style.display = 'none';
 }, 1000);
 }
+function updatePortfolioChart() {
+const container = document.getElementById('portfolioChartContainer');
+if (!container) return;
+const { summaryRows } = calculateSummaryData();
+if (summaryRows.length === 0) {
+container.innerHTML = '<div class="no-data-chart">لا توجد بيانات كافية لعرض توزيع المحفظة</div>';
+return;
+}
+const totalValue = summaryRows.reduce((sum, item) => sum + (item.currentPortfolioValue || 0), 0);
+const totalCash = availableCash + Math.max(0, getNetSalesCash());
+const grandTotal = totalValue + totalCash;
+if (grandTotal <= 0) {
+container.innerHTML = '<div class="no-data-chart">لا توجد استثمارات نشطة لعرضها</div>';
+return;
+}
+let html = '';
+const colors = ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796', '#5a5c69', '#6f42c1', '#e83e8c', '#fd7e14'];
+summaryRows.forEach((item, index) => {
+if (item.currentPortfolioValue > 0) {
+const percentage = (item.currentPortfolioValue / grandTotal) * 100;
+const color = colors[index % colors.length];
+html += '<div class="chart-row"><div class="coin-name">' + item.symbol + '</div><div class="chart-bar-container"><div class="chart-bar" style="width: ' + percentage + '%; background-color: ' + color + ';"><span class="chart-bar-value">' + formatNumber(percentage, 1) + '%</span></div></div><div class="percentage-display">' + formatWithCommas(item.currentPortfolioValue, 2) + ' $</div></div>';
+}
+});
+if (totalCash > 0) {
+const cashPercentage = (totalCash / grandTotal) * 100;
+html += '<div class="chart-row"><div class="coin-name">الكاش</div><div class="chart-bar-container"><div class="chart-bar" style="width: ' + cashPercentage + '%; background-color: #17a2b8;"><span class="chart-bar-value">' + formatNumber(cashPercentage, 1) + '%</span></div></div><div class="percentage-display">' + formatWithCommas(totalCash, 2) + ' $</div></div>';
+}
+container.innerHTML = html;
+}
 function calculateActiveCoinDetails() {
 document.getElementById('initialCoinQty').textContent = formatNumber(0, 8);
 document.getElementById('initialSoldQtyDisplay').textContent = formatNumber(0, 8);
@@ -5117,6 +5056,26 @@ document.getElementById('tpPrice1').textContent = formatNumber(0, 8);
 document.getElementById('tpPrice2').textContent = formatNumber(0, 8);
 document.getElementById('tpPrice3').textContent = formatNumber(0, 8);
 document.getElementById('slPrice').textContent = formatNumber(0, 8);
+for (let i = 1; i <= 20; i++) {
+const dpSpan = document.getElementById('downPercent' + i);
+const rpQtyDiv = document.getElementById('repurchaseQty' + i);
+const rpSoldQtyDiv = document.getElementById('repurchaseSoldQtyDisplay' + i);
+const rpRemainingQtyDiv = document.getElementById('repurchaseRemainingQty' + i);
+const rpPnlDiv = document.getElementById('repurchasePnl' + i);
+const rpPnlPercentDiv = document.getElementById('repurchasePnlPercent' + i);
+const rpTradePnlPercentDiv = document.getElementById('repurchaseTradePnlPercent' + i);
+const rpTradePnlAmountDiv = document.getElementById('repurchaseTradePnlAmount' + i);
+const rpCashDiv = document.getElementById('repurchaseCashFromSales' + i);
+if (dpSpan) { dpSpan.textContent = '-%'; dpSpan.className = 'down-percent'; }
+if (rpQtyDiv) rpQtyDiv.textContent = formatNumber(0, 8);
+if (rpSoldQtyDiv) rpSoldQtyDiv.textContent = formatNumber(0, 8);
+if (rpRemainingQtyDiv) rpRemainingQtyDiv.textContent = formatNumber(0, 8);
+if (rpPnlDiv) { rpPnlDiv.textContent = formatWithCommas(0, 2); rpPnlDiv.className = 'output-field repurchase-pnl'; }
+if (rpPnlPercentDiv) { rpPnlPercentDiv.textContent = formatNumber(0, 2) + '%'; rpPnlPercentDiv.className = 'output-field repurchase-pnl-percent'; }
+if (rpTradePnlPercentDiv) { rpTradePnlPercentDiv.textContent = formatNumber(0, 2) + '%'; rpTradePnlPercentDiv.className = 'output-field repurchase-pnl-percent'; }
+if (rpTradePnlAmountDiv) { rpTradePnlAmountDiv.textContent = formatWithCommas(0, 2); rpTradePnlAmountDiv.className = 'output-field repurchase-pnl'; }
+if (rpCashDiv) { rpCashDiv.textContent = formatWithCommas(0, 2); rpCashDiv.className = 'output-field repurchase-cash'; }
+}
 if (!activeCoinSymbol || !allCoinData[activeCoinSymbol]) {
 updateAvailableQtyForSale();
 return;
@@ -5174,6 +5133,76 @@ totalInvestedAmount += remainingAmount;
 }
 totalCashFromSales += cashFromSales;
 }
+const index = idx + 1;
+const dpSpan = document.getElementById('downPercent' + index);
+const rpQtyDiv = document.getElementById('repurchaseQty' + index);
+const rpSoldQtyDiv = document.getElementById('repurchaseSoldQtyDisplay' + index);
+const rpRemainingQtyDiv = document.getElementById('repurchaseRemainingQty' + index);
+const rpPnlDiv = document.getElementById('repurchasePnl' + index);
+const rpPnlPercentDiv = document.getElementById('repurchasePnlPercent' + index);
+const rpTradePnlPercentDiv = document.getElementById('repurchaseTradePnlPercent' + index);
+const rpTradePnlAmountDiv = document.getElementById('repurchaseTradePnlAmount' + index);
+const rpCashDiv = document.getElementById('repurchaseCashFromSales' + index);
+let changePercent = 0;
+if (initialEntryPrice > 0 && repurchasePrice > 0) {
+changePercent = ((repurchasePrice - initialEntryPrice) / initialEntryPrice) * 100;
+}
+let pnlAmount = 0;
+let pnlPercent = 0;
+let totalSaleAmount = 0;
+let totalInvestedForSales = 0;
+sales.forEach(sale => {
+totalSaleAmount += sale.qty * sale.price;
+totalInvestedForSales += sale.investedAmount || (repurchaseQty > 0 ? repurchaseAmount * (sale.qty / repurchaseQty) : 0);
+});
+pnlAmount = totalSaleAmount - totalInvestedForSales;
+pnlPercent = totalInvestedForSales > 0 ? (pnlAmount / totalInvestedForSales) * 100 : 0;
+let totalTradePnlAmount = 0;
+let totalTradePnlPercent = 0;
+if (marketPrice > 0) {
+const currentValue = remainingQty * marketPrice;
+const remainingInvested = repurchaseQty > 0 ? repurchaseAmount * (remainingQty / repurchaseQty) : 0;
+totalTradePnlAmount = pnlAmount + (currentValue - remainingInvested);
+const totalInvested = totalInvestedForSales + remainingInvested;
+totalTradePnlPercent = totalInvested > 0 ? (totalTradePnlAmount / totalInvested) * 100 : 0;
+}
+const pnlClass = pnlAmount > 0 ? 'pnl-positive' : (pnlAmount < 0 ? 'pnl-negative' : '');
+const tradePnlClass = totalTradePnlAmount > 0 ? 'pnl-positive' : (totalTradePnlAmount < 0 ? 'pnl-negative' : '');
+const changeClass = changePercent < 0 ? 'negative' : (changePercent > 0 ? 'positive' : '');
+if (dpSpan) {
+dpSpan.textContent = changePercent !== 0 && isFinite(changePercent) ? formatNumber(changePercent, 2) + '%' : '-%';
+dpSpan.className = 'down-percent ' + changeClass;
+}
+if (rpQtyDiv) rpQtyDiv.textContent = formatNumber(repurchaseQty, 8);
+if (rpSoldQtyDiv) rpSoldQtyDiv.textContent = formatNumber(totalSoldQty, 8);
+if (rpRemainingQtyDiv) {
+rpRemainingQtyDiv.textContent = formatNumber(remainingQty, 8);
+if (remainingQty > 0) {
+rpRemainingQtyDiv.classList.add('remaining-info');
+} else {
+rpRemainingQtyDiv.classList.remove('remaining-info');
+}
+}
+if (rpPnlDiv) {
+rpPnlDiv.textContent = formatWithCommas(pnlAmount, 2);
+rpPnlDiv.className = 'output-field repurchase-pnl ' + pnlClass;
+}
+if (rpPnlPercentDiv) {
+rpPnlPercentDiv.textContent = formatNumber(pnlPercent, 2) + '%';
+rpPnlPercentDiv.className = 'output-field repurchase-pnl-percent ' + pnlClass;
+}
+if (rpTradePnlAmountDiv) {
+rpTradePnlAmountDiv.textContent = formatWithCommas(totalTradePnlAmount, 2);
+rpTradePnlAmountDiv.className = 'output-field repurchase-pnl ' + tradePnlClass;
+}
+if (rpTradePnlPercentDiv) {
+rpTradePnlPercentDiv.textContent = formatNumber(totalTradePnlPercent, 2) + '%';
+rpTradePnlPercentDiv.className = 'output-field repurchase-pnl-percent ' + tradePnlClass;
+}
+if (rpCashDiv) {
+rpCashDiv.textContent = formatWithCommas(cashFromSales, 2);
+rpCashDiv.className = 'output-field repurchase-cash' + (cashFromSales > 0 ? ' cash-positive' : '');
+}
 });
 const averageEntryPrice = totalCoinQty > 0 ? totalInvestedAmount / totalCoinQty : 0;
 const currentPortfolioValue = totalCoinQty * marketPrice;
@@ -5216,6 +5245,7 @@ updateAvailableQtyForSale();
 function calculateAndDisplay() {
 calculateActiveCoinDetails();
 updateSummaryTable();
+updatePortfolioChart();
 }
 function addOrSwitchCoin() {
 const symbol = newCoinNameInput.value.trim().toUpperCase();
@@ -5456,7 +5486,6 @@ sales[saleIndex].cashRecordId = cashRecordId;
 saveAllDataToLocalStorage();
 updateSummaryTable();
 calculateAndDisplay();
-updateCashDisplay();
 const coinsList = selectedCoins.map(c => c.symbol).join('، ');
 showSuccess('✅ تم بيع ' + selectedCoins.length + ' عملة بنجاح!\nالعملات: ' + coinsList + '\nتم تصفير جميع الكميات وإضافة الكاش من البيع.');
 }
@@ -5724,15 +5753,13 @@ document.addEventListener('DOMContentLoaded', function() {
 loadThemePreference();
 loadAllDataFromLocalStorage();
 loadCashFromStorage();
-loadCapitalData();
-loadProfileName();
 loadExpandedCoins();
 loadSectionStates();
 applyColorSettings();
 loadSavedEstimatePrices();
 migrateOldData();
+loadProfileSettings();
 updateCoinSelector();
-updateCapitalDisplay();
 const importInput = document.getElementById('importTxtFile');
 if (importInput) {
 importInput.addEventListener('change', handleImportTxtFile);
@@ -5752,7 +5779,6 @@ loadExchangeSettings();
 loadPriceAlerts();
 loadNotifications();
 updateProfileStats();
-updateCapitalDisplay();
 }, 1000);
 autoRefreshCheckbox.addEventListener('change', handleAutoRefreshToggle);
 newCoinNameInput.addEventListener('keypress', (e) => {
@@ -5781,10 +5807,17 @@ if (controlsBar) controlsBar.scrollIntoView({ behavior: 'smooth', block: 'start'
 }
 }
 });
+updatePortfolioChart();
 });
 </script>
 
+<!-- ============================================================
+     🆕 JavaScript جديد - الميزات الإضافية (20 ميزة)
+     ============================================================ -->
 <script>
+/* ============================================================
+   🎯 الميزة #1: شريط المتحدث (Crypto Ticker)
+   ============================================================ */
 const TOP_COINS_TICKER = [
 'BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT', 'XRPUSDT', 'ADAUSDT',
 'DOGEUSDT', 'AVAXUSDT', 'DOTUSDT', 'MATICUSDT', 'LINKUSDT', 'LTCUSDT',
@@ -5797,6 +5830,7 @@ async function updateCryptoTicker() {
 const ticker = document.getElementById('cryptoTicker');
 if (!ticker) return;
 
+// جلب أسعار العملات من Binance
 const promises = TOP_COINS_TICKER.map(async (symbol) => {
 try {
 const response = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`);
@@ -5822,6 +5856,7 @@ const ticker = document.getElementById('cryptoTicker');
 if (!ticker || Object.keys(tickerData).length === 0) return;
 
 let html = '';
+// تكرار المحتوى مرتين للحركة المستمرة
 for (let i = 0; i < 2; i++) {
 Object.keys(tickerData).forEach(symbol => {
 const data = tickerData[symbol];
@@ -5847,8 +5882,12 @@ if (price >= 0.01) return price.toFixed(4);
 return price.toFixed(6);
 }
 
+/* ============================================================
+   📊 الميزة #3: مؤشرات السوق (Market Insights)
+   ============================================================ */
 async function initMarketInsights() {
 try {
+// جلب القيمة السوقية من CoinGecko
 const mcResponse = await fetch('https://api.coingecko.com/api/v3/global');
 if (mcResponse.ok) {
 const mcData = await mcResponse.json();
@@ -5858,9 +5897,12 @@ document.getElementById('miMarketCap').textContent = '$' + formatLargeNumber(mar
 const changeEl = document.getElementById('miMarketCapChange');
 changeEl.textContent = (change24h >= 0 ? '+' : '') + change24h.toFixed(2) + '%';
 changeEl.className = 'mi-change ' + (change24h >= 0 ? 'up' : 'down');
+
+// رسم Sparkline بسيط
 drawSparkline();
 }
 
+// جلب Fear & Greed Index
 const fngResponse = await fetch('https://api.alternative.me/fng/?limit=1');
 if (fngResponse.ok) {
 const fngData = await fngResponse.json();
@@ -5871,6 +5913,7 @@ document.getElementById('miFngLabel').textContent = translateFngLabel(classifica
 drawFngGauge(value);
 }
 
+// جلب Altcoin Season Index (محاكاة)
 const altcoinValue = Math.floor(Math.random() * 100);
 document.getElementById('miAltcoinValue').textContent = altcoinValue + '/100';
 document.getElementById('miAltcoinThumb').style.right = altcoinValue + '%';
@@ -5905,6 +5948,7 @@ return translations[label] || label;
 function drawSparkline() {
 const path = document.getElementById('miSparkline');
 if (!path) return;
+// توليد نقاط عشوائية لمحاكاة الحركة
 const points = [];
 let y = 20;
 for (let x = 0; x <= 180; x += 10) {
@@ -5923,8 +5967,10 @@ const centerX = canvas.width / 2;
 const centerY = canvas.height - 10;
 const radius = 80;
 
+// مسح
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+// رسم القوس
 const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
 gradient.addColorStop(0, '#dc3545');
 gradient.addColorStop(0.25, '#fd7e14');
@@ -5938,6 +5984,7 @@ ctx.lineWidth = 15;
 ctx.strokeStyle = gradient;
 ctx.stroke();
 
+// رسم المؤشر
 const angle = Math.PI + (value / 100) * Math.PI;
 const indicatorX = centerX + Math.cos(angle) * (radius - 5);
 const indicatorY = centerY + Math.sin(angle) * (radius - 5);
@@ -5951,8 +5998,14 @@ ctx.fill();
 ctx.stroke();
 }
 
+/* ============================================================
+   👤 الميزة #4: البروفايل (Profile Modal) + إعدادات الملف الشخصي
+   ============================================================ */
+const LS_KEY_PROFILE_SETTINGS = 'muharraqi_profile_settings';
+
 function openProfileModal() {
 updateProfileStats();
+loadProfileSettings();
 document.getElementById('profileModal').classList.add('active');
 }
 
@@ -5979,6 +6032,57 @@ totalPnl < 0 ? 'var(--negative-color)' : 'var(--text-color)';
 }
 }
 
+/* 🆕 إعدادات الملف الشخصي (اسم المستخدم + اسم المحفظة) */
+function loadProfileSettings() {
+try {
+const saved = localStorage.getItem(LS_KEY_PROFILE_SETTINGS);
+const usernameInput = document.getElementById('profileUsernameInput');
+const walletNameInput = document.getElementById('profileWalletNameInput');
+if (saved) {
+const data = JSON.parse(saved);
+if (data.username && usernameInput) usernameInput.value = data.username;
+if (data.walletName && walletNameInput) walletNameInput.value = data.walletName;
+applyProfileSettings(data);
+}
+} catch (e) { console.error('خطأ في تحميل إعدادات البروفايل:', e); }
+}
+
+function applyProfileSettings(data) {
+if (!data) return;
+if (data.username) {
+const brandEl = document.getElementById('brandUsername');
+if (brandEl) brandEl.textContent = data.username;
+const nameEl = document.querySelector('.profile-name');
+if (nameEl) nameEl.textContent = data.username;
+const avatarEl = document.querySelector('.profile-avatar');
+if (avatarEl) avatarEl.textContent = data.username.charAt(0);
+const btnAvatarEl = document.querySelector('.profile-btn-avatar');
+if (btnAvatarEl) btnAvatarEl.textContent = data.username.charAt(0);
+}
+if (data.walletName) {
+const subtitleEl = document.querySelector('.profile-subtitle');
+if (subtitleEl) subtitleEl.textContent = '💼 ' + data.walletName;
+}
+}
+
+function saveProfileSettings() {
+const usernameInput = document.getElementById('profileUsernameInput');
+const walletNameInput = document.getElementById('profileWalletNameInput');
+const username = (usernameInput?.value || '').trim() || 'مستخدم Muharraqi';
+const walletName = (walletNameInput?.value || '').trim() || 'حساب شخصي محفوظ محلياً';
+const data = { username, walletName };
+try {
+localStorage.setItem(LS_KEY_PROFILE_SETTINGS, JSON.stringify(data));
+applyProfileSettings(data);
+showSuccess('✅ تم حفظ بيانات الملف الشخصي بنجاح');
+} catch (e) {
+showError('❌ فشل حفظ الإعدادات');
+}
+}
+
+/* ============================================================
+   🐛 الميزة #5: نافذة الإبلاغ عن الأخطاء
+   ============================================================ */
 let selectedBugType = 'bug';
 
 function openBugReportModal() {
@@ -6041,6 +6145,9 @@ closeBugReportModal();
 showSuccess('✅ تم فتح واتساب. يرجى إرسال التقرير.');
 }
 
+/* ============================================================
+   💰 الميزة #6: نافذة الدعم (Donate Modal)
+   ============================================================ */
 const DONATE_ADDRESSES = {
 'usdt-trc20': { address: 'TRxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', label: 'USDT (TRC20)' },
 'btc': { address: 'bc1qxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', label: 'Bitcoin' },
@@ -6077,22 +6184,9 @@ showError('❌ فشل النسخ. يرجى النسخ يدوياً.');
 });
 }
 
-function openContactModal() {
-document.getElementById('contactPopup').classList.add('active');
-}
-
-function closeContactModal() {
-document.getElementById('contactPopup').classList.remove('active');
-}
-
-function openTadawulModal() {
-document.getElementById('tadawulPopup').classList.add('active');
-}
-
-function closeTadawulModal() {
-document.getElementById('tadawulPopup').classList.remove('active');
-}
-
+/* ============================================================
+   🔔 الميزة #9: مركز التنبيهات (Notification Center)
+   ============================================================ */
 let notifications = [];
 
 function toggleNotificationCenter() {
@@ -6194,9 +6288,13 @@ updateNotifBadge();
 function switchNotifTab(tab, el) {
 document.querySelectorAll('.notif-tab').forEach(t => t.classList.remove('active'));
 el.classList.add('active');
+// يمكن إضافة فلترة حسب النوع هنا
 renderNotifications();
 }
 
+/* ============================================================
+   🔔 الميزة #10: تنبيهات الأسعار (Price Alerts)
+   ============================================================ */
 let priceAlerts = [];
 
 function openPriceAlertsModal() {
@@ -6403,6 +6501,9 @@ oscillator.stop(audioContext.currentTime + 0.5);
 } catch (e) {}
 }
 
+/* ============================================================
+   ⚙️ الميزة #11: إعدادات المنصات (Exchange Settings)
+   ============================================================ */
 let exchangeSettings = {
 platform: 'binance',
 country: 'sa',
@@ -6447,11 +6548,13 @@ try {
 const saved = localStorage.getItem('muharraqi_pro_settings');
 if (saved) {
 exchangeSettings = JSON.parse(saved);
+// تحديث الواجهة
 const countrySelect = document.getElementById('exchangeCountry');
 const feeSelect = document.getElementById('feeProfile');
 if (countrySelect) countrySelect.value = exchangeSettings.country || 'sa';
 if (feeSelect) feeSelect.value = exchangeSettings.feeProfile || 'standard';
 
+// تحديد المنصة المختارة
 document.querySelectorAll('.exchange-option').forEach(opt => {
 opt.classList.remove('selected');
 const name = opt.querySelector('.exchange-option-name')?.textContent.toLowerCase();
@@ -6470,6 +6573,9 @@ if (makerEl) makerEl.textContent = profile.maker.toFixed(2) + '%';
 if (takerEl) takerEl.textContent = profile.taker.toFixed(2) + '%';
 }
 
+/* ============================================================
+   🔄 الميزة #12: نافذة التحديث (Update Popup)
+   ============================================================ */
 function showUpdatePopup() {
 document.getElementById('updatePopup').classList.add('active');
 }
@@ -6478,6 +6584,9 @@ function closeUpdatePopup() {
 document.getElementById('updatePopup').classList.remove('active');
 }
 
+/* ============================================================
+   👁️ الميزة #13: Financial Privacy Mode
+   ============================================================ */
 function toggleFinancialPrivacy() {
 const body = document.body;
 const toggle = document.getElementById('privacyToggle');
@@ -6505,6 +6614,9 @@ toggleFinancialPrivacy();
 } catch (e) {}
 }
 
+/* ============================================================
+   📊 الميزة #8, #9, #10: تحليلات المحفظة المتقدمة
+   ============================================================ */
 let donutChart = null;
 let trendChart = null;
 let trendRange = 'ALL';
@@ -6526,6 +6638,7 @@ portfolioHistory = [];
 
 function savePortfolioHistory() {
 try {
+// حفظ نقطة بيانات جديدة كل 5 دقائق على الأكثر
 const now = Date.now();
 const lastEntry = portfolioHistory[portfolioHistory.length - 1];
 const { totals } = calculateSummaryData();
@@ -6536,6 +6649,7 @@ portfolioHistory.push({
 time: now,
 value: totalAssets
 });
+// الاحتفاظ بآخر 1000 نقطة
 if (portfolioHistory.length > 1000) {
 portfolioHistory = portfolioHistory.slice(-1000);
 }
@@ -6576,8 +6690,7 @@ colors.push('#17a2b8');
 }
 
 const totalValue = data.reduce((s, v) => s + v, 0);
-const totalEl = document.getElementById('donutTotal');
-if (totalEl) totalEl.textContent = '$' + formatWithCommas(totalValue, 2);
+document.getElementById('donutTotal').textContent = '$' + formatWithCommas(totalValue, 2);
 
 if (donutChart) donutChart.destroy();
 
@@ -6611,6 +6724,7 @@ return `${context.label}: $${formatWithCommas(value, 2)} (${percentage}%)`;
 }
 });
 
+// تحديث الـ Legend
 const legendEl = document.getElementById('donutLegend');
 if (legendEl) {
 legendEl.innerHTML = labels.map((label, i) => {
@@ -6629,6 +6743,7 @@ function updateTrendChart() {
 const canvas = document.getElementById('trendChart');
 if (!canvas || portfolioHistory.length === 0) return;
 
+// فلترة حسب النطاق
 let filteredData = portfolioHistory;
 const now = Date.now();
 if (trendRange === '4H') {
@@ -6654,17 +6769,11 @@ const change = current - first;
 const high = Math.max(...data);
 const low = Math.min(...data);
 
-const currentEl = document.getElementById('trendCurrent');
-const changeEl = document.getElementById('trendChange');
-const highEl = document.getElementById('trendHigh');
-const lowEl = document.getElementById('trendLow');
-if (currentEl) currentEl.textContent = '$' + formatWithCommas(current, 2);
-if (changeEl) {
-changeEl.textContent = (change >= 0 ? '+' : '') + '$' + formatWithCommas(change, 2);
-changeEl.style.color = change >= 0 ? 'var(--positive-color)' : 'var(--negative-color)';
-}
-if (highEl) highEl.textContent = '$' + formatWithCommas(high, 2);
-if (lowEl) lowEl.textContent = '$' + formatWithCommas(low, 2);
+document.getElementById('trendCurrent').textContent = '$' + formatWithCommas(current, 2);
+document.getElementById('trendChange').textContent = (change >= 0 ? '+' : '') + '$' + formatWithCommas(change, 2);
+document.getElementById('trendChange').style.color = change >= 0 ? 'var(--positive-color)' : 'var(--negative-color)';
+document.getElementById('trendHigh').textContent = '$' + formatWithCommas(high, 2);
+document.getElementById('trendLow').textContent = '$' + formatWithCommas(low, 2);
 
 if (trendChart) trendChart.destroy();
 
@@ -6703,7 +6812,7 @@ intersect: false,
 callbacks: {
 label: function(context) {
 return '$' + formatWithCommas(context.parsed.y, 2);
-}
+ }
 }
 }
 },
@@ -6738,14 +6847,24 @@ el.classList.add('active');
 updateTrendChart();
 }
 
+/* ============================================================
+   🚀 التهيئة النهائية
+   ============================================================ */
 document.addEventListener('DOMContentLoaded', function() {
+// تحميل الوضع الخاص
 loadPrivacyMode();
 
+// تحميل إعدادات البروفايل
+loadProfileSettings();
+
+// تحديث الشريط المتحدث كل 60 ثانية
 updateCryptoTicker();
 setInterval(updateCryptoTicker, 60000);
 
+// تحديث مؤشرات السوق كل 5 دقائق
 setInterval(initMarketInsights, 5 * 60 * 1000);
 
+// إغلاق النوافذ عند النقر خارجها
 document.addEventListener('click', function(e) {
 const notifCenter = document.getElementById('notificationCenter');
 const notifBell = document.querySelector('.notification-bell');
@@ -6755,6 +6874,7 @@ notifCenter.classList.remove('active');
 }
 });
 
+// إغلاق النوافذ بمفتاح Escape
 document.addEventListener('keydown', function(e) {
 if (e.key === 'Escape') {
 document.querySelectorAll('.popup-overlay.active, .profile-modal-overlay.active, .notification-center.active, .update-popup.active').forEach(el => {
@@ -6763,6 +6883,7 @@ el.classList.remove('active');
 }
 });
 
+// إضافة ترحيب
 setTimeout(() => {
 addNotification('مرحباً بك!', 'نسخة Pro Edition جاهزة مع 20 ميزة جديدة 🎉', 'success');
 }, 2000);
