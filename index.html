@@ -128,1827 +128,368 @@
 --estimate-border: #ffa726;
 --estimate-text: #ffcc80;
 }
-.popup-overlay {
+.floating-refresh-btn {
 position: fixed;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background-color: var(--popup-bg);
-display: flex;
-justify-content: center;
-align-items: center;
-z-index: 9999;
-opacity: 0;
-visibility: hidden;
-transition: all 0.3s ease;
-}
-.popup-overlay.active {
-opacity: 1;
-visibility: visible;
-}
-.popup-content {
-background-color: var(--popup-content-bg);
-border-radius: 12px;
-padding: 25px;
-max-width: 1100px;
-width: 95%;
-max-height: 90vh;
-overflow-y: auto;
-box-shadow: var(--popup-shadow);
-transform: translateY(-20px) scale(0.95);
-transition: all 0.3s ease;
-position: relative;
-}
-.popup-overlay.active .popup-content {
-transform: translateY(0) scale(1);
-}
-.popup-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 20px;
-border-bottom: 1px solid var(--border-color);
-padding-bottom: 15px;
-}
-.popup-title {
-font-size: 1.4em;
-font-weight: var(--font-weight-bold);
-color: var(--primary-color);
-margin: 0;
-}
-.popup-close {
-background: none;
-border: none;
-font-size: 1.5em;
-cursor: pointer;
-color: var(--text-muted);
-transition: color 0.3s ease;
-padding: 5px;
-border-radius: 4px;
-}
-.popup-close:hover {
-color: var(--negative-color);
-background-color: var(--hover-bg);
-}
-.popup-body {
-margin-bottom: 20px;
-}
-.popup-footer {
-display: flex;
-justify-content: flex-end;
-gap: 10px;
-margin-top: 20px;
-}
-.popup-btn {
-padding: 10px 20px;
-border: none;
-border-radius: 6px;
-font-weight: var(--font-weight-semibold);
-cursor: pointer;
-transition: all 0.3s ease;
-}
-.popup-btn-primary {
-background-color: var(--primary-color);
-color: white;
-}
-.popup-btn-primary:hover {
-background-color: var(--secondary-color);
-transform: translateY(-2px);
-}
-.popup-btn-secondary {
-background-color: var(--text-muted);
-color: white;
-}
-.popup-btn-secondary:hover {
-background-color: var(--border-color);
-transform: translateY(-2px);
-}
-.popup-btn-danger {
-background-color: var(--negative-color);
-color: white;
-}
-.popup-btn-danger:hover {
-background-color: #c82333;
-transform: translateY(-2px);
-}
-.popup-btn-success {
-background-color: var(--positive-color);
-color: white;
-}
-.popup-btn-success:hover {
-background-color: #146c43;
-transform: translateY(-2px);
-}
-.btn-pulse {
-position: relative;
-overflow: hidden;
-}
-.btn-pulse:after {
-content: '';
-position: absolute;
-top: 50%;
-left: 50%;
-width: 5px;
-height: 5px;
-background: rgba(255, 255, 255, 0.5);
-opacity: 0;
-border-radius: 100%;
-transform: scale(1, 1) translate(-50%);
-transform-origin: 50% 50%;
-}
-.btn-pulse:focus:not(:active)::after {
-animation: ripple 1s ease-out;
-}
-@keyframes ripple {
-0% { transform: scale(0, 0); opacity: 0.5; }
-100% { transform: scale(20, 20); opacity: 0; }
-}
-.table-hover-effect tr {
-transition: all 0.3s ease;
-}
-.table-hover-effect tr:hover {
-transform: translateX(5px);
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.card-hover {
-transition: all 0.3s ease;
-}
-.card-hover:hover {
-transform: translateY(-5px);
-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-body {
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-background-color: var(--bg-color);
-color: var(--text-color);
-line-height: 1.6;
-margin: 0;
-font-size: 14px;
-transition: background-color 0.3s ease, color 0.3s ease;
-}
-.settings-top-bar {
-background-color: var(--dark-header-bg);
-padding: 10px 25px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-flex-wrap: wrap;
-gap: 10px;
-border-bottom: 3px solid var(--primary-color);
-}
-.settings-top-bar .brand {
-color: var(--text-light);
-font-weight: var(--font-weight-bold);
-font-size: 1.1em;
-}
-.settings-top-bar .brand span {
-color: var(--telegram-link-color);
-}
-.settings-top-bar .settings-actions {
-display: flex;
-gap: 8px;
-align-items: center;
-flex-wrap: wrap;
-}
-.settings-top-bar .settings-actions button {
-padding: 6px 14px;
-border: none;
-border-radius: 6px;
-cursor: pointer;
-font-weight: var(--font-weight-semibold);
-font-size: 0.85em;
-transition: all 0.2s ease;
-color: white;
-}
-.settings-top-bar .settings-actions .settings-btn {
-background-color: #6f42c1;
-}
-.settings-top-bar .settings-actions .settings-btn:hover {
-background-color: #5a32a3;
-transform: translateY(-1px);
-}
-.settings-top-bar .settings-actions .theme-btn {
-background: none;
-border: 1px solid var(--header-link-color);
-color: var(--header-link-color);
-font-size: 1.2em;
-padding: 4px 10px;
-border-radius: 6px;
-cursor: pointer;
-transition: all 0.2s ease;
-}
-.settings-top-bar .settings-actions .theme-btn:hover {
-background-color: rgba(255,255,255,0.1);
-transform: translateY(-1px);
-}
-.settings-top-bar .settings-actions .print-btn {
-background-color: #6c757d;
-}
-.settings-top-bar .settings-actions .print-btn:hover {
-background-color: #5a6268;
-transform: translateY(-1px);
-}
-.settings-top-bar .settings-actions .txt-btn {
-background-color: #17a2b8;
-}
-.settings-top-bar .settings-actions .txt-btn:hover {
-background-color: #138496;
-transform: translateY(-1px);
-}
-.settings-top-bar .settings-actions .import-btn {
-background-color: #28a745;
-}
-.settings-top-bar .settings-actions .import-btn:hover {
-background-color: #1e7e34;
-transform: translateY(-1px);
-}
-.page-header {
-text-align: center;
-padding: 10px 20px;
-background-color: var(--dark-header-bg);
-color: var(--text-light);
-font-size: 0.9em;
-border-bottom: 2px solid var(--primary-color);
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-.page-header strong { font-weight: var(--font-weight-semibold); }
-.page-header a {
-color: var(--header-link-color);
-text-decoration: none;
-font-weight: var(--font-weight-normal);
-margin: 0 5px;
-transition: color 0.2s ease;
-}
-.page-header a:hover { text-decoration: underline; color: var(--header-link-hover-color); }
-.page-header a.telegram-link {
-color: var(--telegram-link-color) !important;
-font-weight: var(--font-weight-bold) !important;
-}
-.page-header a.telegram-link:hover { text-decoration: underline; filter: brightness(1.1); }
-.container {
-max-width: 1920px;
-margin: 20px auto;
-padding: 0 25px;
-}
-h1 {
-text-align: center;
-color: var(--primary-color);
-margin-top: 15px;
-margin-bottom: 30px;
-font-weight: var(--font-weight-bold);
-font-size: 1.8em;
-transition: color 0.3s ease;
-}
-h2 {
-margin-top: 0;
-color: var(--primary-color);
-font-size: 1.4em;
-border-bottom: 2px solid var(--secondary-color);
-padding-bottom: 10px;
-margin-bottom: 25px;
-font-weight: var(--font-weight-semibold);
-transition: color 0.3s ease, border-color 0.3s ease;
-}
-h3 {
-font-size: 1.2em;
-color: var(--primary-color);
-margin-bottom: 15px;
-margin-top: 0;
-font-weight: var(--font-weight-semibold);
-transition: color 0.3s ease;
-}
-.color-settings-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 12px;
-}
-.color-setting-item {
-display: flex;
-align-items: center;
-gap: 10px;
-padding: 8px 12px;
-border: 1px solid var(--border-color);
-border-radius: 6px;
-background-color: var(--bg-color);
-transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-.color-setting-item label {
-flex: 1;
-font-size: 0.85em;
-font-weight: var(--font-weight-semibold);
-margin-bottom: 0;
-color: var(--text-color);
-}
-.color-setting-item input[type="color"] {
-width: 40px;
-height: 40px;
-border: 2px solid var(--border-color);
-border-radius: 6px;
-cursor: pointer;
-padding: 2px;
-background: none;
-}
-.color-setting-item input[type="color"]::-webkit-color-swatch-wrapper {
-padding: 0;
-}
-.color-setting-item input[type="color"]::-webkit-color-swatch {
-border: none;
-border-radius: 4px;
-}
-.color-setting-item .reset-color-btn {
-background: none;
-border: 1px solid var(--border-color);
-border-radius: 4px;
-padding: 4px 8px;
-cursor: pointer;
-font-size: 0.7em;
-color: var(--text-muted);
-transition: all 0.2s ease;
-}
-.color-setting-item .reset-color-btn:hover {
-background-color: var(--hover-bg);
-color: var(--text-color);
-}
-.color-settings-actions {
-display: flex;
-gap: 10px;
-margin-top: 15px;
-justify-content: center;
-flex-wrap: wrap;
-}
-.color-settings-actions button {
-padding: 8px 16px;
-border: none;
-border-radius: 6px;
-cursor: pointer;
-font-weight: var(--font-weight-semibold);
-transition: all 0.2s ease;
-}
-.color-settings-actions .reset-all-btn {
-background-color: var(--negative-color);
-color: white;
-}
-.color-settings-actions .reset-all-btn:hover {
-opacity: 0.8;
-}
-.color-settings-actions .close-settings-btn {
-background-color: var(--secondary-color);
-color: white;
-}
-.color-settings-actions .close-settings-btn:hover {
-background-color: var(--primary-color);
-}
-.settings-theme-toggle {
-display: flex;
-align-items: center;
-gap: 10px;
-padding: 10px 0;
-border-bottom: 1px solid var(--border-color);
-margin-bottom: 15px;
-}
-.settings-theme-toggle label {
-font-weight: var(--font-weight-semibold);
-color: var(--text-color);
-}
-.settings-theme-toggle button {
-padding: 6px 14px;
-border: 1px solid var(--border-color);
-border-radius: 6px;
-cursor: pointer;
-background-color: var(--bg-color);
-color: var(--text-color);
-font-weight: var(--font-weight-semibold);
-transition: all 0.2s ease;
-}
-.settings-theme-toggle button:hover {
-background-color: var(--hover-bg);
-}
-.settings-theme-toggle button.active {
-background-color: var(--primary-color);
-color: white;
-border-color: var(--primary-color);
-}
-.section-custom {
-transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.portfolio-distribution-section {
-background-color: var(--section-bg);
-padding: 20px 25px;
-margin-bottom: 25px;
-border-radius: 10px;
-box-shadow: 0 4px 12px var(--shadow-color);
-border: 1px solid var(--border-color);
-transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.portfolio-chart-container {
-display: flex;
-flex-direction: column;
-gap: 20px;
-margin-top: 15px;
-}
-.chart-row {
-display: flex;
-align-items: center;
-gap: 15px;
-padding: 10px 0;
-border-bottom: 1px solid var(--border-color);
-}
-.chart-row:last-child { border-bottom: none; }
-.coin-name {
-min-width: 100px;
-font-weight: var(--font-weight-semibold);
-}
-.chart-bar-container {
-flex: 1;
-height: 24px;
-background-color: var(--output-field-bg);
-border-radius: 12px;
-overflow: hidden;
-position: relative;
-}
-.chart-bar {
-height: 100%;
-border-radius: 12px;
-transition: width 0.5s ease;
-position: relative;
-}
-.chart-bar-value {
-position: absolute;
-right: 10px;
-top: 50%;
-transform: translateY(-50%);
-font-size: 0.85em;
-font-weight: var(--font-weight-bold);
-color: var(--text-light);
-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-.percentage-display {
-min-width: 60px;
-text-align: left;
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-font-weight: var(--font-weight-bold);
-}
-.no-data-chart {
-text-align: center;
-padding: 40px 20px;
-color: var(--text-muted);
-font-style: italic;
-}
-.cash-section {
-background-color: var(--section-bg);
-padding: 20px 25px;
-margin-bottom: 25px;
-border-radius: 10px;
-box-shadow: 0 4px 12px var(--shadow-color);
-border: 1px solid var(--border-color);
-transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.section-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 15px;
-cursor: pointer;
-}
-.section-header h2 {
-margin-bottom: 0;
-border-bottom: none;
-flex: 1;
-}
-.toggle-btn {
-background-color: var(--secondary-color);
+top: 90px;
+left: 20px;
+z-index: 9998;
+background: linear-gradient(135deg, var(--positive-color) 0%, #20c997 100%);
 color: white;
 border: none;
-border-radius: 4px;
-padding: 5px 10px;
+border-radius: 50%;
+width: 55px;
+height: 55px;
+font-size: 1.6em;
 cursor: pointer;
-font-size: 0.9em;
-transition: background-color 0.2s ease;
-min-width: 60px;
-}
-.toggle-btn:hover {
-background-color: var(--primary-color);
-}
-.section-content {
+box-shadow: 0 4px 15px rgba(25, 135, 84, 0.4);
 transition: all 0.3s ease;
-overflow: hidden;
-}
-.section-content.collapsed {
-max-height: 0;
-opacity: 0;
-margin: 0;
-padding: 0;
-}
-.cash-display-container {
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-gap: 15px;
-margin-bottom: 20px;
-}
-.cash-display-box {
-background-color: var(--bg-color);
-padding: 15px;
-border-radius: 8px;
-border: 1px solid var(--border-color);
-text-align: center;
-transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-.cash-display-box label {
-font-size: 0.85em;
-color: var(--text-muted);
-display: block;
-margin-bottom: 5px;
-font-weight: var(--font-weight-normal);
-}
-.cash-display-box .value {
-font-size: 1.4em;
-font-weight: var(--font-weight-bold);
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-direction: ltr;
-}
-.cash-display-box .value.cash-manual {
-color: var(--primary-color);
-}
-.cash-display-box .value.cash-sales {
-color: var(--cash-color);
-}
-.cash-display-box .value.cash-total {
-color: var(--positive-color);
-}
-.cash-display-box .value.cash-total.zero {
-color: var(--negative-color);
-}
-.cash-input-container {
-display: flex;
-gap: 15px;
-align-items: center;
-flex-wrap: wrap;
-}
-.cash-input-group {
-display: flex;
-flex-direction: column;
-flex: 1;
-min-width: 200px;
-}
-.cash-input-group label {
-margin-bottom: 8px;
-font-weight: var(--font-weight-semibold);
-color: var(--text-muted);
-font-size: 0.9em;
-}
-.cash-input {
-padding: 10px 14px;
-border: 2px solid var(--cash-input-border);
-border-radius: 6px;
-font-size: 1.1em;
-background-color: var(--cash-input-bg);
-color: var(--text-color);
-font-weight: var(--font-weight-bold);
-text-align: center;
-transition: all 0.3s ease;
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-}
-.cash-input.zero {
-border-color: var(--cash-zero-border);
-background-color: var(--cash-zero-bg);
-animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
-70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
-100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
-}
-.cash-warning {
-color: var(--negative-color);
-font-weight: var(--font-weight-bold);
-text-align: center;
-margin-top: 10px;
-padding: 8px;
-border-radius: 4px;
-background-color: rgba(220, 53, 69, 0.1);
 display: none;
-}
-.cash-warning.show {
-display: block;
-animation: fadeIn 0.5s;
-}
-@keyframes fadeIn {
-from { opacity: 0; }
-to { opacity: 1; }
-}
-.cash-explanation {
-margin-top: 10px;
-font-size: 0.9em;
-color: var(--text-muted);
-text-align: center;
-padding: 8px;
-background-color: var(--output-field-bg);
-border-radius: 4px;
-}
-.cash-history {
-margin-top: 20px;
-border: 1px solid var(--history-border);
-border-radius: 8px;
-background-color: var(--history-bg);
-padding: 15px;
-}
-.cash-history h3 {
-margin-top: 0;
-font-size: 1.1em;
-color: var(--primary-color);
-}
-.history-tabs {
-display: flex;
-border-bottom: 1px solid var(--border-color);
-margin-bottom: 15px;
-}
-.history-tab {
-padding: 8px 16px;
-cursor: pointer;
-border: none;
-background: none;
-color: var(--text-muted);
-border-bottom: 2px solid transparent;
-transition: all 0.3s ease;
-}
-.history-tab.active {
-color: var(--primary-color);
-border-bottom-color: var(--primary-color);
-font-weight: var(--font-weight-semibold);
-}
-.history-content {
-max-height: 200px;
-overflow-y: auto;
-}
-.history-record {
-display: flex;
-justify-content: space-between;
 align-items: center;
-padding: 10px;
-border-bottom: 1px solid var(--border-color);
-transition: background-color 0.2s ease;
+justify-content: center;
 }
+.floating-refresh-btn.visible {
+display: flex;
+animation: floatIn 0.4s ease-out;
+}
+@keyframes floatIn {
+from { opacity: 0; transform: translateX(-20px) scale(0.8); }
+to { opacity: 1; transform: translateX(0) scale(1); }
+}
+.floating-refresh-btn:hover {
+transform: scale(1.1);
+box-shadow: 0 6px 20px rgba(25, 135, 84, 0.6);
+}
+.floating-refresh-btn:hover .refresh-icon {
+animation: spin 0.8s ease-in-out;
+}
+@keyframes spin {
+from { transform: rotate(0deg); }
+to { transform: rotate(360deg); }
+}
+.floating-refresh-btn:active { transform: scale(0.95); }
+.floating-refresh-btn .refresh-icon { font-size: 1em; display: inline-block; }
+.floating-refresh-btn.loading .refresh-icon { animation: spin 1s linear infinite; }
+.dark-mode .floating-refresh-btn { box-shadow: 0 4px 15px rgba(32, 201, 151, 0.3); }
+.popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--popup-bg); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+.popup-overlay.active { opacity: 1; visibility: visible; }
+.popup-content { background-color: var(--popup-content-bg); border-radius: 12px; padding: 25px; max-width: 1100px; width: 95%; max-height: 90vh; overflow-y: auto; box-shadow: var(--popup-shadow); transform: translateY(-20px) scale(0.95); transition: all 0.3s ease; position: relative; }
+.popup-overlay.active .popup-content { transform: translateY(0) scale(1); }
+.popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+.popup-title { font-size: 1.4em; font-weight: var(--font-weight-bold); color: var(--primary-color); margin: 0; }
+.popup-close { background: none; border: none; font-size: 1.5em; cursor: pointer; color: var(--text-muted); transition: color 0.3s ease; padding: 5px; border-radius: 4px; }
+.popup-close:hover { color: var(--negative-color); background-color: var(--hover-bg); }
+.popup-body { margin-bottom: 20px; }
+.popup-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+.popup-btn { padding: 10px 20px; border: none; border-radius: 6px; font-weight: var(--font-weight-semibold); cursor: pointer; transition: all 0.3s ease; }
+.popup-btn-primary { background-color: var(--primary-color); color: white; }
+.popup-btn-primary:hover { background-color: var(--secondary-color); transform: translateY(-2px); }
+.popup-btn-secondary { background-color: var(--text-muted); color: white; }
+.popup-btn-secondary:hover { background-color: var(--border-color); transform: translateY(-2px); }
+.popup-btn-danger { background-color: var(--negative-color); color: white; }
+.popup-btn-danger:hover { background-color: #c82333; transform: translateY(-2px); }
+.popup-btn-success { background-color: var(--positive-color); color: white; }
+.popup-btn-success:hover { background-color: #146c43; transform: translateY(-2px); }
+.btn-pulse { position: relative; overflow: hidden; }
+.btn-pulse:after { content: ''; position: absolute; top: 50%; left: 50%; width: 5px; height: 5px; background: rgba(255, 255, 255, 0.5); opacity: 0; border-radius: 100%; transform: scale(1, 1) translate(-50%); transform-origin: 50% 50%; }
+.btn-pulse:focus:not(:active)::after { animation: ripple 1s ease-out; }
+@keyframes ripple { 0% { transform: scale(0, 0); opacity: 0.5; } 100% { transform: scale(20, 20); opacity: 0; } }
+.table-hover-effect tr { transition: all 0.3s ease; }
+.table-hover-effect tr:hover { transform: translateX(5px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+.card-hover { transition: all 0.3s ease; }
+.card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; margin: 0; font-size: 14px; transition: background-color 0.3s ease, color 0.3s ease; }
+.settings-top-bar { background-color: var(--dark-header-bg); padding: 10px 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 3px solid var(--primary-color); }
+.settings-top-bar .brand { color: var(--text-light); font-weight: var(--font-weight-bold); font-size: 1.1em; }
+.settings-top-bar .brand span { color: var(--telegram-link-color); }
+.settings-top-bar .settings-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.settings-top-bar .settings-actions button { padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: var(--font-weight-semibold); font-size: 0.85em; transition: all 0.2s ease; color: white; }
+.settings-top-bar .settings-actions .settings-btn { background-color: #6f42c1; }
+.settings-top-bar .settings-actions .settings-btn:hover { background-color: #5a32a3; transform: translateY(-1px); }
+.settings-top-bar .settings-actions .theme-btn { background: none; border: 1px solid var(--header-link-color); color: var(--header-link-color); font-size: 1.2em; padding: 4px 10px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
+.settings-top-bar .settings-actions .theme-btn:hover { background-color: rgba(255,255,255,0.1); transform: translateY(-1px); }
+.settings-top-bar .settings-actions .print-btn { background-color: #6c757d; }
+.settings-top-bar .settings-actions .print-btn:hover { background-color: #5a6268; transform: translateY(-1px); }
+.settings-top-bar .settings-actions .txt-btn { background-color: #17a2b8; }
+.settings-top-bar .settings-actions .txt-btn:hover { background-color: #138496; transform: translateY(-1px); }
+.settings-top-bar .settings-actions .import-btn { background-color: #28a745; }
+.settings-top-bar .settings-actions .import-btn:hover { background-color: #1e7e34; transform: translateY(-1px); }
+.settings-top-bar .settings-actions .reset-btn { background-color: var(--negative-color); }
+.settings-top-bar .settings-actions .reset-btn:hover { background-color: #c82333; transform: translateY(-1px); }
+.page-header { text-align: center; padding: 10px 20px; background-color: var(--dark-header-bg); color: var(--text-light); font-size: 0.9em; border-bottom: 2px solid var(--primary-color); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+.page-header strong { font-weight: var(--font-weight-semibold); }
+.page-header a { color: var(--header-link-color); text-decoration: none; font-weight: var(--font-weight-normal); margin: 0 5px; transition: color 0.2s ease; }
+.page-header a:hover { text-decoration: underline; color: var(--header-link-hover-color); }
+.page-header a.telegram-link { color: var(--telegram-link-color) !important; font-weight: var(--font-weight-bold) !important; }
+.page-header a.telegram-link:hover { text-decoration: underline; filter: brightness(1.1); }
+.container { max-width: 1920px; margin: 20px auto; padding: 0 25px; }
+h1 { text-align: center; color: var(--primary-color); margin-top: 15px; margin-bottom: 30px; font-weight: var(--font-weight-bold); font-size: 1.8em; transition: color 0.3s ease; }
+h2 { margin-top: 0; color: var(--primary-color); font-size: 1.4em; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px; margin-bottom: 25px; font-weight: var(--font-weight-semibold); transition: color 0.3s ease, border-color 0.3s ease; }
+h3 { font-size: 1.2em; color: var(--primary-color); margin-bottom: 15px; margin-top: 0; font-weight: var(--font-weight-semibold); transition: color 0.3s ease; }
+.color-settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.color-setting-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; background-color: var(--bg-color); transition: background-color 0.3s ease, border-color 0.3s ease; }
+.color-setting-item label { flex: 1; font-size: 0.85em; font-weight: var(--font-weight-semibold); margin-bottom: 0; color: var(--text-color); }
+.color-setting-item input[type="color"] { width: 40px; height: 40px; border: 2px solid var(--border-color); border-radius: 6px; cursor: pointer; padding: 2px; background: none; }
+.color-setting-item input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.color-setting-item input[type="color"]::-webkit-color-swatch { border: none; border-radius: 4px; }
+.color-setting-item .reset-color-btn { background: none; border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 0.7em; color: var(--text-muted); transition: all 0.2s ease; }
+.color-setting-item .reset-color-btn:hover { background-color: var(--hover-bg); color: var(--text-color); }
+.color-settings-actions { display: flex; gap: 10px; margin-top: 15px; justify-content: center; flex-wrap: wrap; }
+.color-settings-actions button { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: var(--font-weight-semibold); transition: all 0.2s ease; }
+.color-settings-actions .reset-all-btn { background-color: var(--negative-color); color: white; }
+.color-settings-actions .reset-all-btn:hover { opacity: 0.8; }
+.color-settings-actions .close-settings-btn { background-color: var(--secondary-color); color: white; }
+.color-settings-actions .close-settings-btn:hover { background-color: var(--primary-color); }
+.settings-theme-toggle { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 15px; }
+.settings-theme-toggle label { font-weight: var(--font-weight-semibold); color: var(--text-color); }
+.settings-theme-toggle button { padding: 6px 14px; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; background-color: var(--bg-color); color: var(--text-color); font-weight: var(--font-weight-semibold); transition: all 0.2s ease; }
+.settings-theme-toggle button:hover { background-color: var(--hover-bg); }
+.settings-theme-toggle button.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+.section-custom { transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+.portfolio-distribution-section { background-color: var(--section-bg); padding: 20px 25px; margin-bottom: 25px; border-radius: 10px; box-shadow: 0 4px 12px var(--shadow-color); border: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+.portfolio-chart-container { display: flex; flex-direction: column; gap: 20px; margin-top: 15px; }
+.chart-row { display: flex; align-items: center; gap: 15px; padding: 10px 0; border-bottom: 1px solid var(--border-color); }
+.chart-row:last-child { border-bottom: none; }
+.coin-name { min-width: 100px; font-weight: var(--font-weight-semibold); }
+.chart-bar-container { flex: 1; height: 24px; background-color: var(--output-field-bg); border-radius: 12px; overflow: hidden; position: relative; }
+.chart-bar { height: 100%; border-radius: 12px; transition: width 0.5s ease; position: relative; }
+.chart-bar-value { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 0.85em; font-weight: var(--font-weight-bold); color: var(--text-light); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
+.percentage-display { min-width: 60px; text-align: left; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; font-weight: var(--font-weight-bold); }
+.no-data-chart { text-align: center; padding: 40px 20px; color: var(--text-muted); font-style: italic; }
+.cash-section { background-color: var(--section-bg); padding: 20px 25px; margin-bottom: 25px; border-radius: 10px; box-shadow: 0 4px 12px var(--shadow-color); border: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; }
+.section-header h2 { margin-bottom: 0; border-bottom: none; flex: 1; }
+.toggle-btn { background-color: var(--secondary-color); color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer; font-size: 0.9em; transition: background-color 0.2s ease; min-width: 60px; }
+.toggle-btn:hover { background-color: var(--primary-color); }
+.section-content { transition: all 0.3s ease; overflow: hidden; }
+.section-content.collapsed { max-height: 0; opacity: 0; margin: 0; padding: 0; }
+.cash-display-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+.cash-display-box { background-color: var(--bg-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; transition: background-color 0.3s ease, border-color 0.3s ease; }
+.cash-display-box label { font-size: 0.85em; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: var(--font-weight-normal); }
+.cash-display-box .value { font-size: 1.4em; font-weight: var(--font-weight-bold); font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; direction: ltr; }
+.cash-display-box .value.cash-manual { color: var(--primary-color); }
+.cash-display-box .value.cash-sales { color: var(--cash-color); }
+.cash-display-box .value.cash-total { color: var(--positive-color); }
+.cash-display-box .value.cash-total.zero { color: var(--negative-color); }
+.cash-input-container { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+.cash-input-group { display: flex; flex-direction: column; flex: 1; min-width: 200px; }
+.cash-input-group label { margin-bottom: 8px; font-weight: var(--font-weight-semibold); color: var(--text-muted); font-size: 0.9em; }
+.cash-input { padding: 10px 14px; border: 2px solid var(--cash-input-border); border-radius: 6px; font-size: 1.1em; background-color: var(--cash-input-bg); color: var(--text-color); font-weight: var(--font-weight-bold); text-align: center; transition: all 0.3s ease; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; }
+.cash-input.zero { border-color: var(--cash-zero-border); background-color: var(--cash-zero-bg); animation: pulse 1.5s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); } }
+.cash-warning { color: var(--negative-color); font-weight: var(--font-weight-bold); text-align: center; margin-top: 10px; padding: 8px; border-radius: 4px; background-color: rgba(220, 53, 69, 0.1); display: none; }
+.cash-warning.show { display: block; animation: fadeIn 0.5s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.cash-explanation { margin-top: 10px; font-size: 0.9em; color: var(--text-muted); text-align: center; padding: 8px; background-color: var(--output-field-bg); border-radius: 4px; }
+.cash-history { margin-top: 20px; border: 1px solid var(--history-border); border-radius: 8px; background-color: var(--history-bg); padding: 15px; }
+.cash-history h3 { margin-top: 0; font-size: 1.1em; color: var(--primary-color); }
+.history-tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 15px; }
+.history-tab { padding: 8px 16px; cursor: pointer; border: none; background: none; color: var(--text-muted); border-bottom: 2px solid transparent; transition: all 0.3s ease; }
+.history-tab.active { color: var(--primary-color); border-bottom-color: var(--primary-color); font-weight: var(--font-weight-semibold); }
+.history-content { max-height: 200px; overflow-y: auto; }
+.history-record { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--border-color); transition: background-color 0.2s ease; }
 .history-record:last-child { border-bottom: none; }
 .history-record:hover { background-color: var(--hover-bg); }
-.history-record.deposit .amount {
-color: var(--positive-color);
-font-weight: var(--font-weight-bold);
-}
-.history-record.withdrawal .amount {
-color: var(--negative-color);
-font-weight: var(--font-weight-bold);
-}
+.history-record.deposit .amount { color: var(--positive-color); font-weight: var(--font-weight-bold); }
+.history-record.withdrawal .amount { color: var(--negative-color); font-weight: var(--font-weight-bold); }
 .history-details { flex: 1; }
-.history-amount {
-margin: 0 10px;
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-}
-.history-date {
-font-size: 0.8em;
-color: var(--text-muted);
-}
-.history-actions {
-display: flex;
-gap: 5px;
-}
-.cancel-history-btn {
-background-color: var(--cancel-color);
-color: white;
-border: none;
-border-radius: 4px;
-padding: 4px 8px;
-font-size: 0.8em;
-cursor: pointer;
-transition: background-color 0.2s ease;
-}
-.cancel-history-btn:hover {
-background-color: var(--cancel-hover-color);
-}
-.no-records {
-text-align: center;
-color: var(--text-muted);
-padding: 20px;
-font-style: italic;
-}
-.overall-summary-section {
-background-color: var(--section-bg);
-padding: 20px 25px;
-margin-bottom: 25px;
-border-radius: 10px;
-box-shadow: 0 4px 12px var(--shadow-color);
-border: 1px solid var(--border-color);
-transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.summary-table-container {
-max-height: 600px;
-overflow-y: auto;
-border: 1px solid var(--border-color);
-border-radius: 6px;
-margin-bottom: 20px;
-background-color: var(--bg-color);
-transition: border-color 0.3s ease, background-color 0.3s ease;
-}
-.summary-table {
-width: 100%;
-border-collapse: separate;
-border-spacing: 0;
-font-size: 0.9em;
-}
-.summary-table th, .summary-table td {
-border-bottom: 1px solid var(--border-color);
-padding: 10px 14px;
-text-align: center;
-white-space: nowrap;
-vertical-align: middle;
-transition: border-color 0.3s ease, background-color 0.2s ease;
-}
-.summary-table th {
-background-color: var(--table-header-bg);
-color: var(--text-color);
-position: sticky;
-top: 0;
-z-index: 1;
-font-weight: var(--font-weight-semibold);
-border-top: 1px solid var(--border-color);
-transition: background-color 0.3s ease, color 0.3s ease;
-}
-.summary-table td:first-child, .summary-table th:first-child {
-border-right: 1px solid var(--border-color);
-border-top-right-radius: 6px;
-}
-.summary-table td:last-child, .summary-table th:last-child {
-border-left: 1px solid var(--border-color);
-border-top-left-radius: 6px;
-}
+.history-amount { margin: 0 10px; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; }
+.history-date { font-size: 0.8em; color: var(--text-muted); }
+.history-actions { display: flex; gap: 5px; }
+.cancel-history-btn { background-color: var(--cancel-color); color: white; border: none; border-radius: 4px; padding: 4px 8px; font-size: 0.8em; cursor: pointer; transition: background-color 0.2s ease; }
+.cancel-history-btn:hover { background-color: var(--cancel-hover-color); }
+.no-records { text-align: center; color: var(--text-muted); padding: 20px; font-style: italic; }
+.overall-summary-section { background-color: var(--section-bg); padding: 20px 25px; margin-bottom: 25px; border-radius: 10px; box-shadow: 0 4px 12px var(--shadow-color); border: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+.summary-table-container { max-height: 600px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 20px; background-color: var(--bg-color); transition: border-color 0.3s ease, background-color 0.3s ease; }
+.summary-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.9em; }
+.summary-table th, .summary-table td { border-bottom: 1px solid var(--border-color); padding: 10px 14px; text-align: center; white-space: nowrap; vertical-align: middle; transition: border-color 0.3s ease, background-color 0.2s ease; }
+.summary-table th { background-color: var(--table-header-bg); color: var(--text-color); position: sticky; top: 0; z-index: 1; font-weight: var(--font-weight-semibold); border-top: 1px solid var(--border-color); transition: background-color 0.3s ease, color 0.3s ease; }
+.summary-table td:first-child, .summary-table th:first-child { border-right: 1px solid var(--border-color); border-top-right-radius: 6px; }
+.summary-table td:last-child, .summary-table th:last-child { border-left: 1px solid var(--border-color); border-top-left-radius: 6px; }
 .summary-table tr:last-child td { border-bottom: none; }
 .summary-table tr:last-child td:first-child { border-bottom-right-radius: 6px; }
 .summary-table tr:last-child td:last-child { border-bottom-left-radius: 6px; }
 .summary-table tr:nth-child(even) { background-color: transparent; }
 .summary-table tr:hover td { background-color: var(--hover-bg); }
 .summary-table tbody td { font-weight: var(--font-weight-normal); }
-.summary-table .coin-symbol {
-text-align: right;
-padding-right: 15px;
-font-weight: var(--font-weight-semibold);
-}
-.summary-table .number-col {
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-direction: ltr;
-text-align: center;
-font-weight: var(--font-weight-semibold);
-}
-.summary-table .pnl-positive, .totals-positive {
-color: var(--positive-color) !important;
-font-weight: var(--font-weight-bold);
-}
-.summary-table .pnl-negative, .totals-negative {
-color: var(--negative-color) !important;
-font-weight: var(--font-weight-bold);
-}
-.summary-table .cash-positive {
-color: var(--cash-color) !important;
-font-weight: var(--font-weight-bold);
-}
-.summary-table .error {
-color: var(--negative-color);
-font-style: italic;
-font-size: 0.9em;
-font-weight: var(--font-weight-normal);
-}
-.summary-coin-clickable {
-cursor: pointer;
-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-}
-.summary-coin-clickable:hover {
-background-color: var(--hover-bg);
-color: var(--primary-color);
-font-weight: var(--font-weight-bold);
-}
-.expand-btn {
-background: none;
-border: none;
-cursor: pointer;
-font-size: 1.2em;
-margin-left: 5px;
-color: var(--primary-color);
-transition: transform 0.3s ease;
-padding: 0 5px;
-}
-.expand-btn.expanded {
-transform: rotate(45deg);
-}
-.coin-details {
-background-color: var(--expand-bg);
-border: 1px solid var(--expand-border);
-border-radius: 6px;
-margin: 5px 0;
-padding: 15px;
-display: none;
-width: 100%;
-box-sizing: border-box;
-}
-.coin-details.expanded {
-display: block;
-}
-.dca-table {
-width: 100%;
-border-collapse: collapse;
-font-size: 0.85em;
-margin-top: 10px;
-}
-.dca-table th, .dca-table td {
-border: 1px solid var(--border-color);
-padding: 6px 8px;
-text-align: center;
-vertical-align: middle;
-}
-.dca-table th {
-background-color: var(--table-header-bg);
-font-weight: var(--font-weight-semibold);
-}
-.dca-table tr:nth-child(even) {
-background-color: var(--dca-row-bg);
-}
-.dca-table .output-field {
-font-size: 0.9em;
-padding: 4px 6px;
-min-height: 28px;
-background-color: transparent;
-border: none;
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-font-weight: var(--font-weight-bold);
-color: var(--text-color);
-text-align: center;
-display: inline-block;
-width: auto;
-}
-.dca-table input[type="text"] {
-width: 85px;
-padding: 4px 6px;
-font-size: 0.85em;
-text-align: center;
-margin: 0 auto;
-display: inline-block;
-box-shadow: none;
-border: 1px solid var(--input-border);
-border-radius: 4px;
-background-color: var(--input-bg);
-color: var(--text-color);
-}
-.dca-table input[type="text"]:focus {
-outline: none;
-border-color: var(--primary-color);
-box-shadow: 0 0 0 2px var(--focus-ring-color);
-}
-.dca-table .sell-btn {
-padding: 4px 10px;
-font-size: 0.8em;
-margin: 0 2px;
-background-color: var(--positive-color);
-color: white;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-transition: background-color 0.2s ease;
-}
-.dca-table .sell-btn:hover {
-background-color: #146c43;
-}
-.dca-table .sell-full-btn {
-background-color: var(--negative-color);
-}
-.dca-table .sell-full-btn:hover {
-background-color: #c82333;
-}
-.dca-table .save-dca-btn {
-padding: 4px 8px;
-font-size: 0.8em;
-background-color: var(--positive-color);
-color: white;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-transition: background-color 0.2s ease;
-}
-.dca-table .save-dca-btn:hover {
-background-color: #146c43;
-}
-.dca-table .sell-form {
-display: none;
-margin-top: 3px;
-padding: 5px;
-background-color: var(--output-field-bg);
-border-radius: 4px;
-border: 1px solid var(--border-color);
-}
-.dca-table .sell-form input[type="text"] {
-width: 60px;
-margin: 0 2px;
-padding: 3px;
-font-size: 0.8em;
-border: 1px solid var(--input-border);
-border-radius: 3px;
-background-color: var(--input-bg);
-color: var(--text-color);
-}
-.dca-table .sell-form button {
-padding: 3px 6px;
-font-size: 0.8em;
-margin: 0 2px;
-background-color: var(--positive-color);
-color: white;
-border: none;
-border-radius: 3px;
-cursor: pointer;
-}
-.dca-table .sell-form button:hover {
-background-color: #146c43;
-}
-.dca-table .sales-history {
-margin-top: 3px;
-font-size: 0.75em;
-max-height: 100px;
-overflow-y: auto;
-border: 1px solid var(--border-color);
-border-radius: 4px;
-padding: 3px;
-background-color: var(--output-field-bg);
-}
-.dca-table .sale-record {
-display: flex;
-justify-content: space-between;
-padding: 2px 0;
-border-bottom: 1px dashed var(--border-color);
-align-items: center;
-font-size: 0.9em;
-}
+.summary-table .coin-symbol { text-align: right; padding-right: 15px; font-weight: var(--font-weight-semibold); }
+.summary-table .number-col { font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; direction: ltr; text-align: center; font-weight: var(--font-weight-semibold); }
+.summary-table .pnl-positive, .totals-positive { color: var(--positive-color) !important; font-weight: var(--font-weight-bold); }
+.summary-table .pnl-negative, .totals-negative { color: var(--negative-color) !important; font-weight: var(--font-weight-bold); }
+.summary-table .cash-positive { color: var(--cash-color) !important; font-weight: var(--font-weight-bold); }
+.summary-table .error { color: var(--negative-color); font-style: italic; font-size: 0.9em; font-weight: var(--font-weight-normal); }
+.summary-coin-clickable { cursor: pointer; transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out; }
+.summary-coin-clickable:hover { background-color: var(--hover-bg); color: var(--primary-color); font-weight: var(--font-weight-bold); }
+.expand-btn { background: none; border: none; cursor: pointer; font-size: 1.2em; margin-left: 5px; color: var(--primary-color); transition: transform 0.3s ease; padding: 0 5px; }
+.expand-btn.expanded { transform: rotate(45deg); }
+.coin-details { background-color: var(--expand-bg); border: 1px solid var(--expand-border); border-radius: 6px; margin: 5px 0; padding: 15px; display: none; width: 100%; box-sizing: border-box; }
+.coin-details.expanded { display: block; }
+.dca-table { width: 100%; border-collapse: collapse; font-size: 0.85em; margin-top: 10px; }
+.dca-table th, .dca-table td { border: 1px solid var(--border-color); padding: 6px 8px; text-align: center; vertical-align: middle; }
+.dca-table th { background-color: var(--table-header-bg); font-weight: var(--font-weight-semibold); }
+.dca-table tr:nth-child(even) { background-color: var(--dca-row-bg); }
+.dca-table .output-field { font-size: 0.9em; padding: 4px 6px; min-height: 28px; background-color: transparent; border: none; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; font-weight: var(--font-weight-bold); color: var(--text-color); text-align: center; display: inline-block; width: auto; }
+.dca-table input[type="text"] { width: 85px; padding: 4px 6px; font-size: 0.85em; text-align: center; margin: 0 auto; display: inline-block; box-shadow: none; border: 1px solid var(--input-border); border-radius: 4px; background-color: var(--input-bg); color: var(--text-color); }
+.dca-table input[type="text"]:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px var(--focus-ring-color); }
+.dca-table .sell-btn { padding: 4px 10px; font-size: 0.8em; margin: 0 2px; background-color: var(--positive-color); color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease; }
+.dca-table .sell-btn:hover { background-color: #146c43; }
+.dca-table .sell-full-btn { background-color: var(--negative-color); }
+.dca-table .sell-full-btn:hover { background-color: #c82333; }
+.dca-table .save-dca-btn { padding: 4px 8px; font-size: 0.8em; background-color: var(--positive-color); color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease; }
+.dca-table .save-dca-btn:hover { background-color: #146c43; }
+.dca-table .sell-form { display: none; margin-top: 3px; padding: 5px; background-color: var(--output-field-bg); border-radius: 4px; border: 1px solid var(--border-color); }
+.dca-table .sell-form input[type="text"] { width: 60px; margin: 0 2px; padding: 3px; font-size: 0.8em; border: 1px solid var(--input-border); border-radius: 3px; background-color: var(--input-bg); color: var(--text-color); }
+.dca-table .sell-form button { padding: 3px 6px; font-size: 0.8em; margin: 0 2px; background-color: var(--positive-color); color: white; border: none; border-radius: 3px; cursor: pointer; }
+.dca-table .sell-form button:hover { background-color: #146c43; }
+.dca-table .sales-history { margin-top: 3px; font-size: 0.75em; max-height: 100px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 4px; padding: 3px; background-color: var(--output-field-bg); }
+.dca-table .sale-record { display: flex; justify-content: space-between; padding: 2px 0; border-bottom: 1px dashed var(--border-color); align-items: center; font-size: 0.9em; }
 .dca-table .sale-record:last-child { border-bottom: none; }
 .dca-table .sale-record-info { flex: 1; display: flex; flex-direction: column; }
-.dca-table .sale-record-details {
-display: flex;
-justify-content: space-between;
-font-size: 0.75em;
-color: var(--text-muted);
-}
-.dca-table .sale-record-actions button {
-background: none;
-border: none;
-color: var(--negative-color);
-cursor: pointer;
-font-size: 0.9em;
-padding: 1px 4px;
-}
-.dca-table .sale-record-actions button:hover {
-background-color: rgba(220, 53, 69, 0.1);
-border-radius: 3px;
-}
-.dca-table .down-percent {
-font-weight: var(--font-weight-semibold);
-min-width: 50px;
-display: inline-block;
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-direction: ltr;
-padding: 2px 4px;
-border-radius: 4px;
-font-size: 0.85em;
-}
-.dca-table .down-percent.positive {
-color: var(--positive-color);
-background-color: rgba(25, 135, 84, 0.1);
-}
-.dca-table .down-percent.negative {
-color: var(--negative-color);
-background-color: rgba(220, 53, 69, 0.1);
-}
-.dca-table .remaining-info {
-background-color: var(--remaining-bg);
-color: var(--remaining-text);
-padding: 2px 6px;
-border-radius: 4px;
-font-size: 0.8em;
-font-weight: var(--font-weight-semibold);
-}
-.dca-table .sold-row {
-background-color: var(--sold-bg) !important;
-color: var(--sold-text) !important;
-}
-.dca-table .partial-sold-row {
-background-color: var(--partial-sold-bg) !important;
-color: var(--partial-sold-text) !important;
-}
-.dca-table .sold-btn {
-background-color: var(--text-muted);
-color: white;
-}
-.dca-table .partial-sold-btn {
-background-color: var(--partial-sold-text);
-color: white;
-}
-.dca-table .cancel-btn {
-background-color: var(--cancel-color);
-color: white;
-border: none;
-border-radius: 4px;
-padding: 4px 10px;
-font-size: 0.8em;
-cursor: pointer;
-transition: background-color 0.2s ease;
-}
-.dca-table .cancel-btn:hover {
-background-color: var(--cancel-hover-color);
-}
-.dca-table .price-mode-toggle {
-display: flex;
-gap: 3px;
-margin-top: 3px;
-justify-content: center;
-}
-.dca-table .price-mode-btn {
-padding: 2px 6px;
-border: 1px solid var(--border-color);
-background-color: var(--output-field-bg);
-color: var(--text-muted);
-border-radius: 3px;
-cursor: pointer;
-font-size: 0.7em;
-transition: all 0.3s ease;
-}
-.dca-table .price-mode-btn.active {
-background-color: var(--primary-color);
-color: white;
-border-color: var(--primary-color);
-}
-.dca-table .percentage-input-group {
-display: none;
-margin-top: 3px;
-}
-.dca-table .percentage-input-group.active {
-display: block;
-}
-.add-dca-btn {
-background-color: var(--positive-color);
-color: white;
-border: none;
-border-radius: 6px;
-padding: 6px 15px;
-font-size: 0.9em;
-font-weight: var(--font-weight-semibold);
-cursor: pointer;
-transition: background-color 0.2s ease;
-margin-top: 10px;
-}
-.add-dca-btn:hover {
-background-color: #146c43;
-}
-.summary-totals {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-gap: 15px;
-background-color: var(--section-bg);
-padding: 15px 20px;
-border-radius: 8px;
-margin-top: 15px;
-border: 1px solid var(--border-color);
-font-weight: var(--font-weight-bold);
-text-align: center;
-transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-.summary-totals div {
-display: flex;
-flex-direction: column;
-flex-basis: auto;
-flex-grow: auto;
-}
-.summary-totals label {
-font-size: 0.9em;
-color: var(--text-muted);
-margin-bottom: 5px;
-font-weight: var(--font-weight-normal);
-transition: color 0.3s ease;
-}
-.summary-totals span {
-font-size: 1.3em;
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-font-weight: var(--font-weight-bold);
-transition: color 0.3s ease;
-}
-.controls-bar {
-display: flex;
-gap: 12px;
-margin-bottom: 30px;
-flex-wrap: wrap;
-background-color: var(--section-bg);
-padding: 15px 20px;
-border-radius: 8px;
-box-shadow: 0 2px 8px var(--shadow-color);
-border: 1px solid var(--border-color);
-align-items: center;
-transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.controls-bar label {
-font-weight: var(--font-weight-semibold);
-margin-left: 5px;
-color: var(--primary-color);
-flex-shrink: 0;
-font-size: 0.95em;
-}
-.controls-bar select, .controls-bar input[type="text"] {
-padding: 10px 14px;
-border: 1px solid var(--input-border);
-border-radius: 6px;
-font-size: 1em;
-flex-grow: 1;
-min-width: 160px;
-background-color: var(--input-bg);
-color: var(--text-color);
-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.controls-bar select:focus, .controls-bar input[type="text"]:focus {
-outline: none;
-border-color: var(--primary-color);
-box-shadow: 0 0 0 3px var(--focus-ring-color), inset 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-.controls-bar button {
-padding: 10px 20px;
-font-size: 0.95em;
-font-weight: var(--font-weight-semibold);
-cursor: pointer;
-background-color: var(--secondary-color);
-color: white;
-border: none;
-border-radius: 6px;
-flex-shrink: 0;
-transition: background-color 0.2s ease, transform 0.1s ease;
-}
-.controls-bar button:hover {
-background-color: var(--primary-color);
-transform: translateY(-1px);
-}
-.controls-bar button:active {
-transform: translateY(0px);
-}
-.controls-bar button#deleteCoinBtn {
-background-color: var(--negative-color);
-}
-.controls-bar button#deleteCoinBtn:hover {
-opacity: 0.85;
-background-color: var(--negative-color);
-}
-.controls-bar button#refreshPriceBtn {
-background-color: var(--positive-color);
-padding: 8px 12px;
-font-size: 1.2em;
-}
-.controls-bar button#refreshPriceBtn:hover {
-background-color: #146c43;
-}
-.controls-bar button#tradingViewBtn {
-background-color: #2962ff;
-}
-.controls-bar button#tradingViewBtn:hover {
-background-color: #1a4fd4;
-}
-#apiStatus {
-flex-grow: 1;
-text-align: left;
-font-size: 0.9em;
-color: var(--text-muted);
-margin: 0 10px;
-flex-shrink: 1;
-min-width: 150px;
-transition: color 0.3s ease;
-}
-#coinStatus {
-font-size: 0.95em;
-color: var(--text-muted);
-flex-shrink: 0;
-transition: color 0.3s ease;
-font-weight: var(--font-weight-normal);
-}
-.horizontal-section {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 25px;
-}
-.section {
-background-color: var(--section-bg);
-padding: 25px;
-border-radius: 10px;
-border: 1px solid var(--border-color);
-box-shadow: 0 3px 10px var(--shadow-color);
-transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-height: 100%;
-display: flex;
-flex-direction: column;
-}
+.dca-table .sale-record-details { display: flex; justify-content: space-between; font-size: 0.75em; color: var(--text-muted); }
+.dca-table .sale-record-actions button { background: none; border: none; color: var(--negative-color); cursor: pointer; font-size: 0.9em; padding: 1px 4px; }
+.dca-table .sale-record-actions button:hover { background-color: rgba(220, 53, 69, 0.1); border-radius: 3px; }
+.dca-table .down-percent { font-weight: var(--font-weight-semibold); min-width: 50px; display: inline-block; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; direction: ltr; padding: 2px 4px; border-radius: 4px; font-size: 0.85em; }
+.dca-table .down-percent.positive { color: var(--positive-color); background-color: rgba(25, 135, 84, 0.1); }
+.dca-table .down-percent.negative { color: var(--negative-color); background-color: rgba(220, 53, 69, 0.1); }
+.dca-table .remaining-info { background-color: var(--remaining-bg); color: var(--remaining-text); padding: 2px 6px; border-radius: 4px; font-size: 0.8em; font-weight: var(--font-weight-semibold); }
+.dca-table .sold-row { background-color: var(--sold-bg) !important; color: var(--sold-text) !important; }
+.dca-table .partial-sold-row { background-color: var(--partial-sold-bg) !important; color: var(--partial-sold-text) !important; }
+.dca-table .sold-btn { background-color: var(--text-muted); color: white; }
+.dca-table .partial-sold-btn { background-color: var(--partial-sold-text); color: white; }
+.dca-table .cancel-btn { background-color: var(--cancel-color); color: white; border: none; border-radius: 4px; padding: 4px 10px; font-size: 0.8em; cursor: pointer; transition: background-color 0.2s ease; }
+.dca-table .cancel-btn:hover { background-color: var(--cancel-hover-color); }
+.dca-table .price-mode-toggle { display: flex; gap: 3px; margin-top: 3px; justify-content: center; }
+.dca-table .price-mode-btn { padding: 2px 6px; border: 1px solid var(--border-color); background-color: var(--output-field-bg); color: var(--text-muted); border-radius: 3px; cursor: pointer; font-size: 0.7em; transition: all 0.3s ease; }
+.dca-table .price-mode-btn.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+.dca-table .percentage-input-group { display: none; margin-top: 3px; }
+.dca-table .percentage-input-group.active { display: block; }
+.add-dca-btn { background-color: var(--positive-color); color: white; border: none; border-radius: 6px; padding: 6px 15px; font-size: 0.9em; font-weight: var(--font-weight-semibold); cursor: pointer; transition: background-color 0.2s ease; margin-top: 10px; }
+.add-dca-btn:hover { background-color: #146c43; }
+.summary-totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; background-color: var(--section-bg); padding: 15px 20px; border-radius: 8px; margin-top: 15px; border: 1px solid var(--border-color); font-weight: var(--font-weight-bold); text-align: center; transition: background-color 0.3s ease, border-color 0.3s ease; }
+.summary-totals div { display: flex; flex-direction: column; flex-basis: auto; flex-grow: auto; }
+.summary-totals label { font-size: 0.9em; color: var(--text-muted); margin-bottom: 5px; font-weight: var(--font-weight-normal); transition: color 0.3s ease; }
+.summary-totals span { font-size: 1.3em; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; font-weight: var(--font-weight-bold); transition: color 0.3s ease; }
+.controls-bar { display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; background-color: var(--section-bg); padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 8px var(--shadow-color); border: 1px solid var(--border-color); align-items: center; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+.controls-bar label { font-weight: var(--font-weight-semibold); margin-left: 5px; color: var(--primary-color); flex-shrink: 0; font-size: 0.95em; }
+.controls-bar select, .controls-bar input[type="text"] { padding: 10px 14px; border: 1px solid var(--input-border); border-radius: 6px; font-size: 1em; flex-grow: 1; min-width: 160px; background-color: var(--input-bg); color: var(--text-color); box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06); transition: background-color 0.3s ease, color 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+.controls-bar select:focus, .controls-bar input[type="text"]:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px var(--focus-ring-color), inset 0 1px 3px rgba(0, 0, 0, 0.06); }
+.controls-bar button { padding: 10px 20px; font-size: 0.95em; font-weight: var(--font-weight-semibold); cursor: pointer; background-color: var(--secondary-color); color: white; border: none; border-radius: 6px; flex-shrink: 0; transition: background-color 0.2s ease, transform 0.1s ease; }
+.controls-bar button:hover { background-color: var(--primary-color); transform: translateY(-1px); }
+.controls-bar button:active { transform: translateY(0px); }
+.controls-bar button#deleteCoinBtn { background-color: var(--negative-color); }
+.controls-bar button#deleteCoinBtn:hover { opacity: 0.85; background-color: var(--negative-color); }
+.controls-bar button#refreshPriceBtn { background-color: var(--positive-color); padding: 8px 12px; font-size: 1.2em; }
+.controls-bar button#refreshPriceBtn:hover { background-color: #146c43; }
+.controls-bar button#tradingViewBtn { background-color: #2962ff; }
+.controls-bar button#tradingViewBtn:hover { background-color: #1a4fd4; }
+#apiStatus { flex-grow: 1; text-align: left; font-size: 0.9em; color: var(--text-muted); margin: 0 10px; flex-shrink: 1; min-width: 150px; transition: color 0.3s ease; }
+#coinStatus { font-size: 0.95em; color: var(--text-muted); flex-shrink: 0; transition: color 0.3s ease; font-weight: var(--font-weight-normal); }
+.horizontal-section { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+.section { background-color: var(--section-bg); padding: 25px; border-radius: 10px; border: 1px solid var(--border-color); box-shadow: 0 3px 10px var(--shadow-color); transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; height: 100%; display: flex; flex-direction: column; }
 .section>*:last-child { margin-bottom: 0; }
-.form-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 20px 15px;
-margin-bottom: 25px;
-}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 15px; margin-bottom: 25px; }
 .form-group { display: flex; flex-direction: column; }
-label {
-margin-bottom: 8px;
-font-weight: var(--font-weight-semibold);
-color: var(--text-muted);
-font-size: 0.9em;
-transition: color 0.3s ease;
-}
-input[type="text"], input[type="number"], select {
-padding: 10px 14px;
-border: 1px solid var(--input-border);
-border-radius: 6px;
-font-size: 1em;
-box-sizing: border-box;
-width: 100%;
-background-color: var(--input-bg);
-color: var(--text-color);
-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-font-weight: var(--font-weight-normal);
-}
+label { margin-bottom: 8px; font-weight: var(--font-weight-semibold); color: var(--text-muted); font-size: 0.9em; transition: color 0.3s ease; }
+input[type="text"], input[type="number"], select { padding: 10px 14px; border: 1px solid var(--input-border); border-radius: 6px; font-size: 1em; box-sizing: border-box; width: 100%; background-color: var(--input-bg); color: var(--text-color); box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06); transition: background-color 0.3s ease, color 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease; font-weight: var(--font-weight-normal); }
 input[type="number"] { -moz-appearance: textfield; }
-input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
--webkit-appearance: none;
-margin: 0;
-}
-input[type="text"]:focus, input[type="number"]:focus, select:focus {
-outline: none;
-border-color: var(--primary-color);
-box-shadow: 0 0 0 3px var(--focus-ring-color), inset 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-.output-field, .input-field-read-only {
-padding: 10px 14px;
-border: 1px solid var(--border-color);
-border-radius: 6px;
-background-color: var(--output-field-bg);
-font-weight: var(--font-weight-bold);
-min-height: 42px;
-display: flex;
-align-items: center;
-color: var(--output-field-text);
-font-size: 1em;
-word-break: break-all;
-box-sizing: border-box;
-width: 100%;
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-direction: ltr;
-text-align: left;
-}
-.output-field.error {
-color: var(--negative-color);
-background-color: rgba(220, 53, 69, 0.05);
-border-color: rgba(220, 53, 69, 0.3);
-}
-.market-price-display-group {
-grid-column: span 2;
-display: flex;
-align-items: flex-end;
-gap: 10px;
-margin-top: 10px;
-}
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="text"]:focus, input[type="number"]:focus, select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px var(--focus-ring-color), inset 0 1px 3px rgba(0, 0, 0, 0.06); }
+.output-field, .input-field-read-only { padding: 10px 14px; border: 1px solid var(--border-color); border-radius: 6px; background-color: var(--output-field-bg); font-weight: var(--font-weight-bold); min-height: 42px; display: flex; align-items: center; color: var(--output-field-text); font-size: 1em; word-break: break-all; box-sizing: border-box; width: 100%; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; direction: ltr; text-align: left; }
+.output-field.error { color: var(--negative-color); background-color: rgba(220, 53, 69, 0.05); border-color: rgba(220, 53, 69, 0.3); }
+.market-price-display-group { grid-column: span 2; display: flex; align-items: flex-end; gap: 10px; margin-top: 10px; }
 .market-price-display-group .form-group { flex-grow: 1; margin-bottom: 0; }
-#marketPriceDisplay {
-font-size: 1.1em;
-font-weight: var(--font-weight-bold);
-color: var(--primary-color);
-background-color: var(--bg-color);
-}
-.auto-refresh-group {
-grid-column: span 2;
-display: flex;
-align-items: center;
-gap: 10px;
-font-size: 0.95em;
-margin-top: 10px;
-background-color: var(--output-field-bg);
-padding: 8px 12px;
-border-radius: 6px;
-}
-.auto-refresh-group input[type="checkbox"] {
-margin-left: 5px;
-width: 16px;
-height: 16px;
-accent-color: var(--primary-color);
-}
-.auto-refresh-group label {
-margin-bottom: 0;
-font-weight: var(--font-weight-normal);
-color: var(--text-muted);
-}
-.summary-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-gap: 15px;
-}
-.summary-item {
-background-color: var(--bg-color);
-padding: 15px;
-border-radius: 8px;
-border: 1px solid var(--border-color);
-transition: background-color 0.3s ease, border-color 0.3s ease;
-display: flex;
-flex-direction: column;
-}
-.summary-item label {
-font-size: 0.85em;
-color: var(--text-muted);
-display: block;
-margin-bottom: 6px;
-font-weight: var(--font-weight-normal);
-transition: color 0.3s ease;
-}
-.summary-item .value {
-font-size: 1.2em;
-font-weight: var(--font-weight-bold);
-color: var(--primary-color);
-word-wrap: break-word;
-margin-top: auto;
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-transition: color 0.3s ease;
-direction: ltr;
-text-align: left;
-}
+#marketPriceDisplay { font-size: 1.1em; font-weight: var(--font-weight-bold); color: var(--primary-color); background-color: var(--bg-color); }
+.auto-refresh-group { grid-column: span 2; display: flex; align-items: center; gap: 10px; font-size: 0.95em; margin-top: 10px; background-color: var(--output-field-bg); padding: 8px 12px; border-radius: 6px; }
+.auto-refresh-group input[type="checkbox"] { margin-left: 5px; width: 16px; height: 16px; accent-color: var(--primary-color); }
+.auto-refresh-group label { margin-bottom: 0; font-weight: var(--font-weight-normal); color: var(--text-muted); }
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
+.summary-item { background-color: var(--bg-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease; display: flex; flex-direction: column; }
+.summary-item label { font-size: 0.85em; color: var(--text-muted); display: block; margin-bottom: 6px; font-weight: var(--font-weight-normal); transition: color 0.3s ease; }
+.summary-item .value { font-size: 1.2em; font-weight: var(--font-weight-bold); color: var(--primary-color); word-wrap: break-word; margin-top: auto; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; transition: color 0.3s ease; direction: ltr; text-align: left; }
 .pnl-positive { color: var(--positive-color) !important; }
 .pnl-negative { color: var(--negative-color) !important; }
 .pnl-neutral { color: var(--text-color) !important; }
-.save-entry-btn {
-background-color: var(--positive-color);
-color: white;
-border: none;
-border-radius: 6px;
-padding: 10px 20px;
-font-size: 0.95em;
-font-weight: var(--font-weight-semibold);
-cursor: pointer;
-transition: background-color 0.2s ease;
-margin-top: 10px;
-}
-.save-entry-btn:hover {
-background-color: #146c43;
-}
-.risk-calculator-section {
-background-color: var(--section-bg);
-padding: 20px 25px;
-margin-bottom: 25px;
-border-radius: 10px;
-box-shadow: 0 4px 12px var(--shadow-color);
-border: 1px solid var(--border-color);
-transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.risk-calculator-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 20px;
-margin-top: 15px;
-}
-.risk-input-group {
-display: flex;
-flex-direction: column;
-gap: 8px;
-}
-.risk-output-group {
-background-color: var(--output-field-bg);
-padding: 15px;
-border-radius: 8px;
-border: 1px solid var(--border-color);
-}
-.risk-output-item {
-display: flex;
-justify-content: space-between;
-margin-bottom: 10px;
-padding-bottom: 10px;
-border-bottom: 1px dashed var(--border-color);
-}
-.risk-output-item:last-child {
-margin-bottom: 0;
-padding-bottom: 0;
-border-bottom: none;
-}
-.risk-warning {
-color: var(--negative-color);
-font-weight: var(--font-weight-bold);
-text-align: center;
-padding: 10px;
-background-color: rgba(220, 53, 69, 0.1);
-border-radius: 6px;
-margin-top: 15px;
-display: none;
-}
+.save-entry-btn { background-color: var(--positive-color); color: white; border: none; border-radius: 6px; padding: 10px 20px; font-size: 0.95em; font-weight: var(--font-weight-semibold); cursor: pointer; transition: background-color 0.2s ease; margin-top: 10px; }
+.save-entry-btn:hover { background-color: #146c43; }
+.risk-calculator-section { background-color: var(--section-bg); padding: 20px 25px; margin-bottom: 25px; border-radius: 10px; box-shadow: 0 4px 12px var(--shadow-color); border: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+.risk-calculator-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
+.risk-input-group { display: flex; flex-direction: column; gap: 8px; }
+.risk-output-group { background-color: var(--output-field-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); }
+.risk-output-item { display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed var(--border-color); }
+.risk-output-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.risk-warning { color: var(--negative-color); font-weight: var(--font-weight-bold); text-align: center; padding: 10px; background-color: rgba(220, 53, 69, 0.1); border-radius: 6px; margin-top: 15px; display: none; }
 .risk-warning.show { display: block; }
-.risk-recommendation {
-color: var(--positive-color);
-font-weight: var(--font-weight-semibold);
-text-align: center;
-padding: 10px;
-background-color: rgba(25, 135, 84, 0.1);
-border-radius: 6px;
-margin-top: 15px;
-}
-.targets-section {
-background-color: var(--section-bg);
-padding: 20px 25px;
-margin-bottom: 25px;
-border-radius: 10px;
-box-shadow: 0 4px 12px var(--shadow-color);
-border: 1px solid var(--border-color);
-transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-#targetsSection {
-margin-top: 0;
-padding-top: 0;
-border-top: none;
-}
-.targets-grid {
-display: grid;
-grid-template-columns: 1fr;
-gap: 18px;
-}
-.target-pair {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 10px;
-align-items: end;
-}
-.targets-grid label {
-font-size: 0.85em;
-text-align: center;
-margin-bottom: 4px;
-display: block;
-font-weight: var(--font-weight-normal);
-}
+.risk-recommendation { color: var(--positive-color); font-weight: var(--font-weight-semibold); text-align: center; padding: 10px; background-color: rgba(25, 135, 84, 0.1); border-radius: 6px; margin-top: 15px; }
+.targets-section { background-color: var(--section-bg); padding: 20px 25px; margin-bottom: 25px; border-radius: 10px; box-shadow: 0 4px 12px var(--shadow-color); border: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+#targetsSection { margin-top: 0; padding-top: 0; border-top: none; }
+.targets-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+.target-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: end; }
+.targets-grid label { font-size: 0.85em; text-align: center; margin-bottom: 4px; display: block; font-weight: var(--font-weight-normal); }
 .targets-grid .form-group { margin-bottom: 0; }
-.targets-grid input[type="number"] {
-text-align: center;
-padding: 8px 10px;
-}
-.targets-grid .output-field {
-font-size: 1em;
-text-align: center;
-padding: 9px 10px;
-min-height: 38px;
-font-weight: var(--font-weight-bold);
-}
-.sl-group {
-margin-top: 15px;
-padding-top: 15px;
-border-top: 1px solid var(--border-color);
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 18px;
-}
-.sl-input input {
-border-color: var(--negative-color);
-background-color: rgba(220, 53, 69, 0.05);
-}
-.sl-input input:focus {
-border-color: var(--negative-color);
-box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
-}
-.sl-output {
-background-color: var(--sl-output-bg) !important;
-color: var(--sl-output-text) !important;
-border-color: var(--sl-output-border) !important;
-font-weight: var(--font-weight-bold);
-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-.available-qty-notice {
-background-color: var(--available-qty-bg);
-border: 2px solid var(--available-qty-border);
-padding: 12px;
-border-radius: 8px;
-margin: 10px 0;
-font-weight: var(--font-weight-bold);
-color: var(--available-qty-text);
-text-align: center;
-font-size: 1.1em;
-}
-.available-qty-notice span {
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-font-size: 1.2em;
-}
-.sell-all-global-btn {
-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-color: white;
-border: none;
-border-radius: 8px;
-padding: 10px 18px;
-font-size: 0.9em;
-font-weight: var(--font-weight-bold);
-cursor: pointer;
-transition: all 0.3s ease;
-box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-white-space: nowrap;
-}
-.sell-all-global-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-}
-.sell-all-global-btn:active {
-transform: translateY(0);
-}
-.estimate-sell-btn {
-background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-color: white;
-border: none;
-border-radius: 8px;
-padding: 10px 18px;
-font-size: 0.9em;
-font-weight: var(--font-weight-bold);
-cursor: pointer;
-transition: all 0.3s ease;
-box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
-white-space: nowrap;
-}
-.estimate-sell-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
-}
-.estimate-sell-btn:active {
-transform: translateY(0);
-}
-.summary-header-with-btn {
-display: flex;
-justify-content: space-between;
-align-items: center;
-gap: 15px;
-flex-wrap: wrap;
-}
-.summary-header-with-btn h2 {
-flex: 1;
-margin-bottom: 0;
-}
-.summary-header-buttons {
-display: flex;
-gap: 10px;
-flex-wrap: wrap;
-}
-.coin-checkbox-item {
-display: flex;
-align-items: center;
-padding: 12px;
-margin: 6px 0;
-background: var(--checkbox-item-bg);
-border: 1px solid var(--checkbox-item-border);
-border-radius: 8px;
-cursor: pointer;
-transition: all 0.2s ease;
-}
-.coin-checkbox-item:hover {
-background: var(--checkbox-item-hover);
-border-color: var(--primary-color);
-}
-.coin-checkbox-item input[type="checkbox"] {
-width: 22px;
-height: 22px;
-margin-left: 12px;
-cursor: pointer;
-accent-color: var(--primary-color);
-}
-.coin-checkbox-item .coin-info {
-flex: 1;
-}
-.coin-checkbox-item .coin-name-label {
-font-weight: var(--font-weight-bold);
-font-size: 1.05em;
-color: var(--text-color);
-}
-.coin-checkbox-item .coin-details-label {
-font-size: 0.85em;
-color: var(--text-muted);
-margin-top: 3px;
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-direction: ltr;
-text-align: left;
-}
-.dca-badge {
-background: var(--cancel-color);
-color: #000;
-padding: 2px 8px;
-border-radius: 4px;
-font-size: 0.75em;
-margin-right: 8px;
-font-weight: var(--font-weight-bold);
-}
-.coins-checkboxes-container {
-max-height: 300px;
-overflow-y: auto;
-margin: 15px 0;
-padding: 10px;
-background: var(--bg-color);
-border-radius: 8px;
-border: 1px solid var(--border-color);
-}
-.total-expected-value {
-text-align: center;
-margin-top: 15px;
-padding: 12px;
-background: var(--output-field-bg);
-border-radius: 8px;
-font-weight: var(--font-weight-bold);
-font-size: 1.1em;
-color: var(--primary-color);
-}
-.select-all-btn {
-background-color: var(--secondary-color);
-color: white;
-border: none;
-border-radius: 4px;
-padding: 6px 12px;
-font-size: 0.85em;
-cursor: pointer;
-margin-bottom: 10px;
-transition: background-color 0.2s ease;
-}
-.select-all-btn:hover {
-background-color: var(--primary-color);
-}
-/* ✅ أنماط جديدة للنافذة التقديرية */
-.estimate-table-container {
-max-height: 400px;
-overflow-y: auto;
-border: 1px solid var(--border-color);
-border-radius: 6px;
-margin-bottom: 15px;
-background-color: var(--bg-color);
-}
-.estimate-table {
-width: 100%;
-border-collapse: collapse;
-font-size: 0.85em;
-}
-.estimate-table th, .estimate-table td {
-border: 1px solid var(--border-color);
-padding: 8px 10px;
-text-align: center;
-vertical-align: middle;
-}
-.estimate-table th {
-background-color: var(--table-header-bg);
-font-weight: var(--font-weight-semibold);
-position: sticky;
-top: 0;
-z-index: 1;
-}
-.estimate-table .number-col {
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-direction: ltr;
-text-align: center;
-font-weight: var(--font-weight-semibold);
-}
-.estimate-table input[type="text"] {
-width: 100px;
-padding: 6px 8px;
-font-size: 0.9em;
-text-align: center;
-border: 1px solid var(--input-border);
-border-radius: 4px;
-background-color: var(--input-bg);
-color: var(--text-color);
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-direction: ltr;
-}
-.estimate-table input[type="text"]:focus {
-outline: none;
-border-color: var(--estimate-border);
-box-shadow: 0 0 0 2px rgba(255, 167, 38, 0.3);
-}
-.estimate-summary {
-background: var(--estimate-bg);
-border: 2px solid var(--estimate-border);
-border-radius: 8px;
-padding: 15px;
-margin-top: 15px;
-}
-.estimate-summary h4 {
-margin: 0 0 10px 0;
-color: var(--estimate-text);
-text-align: center;
-font-size: 1.2em;
-}
-.estimate-summary-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-gap: 10px;
-}
-.estimate-summary-item {
-background: var(--bg-color);
-padding: 10px;
-border-radius: 6px;
-text-align: center;
-border: 1px solid var(--estimate-border);
-}
-.estimate-summary-item label {
-display: block;
-font-size: 0.85em;
-color: var(--text-muted);
-margin-bottom: 5px;
-}
-.estimate-summary-item .value {
-font-size: 1.2em;
-font-weight: var(--font-weight-bold);
-font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-direction: ltr;
-color: var(--estimate-text);
-}
-.estimate-summary-item .value.positive {
-color: var(--positive-color);
-}
-.estimate-summary-item .value.negative {
-color: var(--negative-color);
-}
-.estimate-info-box {
-background: var(--output-field-bg);
-border-radius: 6px;
-padding: 10px;
-margin-bottom: 15px;
-font-size: 0.9em;
-color: var(--text-muted);
-text-align: center;
-border: 1px dashed var(--border-color);
-}
+.targets-grid input[type="number"] { text-align: center; padding: 8px 10px; }
+.targets-grid .output-field { font-size: 1em; text-align: center; padding: 9px 10px; min-height: 38px; font-weight: var(--font-weight-bold); }
+.sl-group { margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.sl-input input { border-color: var(--negative-color); background-color: rgba(220, 53, 69, 0.05); }
+.sl-input input:focus { border-color: var(--negative-color); box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2); }
+.sl-output { background-color: var(--sl-output-bg) !important; color: var(--sl-output-text) !important; border-color: var(--sl-output-border) !important; font-weight: var(--font-weight-bold); transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+.available-qty-notice { background-color: var(--available-qty-bg); border: 2px solid var(--available-qty-border); padding: 12px; border-radius: 8px; margin: 10px 0; font-weight: var(--font-weight-bold); color: var(--available-qty-text); text-align: center; font-size: 1.1em; }
+.available-qty-notice span { font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; font-size: 1.2em; }
+.sell-all-global-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; padding: 10px 18px; font-size: 0.9em; font-weight: var(--font-weight-bold); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); white-space: nowrap; }
+.sell-all-global-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
+.sell-all-global-btn:active { transform: translateY(0); }
+.estimate-sell-btn { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 8px; padding: 10px 18px; font-size: 0.9em; font-weight: var(--font-weight-bold); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4); white-space: nowrap; }
+.estimate-sell-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6); }
+.estimate-sell-btn:active { transform: translateY(0); }
+.summary-header-with-btn { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
+.summary-header-with-btn h2 { flex: 1; margin-bottom: 0; }
+.summary-header-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+.coin-checkbox-item { display: flex; align-items: center; padding: 12px; margin: 6px 0; background: var(--checkbox-item-bg); border: 1px solid var(--checkbox-item-border); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+.coin-checkbox-item:hover { background: var(--checkbox-item-hover); border-color: var(--primary-color); }
+.coin-checkbox-item input[type="checkbox"] { width: 22px; height: 22px; margin-left: 12px; cursor: pointer; accent-color: var(--primary-color); }
+.coin-checkbox-item .coin-info { flex: 1; }
+.coin-checkbox-item .coin-name-label { font-weight: var(--font-weight-bold); font-size: 1.05em; color: var(--text-color); }
+.coin-checkbox-item .coin-details-label { font-size: 0.85em; color: var(--text-muted); margin-top: 3px; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; direction: ltr; text-align: left; }
+.dca-badge { background: var(--cancel-color); color: #000; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; margin-right: 8px; font-weight: var(--font-weight-bold); }
+.coins-checkboxes-container { max-height: 300px; overflow-y: auto; margin: 15px 0; padding: 10px; background: var(--bg-color); border-radius: 8px; border: 1px solid var(--border-color); }
+.total-expected-value { text-align: center; margin-top: 15px; padding: 12px; background: var(--output-field-bg); border-radius: 8px; font-weight: var(--font-weight-bold); font-size: 1.1em; color: var(--primary-color); }
+.select-all-btn { background-color: var(--secondary-color); color: white; border: none; border-radius: 4px; padding: 6px 12px; font-size: 0.85em; cursor: pointer; margin-bottom: 10px; transition: background-color 0.2s ease; }
+.select-all-btn:hover { background-color: var(--primary-color); }
+.estimate-table-container { max-height: 400px; overflow-x: auto; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 15px; background-color: var(--bg-color); -webkit-overflow-scrolling: touch; }
+.estimate-table { width: 100%; border-collapse: collapse; font-size: 0.85em; min-width: 900px; }
+.estimate-table th, .estimate-table td { border: 1px solid var(--border-color); padding: 8px 10px; text-align: center; vertical-align: middle; }
+.estimate-table th { background-color: var(--table-header-bg); font-weight: var(--font-weight-semibold); position: sticky; top: 0; z-index: 1; }
+.estimate-table .number-col { font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; direction: ltr; text-align: center; font-weight: var(--font-weight-semibold); }
+.estimate-table input[type="text"] { width: 110px; padding: 6px 8px; font-size: 0.9em; text-align: center; border: 1px solid var(--input-border); border-radius: 4px; background-color: var(--input-bg); color: var(--text-color); font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; direction: ltr; }
+.estimate-table input[type="text"]:focus { outline: none; border-color: var(--estimate-border); box-shadow: 0 0 0 2px rgba(255, 167, 38, 0.3); }
+.estimate-summary { background: var(--estimate-bg); border: 2px solid var(--estimate-border); border-radius: 8px; padding: 15px; margin-top: 15px; }
+.estimate-summary h4 { margin: 0 0 10px 0; color: var(--estimate-text); text-align: center; font-size: 1.2em; }
+.estimate-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.estimate-summary-item { background: var(--bg-color); padding: 10px; border-radius: 6px; text-align: center; border: 1px solid var(--estimate-border); }
+.estimate-summary-item label { display: block; font-size: 0.85em; color: var(--text-muted); margin-bottom: 5px; }
+.estimate-summary-item .value { font-size: 1.2em; font-weight: var(--font-weight-bold); font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; direction: ltr; color: var(--estimate-text); }
+.estimate-summary-item .value.positive { color: var(--positive-color); }
+.estimate-summary-item .value.negative { color: var(--negative-color); }
+.estimate-info-box { background: var(--output-field-bg); border-radius: 6px; padding: 10px; margin-bottom: 15px; font-size: 0.9em; color: var(--text-muted); text-align: center; border: 1px dashed var(--border-color); }
+.estimate-actions { display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
+.estimate-actions button { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: var(--font-weight-semibold); transition: all 0.2s ease; font-size: 0.9em; color: white; }
+.estimate-save-btn { background-color: var(--positive-color); }
+.estimate-save-btn:hover { background-color: #146c43; }
+.estimate-clear-btn { background-color: var(--negative-color); }
+.estimate-clear-btn:hover { background-color: #c82333; }
 @media print {
 body * { visibility: hidden; }
 #printReport, #printReport * { visibility: visible; }
-#printReport {
-position: absolute;
-left: 0;
-top: 0;
-width: auto;
-height: auto;
-margin: 15mm;
-padding: 10mm;
-background: white;
-color: black;
-font-family: Arial, sans-serif;
-display: block !important;
-font-size: 12pt;
-line-height: 1.4;
-}
-.print-header {
-text-align: center;
-margin-bottom: 20px;
-border-bottom: 2px solid #333;
-padding-bottom: 10px;
-page-break-after: avoid;
-}
-.print-section {
-margin-bottom: 25px;
-page-break-inside: avoid;
-}
-.print-table {
-width: 100%;
-border-collapse: collapse;
-margin-bottom: 20px;
-font-size: 10pt;
-page-break-inside: auto;
-}
-.print-table th, .print-table td {
-border: 1px solid #ddd;
-padding: 6px 8px;
-text-align: center;
-word-wrap: break-word;
-}
-.print-table th {
-background-color: #f2f2f2;
-font-weight: bold;
-page-break-inside: avoid;
-}
+#printReport { position: absolute; left: 0; top: 0; width: auto; height: auto; margin: 15mm; padding: 10mm; background: white; color: black; font-family: Arial, sans-serif; display: block !important; font-size: 12pt; line-height: 1.4; }
+.print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; page-break-after: avoid; }
+.print-section { margin-bottom: 25px; page-break-inside: avoid; }
+.print-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 10pt; page-break-inside: auto; }
+.print-table th, .print-table td { border: 1px solid #ddd; padding: 6px 8px; text-align: center; word-wrap: break-word; }
+.print-table th { background-color: #f2f2f2; font-weight: bold; page-break-inside: avoid; }
 .positive { color: green; font-weight: bold; }
 .negative { color: red; font-weight: bold; }
-.print-totals {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-gap: 15px;
-margin-top: 20px;
-padding: 15px;
-background-color: #f9f9f9;
-border: 1px solid #ddd;
-page-break-inside: avoid;
-}
-.print-totals div {
-display: flex;
-justify-content: space-between;
-padding: 5px 0;
-}
-.print-footer {
-text-align: center;
-margin-top: 30px;
-font-size: 10pt;
-color: #666;
-border-top: 1px solid #ddd;
-padding-top: 15px;
-page-break-before: avoid;
-}
-.print-table tr {
-page-break-inside: avoid;
-page-break-after: auto;
-}
+.print-totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; padding: 15px; background-color: #f9f9f9; border: 1px solid #ddd; page-break-inside: avoid; }
+.print-totals div { display: flex; justify-content: space-between; padding: 5px 0; }
+.print-footer { text-align: center; margin-top: 30px; font-size: 10pt; color: #666; border-top: 1px solid #ddd; padding-top: 15px; page-break-before: avoid; }
+.print-table tr { page-break-inside: avoid; page-break-after: auto; }
 }
 @media (max-width: 1200px) {
 .horizontal-section { grid-template-columns: 1fr; }
@@ -1960,73 +501,124 @@ page-break-after: auto;
 .summary-totals { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
 }
 @media (max-width: 768px) {
-.container { padding: 0 15px; }
-h1 { font-size: 1.6em; margin-bottom: 20px; }
-h2 { font-size: 1.3em; margin-bottom: 20px; }
-.settings-top-bar { flex-direction: column; align-items: stretch; gap: 8px; }
-.settings-top-bar .settings-actions { justify-content: center; }
-.overall-summary-section { position: static; margin-bottom: 20px; }
-.summary-totals { grid-template-columns: 1fr 1fr; }
-.controls-bar { flex-direction: column; align-items: stretch; gap: 10px; }
-.controls-bar button, .controls-bar select, .controls-bar input { width: 100%; }
-.controls-bar button#deleteCoinBtn { margin-top: 5px; }
-#apiStatus { text-align: center; margin: 8px 0; }
-.section { padding: 20px; }
-.form-grid { grid-template-columns: 1fr; gap: 15px; }
+body { font-size: 13px; }
+.container { padding: 0 10px; margin: 10px auto; }
+h1 { font-size: 1.4em; margin-bottom: 15px; }
+h2 { font-size: 1.15em; margin-bottom: 15px; padding-bottom: 6px; }
+h3 { font-size: 1em; }
+.settings-top-bar { flex-direction: column; align-items: stretch; gap: 8px; padding: 8px 12px; }
+.settings-top-bar .brand { text-align: center; font-size: 1em; }
+.settings-top-bar .settings-actions { justify-content: center; flex-wrap: wrap; }
+.settings-top-bar .settings-actions button { padding: 6px 10px; font-size: 0.8em; }
+.page-header { font-size: 0.8em; padding: 8px 12px; }
+.overall-summary-section { position: static; margin-bottom: 15px; padding: 15px; }
+.section { padding: 15px; }
+.summary-table-container, .dca-table, .coin-details { overflow-x: auto; -webkit-overflow-scrolling: touch; display: block; width: 100%; }
+.summary-table, .dca-table { min-width: 700px; font-size: 0.8em; }
+.summary-table th, .summary-table td { padding: 6px 5px; white-space: nowrap; font-size: 0.85em; }
+.dca-table th, .dca-table td { padding: 4px 3px; font-size: 0.75em; }
+.dca-table input[type="text"] { width: 55px; padding: 3px 4px; font-size: 0.75em; }
+.dca-table .sell-form input[type="text"] { width: 45px; }
+.dca-table .sell-btn, .dca-table .cancel-btn, .dca-table .save-dca-btn { padding: 3px 6px; font-size: 0.7em; margin: 1px; }
+.dca-table .sales-history { max-height: 80px; font-size: 0.7em; }
+.dca-table .sale-record { flex-direction: column; align-items: flex-start; gap: 3px; }
+.dca-table .sale-record-details { flex-direction: column; gap: 2px; }
+.controls-bar { flex-direction: column; align-items: stretch; gap: 8px; padding: 12px; margin-bottom: 15px; }
+.controls-bar label { margin: 0; font-size: 0.85em; }
+.controls-bar button, .controls-bar select, .controls-bar input { width: 100%; padding: 10px; font-size: 0.9em; }
+.controls-bar button#deleteCoinBtn { margin-top: 0; }
+#apiStatus { text-align: center; margin: 5px 0; font-size: 0.8em; min-width: auto; }
+#coinStatus { text-align: center; font-size: 0.85em; }
+.form-grid { grid-template-columns: 1fr; gap: 12px; }
 .market-price-display-group { grid-column: auto; }
-.auto-refresh-group { grid-column: auto; }
-.targets-grid { grid-template-columns: 1fr; }
-.target-pair { grid-template-columns: 1fr 1fr; }
-.sl-group { grid-template-columns: 1fr; gap: 12px; }
-.cash-display-container { grid-template-columns: 1fr; }
-.cash-input-container { flex-direction: column; align-items: stretch; }
+.auto-refresh-group { grid-column: auto; padding: 6px 10px; font-size: 0.85em; }
+input[type="text"], input[type="number"], select { padding: 9px 10px; font-size: 0.95em; }
+.output-field { padding: 8px 10px; min-height: 36px; font-size: 0.9em; }
+label { font-size: 0.85em; margin-bottom: 5px; }
+.targets-grid { grid-template-columns: 1fr; gap: 12px; }
+.target-pair { grid-template-columns: 1fr 1fr; gap: 8px; }
+.targets-grid input[type="number"] { padding: 7px 8px; font-size: 0.9em; }
+.targets-grid .output-field { padding: 7px 8px; min-height: 34px; font-size: 0.9em; }
+.sl-group { grid-template-columns: 1fr; gap: 10px; }
+.cash-display-container { grid-template-columns: 1fr; gap: 10px; }
+.cash-display-box { padding: 12px; }
+.cash-display-box .value { font-size: 1.2em; }
+.cash-input-container { flex-direction: column; align-items: stretch; gap: 10px; }
 .cash-input-group { min-width: 100%; }
-.history-record { flex-direction: column; align-items: flex-start; }
-.history-amount { margin: 5px 0; }
+.cash-input { padding: 10px; font-size: 1em; }
+.history-record { flex-direction: column; align-items: flex-start; gap: 6px; padding: 8px; }
+.history-amount { margin: 3px 0; font-size: 0.95em; }
 .history-actions { align-self: flex-end; }
-.portfolio-chart-container { gap: 15px; }
-.chart-row { flex-direction: column; align-items: flex-start; gap: 8px; }
-.coin-name { min-width: auto; }
+.history-content { max-height: 250px; }
+.portfolio-chart-container { gap: 12px; }
+.chart-row { flex-direction: column; align-items: flex-start; gap: 5px; padding: 8px 0; }
+.coin-name { min-width: auto; font-size: 0.9em; }
 .chart-bar-container { width: 100%; }
-.risk-calculator-grid { grid-template-columns: 1fr; }
-.dca-table { font-size: 0.75em; }
-.dca-table input[type="text"] { width: 60px; }
-.dca-table th, .dca-table td { padding: 4px 4px; }
-.dca-table .sell-form input[type="text"] { width: 50px; }
+.percentage-display { font-size: 0.9em; }
+.risk-calculator-grid { grid-template-columns: 1fr; gap: 15px; }
+.risk-output-item { flex-direction: column; gap: 3px; }
+.summary-totals { grid-template-columns: 1fr 1fr; gap: 10px; padding: 12px; }
+.summary-totals label { font-size: 0.8em; }
+.summary-totals span { font-size: 1.1em; }
+.summary-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+.summary-item { padding: 10px; }
+.summary-item label { font-size: 0.8em; }
+.summary-item .value { font-size: 1em; }
+.available-qty-notice { font-size: 0.95em; padding: 10px; }
+.sell-all-global-btn, .estimate-sell-btn { font-size: 0.85em; padding: 9px 14px; width: 100%; }
+.summary-header-with-btn { flex-direction: column; align-items: stretch; gap: 10px; }
+.summary-header-buttons { justify-content: center; width: 100%; }
+.summary-header-buttons button { flex: 1; }
 .color-settings-grid { grid-template-columns: 1fr; }
-.available-qty-notice { font-size: 1em; }
-.sell-all-global-btn, .estimate-sell-btn { font-size: 0.85em; padding: 8px 12px; }
-.summary-header-with-btn { flex-direction: column; align-items: stretch; }
-.summary-header-buttons { justify-content: center; }
-.estimate-table { font-size: 0.75em; }
-.estimate-table input[type="text"] { width: 80px; }
+.color-setting-item { padding: 6px 10px; }
+.popup-content { padding: 15px; width: 95%; max-height: 85vh; }
+.popup-title { font-size: 1.15em; }
+.popup-body { font-size: 0.9em; }
+.popup-btn { padding: 9px 15px; font-size: 0.9em; }
+.coin-checkbox-item { padding: 10px; }
+.coin-checkbox-item .coin-name-label { font-size: 0.95em; }
+.coin-checkbox-item .coin-details-label { font-size: 0.75em; }
+.coins-checkboxes-container { max-height: 250px; padding: 8px; }
+.total-expected-value { font-size: 0.95em; padding: 10px; }
+.estimate-table { min-width: 900px; }
+.estimate-table input[type="text"] { width: 90px; }
 .estimate-summary-grid { grid-template-columns: 1fr 1fr; }
+.estimate-actions { flex-direction: column; }
+.estimate-actions button { width: 100%; }
+.floating-refresh-btn { top: 75px; left: 10px; width: 48px; height: 48px; font-size: 1.4em; }
 }
 @media (max-width: 480px) {
-body { font-size: 13px; }
-.container { padding: 0 10px; }
-h1 { font-size: 1.4em; }
-h2 { font-size: 1.2em; }
-.summary-table { font-size: 0.75em; }
-.summary-table th, .summary-table td { padding: 6px 5px; white-space: normal; }
-.summary-totals { grid-template-columns: 1fr; gap: 10px; }
+body { font-size: 12px; }
+.container { padding: 0 8px; }
+h1 { font-size: 1.2em; }
+h2 { font-size: 1.05em; }
+.settings-top-bar .settings-actions button { padding: 5px 8px; font-size: 0.75em; }
+.summary-table { min-width: 650px; font-size: 0.75em; }
+.summary-table th, .summary-table td { padding: 5px 4px; }
+.dca-table { min-width: 650px; font-size: 0.7em; }
+.dca-table th, .dca-table td { padding: 3px 2px; }
+.dca-table input[type="text"] { width: 50px; }
+.dca-table .sell-btn, .dca-table .cancel-btn { padding: 2px 5px; font-size: 0.65em; }
+.summary-totals { grid-template-columns: 1fr; gap: 8px; }
 .summary-grid { grid-template-columns: 1fr; }
 .target-pair { grid-template-columns: 1fr; }
-.dca-table { font-size: 0.7em; }
-.dca-table input[type="text"] { width: 50px; }
-.dca-table th, .dca-table td { padding: 3px 2px; }
-.dca-table .sell-btn { padding: 2px 6px; font-size: 0.7em; }
-.dca-table .cancel-btn { padding: 2px 6px; font-size: 0.7em; }
-.available-qty-notice { font-size: 0.9em; padding: 10px; }
+.controls-bar button, .controls-bar select, .controls-bar input { font-size: 0.85em; padding: 9px; }
+.available-qty-notice { font-size: 0.85em; padding: 8px; }
 .sell-all-global-btn, .estimate-sell-btn { font-size: 0.8em; padding: 8px 10px; }
-.estimate-table { font-size: 0.7em; }
-.estimate-table input[type="text"] { width: 70px; }
+.cash-display-box .value { font-size: 1.1em; }
+.popup-content { padding: 12px; }
+.popup-title { font-size: 1.05em; }
+.estimate-table { min-width: 850px; font-size: 0.7em; }
+.estimate-table input[type="text"] { width: 80px; }
 .estimate-summary-grid { grid-template-columns: 1fr; }
+.floating-refresh-btn { top: 70px; left: 8px; width: 44px; height: 44px; font-size: 1.3em; }
 }
 </style>
 </head>
 <body>
-<!-- البوب أب الرئيسي -->
+<button class="floating-refresh-btn" id="floatingRefreshBtn" onclick="handleFloatingRefreshClick()" title="تحديث الأسعار والصفحة">
+<span class="refresh-icon">🔄</span>
+</button>
 <div class="popup-overlay" id="popupOverlay">
 <div class="popup-content">
 <div class="popup-header">
@@ -2040,7 +632,6 @@ h2 { font-size: 1.2em; }
 </div>
 </div>
 </div>
-<!-- بوب أب إعدادات الألوان والثيم -->
 <div class="popup-overlay" id="colorSettingsPopup">
 <div class="popup-content">
 <div class="popup-header">
@@ -2061,7 +652,6 @@ h2 { font-size: 1.2em; }
 </div>
 </div>
 </div>
-<!-- شريط الإعدادات العلوي -->
 <div class="settings-top-bar">
 <div class="brand">📊 <span>Muharraqi</span> - متابعة الصفقات</div>
 <div class="settings-actions">
@@ -2070,6 +660,7 @@ h2 { font-size: 1.2em; }
 <button class="print-btn" onclick="printReport()" title="طباعة التقرير">🖨️ طباعة</button>
 <button class="import-btn" onclick="document.getElementById('importTxtFile').click()" title="استيراد TXT">📂 استيراد</button>
 <button class="txt-btn" onclick="downloadAllDataAsTxt()" title="حفظ كـ TXT">💾 حفظ TXT</button>
+<button class="reset-btn" onclick="resetAllData()" title="ضبط افتراضي - مسح كل البيانات">🔄 ضبط افتراضي</button>
 </div>
 </div>
 <div class="page-header">
@@ -2078,7 +669,6 @@ h2 { font-size: 1.2em; }
 </div>
 <div class="container">
 <h1>متابعة الصفقات الشاملة</h1>
-<!-- 1. توزيع المحفظة -->
 <section class="portfolio-distribution-section card-hover section-custom" id="section-portfolio">
 <div class="section-header">
 <h2>توزيع المحفظة الحالي</h2>
@@ -2090,7 +680,6 @@ h2 { font-size: 1.2em; }
 </div>
 </div>
 </section>
-<!-- 2. الكاش -->
 <section class="cash-section card-hover section-custom" id="section-cash">
 <div class="section-header">
 <h2>كم الكاش لديك</h2>
@@ -2132,7 +721,6 @@ h2 { font-size: 1.2em; }
 </div>
 </div>
 </section>
-<!-- 3. العملة النشطة -->
 <section class="section card-hover section-custom" id="section-coinActive">
 <div class="section-header">
 <h2>العملة النشطة</h2>
@@ -2153,7 +741,6 @@ h2 { font-size: 1.2em; }
 </div>
 </div>
 </section>
-<!-- 4. تفاصيل الدخول -->
 <div class="horizontal-section">
 <section class="section section-initial card-hover section-custom" id="section-entryDetails">
 <div class="section-header">
@@ -2169,6 +756,19 @@ h2 { font-size: 1.2em; }
 <div class="form-group">
 <label for="initialAmountDollars">المبلغ بالدولار $:</label>
 <input type="text" id="initialAmountDollars" placeholder="0.00" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); calculateInitialCoinQty();" onfocus="removeCommasFromInput(this)" inputmode="decimal">
+</div>
+<div class="market-price-display-group">
+<div class="form-group">
+<label>السعر الحالي (للعملة النشطة):</label>
+<div id="marketPriceDisplay" class="output-field">---</div>
+</div>
+</div>
+<div class="auto-refresh-group">
+<input type="checkbox" id="autoRefreshCheckbox">
+<label for="autoRefreshCheckbox">تحديث تلقائي للأسعار (كل 30 ثانية)</label>
+</div>
+<div class="form-group" style="grid-column: span 2;">
+<button class="save-entry-btn btn-pulse" id="saveEntryBtn" onclick="saveEntryTransaction()" style="width: 100%;">💾 حفظ صفقة الدخول</button>
 </div>
 <div class="form-group" style="grid-column: span 2;">
 <label>كمية العملة المحصلة:</label>
@@ -2209,21 +809,9 @@ h2 { font-size: 1.2em; }
 </div>
 <div class="sales-history" id="initialSalesHistory"></div>
 </div>
-<div class="market-price-display-group" style="grid-column: span 2;">
-<div class="form-group">
-<label>السعر الحالي (للعملة النشطة):</label>
-<div id="marketPriceDisplay" class="output-field">---</div>
 </div>
-</div>
-<div class="auto-refresh-group" style="grid-column: span 2;">
-<input type="checkbox" id="autoRefreshCheckbox">
-<label for="autoRefreshCheckbox">تحديث تلقائي للأسعار (كل 30 ثانية)</label>
-</div>
-</div>
-<button class="save-entry-btn btn-pulse" id="saveEntryBtn" onclick="saveEntryTransaction()">💾 حفظ صفقة الدخول</button>
 </div>
 </section>
-<!-- 5. الوضع الحالي -->
 <section class="section section-current-targets card-hover section-custom" id="section-currentStatus">
 <div class="section-header">
 <h2>الوضع الحالي والأهداف (<span id="currentCoinDisplay3">---</span>)</h2>
@@ -2242,7 +830,6 @@ h2 { font-size: 1.2em; }
 </div>
 </section>
 </div>
-<!-- 6. ملخص الصفقات - مع زر بيع الكل والبيع التقديري بجانب العنوان -->
 <section class="overall-summary-section card-hover section-custom" id="section-summary">
 <div class="section-header summary-header-with-btn">
 <h2>ملخص الصفقات الكلي</h2>
@@ -2290,7 +877,6 @@ h2 { font-size: 1.2em; }
 </div>
 </div>
 </section>
-<!-- 7. حاسبة المخاطر -->
 <section class="risk-calculator-section card-hover section-custom" id="section-riskCalculator">
 <div class="section-header">
 <h2>🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول)</h2>
@@ -2331,7 +917,6 @@ h2 { font-size: 1.2em; }
 </div>
 </div>
 </section>
-<!-- 8. الأهداف ووقف الخسارة -->
 <section class="targets-section card-hover section-custom" id="section-targets">
 <div class="section-header">
 <h2>الأهداف ووقف الخسارة (من متوسط السعر)</h2>
@@ -2370,65 +955,50 @@ h2 { font-size: 1.2em; }
 <div id="printReport" style="display: none;"></div>
 <input type="file" id="importTxtFile" accept=".txt" style="display: none;">
 <script>
-// ============================================================
-// ✅ دالة إنشاء معرف فريد
-// ============================================================
 function generateUniqueId() {
 return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
 }
-
-// ============================================================
-// ✅ دوال فواصل الآلاف (جديدة) - تُطبق على جميع الأقسام
-// ============================================================
 function formatWithCommas(num, decimals = 2) {
-    const number = Number(num);
-    if (isNaN(number) || !isFinite(number)) return (0).toFixed(decimals);
-    const isNegative = number < 0;
-    const absNumber = Math.abs(number);
-    const parts = absNumber.toFixed(decimals).split('.');
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    const result = parts.join('.');
-    return isNegative ? '-' + result : result;
+const number = Number(num);
+if (isNaN(number) || !isFinite(number)) return (0).toFixed(decimals);
+const isNegative = number < 0;
+const absNumber = Math.abs(number);
+const parts = absNumber.toFixed(decimals).split('.');
+parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const result = parts.join('.');
+return isNegative ? '-' + result : result;
 }
-
 function parseFormattedNumber(str) {
-    if (str === null || str === undefined) return 0;
-    const cleaned = String(str).replace(/,/g, '').trim();
-    if (cleaned === '' || cleaned === '-') return 0;
-    const num = parseFloat(cleaned);
-    return isNaN(num) ? 0 : num;
+if (str === null || str === undefined) return 0;
+const cleaned = String(str).replace(/,/g, '').trim();
+if (cleaned === '' || cleaned === '-') return 0;
+const num = parseFloat(cleaned);
+return isNaN(num) ? 0 : num;
 }
-
 function formatInputWithCommas(input) {
-    if (!input || input.value === '' || input.value === null) return;
-    const num = parseFormattedNumber(input.value);
-    if (num === 0 && input.value.replace(/[^0-9.-]/g, '') !== '0') {
-        input.value = '';
-        return;
-    }
-    // تحديد عدد الخانات العشرية بناءً على نوع الحقل
-    let decimals = 2;
-    const id = input.id || '';
-    if (id.includes('Percent') || id.includes('percentage') || id.includes('riskPerTrade')) {
-        decimals = 2;
-    } else if (id.includes('Price') || id.includes('price') || id.includes('Entry') || id.includes('stopLoss')) {
-        decimals = 8;
-    } else if (id.includes('Amount') || id.includes('amount') || id.includes('Capital') || id.includes('cash')) {
-        decimals = 2;
-    } else if (id.includes('Qty') || id.includes('qty') || id.includes('sold')) {
-        decimals = 8;
-    }
-    input.value = formatWithCommas(num, decimals);
+if (!input || input.value === '' || input.value === null) return;
+const num = parseFormattedNumber(input.value);
+if (num === 0 && input.value.replace(/[^0-9.-]/g, '') !== '0') {
+input.value = '';
+return;
 }
-
+let decimals = 2;
+const id = input.id || '';
+if (id.includes('Percent') || id.includes('percentage') || id.includes('riskPerTrade')) {
+decimals = 2;
+} else if (id.includes('Price') || id.includes('price') || id.includes('Entry') || id.includes('stopLoss')) {
+decimals = 8;
+} else if (id.includes('Amount') || id.includes('amount') || id.includes('Capital') || id.includes('cash')) {
+decimals = 2;
+} else if (id.includes('Qty') || id.includes('qty') || id.includes('sold')) {
+decimals = 8;
+}
+input.value = formatWithCommas(num, decimals);
+}
 function removeCommasFromInput(input) {
-    if (!input) return;
-    input.value = input.value.replace(/,/g, '');
+if (!input) return;
+input.value = input.value.replace(/,/g, '');
 }
-
-// ============================================================
-// 1. دوال إعدادات الألوان والثيم
-// ============================================================
 const sectionConfigs = [
 { id: 'section-portfolio', name: 'توزيع المحفظة الحالي', defaultColor: '#ffffff' },
 { id: 'section-cash', name: 'كم الكاش لديك', defaultColor: '#ffffff' },
@@ -2524,9 +1094,6 @@ if (input) input.value = config.defaultColor;
 showSuccess('تم إعادة تعيين جميع الألوان بنجاح');
 }
 }
-// ============================================================
-// 2. دوال تبديل الثيم
-// ============================================================
 const LS_KEY_THEME = 'cryptoTrackerUniversal_v41_theme';
 function applyTheme(theme) {
 if (theme === 'dark') {
@@ -2559,9 +1126,50 @@ let preferredTheme = localStorage.getItem(LS_KEY_THEME);
 if (!preferredTheme) preferredTheme = 'light';
 applyTheme(preferredTheme);
 }
-// ============================================================
-// 3. دوال طي الحاويات
-// ============================================================
+function resetAllData() {
+const warningMessage = `
+<div style="text-align: center; padding: 15px; background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; margin-bottom: 15px;">
+<div style="font-size: 2.5em; margin-bottom: 10px;">⚠️</div>
+<div style="font-size: 1.3em; font-weight: bold; color: #856404; margin-bottom: 10px;">
+تحذير هام جداً!
+</div>
+<div style="color: #856404; line-height: 1.8; font-size: 1em;">
+سيتم مسح <strong>جميع البيانات</strong> نهائياً:<br>
+• جميع العملات والصفقات<br>
+• جميع التعزيزات والمبيعات<br>
+• سجلات الكاش والإيداعات والسحوبات<br>
+• جميع الإعدادات والألوان<br>
+• بيانات البيع التقديري المحفوظة
+</div>
+<div style="margin-top: 15px; padding: 12px; background: #f8d7da; border-radius: 6px; color: #721c24; font-weight: bold; font-size: 0.95em;">
+💡 إذا كنت لا تريد خسارة البيانات،<br>
+قم بتصدير الملف أولاً<br>
+(استخدم زر 💾 حفظ TXT من الأعلى)
+</div>
+</div>
+<div style="text-align: center; font-size: 1.1em; font-weight: bold; color: var(--negative-color);">
+هل أنت متأكد تماماً من المتابعة؟
+</div>
+`;
+showPopup(
+'🔄 ضبط افتراضي - مسح كل البيانات',
+warningMessage,
+'🗑️ نعم، امسح كل شيء',
+'❌ إلغاء',
+() => {
+localStorage.removeItem('cryptoTrackerUniversal_v41_data');
+localStorage.removeItem('cryptoTrackerUniversal_v41_cash');
+localStorage.removeItem('cryptoTrackerUniversal_v41_cash_history');
+localStorage.removeItem('cryptoTrackerUniversal_v41_sales_cash_history');
+localStorage.removeItem('cryptoTrackerUniversal_v41_expanded_coins');
+localStorage.removeItem('sectionToggleStates');
+localStorage.removeItem('sectionColors');
+localStorage.removeItem('cryptoTrackerUniversal_v41_estimate_prices');
+location.reload();
+},
+null
+);
+}
 function toggleSection(sectionName) {
 const sectionMap = {
 'portfolio': 'portfolioSectionContent',
@@ -2616,43 +1224,28 @@ if (btn) btn.textContent = 'عرض';
 }
 });
 }
-// ============================================================
-// ✅ 4. دالة التحقق من صحة الأرقام - للأرقام فقط
-// ============================================================
 function validateNumberInput(input) {
 if (!input) return;
 const cursorPosition = input.selectionStart;
 if (input.value === '' || input.value === '-') return;
-
-// السماح فقط بالأرقام والنقطة والسالب
 let value = input.value.replace(/[^\d.\-]/g, '');
-
-// التأكد من وجود نقطة واحدة فقط
 const parts = value.split('.');
 if (parts.length > 2) {
 value = parts[0] + '.' + parts.slice(1).join('');
 }
-
-// التأكد من أن السالب في البداية فقط
 if (value.indexOf('-') > 0) {
 value = value.replace(/-/g, '');
 }
-
-// منع أكثر من سالب
 const minusCount = (value.match(/-/g) || []).length;
 if (minusCount > 1) {
 value = value.replace(/-/g, '');
 }
-
 if (input.value !== value) {
 input.value = value;
 const newPosition = Math.min(cursorPosition, input.value.length);
 input.setSelectionRange(newPosition, newPosition);
 }
 }
-// ============================================================
-// 5. دوال البوب أب
-// ============================================================
 function showPopup(title, message, confirmText = 'موافق', cancelText = 'إلغاء', onConfirm = null, onCancel = null) {
 const popupOverlay = document.getElementById('popupOverlay');
 const popupTitle = document.getElementById('popupTitle');
@@ -2671,8 +1264,14 @@ popupCancel.onclick = null;
 const popupClose = document.getElementById('popupClose');
 if (popupClose) popupClose.onclick = null;
 };
-popupConfirm.onclick = () => { if (onConfirm) onConfirm(); closePopup(); };
-popupCancel.onclick = () => { if (onCancel) onCancel(); closePopup(); };
+popupConfirm.onclick = () => {
+closePopup();
+setTimeout(() => { if (onConfirm) onConfirm(); }, 150);
+};
+popupCancel.onclick = () => {
+closePopup();
+setTimeout(() => { if (onCancel) onCancel(); }, 150);
+};
 const popupClose = document.getElementById('popupClose');
 popupClose.onclick = closePopup;
 popupOverlay.onclick = (e) => { if (e.target === popupOverlay) { closePopup(); } };
@@ -2689,9 +1288,6 @@ showPopup('خطأ', message, 'موافق', '', () => {}, null);
 function showInfo(message) {
 showPopup('معلومات', message, 'موافق', '', () => {}, null);
 }
-// ============================================================
-// 6. المتغيرات العامة
-// ============================================================
 const marketPriceDisplay = document.getElementById('marketPriceDisplay');
 const apiStatusDiv = document.getElementById('apiStatus');
 const autoRefreshCheckbox = document.getElementById('autoRefreshCheckbox');
@@ -2722,6 +1318,7 @@ const LS_KEY_CASH = 'cryptoTrackerUniversal_v41_cash';
 const LS_KEY_CASH_HISTORY = 'cryptoTrackerUniversal_v41_cash_history';
 const LS_KEY_SALES_CASH_HISTORY = 'cryptoTrackerUniversal_v41_sales_cash_history';
 const LS_KEY_EXPANDED_COINS = 'cryptoTrackerUniversal_v41_expanded_coins';
+const LS_KEY_ESTIMATE_PRICES = 'cryptoTrackerUniversal_v41_estimate_prices';
 let allCoinData = {};
 let currentMarketPrices = {};
 let activeCoinSymbol = null;
@@ -2729,9 +1326,7 @@ let availableCash = 0;
 let cashHistory = { deposits: [], withdrawals: [] };
 let salesCashHistory = { deposits: [], withdrawals: [] };
 let expandedCoins = new Set();
-// ============================================================
-// 7. دوال الكاش
-// ============================================================
+let savedEstimatePrices = {};
 function updateCashDisplay() {
 const totalSalesCash = salesCashHistory.deposits.reduce((sum, record) => sum + record.amount, 0) -
 salesCashHistory.withdrawals.reduce((sum, record) => sum + record.amount, 0);
@@ -3032,9 +1627,6 @@ localStorage.setItem(LS_KEY_CASH, availableCash.toString());
 updateCashDisplay();
 return true;
 }
-// ============================================================
-// 8. دوال البيانات الأساسية
-// ============================================================
 function getDefaultCoinDataStructure() {
 return {
 initialEntryPrice: '',
@@ -3122,9 +1714,27 @@ currentMarketPrices = {};
 return false;
 }
 }
-// ============================================================
-// 9. تحديث القائمة المنسدلة وعرض البيانات
-// ============================================================
+function loadSavedEstimatePrices() {
+let saved = localStorage.getItem(LS_KEY_ESTIMATE_PRICES);
+if (saved) {
+try {
+savedEstimatePrices = JSON.parse(saved);
+if (typeof savedEstimatePrices !== 'object' || savedEstimatePrices === null) {
+savedEstimatePrices = {};
+}
+} catch (e) {
+console.error("خطأ في تحميل الأسعار التقديرية:", e);
+savedEstimatePrices = {};
+}
+}
+}
+function saveEstimatePrices() {
+try {
+localStorage.setItem(LS_KEY_ESTIMATE_PRICES, JSON.stringify(savedEstimatePrices));
+} catch (e) {
+console.error("خطأ في حفظ الأسعار التقديرية:", e);
+}
+}
 function updateCoinSelector() {
 const previouslySelected = coinSelector.value;
 coinSelector.innerHTML = '<option value="">-- اختر عملة --</option>';
@@ -3166,13 +1776,19 @@ calculateActiveCoinDetails();
 return;
 }
 updateCurrentCoinDisplay(symbol);
-document.getElementById('initialEntryPrice').value = data.initialEntryPrice || '';
-document.getElementById('initialAmountDollars').value = data.initialAmountDollars || '';
+const entryPriceVal = parseFormattedNumber(data.initialEntryPrice);
+const amountVal = parseFormattedNumber(data.initialAmountDollars);
+document.getElementById('initialEntryPrice').value = entryPriceVal > 0 ? formatWithCommas(entryPriceVal, 8) : (data.initialEntryPrice || '');
+document.getElementById('initialAmountDollars').value = amountVal > 0 ? formatWithCommas(amountVal, 2) : (data.initialAmountDollars || '');
 updateInitialSalesHistory(data.initialSales || []);
-document.getElementById('tpPercent1').value = data.targets?.tp1 || '';
-document.getElementById('tpPercent2').value = data.targets?.tp2 || '';
-document.getElementById('tpPercent3').value = data.targets?.tp3 || '';
-document.getElementById('slPercent').value = data.targets?.sl || '';
+const tp1Val = parseFormattedNumber(data.targets?.tp1);
+const tp2Val = parseFormattedNumber(data.targets?.tp2);
+const tp3Val = parseFormattedNumber(data.targets?.tp3);
+const slVal = parseFormattedNumber(data.targets?.sl);
+document.getElementById('tpPercent1').value = tp1Val !== 0 ? formatWithCommas(tp1Val, 2) : (data.targets?.tp1 || '');
+document.getElementById('tpPercent2').value = tp2Val !== 0 ? formatWithCommas(tp2Val, 2) : (data.targets?.tp2 || '');
+document.getElementById('tpPercent3').value = tp3Val !== 0 ? formatWithCommas(tp3Val, 2) : (data.targets?.tp3 || '');
+document.getElementById('slPercent').value = slVal !== 0 ? formatWithCommas(slVal, 2) : (data.targets?.sl || '');
 const activeCoinPrice = currentMarketPrices[symbol];
 if (activeCoinPrice !== null && activeCoinPrice !== undefined && !isNaN(activeCoinPrice)) {
 marketPriceDisplay.textContent = formatNumber(activeCoinPrice, guessDecimalPlaces(activeCoinPrice));
@@ -3244,9 +1860,6 @@ btn.textContent = '💰 بيع الكل';
 btn.textContent = `💰 بيع الكل (${coinsWithQty.join('، ')})`;
 }
 }
-// ============================================================
-// 10. دوال مبيعات الدخول
-// ============================================================
 function updateAvailableQtyForSale() {
 const availableQtyElement = document.getElementById('availableQtyForSale');
 if (!availableQtyElement) return;
@@ -3538,10 +2151,10 @@ const salesCashToRefund = calculateTotalSalesCashFromSales(initialSales);
 const savedAmount = data.initialSavedAmount || 0;
 const refundAmount = initialCoinQty > 0 ? savedAmount * (remainingQty / initialCoinQty) : 0;
 const totalRefund = refundAmount + salesCashToRefund;
-showConfirm(`هل تريد إلغاء صفقة الدخول؟\n` +
-`• استرجاع كاش الكمية المتبقية: ${formatWithCommas(refundAmount, 2)} $\n` +
-`• استرجاع كاش المبيعات السابقة: ${formatWithCommas(salesCashToRefund, 2)} $\n` +
-`• الإجمالي: ${formatWithCommas(totalRefund, 2)} $`, () => {
+showConfirm(`هل تريد إلغاء صفقة الدخول؟
+• استرجاع كاش الكمية المتبقية: ${formatWithCommas(refundAmount, 2)} $
+• استرجاع كاش المبيعات السابقة: ${formatWithCommas(salesCashToRefund, 2)} $
+• الإجمالي: ${formatWithCommas(totalRefund, 2)} $`, () => {
 if (refundAmount > 0) {
 availableCash += refundAmount;
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
@@ -3569,9 +2182,6 @@ function calculateTotalSalesCashFromSales(sales) {
 if (!sales || sales.length === 0) return 0;
 return sales.reduce((total, sale) => total + (sale.qty * sale.price), 0);
 }
-// ============================================================
-// 11. دوال حفظ الصفقات
-// ============================================================
 function updateActiveCoinDataInMemory() {
 if (!activeCoinSymbol || !allCoinData[activeCoinSymbol]) return;
 const currentData = allCoinData[activeCoinSymbol];
@@ -3754,9 +2364,6 @@ showSuccess(`تم تحديث التعزيز ${index+1} (بدون تغيير في
 showSuccess(`تم حفظ صفقة التعزيز ${index+1} لـ ${symbol} بنجاح وخصم ${formatWithCommas(repurchaseAmount, 2)} $ من الكاش`);
 }
 }
-// ============================================================
-// 12. دوال التعزيز
-// ============================================================
 function addDCAForCoin(symbol) {
 if (!symbol || !allCoinData[symbol]) {
 showError("يرجى اختيار عملة أولاً");
@@ -3799,9 +2406,13 @@ const repurchaseQty = repurchaseAmount > 0 && repurchasePrice > 0 ? repurchaseAm
 const sales = rp.sales || [];
 const totalSoldQty = calculateTotalSoldQty(sales);
 const remainingQty = repurchaseQty - totalSoldQty;
-const remainingAmount = repurchaseQty > 0 ? repurchaseAmount * (remainingQty / repurchaseQty) : 0;
+const savedAmount = rp.savedAmount || 0;
+const wasSaved = savedAmount > 0;
+const remainingAmount = wasSaved && repurchaseQty > 0
+? savedAmount * (remainingQty / repurchaseQty)
+: 0;
 const salesCashToRefund = calculateTotalSalesCashFromSales(sales);
-if (remainingAmount > 0 && !isNaN(remainingAmount)) {
+if (wasSaved && remainingAmount > 0 && !isNaN(remainingAmount)) {
 availableCash += remainingAmount;
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
 }
@@ -3813,7 +2424,7 @@ data.repurchases.splice(index, 1);
 saveAllDataToLocalStorage();
 updateSummaryTable();
 calculateAndDisplay();
-showSuccess(`تم حذف التعزيز ${index+1} لـ ${symbol}`);
+showSuccess(`تم حذف التعزيز ${index+1} لـ ${symbol}${wasSaved ? ` واسترجاع ${formatWithCommas(remainingAmount + salesCashToRefund, 2)} $` : ''}`);
 });
 }
 function updateDCADataFromInputs(symbol, index) {
@@ -3836,9 +2447,6 @@ return sales.reduce((total, sale) => total + sale.qty, 0);
 function calculateCashFromSales(sales) {
 return sales.reduce((total, sale) => total + (sale.qty * sale.price), 0);
 }
-// ============================================================
-// 13. دوال عرض DCA في الملخص
-// ============================================================
 function getDCARowsHTML(symbol, data) {
 if (!data || !data.repurchases || data.repurchases.length === 0) {
 return `
@@ -3883,37 +2491,35 @@ let changePercent = 0;
 if (initialEntryPrice > 0 && repurchasePrice > 0) {
 changePercent = ((repurchasePrice - initialEntryPrice) / initialEntryPrice) * 100;
 }
-let pnlAmount = 0;
-let pnlPercent = 0;
-let totalSaleAmount = 0;
+let totalTradePnlAmount = 0;
+let totalTradePnlPercent = 0;
+if (marketPrice > 0 && repurchaseQty > 0) {
+const currentValue = remainingQty * marketPrice;
+const remainingInvested = repurchaseAmount * (remainingQty / repurchaseQty);
 let totalInvestedForSales = 0;
+let totalSaleAmount = 0;
 sales.forEach(sale => {
 totalSaleAmount += sale.qty * sale.price;
 totalInvestedForSales += sale.investedAmount || (repurchaseAmount * (sale.qty / repurchaseQty));
 });
-pnlAmount = totalSaleAmount - totalInvestedForSales;
-pnlPercent = totalInvestedForSales > 0 ? (pnlAmount / totalInvestedForSales) * 100 : 0;
-let totalTradePnlAmount = 0;
-let totalTradePnlPercent = 0;
-if (marketPrice > 0) {
-const currentValue = remainingQty * marketPrice;
-const remainingInvested = repurchaseAmount * (remainingQty / repurchaseQty);
-totalTradePnlAmount = pnlAmount + (currentValue - remainingInvested);
+const pnlFromSales = totalSaleAmount - totalInvestedForSales;
+totalTradePnlAmount = pnlFromSales + (currentValue - remainingInvested);
 const totalInvested = totalInvestedForSales + remainingInvested;
 totalTradePnlPercent = totalInvested > 0 ? (totalTradePnlAmount / totalInvested) * 100 : 0;
 }
 const status = totalSoldQty >= repurchaseQty - 0.00000001 ? 'تم البيع' : (totalSoldQty > 0 ? 'بيع جزئي' : 'نشط');
 const statusClass = status === 'تم البيع' ? 'sold-btn' : (status === 'بيع جزئي' ? 'partial-sold-btn' : '');
-const pnlClass = pnlAmount > 0 ? 'pnl-positive' : (pnlAmount < 0 ? 'pnl-negative' : '');
 const tradePnlClass = totalTradePnlAmount > 0 ? 'pnl-positive' : (totalTradePnlAmount < 0 ? 'pnl-negative' : '');
 const changeClass = changePercent < 0 ? 'negative' : (changePercent > 0 ? 'positive' : '');
 const priceMode = rp.priceMode || 'price';
+const displayPrice = repurchasePrice > 0 ? formatWithCommas(repurchasePrice, 8) : '';
+const displayAmount = repurchaseAmount > 0 ? formatWithCommas(repurchaseAmount, 2) : '';
 html += `
 <tr id="dca_row_${symbol}_${index}" class="${status === 'تم البيع' ? 'sold-row' : (status === 'بيع جزئي' ? 'partial-sold-row' : '')}">
 <td>${index + 1}</td>
 <td><span class="down-percent ${changeClass}">${changePercent !== 0 && isFinite(changePercent) ? formatNumber(changePercent, 2) + '%' : '-%'}</span></td>
 <td>
-<input type="text" id="dca_price_${symbol}_${index}" placeholder="السعر" value="${repurchasePrice}" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs('${symbol}', ${index}); calculateAndDisplay();" onfocus="removeCommasFromInput(this)" inputmode="decimal">
+<input type="text" id="dca_price_${symbol}_${index}" placeholder="السعر" value="${displayPrice}" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs('${symbol}', ${index}); calculateAndDisplay();" onfocus="removeCommasFromInput(this)" inputmode="decimal">
 <div class="percentage-input-group ${priceMode === 'percentage' ? 'active' : ''}" id="dca_percentageGroup_${symbol}_${index}">
 <input type="text" id="dca_percentage_${symbol}_${index}" placeholder="النسبة %" value="${formatNumber(changePercent, 2)}" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); handleDCAPercentageInput('${symbol}', ${index});" onfocus="removeCommasFromInput(this)" inputmode="decimal">
 </div>
@@ -3922,12 +2528,10 @@ html += `
 <button class="price-mode-btn ${priceMode === 'percentage' ? 'active' : ''}" id="dca_percentageModeBtn_${symbol}_${index}" onclick="switchDCAPriceMode('${symbol}', ${index}, 'percentage')">نسبة</button>
 </div>
 </td>
-<td><input type="text" id="dca_amount_${symbol}_${index}" placeholder="$" value="${repurchaseAmount}" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs('${symbol}', ${index}); calculateAndDisplay();" onfocus="removeCommasFromInput(this)" inputmode="decimal"></td>
+<td><input type="text" id="dca_amount_${symbol}_${index}" placeholder="$" value="${displayAmount}" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs('${symbol}', ${index}); calculateAndDisplay();" onfocus="removeCommasFromInput(this)" inputmode="decimal"></td>
 <td><div class="output-field">${formatNumber(repurchaseQty, 8)}</div></td>
 <td><div class="output-field">${formatNumber(totalSoldQty, 8)}</div></td>
 <td><div class="output-field ${remainingQty > 0 ? 'remaining-info' : ''}">${formatNumber(remainingQty, 8)}</div></td>
-<td><div class="output-field ${pnlClass}">${formatWithCommas(pnlAmount, 2)}</div></td>
-<td><div class="output-field ${pnlClass}">${formatNumber(pnlPercent, 2)}%</div></td>
 <td><div class="output-field ${tradePnlClass}">${formatWithCommas(totalTradePnlAmount, 2)}</div></td>
 <td><div class="output-field ${tradePnlClass}">${formatNumber(totalTradePnlPercent, 2)}%</div></td>
 <td><div class="output-field cash-positive">${formatWithCommas(cashFromSales, 2)}</div></td>
@@ -3972,9 +2576,6 @@ html += `
 `;
 return html;
 }
-// ============================================================
-// 14. دوال التحكم في وضع السعر/النسبة للتعزيزات
-// ============================================================
 function switchDCAPriceMode(symbol, index, mode) {
 const data = allCoinData[symbol];
 if (!data || index < 0 || index >= data.repurchases.length) return;
@@ -4016,9 +2617,6 @@ updateDCADataFromInputs(symbol, index);
 calculateAndDisplay();
 }
 }
-// ============================================================
-// 15. دوال البيع للتعزيزات
-// ============================================================
 function toggleDCASellForm(symbol, index) {
 const sellForm = document.getElementById(`dca_sellForm_${symbol}_${index}`);
 const sellBtn = sellForm?.previousElementSibling;
@@ -4180,10 +2778,10 @@ const remainingAmount = repurchaseQty > 0 ? repurchaseAmount * (remainingQty / r
 const salesCashToRefund = calculateTotalSalesCashFromSales(sales);
 const totalRefund = remainingAmount + salesCashToRefund;
 if (totalRefund <= 0.0001) { showError("لا توجد قيمة متبقية في صفقة التعزيز"); return; }
-showConfirm(`هل تريد إلغاء صفقة التعزيز؟\n` +
-`• استرجاع كاش الكمية المتبقية: ${formatWithCommas(remainingAmount, 2)} $\n` +
-`• استرجاع كاش المبيعات السابقة: ${formatWithCommas(salesCashToRefund, 2)} $\n` +
-`• الإجمالي: ${formatWithCommas(totalRefund, 2)} $`, () => {
+showConfirm(`هل تريد إلغاء صفقة التعزيز؟
+• استرجاع كاش الكمية المتبقية: ${formatWithCommas(remainingAmount, 2)} $
+• استرجاع كاش المبيعات السابقة: ${formatWithCommas(salesCashToRefund, 2)} $
+• الإجمالي: ${formatWithCommas(totalRefund, 2)} $`, () => {
 if (remainingAmount > 0) {
 availableCash += remainingAmount;
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
@@ -4248,9 +2846,6 @@ if (sale) return { symbol, sale, type: 'dca', dcaIndex: i };
 }
 return null;
 }
-// ============================================================
-// 16. دوال الملخص
-// ============================================================
 function calculateSummaryData() {
 const summaryRows = [];
 let totalInvested = 0;
@@ -4401,9 +2996,6 @@ totalPnlPercentSummaryEl.className = '';
 totalCurrentValueSummaryEl.className = '';
 totalCashFromSalesSummaryEl.className = '';
 }
-// ============================================================
-// 17. دوال التوسيع
-// ============================================================
 function toggleCoinDetails(symbol) {
 if (expandedCoins.has(symbol)) {
 expandedCoins.delete(symbol);
@@ -4424,9 +3016,6 @@ expandedCoins = new Set(JSON.parse(savedExpandedCoins));
 } catch (e) { console.error("خطأ في تحميل العملات الموسعة:", e); }
 }
 }
-// ============================================================
-// 18. دوال الأسعار
-// ============================================================
 async function fetchSinglePrice(symbol) {
 if (!symbol || typeof symbol !== 'string' || symbol.length < 4) {
 return { symbol: symbol, price: null, source: null, error: 'رمز غير صالح' };
@@ -4532,9 +3121,6 @@ stopAutoRefresh();
 updateSummaryTable();
 }
 }
-// ============================================================
-// 19. دوال التحديث التلقائي
-// ============================================================
 function startAutoRefresh() {
 if (autoRefreshIntervalId) clearInterval(autoRefreshIntervalId);
 const trackedSymbols = Object.keys(allCoinData);
@@ -4575,9 +3161,6 @@ showError("يرجى إضافة عملة أولاً لتفعيل التحديث �
 stopAutoRefresh();
 }
 }
-// ============================================================
-// 20. دوال التنسيق
-// ============================================================
 function formatNumber(num, decimalPlaces = 8) {
 const number = Number(num);
 if (isNaN(number) || !isFinite(number)) return (0).toFixed(decimalPlaces);
@@ -4593,9 +3176,6 @@ if (num >= 0.001) return 6;
 if (num >= 0.0001) return 7;
 return 8;
 }
-// ============================================================
-// 21. دوال حاسبة المخاطر
-// ============================================================
 function calculateRisk() {
 const capital = parseFormattedNumber(document.getElementById('riskCapital').value);
 const riskPercent = parseFormattedNumber(document.getElementById('riskPerTrade').value);
@@ -4633,9 +3213,6 @@ document.getElementById('positionValue').textContent = '0.00 $';
 document.getElementById('leverage').textContent = '1x';
 }
 }
-// ============================================================
-// 22. دوال الاستيراد والتصدير
-// ============================================================
 function downloadAllDataAsTxt() {
 if (!allCoinData || Object.keys(allCoinData).length === 0) {
 showError("لا توجد بيانات لحفظها.");
@@ -4723,6 +3300,12 @@ content += `إجمالي المبلغ المستثمر: ${formatWithCommas(total
 content += `إجمالي القيمة الحالية: ${formatWithCommas(totals.currentValue, 2)} $\n`;
 content += `إجمالي الربح/الخسارة: ${formatWithCommas(totals.pnlAmount, 2)} $ (${formatNumber(totals.pnlPercent, 2)}%)\n`;
 content += `إجمالي الكاش من البيع: ${formatWithCommas(totals.cashFromSales, 2)} $\n`;
+if (Object.keys(savedEstimatePrices).length > 0) {
+content += "\n=== الأسعار التقديرية المحفوظة ===\n";
+Object.keys(savedEstimatePrices).forEach(symbol => {
+content += `${symbol}: ${formatNumber(savedEstimatePrices[symbol], 8)}\n`;
+});
+}
 const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
 const link = document.createElement('a');
 const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
@@ -4839,11 +3422,22 @@ currentMarketPrices[symbol] = price;
 }
 }
 }
+if (currentSection.includes('الأسعار التقديرية المحفوظة')) {
+const estimateMatch = line.match(/([A-Z0-9]+): (\d+\.?\d*)/);
+if (estimateMatch) {
+const symbol = estimateMatch[1];
+const price = parseFloat(estimateMatch[2]);
+if (!isNaN(price)) {
+savedEstimatePrices[symbol] = price;
+}
+}
+}
 });
 if (symbol && coinData) {
 allCoinData[symbol] = coinData;
 }
 saveAllDataToLocalStorage();
+saveEstimatePrices();
 updateCoinSelector();
 updateSummaryTable();
 updatePortfolioChart();
@@ -4851,9 +3445,6 @@ showSuccess("تم استيراد البيانات بنجاح. اختر عملة 
 };
 reader.readAsText(file);
 }
-// ============================================================
-// 23. دوال أخرى
-// ============================================================
 function openTradingView() {
 if (!activeCoinSymbol) { showError("يرجى اختيار عملة أولاً"); return; }
 let symbol = activeCoinSymbol;
@@ -4955,9 +3546,6 @@ setTimeout(() => {
 printReportDiv.style.display = 'none';
 }, 1000);
 }
-// ============================================================
-// 24. تحديث مخطط المحفظة
-// ============================================================
 function updatePortfolioChart() {
 const container = document.getElementById('portfolioChartContainer');
 const { summaryRows } = calculateSummaryData();
@@ -5007,9 +3595,6 @@ html += `
 }
 container.innerHTML = html;
 }
-// ============================================================
-// 25. حساب تفاصيل العملة النشطة
-// ============================================================
 function calculateActiveCoinDetails() {
 document.getElementById('initialCoinQty').textContent = formatNumber(0, 8);
 document.getElementById('initialSoldQtyDisplay').textContent = formatNumber(0, 8);
@@ -5223,9 +3808,6 @@ calculateActiveCoinDetails();
 updateSummaryTable();
 updatePortfolioChart();
 }
-// ============================================================
-// 26. دوال التحكم في العملات
-// ============================================================
 function addOrSwitchCoin() {
 const symbol = newCoinNameInput.value.trim().toUpperCase();
 if (!symbol) { showError("يرجى إدخال رمز العملة (مثل BTCUSDT)."); return; }
@@ -5310,9 +3892,6 @@ apiStatusDiv.textContent = `تم حذف ${symbolToDelete}.`;
 apiStatusDiv.style.color = 'var(--text-muted)';
 });
 }
-// ============================================================
-// 27. بيع الكل مع التعزيزات - مع اختيار العملات
-// ============================================================
 function sellAllCoinsWithDCA() {
 if (Object.keys(allCoinData).length === 0) {
 showError("لا توجد عملات للبيع");
@@ -5488,262 +4067,267 @@ calculateAndDisplay();
 const coinsList = selectedCoins.map(c => c.symbol).join('، ');
 showSuccess(`✅ تم بيع ${selectedCoins.length} عملة بنجاح!\nالعملات: ${coinsList}\nتم تصفير جميع الكميات وإضافة الكاش من البيع.`);
 }
-
-// ============================================================
-// ✅ 28. دالة البيع التقديري (جديدة)
-// ============================================================
 function showEstimateSellPopup() {
-    if (Object.keys(allCoinData).length === 0) {
-        showError("لا توجد عملات لعرضها");
-        return;
-    }
-    
-    // جمع بيانات العملات مع التعزيزات
-    const coinsData = [];
-    Object.keys(allCoinData).forEach(symbol => {
-        const data = allCoinData[symbol];
-        const marketPrice = currentMarketPrices[symbol] || 0;
-        
-        // حساب الكمية الإجمالية (الدخول + التعزيزات)
-        const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
-        const initialAmountDollars = parseFormattedNumber(data.initialAmountDollars);
-        const initialCoinQty = initialEntryPrice > 0 ? initialAmountDollars / initialEntryPrice : 0;
-        const initialSales = data.initialSales || [];
-        const initialTotalSoldQty = calculateTotalInitialSoldQty(initialSales);
-        const initialRemainingQty = Math.max(0, initialCoinQty - initialTotalSoldQty);
-        
-        let totalCoinQty = initialRemainingQty;
-        let totalInvestedAmount = initialCoinQty > 0 ? initialAmountDollars * (initialRemainingQty / initialCoinQty) : 0;
-        
-        (data.repurchases || []).forEach(rp => {
-            const repurchasePrice = parseFormattedNumber(rp.price);
-            const repurchaseAmount = parseFormattedNumber(rp.amount);
-            if (repurchasePrice > 0 && repurchaseAmount > 0) {
-                const repurchaseQty = repurchaseAmount / repurchasePrice;
-                const sales = rp.sales || [];
-                const totalSoldQty = calculateTotalSoldQty(sales);
-                const remainingQty = Math.max(0, repurchaseQty - totalSoldQty);
-                if (remainingQty > 0) {
-                    totalCoinQty += remainingQty;
-                    totalInvestedAmount += repurchaseAmount * (remainingQty / repurchaseQty);
-                }
-            }
-        });
-        
-        if (totalCoinQty > 0.00000001) {
-            const averageEntryPrice = totalCoinQty > 0 ? totalInvestedAmount / totalCoinQty : 0;
-            const currentValue = totalCoinQty * marketPrice;
-            const pnlAmount = currentValue - totalInvestedAmount;
-            const pnlPercent = totalInvestedAmount > 0 ? (pnlAmount / totalInvestedAmount) * 100 : 0;
-            
-            coinsData.push({
-                symbol: symbol,
-                totalCoinQty: totalCoinQty,
-                totalInvestedAmount: totalInvestedAmount,
-                averageEntryPrice: averageEntryPrice,
-                marketPrice: marketPrice,
-                currentValue: currentValue,
-                pnlAmount: pnlAmount,
-                pnlPercent: pnlPercent
-            });
-        }
-    });
-    
-    if (coinsData.length === 0) {
-        showError("لا توجد عملات بكميات متبقية للبيع");
-        return;
-    }
-    
-    // بناء الجدول
-    let tableHTML = `
-    <div class="estimate-info-box">
-        💡 أدخل السعر التقديري الذي تتوقع بيع العملة به، وسيتم حساب الربح المتوقع تلقائياً
-    </div>
-    <div class="estimate-table-container">
-        <table class="estimate-table" id="estimateTable">
-            <thead>
-                <tr>
-                    <th>العملة</th>
-                    <th>الكمية</th>
-                    <th>المستثمر $</th>
-                    <th>متوسط الدخول</th>
-                    <th>السعر الحالي</th>
-                    <th>القيمة الحالية $</th>
-                    <th>الربح/الخسارة $</th>
-                    <th>الربح/الخسارة %</th>
-                    <th>السعر التقديري</th>
-                    <th>الربح المتوقع $</th>
-                    <th>الربح المتوقع %</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-    
-    coinsData.forEach((coin, idx) => {
-        const pnlAmountClass = coin.pnlAmount > 0 ? 'pnl-positive' : (coin.pnlAmount < 0 ? 'pnl-negative' : '');
-        const pnlPercentClass = coin.pnlPercent > 0 ? 'pnl-positive' : (coin.pnlPercent < 0 ? 'pnl-negative' : '');
-        const marketPriceDisplay = coin.marketPrice > 0 ? formatNumber(coin.marketPrice, guessDecimalPlaces(coin.marketPrice)) : '---';
-        const currentValueDisplay = coin.marketPrice > 0 ? formatWithCommas(coin.currentValue, 2) : '---';
-        const pnlAmountDisplay = coin.marketPrice > 0 ? formatWithCommas(coin.pnlAmount, 2) : '---';
-        const pnlPercentDisplay = coin.marketPrice > 0 ? `${formatNumber(coin.pnlPercent, 2)}%` : '---';
-        
-        tableHTML += `
-            <tr data-symbol="${coin.symbol}" data-invested="${coin.totalInvestedAmount}" data-qty="${coin.totalCoinQty}">
-                <td style="font-weight: bold;">${coin.symbol}</td>
-                <td class="number-col">${formatNumber(coin.totalCoinQty, 4)}</td>
-                <td class="number-col">${formatWithCommas(coin.totalInvestedAmount, 2)}</td>
-                <td class="number-col">${formatNumber(coin.averageEntryPrice, guessDecimalPlaces(coin.averageEntryPrice))}</td>
-                <td class="number-col">${marketPriceDisplay}</td>
-                <td class="number-col">${currentValueDisplay}</td>
-                <td class="number-col ${pnlAmountClass}">${pnlAmountDisplay}</td>
-                <td class="number-col ${pnlPercentClass}">${pnlPercentDisplay}</td>
-                <td>
-                    <input type="text" 
-                           id="estimatePrice_${idx}" 
-                           class="estimate-price-input"
-                           placeholder="السعر التقديري" 
-                           value="${coin.marketPrice > 0 ? formatNumber(coin.marketPrice, guessDecimalPlaces(coin.marketPrice)) : ''}"
-                           oninput="validateNumberInput(this)"
-                           onblur="formatInputWithCommas(this); updateEstimateCalculation(${idx})"
-                           onfocus="removeCommasFromInput(this); updateEstimateCalculation(${idx})"
-                           inputmode="decimal">
-                </td>
-                <td class="number-col" id="estimatePnl_${idx}">---</td>
-                <td class="number-col" id="estimatePnlPercent_${idx}">---</td>
-            </tr>
-        `;
-    });
-    
-    tableHTML += `
-            </tbody>
-        </table>
-    </div>
-    <div class="estimate-summary" id="estimateSummary">
-        <h4>📊 الإجماليات التقديرية</h4>
-        <div class="estimate-summary-grid">
-            <div class="estimate-summary-item">
-                <label>إجمالي المستثمر</label>
-                <div class="value" id="estimateTotalInvested">${formatWithCommas(coinsData.reduce((s, c) => s + c.totalInvestedAmount, 0), 2)} $</div>
-            </div>
-            <div class="estimate-summary-item">
-                <label>إجمالي القيمة التقديرية</label>
-                <div class="value" id="estimateTotalValue">0.00 $</div>
-            </div>
-            <div class="estimate-summary-item">
-                <label>إجمالي الربح/الخسارة المتوقع</label>
-                <div class="value" id="estimateTotalPnl">0.00 $</div>
-            </div>
-            <div class="estimate-summary-item">
-                <label>نسبة الربح/الخسارة المتوقعة</label>
-                <div class="value" id="estimateTotalPnlPercent">0.00%</div>
-            </div>
-        </div>
-    </div>
-    `;
-    
-    showPopup(
-        '📊 البيع التقديري - حاسبة الأرباح المتوقعة',
-        tableHTML,
-        'إغلاق',
-        '',
-        () => {},
-        null
-    );
-    
-    // حساب الأرباح الأولية بناءً على السعر الحالي
-    coinsData.forEach((coin, idx) => {
-        updateEstimateCalculation(idx);
-    });
+if (Object.keys(allCoinData).length === 0) {
+showError("لا توجد عملات لعرضها");
+return;
 }
-
+const coinsData = [];
+Object.keys(allCoinData).forEach(symbol => {
+const data = allCoinData[symbol];
+const marketPrice = currentMarketPrices[symbol] || 0;
+const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
+const initialAmountDollars = parseFormattedNumber(data.initialAmountDollars);
+const initialCoinQty = initialEntryPrice > 0 ? initialAmountDollars / initialEntryPrice : 0;
+const initialSales = data.initialSales || [];
+const initialTotalSoldQty = calculateTotalInitialSoldQty(initialSales);
+const initialRemainingQty = Math.max(0, initialCoinQty - initialTotalSoldQty);
+let totalCoinQty = initialRemainingQty;
+let totalInvestedAmount = initialCoinQty > 0 ? initialAmountDollars * (initialRemainingQty / initialCoinQty) : 0;
+(data.repurchases || []).forEach(rp => {
+const repurchasePrice = parseFormattedNumber(rp.price);
+const repurchaseAmount = parseFormattedNumber(rp.amount);
+if (repurchasePrice > 0 && repurchaseAmount > 0) {
+const repurchaseQty = repurchaseAmount / repurchasePrice;
+const sales = rp.sales || [];
+const totalSoldQty = calculateTotalSoldQty(sales);
+const remainingQty = Math.max(0, repurchaseQty - totalSoldQty);
+if (remainingQty > 0) {
+totalCoinQty += remainingQty;
+totalInvestedAmount += repurchaseAmount * (remainingQty / repurchaseQty);
+}
+}
+});
+if (totalCoinQty > 0.00000001) {
+const averageEntryPrice = totalCoinQty > 0 ? totalInvestedAmount / totalCoinQty : 0;
+const currentValue = totalCoinQty * marketPrice;
+const pnlAmount = currentValue - totalInvestedAmount;
+const pnlPercent = totalInvestedAmount > 0 ? (pnlAmount / totalInvestedAmount) * 100 : 0;
+coinsData.push({
+symbol: symbol,
+totalCoinQty: totalCoinQty,
+totalInvestedAmount: totalInvestedAmount,
+averageEntryPrice: averageEntryPrice,
+marketPrice: marketPrice,
+currentValue: currentValue,
+pnlAmount: pnlAmount,
+pnlPercent: pnlPercent
+});
+}
+});
+if (coinsData.length === 0) {
+showError("لا توجد عملات بكميات متبقية للبيع");
+return;
+}
+let tableHTML = `
+<div class="estimate-info-box">
+💡 أدخل السعر التقديري الذي تتوقع بيع العملة به، وسيتم حساب الربح المتوقع تلقائياً.<br>
+<strong>ملاحظة:</strong> الأسعار التي تدخلها ستُحفظ تلقائياً، وعند فتح النافذة مرة أخرى ستجدها جاهزة.
+</div>
+<div class="estimate-table-container">
+<table class="estimate-table" id="estimateTable">
+<thead>
+<tr>
+<th>العملة</th>
+<th>الكمية</th>
+<th>المستثمر $</th>
+<th>متوسط الدخول</th>
+<th>السعر الحالي</th>
+<th>القيمة الحالية $</th>
+<th>الربح/الخسارة $</th>
+<th>الربح/الخسارة %</th>
+<th>السعر التقديري</th>
+<th>الربح المتوقع $</th>
+<th>الربح المتوقع %</th>
+</tr>
+</thead>
+<tbody>
+`;
+coinsData.forEach((coin, idx) => {
+const pnlAmountClass = coin.pnlAmount > 0 ? 'pnl-positive' : (coin.pnlAmount < 0 ? 'pnl-negative' : '');
+const pnlPercentClass = coin.pnlPercent > 0 ? 'pnl-positive' : (coin.pnlPercent < 0 ? 'pnl-negative' : '');
+const marketPriceDisplay = coin.marketPrice > 0 ? formatNumber(coin.marketPrice, guessDecimalPlaces(coin.marketPrice)) : '---';
+const currentValueDisplay = coin.marketPrice > 0 ? formatWithCommas(coin.currentValue, 2) : '---';
+const pnlAmountDisplay = coin.marketPrice > 0 ? formatWithCommas(coin.pnlAmount, 2) : '---';
+const pnlPercentDisplay = coin.marketPrice > 0 ? `${formatNumber(coin.pnlPercent, 2)}%` : '---';
+const savedEstimatePrice = savedEstimatePrices[coin.symbol] || 0;
+const estimateValue = savedEstimatePrice > 0 ? formatWithCommas(savedEstimatePrice, guessDecimalPlaces(savedEstimatePrice)) : (coin.marketPrice > 0 ? formatNumber(coin.marketPrice, guessDecimalPlaces(coin.marketPrice)) : '');
+tableHTML += `
+<tr data-symbol="${coin.symbol}" data-invested="${coin.totalInvestedAmount}" data-qty="${coin.totalCoinQty}">
+<td style="font-weight: bold;">${coin.symbol}</td>
+<td class="number-col">${formatNumber(coin.totalCoinQty, 4)}</td>
+<td class="number-col">${formatWithCommas(coin.totalInvestedAmount, 2)}</td>
+<td class="number-col">${formatNumber(coin.averageEntryPrice, guessDecimalPlaces(coin.averageEntryPrice))}</td>
+<td class="number-col">${marketPriceDisplay}</td>
+<td class="number-col">${currentValueDisplay}</td>
+<td class="number-col ${pnlAmountClass}">${pnlAmountDisplay}</td>
+<td class="number-col ${pnlPercentClass}">${pnlPercentDisplay}</td>
+<td>
+<input type="text"
+id="estimatePrice_${idx}"
+class="estimate-price-input"
+placeholder="السعر التقديري"
+value="${estimateValue}"
+oninput="validateNumberInput(this)"
+onblur="formatInputWithCommas(this); saveEstimatePriceForSymbol('${coin.symbol}', ${idx}); updateEstimateCalculation(${idx})"
+onfocus="removeCommasFromInput(this)"
+inputmode="decimal">
+</td>
+<td class="number-col" id="estimatePnl_${idx}">---</td>
+<td class="number-col" id="estimatePnlPercent_${idx}">---</td>
+</tr>
+`;
+});
+tableHTML += `
+</tbody>
+</table>
+</div>
+<div class="estimate-summary" id="estimateSummary">
+<h4>📊 الإجماليات التقديرية</h4>
+<div class="estimate-summary-grid">
+<div class="estimate-summary-item">
+<label>إجمالي المستثمر</label>
+<div class="value" id="estimateTotalInvested">${formatWithCommas(coinsData.reduce((s, c) => s + c.totalInvestedAmount, 0), 2)} $</div>
+</div>
+<div class="estimate-summary-item">
+<label>إجمالي القيمة التقديرية</label>
+<div class="value" id="estimateTotalValue">0.00 $</div>
+</div>
+<div class="estimate-summary-item">
+<label>إجمالي الربح/الخسارة المتوقع</label>
+<div class="value" id="estimateTotalPnl">0.00 $</div>
+</div>
+<div class="estimate-summary-item">
+<label>نسبة الربح/الخسارة المتوقعة</label>
+<div class="value" id="estimateTotalPnlPercent">0.00%</div>
+</div>
+</div>
+</div>
+<div class="estimate-actions">
+<button class="estimate-save-btn" onclick="saveAllEstimatePrices()">💾 حفظ جميع الأسعار</button>
+<button class="estimate-clear-btn" onclick="clearAllEstimatePrices()">🗑️ مسح جميع الأسعار التقديرية</button>
+</div>
+`;
+showPopup(
+'📊 البيع التقديري - حاسبة الأرباح المتوقعة',
+tableHTML,
+'إغلاق',
+'',
+() => {
+saveAllEstimatePrices();
+},
+null
+);
+coinsData.forEach((coin, idx) => {
+updateEstimateCalculation(idx);
+});
+}
+function saveEstimatePriceForSymbol(symbol, idx) {
+const estimatePriceInput = document.getElementById(`estimatePrice_${idx}`);
+const estimatePrice = parseFormattedNumber(estimatePriceInput?.value);
+if (estimatePrice > 0) {
+savedEstimatePrices[symbol] = estimatePrice;
+} else {
+delete savedEstimatePrices[symbol];
+}
+saveEstimatePrices();
+}
+function saveAllEstimatePrices() {
+const allRows = document.querySelectorAll('#estimateTable tbody tr');
+allRows.forEach((row, idx) => {
+const symbol = row.dataset.symbol;
+const estimatePriceInput = document.getElementById(`estimatePrice_${idx}`);
+const estimatePrice = parseFormattedNumber(estimatePriceInput?.value);
+if (estimatePrice > 0) {
+savedEstimatePrices[symbol] = estimatePrice;
+}
+});
+saveEstimatePrices();
+showSuccess('✅ تم حفظ جميع الأسعار التقديرية بنجاح');
+}
+function clearAllEstimatePrices() {
+showConfirm('هل تريد مسح جميع الأسعار التقديرية المحفوظة؟', () => {
+savedEstimatePrices = {};
+saveEstimatePrices();
+const allRows = document.querySelectorAll('#estimateTable tbody tr');
+allRows.forEach((row, idx) => {
+const estimatePriceInput = document.getElementById(`estimatePrice_${idx}`);
+if (estimatePriceInput) {
+estimatePriceInput.value = '';
+updateEstimateCalculation(idx);
+}
+});
+showSuccess('تم مسح جميع الأسعار التقديرية');
+});
+}
 function updateEstimateCalculation(idx) {
-    const row = document.querySelector(`#estimateTable tr[data-symbol]`);
-    const allRows = document.querySelectorAll('#estimateTable tbody tr');
-    const rowElement = allRows[idx];
-    if (!rowElement) return;
-    
-    const invested = parseFloat(rowElement.dataset.invested) || 0;
-    const qty = parseFloat(rowElement.dataset.qty) || 0;
-    const estimatePriceInput = document.getElementById(`estimatePrice_${idx}`);
-    const estimatePrice = parseFormattedNumber(estimatePriceInput?.value);
-    
-    const estimatePnlCell = document.getElementById(`estimatePnl_${idx}`);
-    const estimatePnlPercentCell = document.getElementById(`estimatePnlPercent_${idx}`);
-    
-    if (estimatePrice > 0 && qty > 0) {
-        const estimatedValue = qty * estimatePrice;
-        const estimatedPnl = estimatedValue - invested;
-        const estimatedPnlPercent = invested > 0 ? (estimatedPnl / invested) * 100 : 0;
-        
-        const pnlClass = estimatedPnl > 0 ? 'pnl-positive' : (estimatedPnl < 0 ? 'pnl-negative' : '');
-        
-        if (estimatePnlCell) {
-            estimatePnlCell.textContent = formatWithCommas(estimatedPnl, 2);
-            estimatePnlCell.className = `number-col ${pnlClass}`;
-        }
-        if (estimatePnlPercentCell) {
-            estimatePnlPercentCell.textContent = `${formatNumber(estimatedPnlPercent, 2)}%`;
-            estimatePnlPercentCell.className = `number-col ${pnlClass}`;
-        }
-    } else {
-        if (estimatePnlCell) {
-            estimatePnlCell.textContent = '---';
-            estimatePnlCell.className = 'number-col';
-        }
-        if (estimatePnlPercentCell) {
-            estimatePnlPercentCell.textContent = '---';
-            estimatePnlPercentCell.className = 'number-col';
-        }
-    }
-    
-    // تحديث الإجماليات
-    updateEstimateTotals();
+const allRows = document.querySelectorAll('#estimateTable tbody tr');
+const rowElement = allRows[idx];
+if (!rowElement) return;
+const invested = parseFloat(rowElement.dataset.invested) || 0;
+const qty = parseFloat(rowElement.dataset.qty) || 0;
+const estimatePriceInput = document.getElementById(`estimatePrice_${idx}`);
+const estimatePrice = parseFormattedNumber(estimatePriceInput?.value);
+const estimatePnlCell = document.getElementById(`estimatePnl_${idx}`);
+const estimatePnlPercentCell = document.getElementById(`estimatePnlPercent_${idx}`);
+if (estimatePrice > 0 && qty > 0) {
+const estimatedValue = qty * estimatePrice;
+const estimatedPnl = estimatedValue - invested;
+const estimatedPnlPercent = invested > 0 ? (estimatedPnl / invested) * 100 : 0;
+const pnlClass = estimatedPnl > 0 ? 'pnl-positive' : (estimatedPnl < 0 ? 'pnl-negative' : '');
+if (estimatePnlCell) {
+estimatePnlCell.textContent = formatWithCommas(estimatedPnl, 2);
+estimatePnlCell.className = `number-col ${pnlClass}`;
 }
-
+if (estimatePnlPercentCell) {
+estimatePnlPercentCell.textContent = `${formatNumber(estimatedPnlPercent, 2)}%`;
+estimatePnlPercentCell.className = `number-col ${pnlClass}`;
+}
+} else {
+if (estimatePnlCell) {
+estimatePnlCell.textContent = '---';
+estimatePnlCell.className = 'number-col';
+}
+if (estimatePnlPercentCell) {
+estimatePnlPercentCell.textContent = '---';
+estimatePnlPercentCell.className = 'number-col';
+}
+}
+updateEstimateTotals();
+}
 function updateEstimateTotals() {
-    const allRows = document.querySelectorAll('#estimateTable tbody tr');
-    let totalInvested = 0;
-    let totalValue = 0;
-    let totalPnl = 0;
-    
-    allRows.forEach((row, idx) => {
-        const invested = parseFloat(row.dataset.invested) || 0;
-        const qty = parseFloat(row.dataset.qty) || 0;
-        const estimatePriceInput = document.getElementById(`estimatePrice_${idx}`);
-        const estimatePrice = parseFormattedNumber(estimatePriceInput?.value);
-        
-        totalInvested += invested;
-        if (estimatePrice > 0 && qty > 0) {
-            const estimatedValue = qty * estimatePrice;
-            totalValue += estimatedValue;
-            totalPnl += (estimatedValue - invested);
-        }
-    });
-    
-    const totalPnlPercent = totalInvested > 0 ? (totalPnl / totalInvested) * 100 : 0;
-    
-    const totalInvestedEl = document.getElementById('estimateTotalInvested');
-    const totalValueEl = document.getElementById('estimateTotalValue');
-    const totalPnlEl = document.getElementById('estimateTotalPnl');
-    const totalPnlPercentEl = document.getElementById('estimateTotalPnlPercent');
-    
-    if (totalInvestedEl) totalInvestedEl.textContent = `${formatWithCommas(totalInvested, 2)} $`;
-    if (totalValueEl) totalValueEl.textContent = `${formatWithCommas(totalValue, 2)} $`;
-    
-    if (totalPnlEl) {
-        totalPnlEl.textContent = `${formatWithCommas(totalPnl, 2)} $`;
-        totalPnlEl.className = `value ${totalPnl > 0 ? 'positive' : (totalPnl < 0 ? 'negative' : '')}`;
-    }
-    
-    if (totalPnlPercentEl) {
-        totalPnlPercentEl.textContent = `${formatNumber(totalPnlPercent, 2)}%`;
-        totalPnlPercentEl.className = `value ${totalPnlPercent > 0 ? 'positive' : (totalPnlPercent < 0 ? 'negative' : '')}`;
-    }
+const allRows = document.querySelectorAll('#estimateTable tbody tr');
+let totalInvested = 0;
+let totalValue = 0;
+let totalPnl = 0;
+allRows.forEach((row, idx) => {
+const invested = parseFloat(row.dataset.invested) || 0;
+const qty = parseFloat(row.dataset.qty) || 0;
+const estimatePriceInput = document.getElementById(`estimatePrice_${idx}`);
+const estimatePrice = parseFormattedNumber(estimatePriceInput?.value);
+totalInvested += invested;
+if (estimatePrice > 0 && qty > 0) {
+const estimatedValue = qty * estimatePrice;
+totalValue += estimatedValue;
+totalPnl += (estimatedValue - invested);
 }
-
-// ============================================================
-// ✅ 29. ترحيل البيانات القديمة
-// ============================================================
+});
+const totalPnlPercent = totalInvested > 0 ? (totalPnl / totalInvested) * 100 : 0;
+const totalInvestedEl = document.getElementById('estimateTotalInvested');
+const totalValueEl = document.getElementById('estimateTotalValue');
+const totalPnlEl = document.getElementById('estimateTotalPnl');
+const totalPnlPercentEl = document.getElementById('estimateTotalPnlPercent');
+if (totalInvestedEl) totalInvestedEl.textContent = `${formatWithCommas(totalInvested, 2)} $`;
+if (totalValueEl) totalValueEl.textContent = `${formatWithCommas(totalValue, 2)} $`;
+if (totalPnlEl) {
+totalPnlEl.textContent = `${formatWithCommas(totalPnl, 2)} $`;
+totalPnlEl.className = `value ${totalPnl > 0 ? 'positive' : (totalPnl < 0 ? 'negative' : '')}`;
+}
+if (totalPnlPercentEl) {
+totalPnlPercentEl.textContent = `${formatNumber(totalPnlPercent, 2)}%`;
+totalPnlPercentEl.className = `value ${totalPnlPercent > 0 ? 'positive' : (totalPnlPercent < 0 ? 'negative' : '')}`;
+}
+}
 function migrateOldData() {
 let migrated = false;
 for (const symbol in allCoinData) {
@@ -5774,9 +4358,51 @@ saveAllDataToLocalStorage();
 console.log('✅ تم ترحيل البيانات القديمة وإضافة saleId للمبيعات');
 }
 }
-// ============================================================
-// 30. تهيئة الصفحة
-// ============================================================
+let refreshObserver = null;
+function setupFloatingRefreshButton() {
+const refreshBtn = document.getElementById('refreshPriceBtn');
+const floatingBtn = document.getElementById('floatingRefreshBtn');
+if (!refreshBtn || !floatingBtn) return;
+if ('IntersectionObserver' in window) {
+refreshObserver = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+floatingBtn.classList.remove('visible');
+} else {
+floatingBtn.classList.add('visible');
+}
+});
+}, {
+root: null,
+rootMargin: '0px',
+threshold: 0.1
+});
+refreshObserver.observe(refreshBtn);
+} else {
+window.addEventListener('scroll', () => {
+const rect = refreshBtn.getBoundingClientRect();
+const isVisible = (
+rect.top >= 0 &&
+rect.left >= 0 &&
+rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+);
+if (isVisible) {
+floatingBtn.classList.remove('visible');
+} else {
+floatingBtn.classList.add('visible');
+}
+});
+}
+}
+function handleFloatingRefreshClick() {
+const floatingBtn = document.getElementById('floatingRefreshBtn');
+if (!floatingBtn) return;
+floatingBtn.classList.add('loading');
+setTimeout(() => {
+location.reload();
+}, 300);
+}
 document.addEventListener('DOMContentLoaded', function() {
 loadThemePreference();
 loadAllDataFromLocalStorage();
@@ -5784,6 +4410,7 @@ loadCashFromStorage();
 loadExpandedCoins();
 loadSectionStates();
 applyColorSettings();
+loadSavedEstimatePrices();
 migrateOldData();
 updateCoinSelector();
 const importInput = document.getElementById('importTxtFile');
@@ -5798,6 +4425,7 @@ handleCoinSelectionChange();
 } else clearUIFields();
 if (autoRefreshCheckbox.checked) startAutoRefresh();
 });
+setupFloatingRefreshButton();
 }, 1000);
 autoRefreshCheckbox.addEventListener('change', handleAutoRefreshToggle);
 newCoinNameInput.addEventListener('keypress', (e) => {
