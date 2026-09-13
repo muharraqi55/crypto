@@ -185,40 +185,14 @@ width: 22px;
 height: 22px;
 border-radius: 50%;
 }
-.ticker-symbol {
-font-weight: 700;
-color: var(--text-color);
-}
-.ticker-price {
-font-family: "Courier New", monospace;
-color: var(--text-muted);
-direction: ltr;
-}
-.ticker-change {
-font-size: 12px;
-font-weight: 700;
-padding: 2px 6px;
-border-radius: 6px;
-direction: ltr;
-}
-.ticker-change.up {
-color: #059669;
-background: #d1fae5;
-}
-.ticker-change.down {
-color: #dc2626;
-background: #fee2e2;
-}
-.dark-mode .ticker-change.up {
-color: #4ade80;
-background: rgba(25, 135, 84, 0.25);
-}
-.dark-mode .ticker-change.down {
-color: #f87171;
-background: rgba(220, 53, 69, 0.25);
-}
+.ticker-symbol { font-weight: 700; color: var(--text-color); }
+.ticker-price { font-family: "Courier New", monospace; color: var(--text-muted); direction: ltr; }
+.ticker-change { font-size: 12px; font-weight: 700; padding: 2px 6px; border-radius: 6px; direction: ltr; }
+.ticker-change.up { color: #059669; background: #d1fae5; }
+.ticker-change.down { color: #dc2626; background: #fee2e2; }
+.dark-mode .ticker-change.up { color: #4ade80; background: rgba(25, 135, 84, 0.25); }
+.dark-mode .ticker-change.down { color: #f87171; background: rgba(220, 53, 69, 0.25); }
 
-/* skeleton أثناء التحميل */
 .ticker-skeleton {
 display: inline-flex;
 align-items: center;
@@ -267,10 +241,7 @@ transition: all 0.3s ease;
 position: relative;
 overflow: hidden;
 }
-.market-insight-card:hover {
-transform: translateY(-3px);
-box-shadow: 0 8px 20px var(--shadow-color);
-}
+.market-insight-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px var(--shadow-color); }
 .market-insight-card::before {
 content: '';
 position: absolute;
@@ -307,16 +278,9 @@ margin-top: 5px;
 }
 .mi-change.up { background: rgba(25, 135, 84, 0.15); color: var(--positive-color); }
 .mi-change.down { background: rgba(220, 53, 69, 0.15); color: var(--negative-color); }
-.mi-sparkline {
-margin-top: 10px;
-height: 40px;
-}
+.mi-sparkline { margin-top: 10px; height: 40px; }
 .mi-sparkline svg { width: 100%; height: 100%; }
-.mi-fng-gauge {
-position: relative;
-height: 100px;
-margin-top: 10px;
-}
+.mi-fng-gauge { position: relative; height: 100px; margin-top: 10px; }
 .mi-fng-center {
 position: absolute;
 top: 50%;
@@ -326,12 +290,7 @@ text-align: center;
 }
 .mi-fng-value { font-size: 1.8em; font-weight: bold; color: var(--text-color); }
 .mi-fng-label { font-size: 0.85em; color: var(--text-muted); }
-.mi-scale {
-display: flex;
-align-items: center;
-gap: 10px;
-margin-top: 10px;
-}
+.mi-scale { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
 .mi-scale-track {
 flex: 1;
 height: 8px;
@@ -350,6 +309,75 @@ border: 3px solid var(--primary-color);
 border-radius: 50%;
 box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
+
+/* ═══════════════════════════════════════════════════════
+   ✅ حاسبة المخاطر — حاوية الوصلات
+   ═══════════════════════════════════════════════════════ */
+.risk-calculator-section {
+background-color: var(--section-bg);
+padding: 20px 25px;
+margin-bottom: 25px;
+border-radius: 10px;
+box-shadow: 0 4px 12px var(--shadow-color);
+border: 1px solid var(--border-color);
+transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.risk-calculator-card {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+padding: 25px;
+border-radius: 12px;
+margin-bottom: 20px;
+text-align: center;
+}
+.risk-calculator-card .icon { font-size: 3em; margin-bottom: 10px; }
+.risk-calculator-card .title { font-size: 1.3em; font-weight: bold; margin-bottom: 8px; }
+.risk-calculator-card .subtitle { font-size: 0.95em; opacity: 0.9; }
+.risk-links-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 15px;
+}
+.risk-link-btn {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+padding: 18px;
+color: white;
+text-decoration: none;
+border-radius: 10px;
+font-weight: 600;
+font-size: 1em;
+transition: all 0.3s ease;
+cursor: pointer;
+}
+.risk-link-btn.green {
+background: linear-gradient(135deg, #28a745, #20c997);
+box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+.risk-link-btn.green:hover {
+transform: translateY(-3px);
+box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
+}
+.risk-link-btn.purple {
+background: linear-gradient(135deg, #667eea, #764ba2);
+box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+.risk-link-btn.purple:hover {
+transform: translateY(-3px);
+box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+.risk-link-btn .icon { font-size: 1.5em; }
+.risk-note {
+margin-top: 20px;
+padding: 15px;
+background: var(--output-field-bg);
+border-radius: 8px;
+border-right: 4px solid var(--primary-color);
+}
+.risk-note strong { color: var(--primary-color); }
+.risk-note span { color: var(--text-color); }
 
 .profile-modal-overlay {
 position: fixed;
@@ -422,11 +450,7 @@ font-weight: bold;
 color: var(--primary-color);
 font-family: 'Roboto Mono', monospace;
 }
-.profile-stat-label {
-font-size: 0.75em;
-color: var(--text-muted);
-margin-top: 3px;
-}
+.profile-stat-label { font-size: 0.75em; color: var(--text-muted); margin-top: 3px; }
 .profile-menu { padding: 15px; }
 .profile-menu-item {
 display: flex;
@@ -443,10 +467,7 @@ width: 100%;
 text-align: right;
 font-size: 0.95em;
 }
-.profile-menu-item:hover {
-background: var(--hover-bg);
-transform: translateX(-5px);
-}
+.profile-menu-item:hover { background: var(--hover-bg); transform: translateX(-5px); }
 .profile-menu-item .icon {
 width: 36px;
 height: 36px;
@@ -643,10 +664,7 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 }
-.notif-tabs {
-display: flex;
-border-bottom: 1px solid var(--border-color);
-}
+.notif-tabs { display: flex; border-bottom: 1px solid var(--border-color); }
 .notif-tab {
 flex: 1;
 padding: 12px;
@@ -666,11 +684,7 @@ border-right: none;
 color: var(--primary-color);
 border-bottom-color: var(--primary-color);
 }
-.notif-list {
-max-height: 350px;
-overflow-y: auto;
-padding: 10px;
-}
+.notif-list { max-height: 350px; overflow-y: auto; padding: 10px; }
 .notif-item {
 padding: 12px;
 border-radius: 10px;
@@ -679,35 +693,15 @@ background: var(--bg-color);
 border: 1px solid var(--border-color);
 transition: all 0.2s ease;
 }
-.notif-item:hover {
-border-color: var(--primary-color);
-transform: translateX(-3px);
-}
+.notif-item:hover { border-color: var(--primary-color); transform: translateX(-3px); }
 .notif-item.unread {
 background: rgba(0, 86, 179, 0.05);
 border-right: 3px solid var(--primary-color);
 }
-.notif-title {
-font-weight: 600;
-margin-bottom: 4px;
-color: var(--text-color);
-font-size: 0.9em;
-}
-.notif-message {
-font-size: 0.8em;
-color: var(--text-muted);
-margin-bottom: 4px;
-}
-.notif-time {
-font-size: 0.7em;
-color: var(--text-muted);
-}
-.notif-empty {
-text-align: center;
-padding: 40px 20px;
-color: var(--text-muted);
-font-style: italic;
-}
+.notif-title { font-weight: 600; margin-bottom: 4px; color: var(--text-color); font-size: 0.9em; }
+.notif-message { font-size: 0.8em; color: var(--text-muted); margin-bottom: 4px; }
+.notif-time { font-size: 0.7em; color: var(--text-muted); }
+.notif-empty { text-align: center; padding: 40px 20px; color: var(--text-muted); font-style: italic; }
 
 .price-alerts-modal {
 background: var(--section-bg);
@@ -728,12 +722,7 @@ justify-content: space-between;
 align-items: center;
 }
 .alert-form { padding: 20px; }
-.alert-form-row {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 12px;
-margin-bottom: 15px;
-}
+.alert-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
 .alert-list-item {
 display: flex;
 justify-content: space-between;
@@ -744,12 +733,7 @@ border: 1px solid var(--border-color);
 border-radius: 10px;
 margin-bottom: 8px;
 }
-.alert-badge {
-padding: 3px 10px;
-border-radius: 12px;
-font-size: 0.75em;
-font-weight: bold;
-}
+.alert-badge { padding: 3px 10px; border-radius: 12px; font-size: 0.75em; font-weight: bold; }
 .alert-badge.above { background: rgba(25, 135, 84, 0.15); color: var(--positive-color); }
 .alert-badge.below { background: rgba(220, 53, 69, 0.15); color: var(--negative-color); }
 .alert-badge.tp { background: rgba(0, 86, 179, 0.15); color: var(--primary-color); }
@@ -786,10 +770,7 @@ transition: all 0.2s ease;
 background: var(--bg-color);
 }
 .exchange-option:hover { border-color: var(--primary-color); }
-.exchange-option.selected {
-border-color: var(--primary-color);
-background: rgba(0, 86, 179, 0.1);
-}
+.exchange-option.selected { border-color: var(--primary-color); background: rgba(0, 86, 179, 0.1); }
 .exchange-option-icon { font-size: 2em; margin-bottom: 5px; }
 .exchange-option-name { font-weight: 600; font-size: 0.85em; }
 
@@ -833,12 +814,7 @@ font-weight: bold;
 margin-bottom: 8px;
 color: var(--text-color);
 }
-.update-popup-version {
-text-align: center;
-color: var(--text-muted);
-font-size: 0.9em;
-margin-bottom: 15px;
-}
+.update-popup-version { text-align: center; color: var(--text-muted); font-size: 0.9em; margin-bottom: 15px; }
 .update-popup-notes {
 background: var(--bg-color);
 border-radius: 10px;
@@ -868,23 +844,10 @@ font-size: 0.85em;
 transition: all 0.3s ease;
 color: var(--text-color);
 }
-.financial-privacy-toggle:hover {
-transform: translateY(-3px);
-box-shadow: 0 6px 20px var(--shadow-color);
-}
-.financial-privacy-toggle.active {
-background: var(--primary-color);
-color: white;
-border-color: var(--primary-color);
-}
-body.financial-privacy .sensitive-value {
-filter: blur(8px);
-user-select: none;
-transition: filter 0.3s ease;
-}
-body.financial-privacy .sensitive-value:hover {
-filter: blur(0);
-}
+.financial-privacy-toggle:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow-color); }
+.financial-privacy-toggle.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+body.financial-privacy .sensitive-value { filter: blur(8px); user-select: none; transition: filter 0.3s ease; }
+body.financial-privacy .sensitive-value:hover { filter: blur(0); }
 
 .advanced-charts-section {
 background: var(--section-bg);
@@ -908,9 +871,7 @@ border-radius: 12px;
 padding: 20px;
 transition: all 0.3s ease;
 }
-.chart-card:hover {
-box-shadow: 0 6px 20px var(--shadow-color);
-}
+.chart-card:hover { box-shadow: 0 6px 20px var(--shadow-color); }
 .chart-card-header {
 display: flex;
 justify-content: space-between;
@@ -919,20 +880,9 @@ margin-bottom: 15px;
 padding-bottom: 12px;
 border-bottom: 1px solid var(--border-color);
 }
-.chart-card-title {
-font-size: 1.1em;
-font-weight: bold;
-color: var(--text-color);
-}
-.chart-card-subtitle {
-font-size: 0.8em;
-color: var(--text-muted);
-margin-top: 3px;
-}
-.chart-ranges {
-display: flex;
-gap: 5px;
-}
+.chart-card-title { font-size: 1.1em; font-weight: bold; color: var(--text-color); }
+.chart-card-subtitle { font-size: 0.8em; color: var(--text-muted); margin-top: 3px; }
+.chart-ranges { display: flex; gap: 5px; }
 .chart-range-btn {
 padding: 5px 12px;
 border: 1px solid var(--border-color);
@@ -945,11 +895,7 @@ color: var(--text-muted);
 transition: all 0.2s ease;
 }
 .chart-range-btn:hover { border-color: var(--primary-color); }
-.chart-range-btn.active {
-background: var(--primary-color);
-color: white;
-border-color: var(--primary-color);
-}
+.chart-range-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
 .chart-metrics {
 display: grid;
 grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -985,35 +931,16 @@ transform: translate(-50%, -50%);
 text-align: center;
 pointer-events: none;
 }
-.donut-center-label {
-font-size: 0.75em;
-color: var(--text-muted);
-}
+.donut-center-label { font-size: 0.75em; color: var(--text-muted); }
 .donut-center-value {
 font-size: 1.4em;
 font-weight: bold;
 color: var(--text-color);
 font-family: 'Roboto Mono', monospace;
 }
-.chart-legend {
-display: flex;
-flex-wrap: wrap;
-gap: 10px;
-margin-top: 15px;
-justify-content: center;
-}
-.legend-item {
-display: flex;
-align-items: center;
-gap: 6px;
-font-size: 0.8em;
-color: var(--text-color);
-}
-.legend-color {
-width: 12px;
-height: 12px;
-border-radius: 3px;
-}
+.chart-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; justify-content: center; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.8em; color: var(--text-color); }
+.legend-color { width: 12px; height: 12px; border-radius: 3px; }
 
 .quick-actions-bar {
 position: fixed;
@@ -1040,10 +967,7 @@ transition: all 0.3s ease;
 color: var(--text-color);
 position: relative;
 }
-.quick-action-btn:hover {
-transform: scale(1.1) rotate(5deg);
-box-shadow: 0 6px 20px var(--shadow-color);
-}
+.quick-action-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 6px 20px var(--shadow-color); }
 .quick-action-tooltip {
 position: absolute;
 right: 60px;
@@ -1057,10 +981,7 @@ opacity: 0;
 pointer-events: none;
 transition: all 0.2s ease;
 }
-.quick-action-btn:hover .quick-action-tooltip {
-opacity: 1;
-right: 65px;
-}
+.quick-action-btn:hover .quick-action-tooltip { opacity: 1; right: 65px; }
 
 .pro-footer {
 background: linear-gradient(135deg, var(--dark-header-bg), #1a1a1a);
@@ -1086,17 +1007,8 @@ background: linear-gradient(135deg, #4dabf7, #74c0fc);
 -webkit-text-fill-color: transparent;
 background-clip: text;
 }
-.footer-tagline {
-color: #adb5bd;
-font-size: 0.9em;
-line-height: 1.6;
-margin-bottom: 15px;
-}
-.footer-chips {
-display: flex;
-flex-wrap: wrap;
-gap: 8px;
-}
+.footer-tagline { color: #adb5bd; font-size: 0.9em; line-height: 1.6; margin-bottom: 15px; }
+.footer-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .footer-chip {
 background: rgba(255,255,255,0.1);
 padding: 5px 12px;
@@ -1111,11 +1023,7 @@ color: white;
 border-bottom: 1px solid rgba(255,255,255,0.1);
 padding-bottom: 8px;
 }
-.footer-links {
-list-style: none;
-padding: 0;
-margin: 0;
-}
+.footer-links { list-style: none; padding: 0; margin: 0; }
 .footer-links li { margin-bottom: 8px; }
 .footer-links a {
 color: #adb5bd;
@@ -1126,10 +1034,7 @@ display: inline-flex;
 align-items: center;
 gap: 8px;
 }
-.footer-links a:hover {
-color: white;
-transform: translateX(-5px);
-}
+.footer-links a:hover { color: white; transform: translateX(-5px); }
 .footer-bottom {
 text-align: center;
 padding-top: 20px;
@@ -1152,10 +1057,7 @@ transition: all 0.2s ease;
 font-size: 0.85em;
 font-weight: 600;
 }
-.profile-btn:hover {
-background: rgba(255,255,255,0.2);
-transform: translateY(-1px);
-}
+.profile-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
 .profile-btn-avatar {
 width: 28px;
 height: 28px;
@@ -1183,10 +1085,7 @@ color: white;
 font-size: 1em;
 transition: all 0.2s ease;
 }
-.notification-bell:hover {
-background: rgba(255,255,255,0.2);
-transform: rotate(15deg);
-}
+.notification-bell:hover { background: rgba(255,255,255,0.2); transform: rotate(15deg); }
 .notification-badge {
 position: absolute;
 top: -5px;
@@ -1233,22 +1132,14 @@ animation: fabPulse 3s ease-in-out infinite;
 0%, 100% { box-shadow: 0 4px 20px rgba(232, 62, 140, 0.4); }
 50% { box-shadow: 0 4px 30px rgba(232, 62, 140, 0.7); }
 }
-.donate-fab:hover {
-transform: scale(1.1) rotate(10deg);
-}
+.donate-fab:hover { transform: scale(1.1) rotate(10deg); }
 
-.dark-mode .crypto-ticker-wrap {
-background: var(--section-bg);
-}
-.dark-mode .market-insight-card {
-background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
-}
+.dark-mode .crypto-ticker-wrap { background: var(--section-bg); }
+.dark-mode .market-insight-card { background: linear-gradient(135deg, #1e1e1e, #2a2a2a); }
 .dark-mode .profile-header,
 .dark-mode .bug-header,
 .dark-mode .alerts-header,
-.dark-mode .exchange-header {
-filter: brightness(0.9);
-}
+.dark-mode .exchange-header { filter: brightness(0.9); }
 
 @media (max-width: 768px) {
 .ticker-item { padding: 4px 10px; font-size: 12px; gap: 6px; }
@@ -1256,11 +1147,8 @@ filter: brightness(0.9);
 .ticker-skeleton { padding: 4px 10px; }
 .skeleton-icon { width: 18px; height: 18px; }
 .market-insights-grid { grid-template-columns: 1fr; }
-.notification-center {
-width: calc(100% - 40px);
-left: 20px;
-right: 20px;
-}
+.risk-links-grid { grid-template-columns: 1fr; }
+.notification-center { width: calc(100% - 40px); left: 20px; right: 20px; }
 .charts-grid { grid-template-columns: 1fr; }
 .quick-actions-bar { bottom: 70px; left: 10px; }
 .quick-action-btn { width: 45px; height: 45px; font-size: 1.1em; }
@@ -1291,21 +1179,13 @@ display: none;
 align-items: center;
 justify-content: center;
 }
-.floating-refresh-btn.visible {
-display: flex;
-animation: floatIn 0.4s ease-out;
-}
+.floating-refresh-btn.visible { display: flex; animation: floatIn 0.4s ease-out; }
 @keyframes floatIn {
 from { opacity: 0; transform: translateX(-20px) scale(0.8); }
 to { opacity: 1; transform: translateX(0) scale(1); }
 }
-.floating-refresh-btn:hover {
-transform: scale(1.1);
-box-shadow: 0 6px 20px rgba(25, 135, 84, 0.6);
-}
-.floating-refresh-btn:hover .refresh-icon {
-animation: spin 0.8s ease-in-out;
-}
+.floating-refresh-btn:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(25, 135, 84, 0.6); }
+.floating-refresh-btn:hover .refresh-icon { animation: spin 0.8s ease-in-out; }
 @keyframes spin {
 from { transform: rotate(0deg); }
 to { transform: rotate(360deg); }
@@ -1826,7 +1706,6 @@ h2 { font-size: 1.05em; }
 <div class="crypto-ticker-wrap">
 <div class="ticker-scroll" id="cryptoTicker" data-dashboard-loading-scope="boot ticker">
 
-<!-- عناصر الهيكل (Skeleton) أثناء التحميل -->
 <div class="ticker-skeleton">
 <div class="skeleton-icon"></div>
 <div class="skeleton-text" style="width: 40px;"></div>
@@ -2062,6 +1941,49 @@ h2 { font-size: 1.05em; }
 </div>
 </section>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════
+     🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول) للمضاربة
+     ═══════════════════════════════════════════════════════ -->
+<section class="risk-calculator-section card-hover section-custom" id="section-riskCalculator">
+<div class="section-header">
+<h2>🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول) للمضاربة</h2>
+<button class="toggle-btn" onclick="toggleSection('riskCalculator')">طي</button>
+</div>
+<div class="section-content" id="riskCalculatorSectionContent">
+
+<!-- ─────────── بطاقة الوصف ─────────── -->
+<div class="risk-calculator-card">
+<div class="icon">🧮</div>
+<div class="title">حاسبة إدارة المخاطر الاحترافية</div>
+<div class="subtitle">احسب حجم المركز، وقف الخسارة، والرافعة المالية المثالية قبل الدخول</div>
+</div>
+
+<!-- ─────────── أزرار الفتح ─────────── -->
+<div class="risk-links-grid">
+
+<!-- الزر 1: فتح في نفس التبويب -->
+<a href="risk-calculator.html" class="risk-link-btn green">
+<span class="icon">🧮</span>
+<span>افتح الحاسبة</span>
+</a>
+
+<!-- الزر 2: فتح في تبويب جديد -->
+<a href="risk-calculator.html" target="_blank" rel="noopener noreferrer" class="risk-link-btn purple">
+<span class="icon">🪟</span>
+<span>افتح في نافذة جديدة</span>
+</a>
+
+</div>
+
+<!-- ─────────── ملاحظة ─────────── -->
+<div class="risk-note">
+<strong>💡 ملاحظة:</strong>
+<span> الحاسبة تفتح في صفحة منفصلة لتعمل بشكل مستقل دون التأثير على بيانات صفقاتك.</span>
+</div>
+
+</div>
+</section>
 
 <section class="overall-summary-section card-hover section-custom" id="section-summary">
 <div class="section-header summary-header-with-btn">
@@ -2352,6 +2274,7 @@ h2 { font-size: 1.05em; }
 <li>💎 وضع الخصوصية المالية</li>
 <li>⚙️ إعدادات المنصات المتعددة</li>
 <li>🆕 صفقات متعددة لنفس العملة</li>
+<li>🧮 حاسبة إدارة المخاطر المنفصلة</li>
 </ul>
 </div>
 <button onclick="closeUpdatePopup()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">ممتاز!</button>
@@ -2400,7 +2323,7 @@ h2 { font-size: 1.05em; }
 <input type="file" id="importTxtFile" accept=".txt" style="display: none;">
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — نسخة نهائية مع إصلاح تحميل كاش البيع
+   JavaScript — نسخة نهائية مع حاوية حاسبة المخاطر
    ═══════════════════════════════════════════════════════════════ */
 function generateUniqueId() {
 return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
@@ -2480,11 +2403,13 @@ if (!input) return;
 input.value = input.value.replace(/,/g, '');
 }
 
+/* ✅ تحديث: أضفنا section-riskCalculator */
 const sectionConfigs = [
 { id: 'section-cash', name: 'كم الكاش لديك', defaultColor: '#ffffff' },
 { id: 'section-coinActive', name: 'العملة النشطة', defaultColor: '#ffffff' },
 { id: 'section-entryDetails', name: 'تفاصيل الدخول', defaultColor: '#ffffff' },
 { id: 'section-currentStatus', name: 'الوضع الحالي والأهداف', defaultColor: '#ffffff' },
+{ id: 'section-riskCalculator', name: 'حاسبة المخاطر', defaultColor: '#ffffff' },
 { id: 'section-summary', name: 'ملخص الصفقات الكلي', defaultColor: '#ffffff' },
 { id: 'section-marketInsights', name: 'مؤشرات السوق', defaultColor: '#ffffff' },
 { id: 'section-advancedCharts', name: 'تحليلات المحفظة المتقدمة', defaultColor: '#ffffff' }
@@ -2626,12 +2551,14 @@ location.reload();
 null
 );
 }
+/* ✅ تحديث: أضفنا riskCalculator إلى sectionMap */
 function toggleSection(sectionName) {
 const sectionMap = {
 'cash': 'cashSectionContent',
 'coinActive': 'coinActiveSectionContent',
 'entryDetails': 'entryDetailsSectionContent',
 'currentStatus': 'currentStatusSectionContent',
+'riskCalculator': 'riskCalculatorSectionContent',
 'summary': 'summarySectionContent',
 'salesCashHistory': 'salesCashHistorySectionContent',
 'marketInsights': 'marketInsightsSectionContent',
@@ -2654,6 +2581,7 @@ const sectionStates = JSON.parse(localStorage.getItem('sectionToggleStates') || 
 sectionStates[sectionName] = content.classList.contains('collapsed');
 localStorage.setItem('sectionToggleStates', JSON.stringify(sectionStates));
 }
+/* ✅ تحديث: أضفنا riskCalculator إلى sectionMap */
 function loadSectionStates() {
 const sectionStates = JSON.parse(localStorage.getItem('sectionToggleStates') || '{}');
 const sectionMap = {
@@ -2661,6 +2589,7 @@ const sectionMap = {
 'coinActive': 'coinActiveSectionContent',
 'entryDetails': 'entryDetailsSectionContent',
 'currentStatus': 'currentStatusSectionContent',
+'riskCalculator': 'riskCalculatorSectionContent',
 'summary': 'summarySectionContent',
 'salesCashHistory': 'salesCashHistorySectionContent',
 'marketInsights': 'marketInsightsSectionContent',
@@ -2901,20 +2830,12 @@ updateSummaryTable();
 showSuccess(`تم إلغاء ${type === 'deposit' ? 'الإيداع' : 'السحب'} بنجاح`);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   ✅ إصلاح: تحميل الكاش من البيع يظهر مباشرة عند فتح الصفحة
-   - السبب: updateCashDisplay() كانت تُستدعى قبل تحميل salesCashHistory
-   - الحل: نقل الاستدعاء إلى نهاية الدالة بعد تحميل كل البيانات
-   ═══════════════════════════════════════════════════════════════ */
+/* ✅ إصلاح: تحميل كاش البيع يظهر مباشرة عند فتح الصفحة */
 function loadCashFromStorage() {
-/* تحميل الكاش اليدوي */
 let savedCash = localStorage.getItem(LS_KEY_CASH);
 if (savedCash !== null) {
 availableCash = parseFloat(savedCash) || 0;
-/* ❌ لا نستدعي updateCashDisplay هنا */
 }
-
-/* تحميل سجل الكاش اليدوي */
 let savedCashHistory = localStorage.getItem(LS_KEY_CASH_HISTORY);
 if (savedCashHistory) {
 try {
@@ -2924,8 +2845,6 @@ if (!cashHistory.withdrawals) cashHistory.withdrawals = [];
 updateCashHistoryDisplay();
 } catch (e) { console.error("خطأ في تحميل سجل الكاش:", e); }
 }
-
-/* تحميل سجل كاش البيع */
 let savedSalesCashHistory = localStorage.getItem(LS_KEY_SALES_CASH_HISTORY);
 if (savedSalesCashHistory) {
 try {
@@ -2935,8 +2854,7 @@ if (!salesCashHistory.withdrawals) salesCashHistory.withdrawals = [];
 updateSalesCashHistoryDisplay();
 } catch (e) { console.error("خطأ في تحميل سجل الكاش من البيع:", e); }
 }
-
-/* ✅ الحل: استدعاء واحد في النهاية — بعد تحميل كل البيانات */
+/* ✅ الحل: استدعاء واحد في النهاية */
 updateCashDisplay();
 }
 
@@ -4863,7 +4781,6 @@ renderCryptoTicker();
 function renderCryptoTicker() {
 const ticker = document.getElementById('cryptoTicker');
 if (!ticker || Object.keys(tickerData).length === 0) return;
-
 let itemsHtml = '';
 Object.keys(tickerData).forEach(symbol => {
 const data = tickerData[symbol];
@@ -4879,7 +4796,6 @@ itemsHtml += `
 <span class="ticker-change ${changeClass}">${changeSign}${data.change.toFixed(2)}%</span>
 </div>`;
 });
-
 ticker.innerHTML = itemsHtml + itemsHtml;
 }
 
