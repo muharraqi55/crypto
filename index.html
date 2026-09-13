@@ -132,51 +132,119 @@
 --estimate-text: #ffcc80;
 }
 
+/* ═══════════════════════════════════════════════════════
+   ✅ شريط المتحدث — نسخة Osoul Pro
+   ✅ skeleton أثناء التحميل + أيقونات العملات
+   ✅ padding على العناصر (لحام مثالي 100%)
+   ═══════════════════════════════════════════════════════ */
 .crypto-ticker-wrap {
-background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+background: var(--section-bg);
 overflow: hidden;
-border-bottom: 2px solid var(--border-color);
-position: sticky;
-top: 0;
-z-index: 100;
+border: 2px solid var(--border-color);
+position: relative;
+z-index: 1;
 box-shadow: 0 2px 10px var(--shadow-color);
+width: 100%;
+max-width: 1920px;
+margin: 20px auto;
+border-radius: 10px;
+height: 56px;
+display: flex;
+align-items: center;
+direction: ltr;
 }
 .ticker-scroll {
-display: flex;
-gap: 30px;
-padding: 10px 20px;
-animation: tickerScroll 40s linear infinite;
-white-space: nowrap;
+display: inline-flex;
+align-items: center;
+flex-wrap: nowrap;
+gap: 0;
+padding: 12px 20px;
 width: max-content;
+animation: ticker-scroll 40s linear infinite;
+will-change: transform;
 }
-.ticker-scroll:hover { animation-play-state: paused; }
-@keyframes tickerScroll {
-0% { transform: translateX(0); }
+.crypto-ticker-wrap:hover .ticker-scroll {
+animation-play-state: paused;
+}
+@keyframes ticker-scroll {
+0%   { transform: translateX(0); }
 100% { transform: translateX(-50%); }
 }
 .ticker-item {
 display: inline-flex;
 align-items: center;
 gap: 8px;
-background: rgba(255,255,255,0.15);
-padding: 6px 14px;
-border-radius: 20px;
-color: white;
+flex-shrink: 0;
+font-size: 14px;
 font-weight: 600;
-font-size: 0.85em;
-backdrop-filter: blur(10px);
-border: 1px solid rgba(255,255,255,0.2);
-transition: all 0.3s ease;
+white-space: nowrap;
+color: var(--text-color);
+padding: 6px 14px;
+margin: 0;
 }
-.ticker-item:hover {
-background: rgba(255,255,255,0.25);
-transform: translateY(-2px);
+.ticker-icon {
+width: 22px;
+height: 22px;
+border-radius: 50%;
 }
-.ticker-symbol { font-weight: bold; }
-.ticker-price { font-family: 'Roboto Mono', monospace; direction: ltr; }
-.ticker-change { font-size: 0.85em; padding: 2px 6px; border-radius: 10px; }
-.ticker-change.up { background: rgba(25, 135, 84, 0.3); color: #4ade80; }
-.ticker-change.down { background: rgba(220, 53, 69, 0.3); color: #f87171; }
+.ticker-symbol {
+font-weight: 700;
+color: var(--text-color);
+}
+.ticker-price {
+font-family: "Courier New", monospace;
+color: var(--text-muted);
+direction: ltr;
+}
+.ticker-change {
+font-size: 12px;
+font-weight: 700;
+padding: 2px 6px;
+border-radius: 6px;
+direction: ltr;
+}
+.ticker-change.up {
+color: #059669;
+background: #d1fae5;
+}
+.ticker-change.down {
+color: #dc2626;
+background: #fee2e2;
+}
+.dark-mode .ticker-change.up {
+color: #4ade80;
+background: rgba(25, 135, 84, 0.25);
+}
+.dark-mode .ticker-change.down {
+color: #f87171;
+background: rgba(220, 53, 69, 0.25);
+}
+
+/* skeleton أثناء التحميل */
+.ticker-skeleton {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+flex-shrink: 0;
+padding: 6px 14px;
+}
+.skeleton-icon {
+width: 22px;
+height: 22px;
+border-radius: 50%;
+background: var(--border-color);
+animation: pulse-skeleton 1.4s ease-in-out infinite;
+}
+.skeleton-text {
+height: 10px;
+border-radius: 6px;
+background: var(--border-color);
+animation: pulse-skeleton 1.4s ease-in-out infinite;
+}
+@keyframes pulse-skeleton {
+0%, 100% { opacity: 1; }
+50%      { opacity: 0.4; }
+}
 
 .market-insights-section {
 background: var(--section-bg);
@@ -1172,10 +1240,7 @@ transform: scale(1.1) rotate(10deg);
 }
 
 .dark-mode .crypto-ticker-wrap {
-background: linear-gradient(135deg, #1e3a5f, #2c5282);
-}
-.dark-mode .ticker-item {
-background: rgba(255,255,255,0.1);
+background: var(--section-bg);
 }
 .dark-mode .market-insight-card {
 background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
@@ -1188,9 +1253,10 @@ filter: brightness(0.9);
 }
 
 @media (max-width: 768px) {
-.crypto-ticker-wrap { padding: 0 10px; }
-.ticker-scroll { gap: 15px; padding: 8px 10px; }
-.ticker-item { padding: 4px 10px; font-size: 0.75em; }
+.ticker-item { padding: 4px 10px; font-size: 12px; gap: 6px; }
+.ticker-icon { width: 18px; height: 18px; }
+.ticker-skeleton { padding: 4px 10px; }
+.skeleton-icon { width: 18px; height: 18px; }
 .market-insights-grid { grid-template-columns: 1fr; }
 .notification-center {
 width: calc(100% - 40px);
@@ -1697,10 +1763,6 @@ h2 { font-size: 1.05em; }
 </head>
 <body>
 
-<div class="crypto-ticker-wrap">
-<div class="ticker-scroll" id="cryptoTicker"></div>
-</div>
-
 <div class="settings-top-bar">
 <div class="brand">📊 <span id="brandUsername">Muharraqi</span> - متابعة الصفقات <span style="font-size:0.7em;opacity:0.7;">| Pro Edition</span></div>
 <div class="settings-actions">
@@ -1749,6 +1811,9 @@ h2 { font-size: 1.05em; }
 <div class="container">
 <h1>متابعة الصفقات الشاملة <span style="font-size:0.6em;color:var(--text-muted);">| Pro Edition</span></h1>
 
+<!-- ═══════════════════════════════════════════════════════
+     📊 مؤشرات السوق
+     ═══════════════════════════════════════════════════════ -->
 <section class="market-insights-section card-hover section-custom" id="section-marketInsights">
 <div class="section-header">
 <h2>📊 مؤشرات السوق</h2>
@@ -1786,6 +1851,80 @@ h2 { font-size: 1.05em; }
 </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════
+     ✅ شريط العملات المتحرك — نسخة Osoul Pro (Skeleton + أيقونات)
+     ═══════════════════════════════════════════════════════ -->
+<div class="crypto-ticker-wrap">
+<div class="ticker-scroll" id="cryptoTicker" data-dashboard-loading-scope="boot ticker">
+
+<!-- عناصر الهيكل (Skeleton) أثناء التحميل -->
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+<div class="ticker-skeleton">
+<div class="skeleton-icon"></div>
+<div class="skeleton-text" style="width: 40px;"></div>
+<div class="skeleton-text" style="width: 60px;"></div>
+</div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     📈 تحليلات المحفظة المتقدمة
+     ═══════════════════════════════════════════════════════ -->
 <section class="advanced-charts-section card-hover section-custom" id="section-advancedCharts">
 <div class="section-header">
 <h2>📈 تحليلات المحفظة المتقدمة</h2>
@@ -2356,12 +2495,9 @@ function generateUniqueId() {
 return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
 }
 
-/* 🆕 دوال الصفقات المتعددة */
 function getBaseSymbolFromKey(key) {
 if (!key) return '';
-if (key.includes('__')) {
-return key.split('__')[0];
-}
+if (key.includes('__')) return key.split('__')[0];
 return key;
 }
 function getInstanceNumberFromKey(key) {
@@ -2377,16 +2513,12 @@ if (!key) return '---';
 const base = getBaseSymbolFromKey(key);
 const instanceNum = getInstanceNumberFromKey(key);
 const instances = Object.keys(allCoinData).filter(k => getBaseSymbolFromKey(k) === base);
-if (instances.length > 1) {
-return base + ' ' + instanceNum;
-}
+if (instances.length > 1) return base + ' ' + instanceNum;
 return base;
 }
 function getNextInstanceKey(baseSymbol) {
 const existingKeys = Object.keys(allCoinData).filter(k => getBaseSymbolFromKey(k) === baseSymbol);
-if (existingKeys.length === 0) {
-return baseSymbol;
-}
+if (existingKeys.length === 0) return baseSymbol;
 let maxNum = 1;
 existingKeys.forEach(k => {
 const n = getInstanceNumberFromKey(k);
@@ -2646,16 +2778,10 @@ const cursorPosition = input.selectionStart;
 if (input.value === '' || input.value === '-') return;
 let value = input.value.replace(/[^\d.\-]/g, '');
 const parts = value.split('.');
-if (parts.length > 2) {
-value = parts[0] + '.' + parts.slice(1).join('');
-}
-if (value.indexOf('-') > 0) {
-value = value.replace(/-/g, '');
-}
+if (parts.length > 2) value = parts[0] + '.' + parts.slice(1).join('');
+if (value.indexOf('-') > 0) value = value.replace(/-/g, '');
 const minusCount = (value.match(/-/g) || []).length;
-if (minusCount > 1) {
-value = value.replace(/-/g, '');
-}
+if (minusCount > 1) value = value.replace(/-/g, '');
 if (input.value !== value) {
 input.value = value;
 const newPosition = Math.min(cursorPosition, input.value.length);
@@ -2690,20 +2816,15 @@ setTimeout(() => { if (onCancel) onCancel(); }, 150);
 };
 const popupClose = document.getElementById('popupClose');
 popupClose.onclick = closePopup;
-popupOverlay.onclick = (e) => { if (e.target === popupOverlay) { closePopup(); } };
+popupOverlay.onclick = (e) => { if (e.target === popupOverlay) closePopup(); };
 }
 function showConfirm(message, onConfirm, onCancel = null) {
 showPopup('تأكيد', message, 'نعم', 'لا', onConfirm, onCancel);
 }
-function showSuccess(message) {
-showPopup('نجاح', message, 'موافق', '', () => {}, null);
-}
-function showError(message) {
-showPopup('خطأ', message, 'موافق', '', () => {}, null);
-}
-function showInfo(message) {
-showPopup('معلومات', message, 'موافق', '', () => {}, null);
-}
+function showSuccess(message) { showPopup('نجاح', message, 'موافق', '', () => {}, null); }
+function showError(message) { showPopup('خطأ', message, 'موافق', '', () => {}, null); }
+function showInfo(message) { showPopup('معلومات', message, 'موافق', '', () => {}, null); }
+
 const marketPriceDisplay = document.getElementById('marketPriceDisplay');
 const apiStatusDiv = document.getElementById('apiStatus');
 const autoRefreshCheckbox = document.getElementById('autoRefreshCheckbox');
@@ -2751,16 +2872,10 @@ const totalCash = availableCash + Math.max(0, totalSalesCash);
 cashManualDisplay.textContent = formatWithCommas(availableCash, 2) + ' $';
 cashSalesDisplay.textContent = formatWithCommas(Math.max(0, totalSalesCash), 2) + ' $';
 cashTotalDisplay.textContent = formatWithCommas(totalCash, 2) + ' $';
-if (totalCash <= 0) {
-cashTotalDisplay.classList.add('zero');
-} else {
-cashTotalDisplay.classList.remove('zero');
-}
-if (availableCash <= 0) {
-cashInput.classList.add('zero');
-} else {
-cashInput.classList.remove('zero');
-}
+if (totalCash <= 0) cashTotalDisplay.classList.add('zero');
+else cashTotalDisplay.classList.remove('zero');
+if (availableCash <= 0) cashInput.classList.add('zero');
+else cashInput.classList.remove('zero');
 updateProfileStats();
 updateAdvancedCharts();
 }
@@ -2793,9 +2908,7 @@ const deductFromCash = Math.min(availableCash, remainingNeeded);
 availableCash -= deductFromCash;
 remainingNeeded -= deductFromCash;
 }
-if (remainingNeeded > 0.0001) {
-addSalesCashWithdrawal(remainingNeeded, 'سحب يدوي');
-}
+if (remainingNeeded > 0.0001) addSalesCashWithdrawal(remainingNeeded, 'سحب يدوي');
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
 updateCashDisplay();
 const withdrawalRecord = { id: Date.now(), amount: amount, date: new Date().toLocaleString('ar-EG'), type: 'withdrawal', note: 'سحب يدوي' };
@@ -2809,14 +2922,7 @@ updateSummaryTable();
 function addSalesCashDeposit(amount, note = 'إيداع من بيع', saleId = null) {
 if (amount <= 0.0001) return null;
 const cashRecordId = Date.now() + Math.floor(Math.random() * 1000);
-const depositRecord = {
-id: cashRecordId,
-amount: amount,
-date: new Date().toLocaleString('ar-EG'),
-type: 'deposit',
-note: note,
-saleId: saleId
-};
+const depositRecord = { id: cashRecordId, amount: amount, date: new Date().toLocaleString('ar-EG'), type: 'deposit', note: note, saleId: saleId };
 salesCashHistory.deposits.push(depositRecord);
 saveSalesCashHistory();
 updateSalesCashHistoryDisplay();
@@ -2846,10 +2952,7 @@ if (recordIndex === -1) return;
 const record = records[recordIndex];
 const amount = record.amount;
 if (isSalesCash && type === 'deposit' && record.saleId) {
-showConfirm(`هل تريد إلغاء هذا الإيداع؟
-⚠️ سيتم أيضاً حذف سجل البيع المرتبط من بيانات العملة.
-المبلغ: ${formatWithCommas(amount, 2)} $
-الملاحظة: ${record.note || 'بدون'}`, () => {
+showConfirm(`هل تريد إلغاء هذا الإيداع؟\n⚠️ سيتم أيضاً حذف سجل البيع المرتبط من بيانات العملة.\nالمبلغ: ${formatWithCommas(amount, 2)} $\nالملاحظة: ${record.note || 'بدون'}`, () => {
 deleteSaleBySaleId(record.saleId);
 records.splice(recordIndex, 1);
 saveSalesCashHistory();
@@ -2873,10 +2976,7 @@ return;
 }
 if (type === 'deposit') {
 if (!isSalesCash) {
-if (amount > availableCash + 0.0001) {
-showError("لا يمكن إلغاء هذا الإيداع لأن الرصيد الحالي لا يكفي");
-return;
-}
+if (amount > availableCash + 0.0001) { showError("لا يمكن إلغاء هذا الإيداع لأن الرصيد الحالي لا يكفي"); return; }
 availableCash -= amount;
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
 updateCashDisplay();
@@ -2889,22 +2989,14 @@ updateCashDisplay();
 }
 }
 records.splice(recordIndex, 1);
-if (isSalesCash) {
-saveSalesCashHistory();
-updateSalesCashHistoryDisplay();
-} else {
-saveCashHistory();
-updateCashHistoryDisplay();
-}
+if (isSalesCash) { saveSalesCashHistory(); updateSalesCashHistoryDisplay(); }
+else { saveCashHistory(); updateCashHistoryDisplay(); }
 updateSummaryTable();
 showSuccess(`تم إلغاء ${type === 'deposit' ? 'الإيداع' : 'السحب'} بنجاح`);
 }
 function loadCashFromStorage() {
 let savedCash = localStorage.getItem(LS_KEY_CASH);
-if (savedCash !== null) {
-availableCash = parseFloat(savedCash) || 0;
-updateCashDisplay();
-}
+if (savedCash !== null) { availableCash = parseFloat(savedCash) || 0; updateCashDisplay(); }
 let savedCashHistory = localStorage.getItem(LS_KEY_CASH_HISTORY);
 if (savedCashHistory) {
 try {
@@ -2924,12 +3016,8 @@ updateSalesCashHistoryDisplay();
 } catch (e) { console.error("خطأ في تحميل سجل الكاش من البيع:", e); }
 }
 }
-function saveCashHistory() {
-localStorage.setItem(LS_KEY_CASH_HISTORY, JSON.stringify(cashHistory));
-}
-function saveSalesCashHistory() {
-localStorage.setItem(LS_KEY_SALES_CASH_HISTORY, JSON.stringify(salesCashHistory));
-}
+function saveCashHistory() { localStorage.setItem(LS_KEY_CASH_HISTORY, JSON.stringify(cashHistory)); }
+function saveSalesCashHistory() { localStorage.setItem(LS_KEY_SALES_CASH_HISTORY, JSON.stringify(salesCashHistory)); }
 function updateCashHistoryDisplay() {
 updateHistoryDisplay('cashDepositHistory', cashHistory.deposits, false);
 updateHistoryDisplay('cashWithdrawalHistory', cashHistory.withdrawals, false);
@@ -2979,10 +3067,7 @@ return availableCash + Math.max(0, totalSalesCash);
 }
 function checkCashForTransaction(amount) {
 const availableCashForTransaction = getAvailableCashForTransaction();
-if (availableCashForTransaction < amount - 0.0001) {
-cashWarning.classList.add('show');
-return false;
-}
+if (availableCashForTransaction < amount - 0.0001) { cashWarning.classList.add('show'); return false; }
 cashWarning.classList.remove('show');
 return true;
 }
@@ -2992,9 +3077,7 @@ const totalSalesCash = salesCashHistory.deposits.reduce((sum, record) => sum + r
 salesCashHistory.withdrawals.reduce((sum, record) => sum + record.amount, 0);
 const availableSalesCash = Math.max(0, totalSalesCash);
 const totalAvailable = availableCash + availableSalesCash;
-if (totalAvailable < amount - 0.0001) {
-return false;
-}
+if (totalAvailable < amount - 0.0001) return false;
 let remainingAmount = amount;
 let deductedFromCash = 0;
 if (availableCash > 0) {
@@ -3012,13 +3095,7 @@ return false;
 }
 addSalesCashWithdrawal(remainingAmount, note);
 }
-const withdrawalRecord = {
-id: Date.now() + 1,
-amount: amount,
-date: new Date().toLocaleString('ar-EG'),
-type: 'withdrawal',
-note: note
-};
+const withdrawalRecord = { id: Date.now() + 1, amount: amount, date: new Date().toLocaleString('ar-EG'), type: 'withdrawal', note: note };
 cashHistory.withdrawals.push(withdrawalRecord);
 saveCashHistory();
 updateCashHistoryDisplay();
@@ -3028,22 +3105,15 @@ return true;
 }
 function getDefaultCoinDataStructure() {
 return {
-initialEntryPrice: '',
-initialAmountDollars: '',
-initialSavedAmount: 0,
-initialSales: [],
-initialTotalSoldQty: '0',
-initialPurchaseDate: '',
-isEntrySaved: false,
-repurchases: [],
-targets: { tp1: '', tp2: '', tp3: '', sl: '' }
+initialEntryPrice: '', initialAmountDollars: '', initialSavedAmount: 0,
+initialSales: [], initialTotalSoldQty: '0', initialPurchaseDate: '',
+isEntrySaved: false, repurchases: [], targets: { tp1: '', tp2: '', tp3: '', sl: '' }
 };
 }
 function saveAllDataToLocalStorage() {
 const dataToSave = { coins: allCoinData, active: activeCoinSymbol };
-try {
-localStorage.setItem(LS_KEY_DATA, JSON.stringify(dataToSave));
-} catch (error) {
+try { localStorage.setItem(LS_KEY_DATA, JSON.stringify(dataToSave)); }
+catch (error) {
 console.error("Error saving coin data:", error);
 apiStatusDiv.textContent = "خطأ في حفظ البيانات!";
 apiStatusDiv.style.color = 'var(--negative-color)';
@@ -3058,81 +3128,42 @@ if (parsedData && typeof parsedData.coins === 'object' && parsedData.coins !== n
 allCoinData = parsedData.coins;
 activeCoinSymbol = parsedData.active || null;
 Object.keys(allCoinData).forEach(symbol => {
-if (!allCoinData[symbol]) {
-allCoinData[symbol] = getDefaultCoinDataStructure();
-}
-if (!allCoinData[symbol].repurchases) {
-allCoinData[symbol].repurchases = [];
-}
-if (!allCoinData[symbol].initialSales) {
-allCoinData[symbol].initialSales = [];
-}
-if (!allCoinData[symbol].initialTotalSoldQty) {
-allCoinData[symbol].initialTotalSoldQty = '0';
-}
-if (!allCoinData[symbol].initialPurchaseDate) {
-allCoinData[symbol].initialPurchaseDate = '';
-}
-if (allCoinData[symbol].isEntrySaved === undefined) {
-allCoinData[symbol].isEntrySaved = false;
-}
-if (allCoinData[symbol].initialSavedAmount === undefined) {
-allCoinData[symbol].initialSavedAmount = 0;
-}
-if (!allCoinData[symbol].targets) {
-allCoinData[symbol].targets = { tp1: '', tp2: '', tp3: '', sl: '' };
-}
+if (!allCoinData[symbol]) allCoinData[symbol] = getDefaultCoinDataStructure();
+if (!allCoinData[symbol].repurchases) allCoinData[symbol].repurchases = [];
+if (!allCoinData[symbol].initialSales) allCoinData[symbol].initialSales = [];
+if (!allCoinData[symbol].initialTotalSoldQty) allCoinData[symbol].initialTotalSoldQty = '0';
+if (!allCoinData[symbol].initialPurchaseDate) allCoinData[symbol].initialPurchaseDate = '';
+if (allCoinData[symbol].isEntrySaved === undefined) allCoinData[symbol].isEntrySaved = false;
+if (allCoinData[symbol].initialSavedAmount === undefined) allCoinData[symbol].initialSavedAmount = 0;
+if (!allCoinData[symbol].targets) allCoinData[symbol].targets = { tp1: '', tp2: '', tp3: '', sl: '' };
 (allCoinData[symbol].repurchases || []).forEach(rp => {
-if (rp.savedAmount === undefined) {
-rp.savedAmount = 0;
-}
+if (rp.savedAmount === undefined) rp.savedAmount = 0;
 if (!rp.sales) rp.sales = [];
 if (!rp.totalSoldQty) rp.totalSoldQty = '0';
 });
 currentMarketPrices[symbol] = null;
 });
 return true;
-} else {
-allCoinData = {};
-activeCoinSymbol = null;
-currentMarketPrices = {};
-return false;
-}
+} else { allCoinData = {}; activeCoinSymbol = null; currentMarketPrices = {}; return false; }
 } catch (error) {
-console.error("Error loading or parsing coin data:", error);
-allCoinData = {};
-activeCoinSymbol = null;
-currentMarketPrices = {};
+console.error("Error loading coin data:", error);
+allCoinData = {}; activeCoinSymbol = null; currentMarketPrices = {};
 localStorage.removeItem(LS_KEY_DATA);
 return false;
 }
-} else {
-allCoinData = {};
-activeCoinSymbol = null;
-currentMarketPrices = {};
-return false;
-}
+} else { allCoinData = {}; activeCoinSymbol = null; currentMarketPrices = {}; return false; }
 }
 function loadSavedEstimatePrices() {
 let saved = localStorage.getItem(LS_KEY_ESTIMATE_PRICES);
 if (saved) {
 try {
 savedEstimatePrices = JSON.parse(saved);
-if (typeof savedEstimatePrices !== 'object' || savedEstimatePrices === null) {
-savedEstimatePrices = {};
-}
-} catch (e) {
-console.error("خطأ في تحميل الأسعار التقديرية:", e);
-savedEstimatePrices = {};
-}
+if (typeof savedEstimatePrices !== 'object' || savedEstimatePrices === null) savedEstimatePrices = {};
+} catch (e) { savedEstimatePrices = {}; }
 }
 }
 function saveEstimatePrices() {
-try {
-localStorage.setItem(LS_KEY_ESTIMATE_PRICES, JSON.stringify(savedEstimatePrices));
-} catch (e) {
-console.error("خطأ في حفظ الأسعار التقديرية:", e);
-}
+try { localStorage.setItem(LS_KEY_ESTIMATE_PRICES, JSON.stringify(savedEstimatePrices)); } catch (e) {}
 }
 function updateCoinSelector() {
 const previouslySelected = coinSelector.value;
@@ -3144,23 +3175,12 @@ option.value = symbol;
 option.textContent = getDisplayNameFromKey(symbol);
 coinSelector.appendChild(option);
 });
-if (activeCoinSymbol && allCoinData[activeCoinSymbol]) {
-coinSelector.value = activeCoinSymbol;
-} else if (previouslySelected && allCoinData[previouslySelected]) {
-coinSelector.value = previouslySelected;
-activeCoinSymbol = previouslySelected;
-} else if (coinSymbols.length > 0) {
-coinSelector.value = coinSymbols[0];
-activeCoinSymbol = coinSymbols[0];
-} else {
-activeCoinSymbol = null;
-clearUIFields();
-}
-if (coinSelector.value) {
-displayCoinData(coinSelector.value);
-} else {
-updateCurrentCoinDisplay("لا عملة محددة");
-}
+if (activeCoinSymbol && allCoinData[activeCoinSymbol]) coinSelector.value = activeCoinSymbol;
+else if (previouslySelected && allCoinData[previouslySelected]) { coinSelector.value = previouslySelected; activeCoinSymbol = previouslySelected; }
+else if (coinSymbols.length > 0) { coinSelector.value = coinSymbols[0]; activeCoinSymbol = coinSymbols[0]; }
+else { activeCoinSymbol = null; clearUIFields(); }
+if (coinSelector.value) displayCoinData(coinSelector.value);
+else updateCurrentCoinDisplay("لا عملة محددة");
 updateCoinStatus();
 updateSellAllGlobalBtnText();
 updateAlertSymbolSelector();
@@ -3169,7 +3189,7 @@ function displayCoinData(symbol) {
 activeCoinSymbol = symbol;
 const data = allCoinData[symbol];
 if (!data) {
-console.warn('No data for symbol: ' + symbol + '. Clearing UI.');
+console.warn('No data for symbol: ' + symbol);
 clearUIFields();
 updateCurrentCoinDisplay(symbol || "خطأ");
 calculateActiveCoinDetails();
@@ -3250,13 +3270,10 @@ const totalSoldQty = calculateTotalSoldQty(sales);
 const remainingQty = Math.max(0, repurchaseQty - totalSoldQty);
 coinQty += remainingQty;
 });
-if (coinQty > 0.00000001) {
-coinsWithQty.push(symbol);
-}
+if (coinQty > 0.00000001) coinsWithQty.push(symbol);
 });
-if (coinsWithQty.length === 0) {
-btn.textContent = '💰 بيع الكل';
-} else {
+if (coinsWithQty.length === 0) btn.textContent = '💰 بيع الكل';
+else {
 const displayNames = coinsWithQty.map(s => getDisplayNameFromKey(s));
 btn.textContent = '💰 بيع الكل (' + displayNames.join('، ') + ')';
 }
@@ -3264,10 +3281,7 @@ btn.textContent = '💰 بيع الكل (' + displayNames.join('، ') + ')';
 function updateAvailableQtyForSale() {
 const availableQtyElement = document.getElementById('availableQtyForSale');
 if (!availableQtyElement) return;
-if (!activeCoinSymbol || !allCoinData[activeCoinSymbol]) {
-availableQtyElement.textContent = formatNumber(0, 8);
-return;
-}
+if (!activeCoinSymbol || !allCoinData[activeCoinSymbol]) { availableQtyElement.textContent = formatNumber(0, 8); return; }
 const data = allCoinData[activeCoinSymbol];
 const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice) || parseFormattedNumber(document.getElementById('initialEntryPrice').value);
 const initialAmountDollars = parseFormattedNumber(data.initialAmountDollars) || parseFormattedNumber(document.getElementById('initialAmountDollars').value);
@@ -3280,10 +3294,7 @@ availableQtyElement.textContent = formatNumber(availableQty, 8);
 function updateInitialSalesHistory(sales) {
 const salesHistoryDiv = document.getElementById('initialSalesHistory');
 if (!salesHistoryDiv) return;
-if (sales.length === 0) {
-salesHistoryDiv.innerHTML = '<div style="text-align:center; color:var(--text-muted);">لا توجد مبيعات</div>';
-return;
-}
+if (sales.length === 0) { salesHistoryDiv.innerHTML = '<div style="text-align:center; color:var(--text-muted);">لا توجد مبيعات</div>'; return; }
 let html = '';
 sales.forEach((sale, saleIndex) => {
 const saleNumber = saleIndex + 1;
@@ -3301,22 +3312,13 @@ const data = allCoinData[activeCoinSymbol];
 if (!data) return [];
 return data.initialSales || [];
 }
-function calculateTotalInitialSoldQty(sales) {
-return sales.reduce((total, sale) => total + sale.qty, 0);
-}
-function calculateInitialCashFromSales(sales) {
-return sales.reduce((total, sale) => total + (sale.qty * sale.price), 0);
-}
+function calculateTotalInitialSoldQty(sales) { return sales.reduce((total, sale) => total + sale.qty, 0); }
+function calculateInitialCashFromSales(sales) { return sales.reduce((total, sale) => total + (sale.qty * sale.price), 0); }
 function toggleInitialSellForm() {
 const sellForm = document.getElementById('initialSellForm');
 const sellBtn = document.getElementById('initialSellBtn');
-if (sellForm.style.display === 'none' || !sellForm.style.display) {
-sellForm.style.display = 'block';
-sellBtn.textContent = 'إخفاء';
-} else {
-sellForm.style.display = 'none';
-sellBtn.textContent = '💰 بيع جزئي';
-}
+if (sellForm.style.display === 'none' || !sellForm.style.display) { sellForm.style.display = 'block'; sellBtn.textContent = 'إخفاء'; }
+else { sellForm.style.display = 'none'; sellBtn.textContent = '💰 بيع جزئي'; }
 }
 function applyInitialSale() {
 const soldQtyInput = document.getElementById('initialSoldQty');
@@ -3328,22 +3330,12 @@ const currentSales = getInitialSalesHistory();
 const totalSoldQty = calculateTotalInitialSoldQty(currentSales);
 if (soldQty <= 0) { showError("يرجى إدخال كمية صحيحة للبيع"); return; }
 if (soldPrice <= 0) { showError("يرجى إدخال سعر بيع صحيح"); return; }
-if (totalSoldQty + soldQty > initialCoinQty + 0.00000001) {
-showError("الكمية المباعة الإجمالية لا يمكن أن تكون أكبر من كمية الدخول");
-return;
-}
+if (totalSoldQty + soldQty > initialCoinQty + 0.00000001) { showError("الكمية المباعة الإجمالية لا يمكن أن تكون أكبر من كمية الدخول"); return; }
 const initialEntryPrice = parseFormattedNumber(document.getElementById('initialEntryPrice').value);
 const initialAmountDollars = parseFormattedNumber(document.getElementById('initialAmountDollars').value);
 const investedAmountForSale = initialCoinQty > 0 ? initialAmountDollars * (soldQty / initialCoinQty) : 0;
 const saleId = generateUniqueId();
-currentSales.push({
-id: saleId,
-qty: soldQty,
-price: soldPrice,
-investedAmount: investedAmountForSale,
-date: new Date().toLocaleDateString('ar-EG'),
-cashRecordId: null
-});
+currentSales.push({ id: saleId, qty: soldQty, price: soldPrice, investedAmount: investedAmountForSale, date: new Date().toLocaleDateString('ar-EG'), cashRecordId: null });
 updateInitialSalesHistory(currentSales);
 const saleAmount = soldQty * soldPrice;
 const cashRecordId = addSalesCashDeposit(saleAmount, 'بيع جزئي من ' + getDisplayNameFromKey(activeCoinSymbol) + ' (دخول)', saleId);
@@ -3353,9 +3345,7 @@ const saleIndex = updatedSales.findIndex(s => s.id === saleId);
 if (saleIndex !== -1) {
 updatedSales[saleIndex].cashRecordId = cashRecordId;
 updateInitialSalesHistory(updatedSales);
-if (allCoinData[activeCoinSymbol]) {
-allCoinData[activeCoinSymbol].initialSales = updatedSales;
-}
+if (allCoinData[activeCoinSymbol]) allCoinData[activeCoinSymbol].initialSales = updatedSales;
 }
 }
 soldQtyInput.value = '0';
@@ -3374,10 +3364,7 @@ const initialCoinQty = parseFormattedNumber(document.getElementById('initialCoin
 const currentSales = getInitialSalesHistory();
 const totalSoldQty = calculateTotalInitialSoldQty(currentSales);
 const remainingQty = initialCoinQty - totalSoldQty;
-if (remainingQty <= 0.00000001) {
-showError("لا توجد كمية متبقية للبيع");
-return;
-}
+if (remainingQty <= 0.00000001) { showError("لا توجد كمية متبقية للبيع"); return; }
 const marketPrice = currentMarketPrices[activeCoinSymbol] || 0;
 const expectedValue = remainingQty * marketPrice;
 let choiceMessage = '<div style="text-align: center; padding: 15px; background: var(--output-field-bg); border-radius: 8px; margin-bottom: 15px;"><div style="font-size: 1.1em; font-weight: bold; margin-bottom: 10px;">📊 تفاصيل البيع</div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: right;"><div>الكمية المتبقية:</div><div style="font-family: \'Roboto Mono\', monospace; direction: ltr; text-align: left;">' + formatNumber(remainingQty, 8) + '</div><div>السعر الحالي:</div><div style="font-family: \'Roboto Mono\', monospace; direction: ltr; text-align: left;">' + (marketPrice > 0 ? formatNumber(marketPrice, 8) : 'غير متوفر') + '</div><div>القيمة المتوقعة:</div><div style="font-family: \'Roboto Mono\', monospace; direction: ltr; text-align: left; color: var(--positive-color); font-weight: bold;">' + (marketPrice > 0 ? formatWithCommas(expectedValue, 2) + ' $' : '---') + '</div></div></div><div style="margin-top: 15px;"><div style="font-weight: bold; margin-bottom: 10px; text-align: center;">اختر طريقة البيع:</div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><button onclick="executeSellAllInitialAtMarketPrice()" style="padding: 15px; background: var(--positive-color); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1em;" ' + (marketPrice <= 0 ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : '') + '>📊<br>بيع بالسعر الحالي<br><small>' + (marketPrice > 0 ? formatNumber(marketPrice, 4) : 'غير متوفر') + '</small></button><button onclick="promptManualPriceForSellAll()" style="padding: 15px; background: var(--secondary-color); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1em;">✏️<br>إدخال سعر يدوي<br><small>حدد السعر بنفسك</small></button></div></div>';
@@ -3385,10 +3372,7 @@ showPopup('🔥 بيع الكل - اختر الطريقة', choiceMessage, 'إغ
 }
 function executeSellAllInitialAtMarketPrice() {
 const marketPrice = currentMarketPrices[activeCoinSymbol] || 0;
-if (marketPrice <= 0) {
-showError("لا يوجد سعر حالي متوفر");
-return;
-}
+if (marketPrice <= 0) { showError("لا يوجد سعر حالي متوفر"); return; }
 executeSellAllInitialWithPrice(marketPrice);
 }
 function promptManualPriceForSellAll() {
@@ -3399,10 +3383,7 @@ const remainingQty = initialCoinQty - totalSoldQty;
 const userPrice = prompt('أدخل سعر البيع للكمية المتبقية (' + formatNumber(remainingQty, 8) + '):');
 if (!userPrice) return;
 const sellPrice = parseFloat(userPrice);
-if (isNaN(sellPrice) || sellPrice <= 0) {
-showError("يرجى إدخال سعر بيع صحيح");
-return;
-}
+if (isNaN(sellPrice) || sellPrice <= 0) { showError("يرجى إدخال سعر بيع صحيح"); return; }
 const expectedValue = remainingQty * sellPrice;
 showConfirm('تأكيد البيع بالسعر اليدوي:\n• الكمية: ' + formatNumber(remainingQty, 8) + '\n• السعر: ' + formatNumber(sellPrice, 8) + '\n• المبلغ المتوقع: ' + formatWithCommas(expectedValue, 2) + ' $', () => {
 executeSellAllInitialWithPrice(sellPrice);
@@ -3413,22 +3394,12 @@ const initialCoinQty = parseFormattedNumber(document.getElementById('initialCoin
 const currentSales = getInitialSalesHistory();
 const totalSoldQty = calculateTotalInitialSoldQty(currentSales);
 const remainingQty = initialCoinQty - totalSoldQty;
-if (remainingQty <= 0.00000001) {
-showError("لا توجد كمية متبقية للبيع");
-return;
-}
+if (remainingQty <= 0.00000001) { showError("لا توجد كمية متبقية للبيع"); return; }
 const initialEntryPrice = parseFormattedNumber(document.getElementById('initialEntryPrice').value);
 const initialAmountDollars = parseFormattedNumber(document.getElementById('initialAmountDollars').value);
 const investedAmountForSale = initialCoinQty > 0 ? initialAmountDollars * (remainingQty / initialCoinQty) : 0;
 const saleId = generateUniqueId();
-currentSales.push({
-id: saleId,
-qty: remainingQty,
-price: sellPrice,
-investedAmount: investedAmountForSale,
-date: new Date().toLocaleDateString('ar-EG'),
-cashRecordId: null
-});
+currentSales.push({ id: saleId, qty: remainingQty, price: sellPrice, investedAmount: investedAmountForSale, date: new Date().toLocaleDateString('ar-EG'), cashRecordId: null });
 updateInitialSalesHistory(currentSales);
 const saleAmount = remainingQty * sellPrice;
 const cashRecordId = addSalesCashDeposit(saleAmount, 'بيع الكل من ' + getDisplayNameFromKey(activeCoinSymbol) + ' (دخول)', saleId);
@@ -3438,9 +3409,7 @@ const saleIndex = updatedSales.findIndex(s => s.id === saleId);
 if (saleIndex !== -1) {
 updatedSales[saleIndex].cashRecordId = cashRecordId;
 updateInitialSalesHistory(updatedSales);
-if (allCoinData[activeCoinSymbol]) {
-allCoinData[activeCoinSymbol].initialSales = updatedSales;
-}
+if (allCoinData[activeCoinSymbol]) allCoinData[activeCoinSymbol].initialSales = updatedSales;
 }
 }
 updateActiveCoinDataInMemory();
@@ -3454,11 +3423,7 @@ const currentSales = getInitialSalesHistory();
 const removedSale = currentSales[saleIndex];
 if (removedSale.cashRecordId) {
 const depositIndex = salesCashHistory.deposits.findIndex(d => d.id === removedSale.cashRecordId);
-if (depositIndex !== -1) {
-salesCashHistory.deposits.splice(depositIndex, 1);
-saveSalesCashHistory();
-updateSalesCashHistoryDisplay();
-}
+if (depositIndex !== -1) { salesCashHistory.deposits.splice(depositIndex, 1); saveSalesCashHistory(); updateSalesCashHistoryDisplay(); }
 } else {
 const saleAmount = removedSale.qty * removedSale.price;
 addSalesCashWithdrawal(saleAmount, 'إلغاء بيع من ' + getDisplayNameFromKey(activeCoinSymbol) + ' (دخول)');
@@ -3490,23 +3455,15 @@ const initialAmountDollars = parseFormattedNumber(document.getElementById('initi
 const initialSales = getInitialSalesHistory();
 const totalSoldQty = calculateTotalInitialSoldQty(initialSales);
 const initialCoinQty = parseFormattedNumber(document.getElementById('initialCoinQty').textContent);
-if (initialAmountDollars <= 0 && initialSales.length === 0) {
-showError("لا توجد صفقة دخول لإلغائها");
-return;
-}
+if (initialAmountDollars <= 0 && initialSales.length === 0) { showError("لا توجد صفقة دخول لإلغائها"); return; }
 const remainingQty = initialCoinQty - totalSoldQty;
 const salesCashToRefund = calculateTotalSalesCashFromSales(initialSales);
 const savedAmount = data.initialSavedAmount || 0;
 const refundAmount = initialCoinQty > 0 ? savedAmount * (remainingQty / initialCoinQty) : 0;
 const totalRefund = refundAmount + salesCashToRefund;
 showConfirm('هل تريد إلغاء صفقة الدخول؟\n• استرجاع كاش الكمية المتبقية: ' + formatWithCommas(refundAmount, 2) + ' $\n• استرجاع كاش المبيعات السابقة: ' + formatWithCommas(salesCashToRefund, 2) + ' $\n• الإجمالي: ' + formatWithCommas(totalRefund, 2) + ' $', () => {
-if (refundAmount > 0) {
-availableCash += refundAmount;
-localStorage.setItem(LS_KEY_CASH, availableCash.toString());
-}
-if (salesCashToRefund > 0) {
-addSalesCashDeposit(salesCashToRefund, 'استرجاع إلغاء صفقة ' + getDisplayNameFromKey(activeCoinSymbol), null);
-}
+if (refundAmount > 0) { availableCash += refundAmount; localStorage.setItem(LS_KEY_CASH, availableCash.toString()); }
+if (salesCashToRefund > 0) addSalesCashDeposit(salesCashToRefund, 'استرجاع إلغاء صفقة ' + getDisplayNameFromKey(activeCoinSymbol), null);
 updateCashDisplay();
 document.getElementById('initialEntryPrice').value = '';
 document.getElementById('initialAmountDollars').value = '';
@@ -3556,45 +3513,24 @@ if (!activeCoinSymbol) { showError("لا توجد عملة نشطة لحفظ ص�
 const data = allCoinData[activeCoinSymbol];
 const initialEntryPrice = parseFormattedNumber(document.getElementById('initialEntryPrice').value);
 const initialAmountDollars = parseFormattedNumber(document.getElementById('initialAmountDollars').value);
-if (initialEntryPrice <= 0 || initialAmountDollars <= 0) {
-showError("يرجى إدخال سعر دخول ومبلغ صالحين قبل الحفظ");
-return;
-}
+if (initialEntryPrice <= 0 || initialAmountDollars <= 0) { showError("يرجى إدخال سعر دخول ومبلغ صالحين قبل الحفظ"); return; }
 const isAlreadySaved = data.isEntrySaved === true;
 const oldAmount = data.initialSavedAmount || 0;
 if (!isAlreadySaved) {
-if (!checkCashForTransaction(initialAmountDollars)) {
-showError("ليس لديك كاش كافٍ لإضافة هذه الصفقة");
-return;
-}
-if (!deductCash(initialAmountDollars, 'خصم لصفقة دخول ' + getDisplayNameFromKey(activeCoinSymbol))) {
-showError("فشل في خصم الكاش. الرصيد غير كافٍ");
-return;
-}
+if (!checkCashForTransaction(initialAmountDollars)) { showError("ليس لديك كاش كافٍ لإضافة هذه الصفقة"); return; }
+if (!deductCash(initialAmountDollars, 'خصم لصفقة دخول ' + getDisplayNameFromKey(activeCoinSymbol))) { showError("فشل في خصم الكاش. الرصيد غير كافٍ"); return; }
 data.isEntrySaved = true;
 } else {
 const difference = initialAmountDollars - oldAmount;
 if (Math.abs(difference) > 0.001) {
 if (difference > 0) {
-if (!checkCashForTransaction(difference)) {
-showError('ليس لديك كاش كافٍ لخصم الفرق (' + formatWithCommas(difference, 2) + ' $)');
-return;
-}
-if (!deductCash(difference, 'خصم فرق تعديل ' + getDisplayNameFromKey(activeCoinSymbol))) {
-showError("فشل في خصم الكاش. الرصيد غير كافٍ");
-return;
-}
+if (!checkCashForTransaction(difference)) { showError('ليس لديك كاش كافٍ لخصم الفرق (' + formatWithCommas(difference, 2) + ' $)'); return; }
+if (!deductCash(difference, 'خصم فرق تعديل ' + getDisplayNameFromKey(activeCoinSymbol))) { showError("فشل في خصم الكاش"); return; }
 } else {
 const refundAmount = Math.abs(difference);
 availableCash += refundAmount;
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
-const refundRecord = {
-id: Date.now(),
-amount: refundAmount,
-date: new Date().toLocaleString('ar-EG'),
-type: 'deposit',
-note: 'استرجاع فرق تعديل ' + getDisplayNameFromKey(activeCoinSymbol)
-};
+const refundRecord = { id: Date.now(), amount: refundAmount, date: new Date().toLocaleString('ar-EG'), type: 'deposit', note: 'استرجاع فرق تعديل ' + getDisplayNameFromKey(activeCoinSymbol) };
 cashHistory.deposits.push(refundRecord);
 saveCashHistory();
 updateCashHistoryDisplay();
@@ -3605,9 +3541,7 @@ updateCashDisplay();
 data.initialSavedAmount = initialAmountDollars;
 const initialCoinQty = initialEntryPrice > 0 ? initialAmountDollars / initialEntryPrice : 0;
 if (data.initialSales && data.initialSales.length > 0 && initialCoinQty > 0) {
-data.initialSales.forEach(sale => {
-sale.investedAmount = initialAmountDollars * (sale.qty / initialCoinQty);
-});
+data.initialSales.forEach(sale => { sale.investedAmount = initialAmountDollars * (sale.qty / initialCoinQty); });
 updateInitialSalesHistory(data.initialSales);
 }
 updateActiveCoinDataInMemory();
@@ -3616,15 +3550,9 @@ updateSummaryTable();
 if (isAlreadySaved) {
 const diff = initialAmountDollars - oldAmount;
 if (Math.abs(diff) > 0.001) {
-showSuccess(diff > 0
-? 'تم تحديث صفقة الدخول وخصم الفرق ' + formatWithCommas(diff, 2) + ' $ من الكاش'
-: 'تم تحديث صفقة الدخول وإضافة ' + formatWithCommas(Math.abs(diff), 2) + ' $ إلى الكاش');
-} else {
-showSuccess('تم تحديث صفقة الدخول (بدون تغيير في الكاش)');
-}
-} else {
-showSuccess('تم حفظ صفقة الدخول لـ ' + getDisplayNameFromKey(activeCoinSymbol) + ' بنجاح وخصم ' + formatWithCommas(initialAmountDollars, 2) + ' $ من الكاش');
-}
+showSuccess(diff > 0 ? 'تم تحديث صفقة الدخول وخصم الفرق ' + formatWithCommas(diff, 2) + ' $ من الكاش' : 'تم تحديث صفقة الدخول وإضافة ' + formatWithCommas(Math.abs(diff), 2) + ' $ إلى الكاش');
+} else showSuccess('تم تحديث صفقة الدخول (بدون تغيير في الكاش)');
+} else showSuccess('تم حفظ صفقة الدخول لـ ' + getDisplayNameFromKey(activeCoinSymbol) + ' بنجاح وخصم ' + formatWithCommas(initialAmountDollars, 2) + ' $ من الكاش');
 }
 function saveDCATransaction(symbol, index) {
 if (!symbol) { showError("لا توجد عملة محددة"); return; }
@@ -3635,45 +3563,24 @@ const priceInput = document.getElementById('dca_price_' + symbol + '_' + index);
 const amountInput = document.getElementById('dca_amount_' + symbol + '_' + index);
 const repurchasePrice = parseFormattedNumber(priceInput?.value);
 const repurchaseAmount = parseFormattedNumber(amountInput?.value);
-if (repurchasePrice <= 0 || repurchaseAmount <= 0) {
-showError("يرجى إدخال سعر ومبلغ صالحين قبل الحفظ");
-return;
-}
+if (repurchasePrice <= 0 || repurchaseAmount <= 0) { showError("يرجى إدخال سعر ومبلغ صالحين قبل الحفظ"); return; }
 const rp = data.repurchases[index];
 const isAlreadySaved = rp.savedAmount && rp.savedAmount > 0;
 const oldAmount = rp.savedAmount || 0;
 if (!isAlreadySaved) {
-if (!checkCashForTransaction(repurchaseAmount)) {
-showError("ليس لديك كاش كافٍ لإضافة هذه الصفقة");
-return;
-}
-if (!deductCash(repurchaseAmount, 'خصم لتعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1))) {
-showError("فشل في خصم الكاش. الرصيد غير كافٍ");
-return;
-}
+if (!checkCashForTransaction(repurchaseAmount)) { showError("ليس لديك كاش كافٍ لإضافة هذه الصفقة"); return; }
+if (!deductCash(repurchaseAmount, 'خصم لتعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1))) { showError("فشل في خصم الكاش"); return; }
 } else {
 const difference = repurchaseAmount - oldAmount;
 if (Math.abs(difference) > 0.001) {
 if (difference > 0) {
-if (!checkCashForTransaction(difference)) {
-showError('ليس لديك كاش كافٍ لخصم الفرق (' + formatWithCommas(difference, 2) + ' $)');
-return;
-}
-if (!deductCash(difference, 'خصم فرق تعديل تعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1))) {
-showError("فشل في خصم الكاش. الرصيد غير كافٍ");
-return;
-}
+if (!checkCashForTransaction(difference)) { showError('ليس لديك كاش كافٍ لخصم الفرق (' + formatWithCommas(difference, 2) + ' $)'); return; }
+if (!deductCash(difference, 'خصم فرق تعديل تعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1))) { showError("فشل في خصم الكاش"); return; }
 } else {
 const refundAmount = Math.abs(difference);
 availableCash += refundAmount;
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
-const refundRecord = {
-id: Date.now(),
-amount: refundAmount,
-date: new Date().toLocaleString('ar-EG'),
-type: 'deposit',
-note: 'استرجاع فرق تعديل تعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1)
-};
+const refundRecord = { id: Date.now(), amount: refundAmount, date: new Date().toLocaleString('ar-EG'), type: 'deposit', note: 'استرجاع فرق تعديل تعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1) };
 cashHistory.deposits.push(refundRecord);
 saveCashHistory();
 updateCashHistoryDisplay();
@@ -3684,14 +3591,10 @@ updateCashDisplay();
 rp.savedAmount = repurchaseAmount;
 rp.price = repurchasePrice.toString();
 rp.amount = repurchaseAmount.toString();
-if (!rp.purchaseDate) {
-rp.purchaseDate = new Date().toLocaleDateString('ar-EG');
-}
+if (!rp.purchaseDate) rp.purchaseDate = new Date().toLocaleDateString('ar-EG');
 const repurchaseQty = repurchasePrice > 0 ? repurchaseAmount / repurchasePrice : 0;
 if (rp.sales && rp.sales.length > 0 && repurchaseQty > 0) {
-rp.sales.forEach(sale => {
-sale.investedAmount = repurchaseAmount * (sale.qty / repurchaseQty);
-});
+rp.sales.forEach(sale => { sale.investedAmount = repurchaseAmount * (sale.qty / repurchaseQty); });
 }
 saveAllDataToLocalStorage();
 updateSummaryTable();
@@ -3699,31 +3602,14 @@ calculateActiveCoinDetails();
 if (isAlreadySaved) {
 const diff = repurchaseAmount - oldAmount;
 if (Math.abs(diff) > 0.001) {
-showSuccess(diff > 0
-? 'تم تحديث التعزيز ' + (index+1) + ' وخصم الفرق ' + formatWithCommas(diff, 2) + ' $ من الكاش'
-: 'تم تحديث التعزيز ' + (index+1) + ' وإضافة ' + formatWithCommas(Math.abs(diff), 2) + ' $ إلى الكاش');
-} else {
-showSuccess('تم تحديث التعزيز ' + (index+1) + ' (بدون تغيير في الكاش)');
-}
-} else {
-showSuccess('تم حفظ صفقة التعزيز ' + (index+1) + ' لـ ' + getDisplayNameFromKey(symbol) + ' بنجاح وخصم ' + formatWithCommas(repurchaseAmount, 2) + ' $ من الكاش');
-}
+showSuccess(diff > 0 ? 'تم تحديث التعزيز ' + (index+1) + ' وخصم الفرق ' + formatWithCommas(diff, 2) + ' $ من الكاش' : 'تم تحديث التعزيز ' + (index+1) + ' وإضافة ' + formatWithCommas(Math.abs(diff), 2) + ' $ إلى الكاش');
+} else showSuccess('تم تحديث التعزيز ' + (index+1) + ' (بدون تغيير في الكاش)');
+} else showSuccess('تم حفظ صفقة التعزيز ' + (index+1) + ' لـ ' + getDisplayNameFromKey(symbol) + ' بنجاح وخصم ' + formatWithCommas(repurchaseAmount, 2) + ' $ من الكاش');
 }
 function addDCAForCoin(symbol) {
-if (!symbol || !allCoinData[symbol]) {
-showError("يرجى اختيار عملة أولاً");
-return;
-}
+if (!symbol || !allCoinData[symbol]) { showError("يرجى اختيار عملة أولاً"); return; }
 const data = allCoinData[symbol];
-const newRepurchase = {
-price: '',
-amount: '',
-sales: [],
-totalSoldQty: '0',
-priceMode: 'price',
-purchaseDate: '',
-savedAmount: 0
-};
+const newRepurchase = { price: '', amount: '', sales: [], totalSoldQty: '0', priceMode: 'price', purchaseDate: '', savedAmount: 0 };
 data.repurchases.push(newRepurchase);
 saveAllDataToLocalStorage();
 updateSummaryTable();
@@ -3731,19 +3617,14 @@ expandedCoins.add(symbol);
 saveExpandedCoins();
 setTimeout(() => {
 const detailsDiv = document.getElementById('dcaDetails_' + symbol);
-if (detailsDiv) {
-detailsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
+if (detailsDiv) detailsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }, 300);
 showSuccess('تم إضافة تعزيز جديد لـ ' + getDisplayNameFromKey(symbol));
 }
 function removeDCAForCoin(symbol, index) {
 showConfirm('هل تريد حذف التعزيز رقم ' + (index+1) + ' لـ ' + getDisplayNameFromKey(symbol) + '؟', () => {
 const data = allCoinData[symbol];
-if (!data || index < 0 || index >= data.repurchases.length) {
-showError("التعزيز غير موجود");
-return;
-}
+if (!data || index < 0 || index >= data.repurchases.length) { showError("التعزيز غير موجود"); return; }
 const rp = data.repurchases[index];
 const repurchaseAmount = parseFormattedNumber(rp.amount);
 const repurchasePrice = parseFormattedNumber(rp.price);
@@ -3753,17 +3634,13 @@ const totalSoldQty = calculateTotalSoldQty(sales);
 const remainingQty = repurchaseQty - totalSoldQty;
 const savedAmount = rp.savedAmount || 0;
 const wasSaved = savedAmount > 0;
-const remainingAmount = wasSaved && repurchaseQty > 0
-? savedAmount * (remainingQty / repurchaseQty)
-: 0;
+const remainingAmount = wasSaved && repurchaseQty > 0 ? savedAmount * (remainingQty / repurchaseQty) : 0;
 const salesCashToRefund = calculateTotalSalesCashFromSales(sales);
 if (wasSaved && remainingAmount > 0 && !isNaN(remainingAmount)) {
 availableCash += remainingAmount;
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
 }
-if (salesCashToRefund > 0) {
-addSalesCashDeposit(salesCashToRefund, 'استرجاع إلغاء تعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1), null);
-}
+if (salesCashToRefund > 0) addSalesCashDeposit(salesCashToRefund, 'استرجاع إلغاء تعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1), null);
 updateCashDisplay();
 data.repurchases.splice(index, 1);
 saveAllDataToLocalStorage();
@@ -3780,18 +3657,12 @@ const amountInput = document.getElementById('dca_amount_' + symbol + '_' + index
 const priceModeBtn = document.getElementById('dca_priceModeBtn_' + symbol + '_' + index);
 if (priceInput) data.repurchases[index].price = priceInput.value;
 if (amountInput) data.repurchases[index].amount = amountInput.value;
-if (priceModeBtn) {
-data.repurchases[index].priceMode = priceModeBtn.classList.contains('active') ? 'price' : 'percentage';
-}
+if (priceModeBtn) data.repurchases[index].priceMode = priceModeBtn.classList.contains('active') ? 'price' : 'percentage';
 saveAllDataToLocalStorage();
 calculateAndDisplay();
 }
-function calculateTotalSoldQty(sales) {
-return sales.reduce((total, sale) => total + sale.qty, 0);
-}
-function calculateCashFromSales(sales) {
-return sales.reduce((total, sale) => total + (sale.qty * sale.price), 0);
-}
+function calculateTotalSoldQty(sales) { return sales.reduce((total, sale) => total + sale.qty, 0); }
+function calculateCashFromSales(sales) { return sales.reduce((total, sale) => total + (sale.qty * sale.price), 0); }
 function getDCARowsHTML(symbol, data) {
 if (!data || !data.repurchases || data.repurchases.length === 0) {
 return '<div style="text-align:center; padding:15px; color:var(--text-muted);">لا توجد تعزيزات مسجلة لهذه العملة<br><button class="add-dca-btn" onclick="addDCAForCoin(\'' + symbol + '\')">➕ إضافة تعزيز</button></div>';
@@ -3808,9 +3679,7 @@ const repurchaseQty = repurchasePrice > 0 ? repurchaseAmount / repurchasePrice :
 const remainingQty = repurchaseQty - totalSoldQty;
 const cashFromSales = calculateCashFromSales(sales);
 let changePercent = 0;
-if (initialEntryPrice > 0 && repurchasePrice > 0) {
-changePercent = ((repurchasePrice - initialEntryPrice) / initialEntryPrice) * 100;
-}
+if (initialEntryPrice > 0 && repurchasePrice > 0) changePercent = ((repurchasePrice - initialEntryPrice) / initialEntryPrice) * 100;
 let totalTradePnlAmount = 0;
 let totalTradePnlPercent = 0;
 if (marketPrice > 0 && repurchaseQty > 0) {
@@ -3884,13 +3753,8 @@ function toggleDCASellForm(symbol, index) {
 const sellForm = document.getElementById('dca_sellForm_' + symbol + '_' + index);
 const sellBtn = sellForm?.previousElementSibling;
 if (!sellForm) return;
-if (sellForm.style.display === 'none' || !sellForm.style.display) {
-sellForm.style.display = 'block';
-if (sellBtn) sellBtn.textContent = 'إخفاء';
-} else {
-sellForm.style.display = 'none';
-if (sellBtn) sellBtn.textContent = 'بيع';
-}
+if (sellForm.style.display === 'none' || !sellForm.style.display) { sellForm.style.display = 'block'; if (sellBtn) sellBtn.textContent = 'إخفاء'; }
+else { sellForm.style.display = 'none'; if (sellBtn) sellBtn.textContent = 'بيع'; }
 }
 function applyDCASale(symbol, index) {
 const data = allCoinData[symbol];
@@ -3910,23 +3774,14 @@ if (soldPrice <= 0) { showError("يرجى إدخال سعر بيع صحيح"); r
 if (totalSoldQty + soldQty > repurchaseQty + 0.00000001) { showError("الكمية المباعة الإجمالية لا يمكن أن تكون أكبر من كمية التعزيز"); return; }
 const investedAmountForSale = repurchaseQty > 0 ? repurchaseAmount * (soldQty / repurchaseQty) : 0;
 const saleId = generateUniqueId();
-currentSales.push({
-id: saleId,
-qty: soldQty,
-price: soldPrice,
-investedAmount: investedAmountForSale,
-date: new Date().toLocaleDateString('ar-EG'),
-cashRecordId: null
-});
+currentSales.push({ id: saleId, qty: soldQty, price: soldPrice, investedAmount: investedAmountForSale, date: new Date().toLocaleDateString('ar-EG'), cashRecordId: null });
 rp.sales = currentSales;
 rp.totalSoldQty = calculateTotalSoldQty(currentSales).toString();
 const saleAmount = soldQty * soldPrice;
 const cashRecordId = addSalesCashDeposit(saleAmount, 'بيع من ' + getDisplayNameFromKey(symbol) + ' (تعزيز #' + (index+1) + ')', saleId);
 if (cashRecordId) {
 const saleIndex = rp.sales.findIndex(s => s.id === saleId);
-if (saleIndex !== -1) {
-rp.sales[saleIndex].cashRecordId = cashRecordId;
-}
+if (saleIndex !== -1) rp.sales[saleIndex].cashRecordId = cashRecordId;
 }
 if (soldQtyInput) soldQtyInput.value = '0';
 if (soldPriceInput) soldPriceInput.value = '';
@@ -3957,29 +3812,18 @@ const userPrice = prompt('أدخل سعر البيع للكمية المتبقي
 if (!userPrice || isNaN(parseFloat(userPrice)) || parseFloat(userPrice) <= 0) { showError("يرجى إدخال سعر بيع صحيح"); return; }
 sellPrice = parseFloat(userPrice);
 } else {
-if (!confirm('بيع الكمية المتبقية (' + formatNumber(remainingQty, 4) + ') بالسعر الحالي ' + formatNumber(marketPrice, 8) + '؟')) {
-return;
-}
+if (!confirm('بيع الكمية المتبقية (' + formatNumber(remainingQty, 4) + ') بالسعر الحالي ' + formatNumber(marketPrice, 8) + '؟')) return;
 }
 const investedAmountForSale = repurchaseQty > 0 ? repurchaseAmount * (remainingQty / repurchaseQty) : 0;
 const saleId = generateUniqueId();
-currentSales.push({
-id: saleId,
-qty: remainingQty,
-price: sellPrice,
-investedAmount: investedAmountForSale,
-date: new Date().toLocaleDateString('ar-EG'),
-cashRecordId: null
-});
+currentSales.push({ id: saleId, qty: remainingQty, price: sellPrice, investedAmount: investedAmountForSale, date: new Date().toLocaleDateString('ar-EG'), cashRecordId: null });
 rp.sales = currentSales;
 rp.totalSoldQty = calculateTotalSoldQty(currentSales).toString();
 const saleAmount = remainingQty * sellPrice;
 const cashRecordId = addSalesCashDeposit(saleAmount, 'بيع الكل من ' + getDisplayNameFromKey(symbol) + ' (تعزيز #' + (index+1) + ')', saleId);
 if (cashRecordId) {
 const saleIndex = rp.sales.findIndex(s => s.id === saleId);
-if (saleIndex !== -1) {
-rp.sales[saleIndex].cashRecordId = cashRecordId;
-}
+if (saleIndex !== -1) rp.sales[saleIndex].cashRecordId = cashRecordId;
 }
 saveAllDataToLocalStorage();
 updateSummaryTable();
@@ -3996,11 +3840,7 @@ if (saleIndex < 0 || saleIndex >= sales.length) { showError("البيع غير �
 const removedSale = sales[saleIndex];
 if (removedSale.cashRecordId) {
 const depositIndex = salesCashHistory.deposits.findIndex(d => d.id === removedSale.cashRecordId);
-if (depositIndex !== -1) {
-salesCashHistory.deposits.splice(depositIndex, 1);
-saveSalesCashHistory();
-updateSalesCashHistoryDisplay();
-}
+if (depositIndex !== -1) { salesCashHistory.deposits.splice(depositIndex, 1); saveSalesCashHistory(); updateSalesCashHistoryDisplay(); }
 } else {
 const saleAmount = removedSale.qty * removedSale.price;
 addSalesCashWithdrawal(saleAmount, 'إلغاء بيع من ' + getDisplayNameFromKey(symbol) + ' (تعزيز #' + (repurchaseIndex+1) + ')');
@@ -4040,13 +3880,8 @@ const salesCashToRefund = calculateTotalSalesCashFromSales(sales);
 const totalRefund = remainingAmount + salesCashToRefund;
 if (totalRefund <= 0.0001) { showError("لا توجد قيمة متبقية في صفقة التعزيز"); return; }
 showConfirm('هل تريد إلغاء صفقة التعزيز؟\n• استرجاع كاش الكمية المتبقية: ' + formatWithCommas(remainingAmount, 2) + ' $\n• استرجاع كاش المبيعات السابقة: ' + formatWithCommas(salesCashToRefund, 2) + ' $\n• الإجمالي: ' + formatWithCommas(totalRefund, 2) + ' $', () => {
-if (remainingAmount > 0) {
-availableCash += remainingAmount;
-localStorage.setItem(LS_KEY_CASH, availableCash.toString());
-}
-if (salesCashToRefund > 0) {
-addSalesCashDeposit(salesCashToRefund, 'استرجاع إلغاء تعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1), null);
-}
+if (remainingAmount > 0) { availableCash += remainingAmount; localStorage.setItem(LS_KEY_CASH, availableCash.toString()); }
+if (salesCashToRefund > 0) addSalesCashDeposit(salesCashToRefund, 'استرجاع إلغاء تعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1), null);
 updateCashDisplay();
 data.repurchases.splice(index, 1);
 saveAllDataToLocalStorage();
@@ -4106,10 +3941,7 @@ return null;
 }
 function calculateSummaryData() {
 const summaryRows = [];
-let totalInvested = 0;
-let totalCurrentValue = 0;
-let totalPnlAmount = 0;
-let totalCashFromSales = 0;
+let totalInvested = 0, totalCurrentValue = 0, totalPnlAmount = 0, totalCashFromSales = 0;
 Object.keys(allCoinData).forEach(symbol => {
 const data = allCoinData[symbol];
 const marketPrice = currentMarketPrices[symbol] || 0;
@@ -4146,28 +3978,17 @@ totalCurrentValue += currentPortfolioValue;
 totalPnlAmount += pnlAmount;
 totalCashFromSales += coinCashFromSales;
 summaryRows.push({
-symbol: symbol,
-totalCoinQty: totalCoinQty,
-totalInvestedAmount: totalInvestedAmount,
+symbol: symbol, totalCoinQty: totalCoinQty, totalInvestedAmount: totalInvestedAmount,
 averageEntryPrice: totalCoinQty > 0 ? totalInvestedAmount / totalCoinQty : 0,
-marketPrice: marketPrice,
-currentPortfolioValue: currentPortfolioValue,
-pnlAmount: pnlAmount,
-pnlPercent: pnlPercent,
-totalCashFromSales: coinCashFromSales,
+marketPrice: marketPrice, currentPortfolioValue: currentPortfolioValue,
+pnlAmount: pnlAmount, pnlPercent: pnlPercent, totalCashFromSales: coinCashFromSales,
 error: marketPrice === null ? 'فشل جلب السعر' : null
 });
 });
 const totalPnlPercent = totalInvested > 0 ? (totalPnlAmount / totalInvested) * 100 : 0;
 return {
 summaryRows: summaryRows,
-totals: {
-invested: totalInvested,
-currentValue: totalCurrentValue,
-pnlAmount: totalPnlAmount,
-pnlPercent: totalPnlPercent,
-cashFromSales: totalCashFromSales
-}
+totals: { invested: totalInvested, currentValue: totalCurrentValue, pnlAmount: totalPnlAmount, pnlPercent: totalPnlPercent, cashFromSales: totalCashFromSales }
 };
 }
 function updateSummaryTable() {
@@ -4238,23 +4059,16 @@ totalCurrentValueSummaryEl.className = '';
 totalCashFromSalesSummaryEl.className = '';
 }
 function toggleCoinDetails(symbol) {
-if (expandedCoins.has(symbol)) {
-expandedCoins.delete(symbol);
-} else {
-expandedCoins.add(symbol);
-}
+if (expandedCoins.has(symbol)) expandedCoins.delete(symbol);
+else expandedCoins.add(symbol);
 saveExpandedCoins();
 updateSummaryTable();
 }
-function saveExpandedCoins() {
-localStorage.setItem(LS_KEY_EXPANDED_COINS, JSON.stringify(Array.from(expandedCoins)));
-}
+function saveExpandedCoins() { localStorage.setItem(LS_KEY_EXPANDED_COINS, JSON.stringify(Array.from(expandedCoins))); }
 function loadExpandedCoins() {
 let savedExpandedCoins = localStorage.getItem(LS_KEY_EXPANDED_COINS);
 if (savedExpandedCoins) {
-try {
-expandedCoins = new Set(JSON.parse(savedExpandedCoins));
-} catch (e) { console.error("خطأ في تحميل العملات الموسعة:", e); }
+try { expandedCoins = new Set(JSON.parse(savedExpandedCoins)); } catch (e) { console.error("خطأ في تحميل العملات الموسعة:", e); }
 }
 }
 async function fetchSinglePrice(symbol) {
@@ -4272,10 +4086,7 @@ try {
 const response = await fetch(binanceApiUrl);
 if (response.ok) {
 const data = await response.json();
-if (data && data.price && !isNaN(parseFloat(data.price))) {
-price = parseFloat(data.price);
-source = 'Binance';
-}
+if (data && data.price && !isNaN(parseFloat(data.price))) { price = parseFloat(data.price); source = 'Binance'; }
 }
 } catch (e) { console.warn('Binance fetch failed for ' + baseSymbol + ':', e.message); }
 if (price === null) {
@@ -4290,12 +4101,8 @@ source = 'KuCoin';
 }
 } catch (e) { console.warn('KuCoin fetch failed for ' + kucoinSymbol + ':', e.message); }
 }
-if (price !== null) {
-return { symbol: symbol, price: price, source: source, error: null };
-} else {
-error = 'فشل جلب السعر من جميع المصادر';
-return { symbol: symbol, price: null, source: null, error: error };
-}
+if (price !== null) return { symbol: symbol, price: price, source: source, error: null };
+else return { symbol: symbol, price: null, source: null, error: 'فشل جلب السعر من جميع المصادر' };
 }
 async function fetchAllPrices(isAutoRefresh = false) {
 const trackedSymbols = Object.keys(allCoinData);
@@ -4315,25 +4122,17 @@ apiStatusDiv.style.color = 'var(--primary-color)';
 const pricePromises = trackedSymbols.map(symbol => fetchSinglePrice(symbol));
 try {
 const results = await Promise.allSettled(pricePromises);
-let successCount = 0;
-let failCount = 0;
+let successCount = 0, failCount = 0;
 const fetchTimestamp = new Date();
 results.forEach(result => {
 if (result.status === 'fulfilled') {
 const { symbol, price, error } = result.value;
-if (error === null && price !== null) {
-currentMarketPrices[symbol] = price;
-successCount++;
-} else {
-if (currentMarketPrices[symbol] === undefined) { currentMarketPrices[symbol] = null; }
-failCount++;
-}
+if (error === null && price !== null) { currentMarketPrices[symbol] = price; successCount++; }
+else { if (currentMarketPrices[symbol] === undefined) currentMarketPrices[symbol] = null; failCount++; }
 } else {
 failCount++;
 const failedSymbol = trackedSymbols.find(s => result.reason?.message?.includes(s));
-if (failedSymbol && currentMarketPrices[failedSymbol] === undefined) {
-currentMarketPrices[failedSymbol] = null;
-}
+if (failedSymbol && currentMarketPrices[failedSymbol] === undefined) currentMarketPrices[failedSymbol] = null;
 }
 });
 if (activeCoinSymbol) {
@@ -4355,7 +4154,7 @@ checkPriceAlerts();
 const statusMsg = successCount + ' ناجح, ' + failCount + ' فشل (' + fetchTimestamp.toLocaleTimeString('ar-EG') + ')';
 apiStatusDiv.textContent = isAutoRefresh ? 'تلقائي: ' + statusMsg : 'اكتمل: ' + statusMsg;
 apiStatusDiv.style.color = failCount > 0 ? 'var(--negative-color)' : 'var(--positive-color)';
-if (autoRefreshCheckbox.checked && !autoRefreshIntervalId) { startAutoRefresh(); }
+if (autoRefreshCheckbox.checked && !autoRefreshIntervalId) startAutoRefresh();
 } catch (error) {
 console.error("Unexpected error during fetchAllPrices:", error);
 if (!isAutoRefresh) {
@@ -4374,10 +4173,7 @@ if (!apiStatusDiv.textContent.includes('(تلقائي مفعل)')) apiStatusDiv.
 autoRefreshIntervalId = setInterval(() => fetchAllPrices(true), AUTO_REFRESH_INTERVAL);
 } else {
 autoRefreshCheckbox.checked = false;
-if (trackedSymbols.length === 0) {
-apiStatusDiv.textContent = 'أضف عملة للتحديث التلقائي.';
-apiStatusDiv.style.color = 'var(--text-muted)';
-}
+if (trackedSymbols.length === 0) { apiStatusDiv.textContent = 'أضف عملة للتحديث التلقائي.'; apiStatusDiv.style.color = 'var(--text-muted)'; }
 }
 }
 function stopAutoRefresh() {
@@ -4395,16 +4191,9 @@ apiStatusDiv.textContent = currentStatus + ' (تلقائي متوقف)';
 }
 function handleAutoRefreshToggle() {
 if (autoRefreshCheckbox.checked) {
-if (Object.keys(allCoinData).length > 0) {
-fetchAllPrices();
-startAutoRefresh();
-} else {
-autoRefreshCheckbox.checked = false;
-showError("يرجى إضافة عملة أولاً لتفعيل التحديث التلقائي.");
-}
-} else {
-stopAutoRefresh();
-}
+if (Object.keys(allCoinData).length > 0) { fetchAllPrices(); startAutoRefresh(); }
+else { autoRefreshCheckbox.checked = false; showError("يرجى إضافة عملة أولاً لتفعيل التحديث التلقائي."); }
+} else stopAutoRefresh();
 }
 function formatNumber(num, decimalPlaces = 8) {
 const number = Number(num);
@@ -4440,10 +4229,8 @@ const leverage = capital > 0 ? positionValue / capital : 0;
 document.getElementById('leverage').textContent = formatNumber(leverage, 1) + 'x';
 const riskWarning = document.getElementById('riskWarning');
 const riskRecommendation = document.getElementById('riskRecommendation');
-if (riskPercent > 5) {
-riskWarning.style.display = 'block';
-riskRecommendation.style.display = 'none';
-} else if (riskPercent > 2) {
+if (riskPercent > 5) { riskWarning.style.display = 'block'; riskRecommendation.style.display = 'none'; }
+else if (riskPercent > 2) {
 riskWarning.style.display = 'none';
 riskRecommendation.textContent = '⚠️ نسبة المخاطرة متوسطة - كن حذراً';
 riskRecommendation.style.display = 'block';
@@ -4460,10 +4247,7 @@ document.getElementById('leverage').textContent = '1x';
 }
 }
 function downloadAllDataAsTxt() {
-if (!allCoinData || Object.keys(allCoinData).length === 0) {
-showError("لا توجد بيانات لحفظها.");
-return;
-}
+if (!allCoinData || Object.keys(allCoinData).length === 0) { showError("لا توجد بيانات لحفظها."); return; }
 let content = "=== بيانات متابعة الصفقات الشاملة ===\n";
 content += "تم إنشاء بواسطة: المهندس [Muharraqi]\n";
 content += "تاريخ الإنشاء: " + new Date().toLocaleString('ar-EG') + "\n";
@@ -4475,32 +4259,24 @@ content += "الكاش من البيع: " + formatWithCommas(Math.max(0, totalSa
 content += "إجمالي الكاش المتاح: " + formatWithCommas(availableCash + Math.max(0, totalSalesCash), 2) + " $\n";
 if (cashHistory.deposits.length > 0) {
 content += "--- سجل إيداعات الكاش ---\n";
-cashHistory.deposits.forEach(record => {
-content += "إيداع: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n";
-});
+cashHistory.deposits.forEach(record => { content += "إيداع: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n"; });
 content += "\n";
 }
 if (cashHistory.withdrawals.length > 0) {
 content += "--- سجل سحوبات الكاش ---\n";
-cashHistory.withdrawals.forEach(record => {
-content += "سحب: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n";
-});
+cashHistory.withdrawals.forEach(record => { content += "سحب: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n"; });
 content += "\n";
 }
 if (salesCashHistory.deposits.length > 0 || salesCashHistory.withdrawals.length > 0) {
 content += "=== سجل الكاش من البيع ===\n";
 if (salesCashHistory.deposits.length > 0) {
 content += "--- إيداعات الكاش من البيع ---\n";
-salesCashHistory.deposits.forEach(record => {
-content += "إيداع: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n";
-});
+salesCashHistory.deposits.forEach(record => { content += "إيداع: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n"; });
 content += "\n";
 }
 if (salesCashHistory.withdrawals.length > 0) {
 content += "--- سحوبات الكاش من البيع ---\n";
-salesCashHistory.withdrawals.forEach(record => {
-content += "سحب: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n";
-});
+salesCashHistory.withdrawals.forEach(record => { content += "سحب: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n"; });
 content += "\n";
 }
 }
@@ -4512,32 +4288,23 @@ content += "المبلغ: " + (data.initialAmountDollars || 0) + "\n";
 content += "تاريخ شراء الدخول: " + (data.initialPurchaseDate || 'غير محدد') + "\n";
 if (data.initialSales && data.initialSales.length > 0) {
 content += "مبيعات الدخول: " + data.initialSales.length + "\n";
-data.initialSales.forEach((sale, saleIndex) => {
-content += "  بيع " + (saleIndex + 1) + ": " + sale.qty + ", " + sale.price + ", " + (sale.investedAmount || 0) + ", " + (sale.date || '') + "\n";
-});
-} else {
-content += "مبيعات الدخول: 0\n";
-}
+data.initialSales.forEach((sale, saleIndex) => { content += "  بيع " + (saleIndex + 1) + ": " + sale.qty + ", " + sale.price + ", " + (sale.investedAmount || 0) + ", " + (sale.date || '') + "\n"; });
+} else content += "مبيعات الدخول: 0\n";
 content += "التعزيزات: " + (data.repurchases || []).filter(rp => rp.price && rp.amount).length + "\n";
 (data.repurchases || []).forEach((rp, i) => {
 if (rp.price && rp.amount) {
 content += "  تعزيز " + (i + 1) + ": " + rp.price + ", " + rp.amount + ", " + (rp.totalSoldQty || 0) + ", " + (rp.priceMode || 'price') + ", " + (rp.purchaseDate || 'غير محدد') + "\n";
 if (rp.sales && rp.sales.length > 0) {
-rp.sales.forEach((sale, saleIndex) => {
-content += "    بيع " + (i + 1) + "-" + (saleIndex + 1) + ": " + sale.qty + ", " + sale.price + ", " + (sale.investedAmount || 0) + ", " + (sale.date || '') + "\n";
-});
+rp.sales.forEach((sale, saleIndex) => { content += "    بيع " + (i + 1) + "-" + (saleIndex + 1) + ": " + sale.qty + ", " + sale.price + ", " + (sale.investedAmount || 0) + ", " + (sale.date || '') + "\n"; });
 }
 }
 });
-content += "الأهداف: " + (data.targets.tp1 || 0) + ", " + (data.targets.tp2 || 0) + ", " + (data.targets.tp3 || 0) + ", " + (data.targets.sl || 0) + "\n";
-content += "\n";
+content += "الأهداف: " + (data.targets.tp1 || 0) + ", " + (data.targets.tp2 || 0) + ", " + (data.targets.tp3 || 0) + ", " + (data.targets.sl || 0) + "\n\n";
 }
 content += "=== الأسعار الحالية ===\n";
 Object.keys(currentMarketPrices).forEach(symbol => {
 const price = currentMarketPrices[symbol];
-if (price !== null && price !== undefined) {
-content += symbol + ": " + formatNumber(price, guessDecimalPlaces(price)) + "\n";
-}
+if (price !== null && price !== undefined) content += symbol + ": " + formatNumber(price, guessDecimalPlaces(price)) + "\n";
 });
 content += "\n";
 const { totals } = calculateSummaryData();
@@ -4548,9 +4315,7 @@ content += "إجمالي الربح/الخسارة: " + formatWithCommas(totals.
 content += "إجمالي الكاش من البيع: " + formatWithCommas(totals.cashFromSales, 2) + " $\n";
 if (Object.keys(savedEstimatePrices).length > 0) {
 content += "\n=== الأسعار التقديرية المحفوظة ===\n";
-Object.keys(savedEstimatePrices).forEach(symbol => {
-content += symbol + ": " + formatNumber(savedEstimatePrices[symbol], 8) + "\n";
-});
+Object.keys(savedEstimatePrices).forEach(symbol => { content += symbol + ": " + formatNumber(savedEstimatePrices[symbol], 8) + "\n"; });
 }
 const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
 const link = document.createElement('a');
@@ -4577,7 +4342,7 @@ if (line.startsWith('===')) { currentSection = line; return; }
 if (line.startsWith('---')) {
 const symbolMatch = line.match(/--- ([A-Z0-9_]+) ---/);
 if (symbolMatch) {
-if (symbol && coinData) { allCoinData[symbol] = coinData; }
+if (symbol && coinData) allCoinData[symbol] = coinData;
 symbol = symbolMatch[1];
 coinData = getDefaultCoinDataStructure();
 }
@@ -4586,40 +4351,23 @@ return;
 if (currentSection.includes('بيانات الكاش')) {
 if (line.startsWith('الكاش المدخل يدوياً:')) {
 const amount = parseFloat(line.split(':')[1].replace('$', '').replace(/,/g, '').trim());
-if (!isNaN(amount)) {
-availableCash = amount;
-localStorage.setItem(LS_KEY_CASH, availableCash.toString());
-updateCashDisplay();
-}
+if (!isNaN(amount)) { availableCash = amount; localStorage.setItem(LS_KEY_CASH, availableCash.toString()); updateCashDisplay(); }
 }
 }
 if (currentSection.includes('بيانات العملات') && symbol) {
-if (line.startsWith('سعر الدخول:')) { coinData.initialEntryPrice = line.split(':')[1].trim(); }
-else if (line.startsWith('المبلغ:')) { coinData.initialAmountDollars = line.split(':')[1].trim(); }
-else if (line.startsWith('تاريخ شراء الدخول:')) { coinData.initialPurchaseDate = line.split(':')[1].trim(); }
+if (line.startsWith('سعر الدخول:')) coinData.initialEntryPrice = line.split(':')[1].trim();
+else if (line.startsWith('المبلغ:')) coinData.initialAmountDollars = line.split(':')[1].trim();
+else if (line.startsWith('تاريخ شراء الدخول:')) coinData.initialPurchaseDate = line.split(':')[1].trim();
 else if (line.startsWith('  بيع')) {
 const parts = line.split(':')[1].split(',');
 if (parts.length >= 2) {
-if (!coinData.initialSales) { coinData.initialSales = []; }
-coinData.initialSales.push({
-qty: parseFloat(parts[0].trim()),
-price: parseFloat(parts[1].trim()),
-investedAmount: parts.length >= 3 ? parseFloat(parts[2].trim()) : 0,
-date: parts.length >= 4 ? parts[3].trim() : new Date().toLocaleDateString('ar-EG')
-});
+if (!coinData.initialSales) coinData.initialSales = [];
+coinData.initialSales.push({ qty: parseFloat(parts[0].trim()), price: parseFloat(parts[1].trim()), investedAmount: parts.length >= 3 ? parseFloat(parts[2].trim()) : 0, date: parts.length >= 4 ? parts[3].trim() : new Date().toLocaleDateString('ar-EG') });
 }
 } else if (line.startsWith('  تعزيز')) {
 const parts = line.split(':')[1].split(',');
 if (parts.length >= 2) {
-const rp = {
-price: parts[0].trim(),
-amount: parts[1].trim(),
-sales: [],
-totalSoldQty: parts.length >= 3 ? parts[2].trim() : '0',
-priceMode: parts.length >= 4 ? parts[3].trim() : 'price',
-purchaseDate: parts.length >= 5 ? parts[4].trim() : '',
-savedAmount: 0
-};
+const rp = { price: parts[0].trim(), amount: parts[1].trim(), sales: [], totalSoldQty: parts.length >= 3 ? parts[2].trim() : '0', priceMode: parts.length >= 4 ? parts[3].trim() : 'price', purchaseDate: parts.length >= 5 ? parts[4].trim() : '', savedAmount: 0 };
 coinData.repurchases.push(rp);
 }
 } else if (line.startsWith('    بيع')) {
@@ -4629,12 +4377,7 @@ const saleParts = line.split('بيع ')[1].split('-');
 if (saleParts.length >= 2) {
 const repIndexFromSale = parseInt(saleParts[0]) - 1;
 if (repIndexFromSale >= 0 && repIndexFromSale < coinData.repurchases.length) {
-coinData.repurchases[repIndexFromSale].sales.push({
-qty: parseFloat(parts[0].trim()),
-price: parseFloat(parts[1].trim()),
-investedAmount: parts.length >= 3 ? parseFloat(parts[2].trim()) : 0,
-date: parts.length >= 4 ? parts[3].trim() : new Date().toLocaleDateString('ar-EG')
-});
+coinData.repurchases[repIndexFromSale].sales.push({ qty: parseFloat(parts[0].trim()), price: parseFloat(parts[1].trim()), investedAmount: parts.length >= 3 ? parseFloat(parts[2].trim()) : 0, date: parts.length >= 4 ? parts[3].trim() : new Date().toLocaleDateString('ar-EG') });
 }
 }
 }
@@ -4653,7 +4396,7 @@ const priceMatch = line.match(/([A-Z0-9_]+): (\d+\.?\d*)/);
 if (priceMatch) {
 const sym = priceMatch[1];
 const price = parseFloat(priceMatch[2]);
-if (!isNaN(price)) { currentMarketPrices[sym] = price; }
+if (!isNaN(price)) currentMarketPrices[sym] = price;
 }
 }
 if (currentSection.includes('الأسعار التقديرية المحفوظة')) {
@@ -4661,11 +4404,11 @@ const estimateMatch = line.match(/([A-Z0-9_]+): (\d+\.?\d*)/);
 if (estimateMatch) {
 const sym = estimateMatch[1];
 const price = parseFloat(estimateMatch[2]);
-if (!isNaN(price)) { savedEstimatePrices[sym] = price; }
+if (!isNaN(price)) savedEstimatePrices[sym] = price;
 }
 }
 });
-if (symbol && coinData) { allCoinData[symbol] = coinData; }
+if (symbol && coinData) allCoinData[symbol] = coinData;
 saveAllDataToLocalStorage();
 saveEstimatePrices();
 updateCoinSelector();
@@ -4678,9 +4421,7 @@ reader.readAsText(file);
 function openTradingView() {
 if (!activeCoinSymbol) { showError("يرجى اختيار عملة أولاً"); return; }
 let symbol = getBaseSymbolFromKey(activeCoinSymbol);
-if (!symbol.includes('USDT') && !symbol.includes('BUSD')) {
-symbol += 'USDT';
-}
+if (!symbol.includes('USDT') && !symbol.includes('BUSD')) symbol += 'USDT';
 const tradingViewUrl = 'https://www.tradingview.com/chart/?symbol=BINANCE:' + symbol;
 const newWindow = window.open(tradingViewUrl, '_blank');
 if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
@@ -4692,9 +4433,8 @@ const { summaryRows, totals } = calculateSummaryData();
 const totalSalesCash = salesCashHistory.deposits.reduce((sum, record) => sum + record.amount, 0) -
 salesCashHistory.withdrawals.reduce((sum, record) => sum + record.amount, 0);
 let reportHTML = '<div class="print-header"><h1>تقرير الصفقات الشاملة</h1><p>تم إنشاء بواسطة: المهندس [Muharraqi]</p><p>تاريخ التقرير: ' + new Date().toLocaleString('ar-EG') + '</p></div><div class="print-section"><h2>ملخص عام</h2><div class="print-totals"><div><span>إجمالي المبلغ المستثمر:</span> <span>' + formatWithCommas(totals.invested, 2) + ' $</span></div><div><span>إجمالي القيمة الحالية:</span> <span>' + formatWithCommas(totals.currentValue, 2) + ' $</span></div><div><span>إجمالي الربح/الخسارة:</span> <span class="' + (totals.pnlAmount > 0 ? 'positive' : totals.pnlAmount < 0 ? 'negative' : '') + '">' + formatWithCommas(totals.pnlAmount, 2) + ' $</span></div><div><span>إجمالي الربح/الخسارة %:</span> <span class="' + (totals.pnlPercent > 0 ? 'positive' : totals.pnlPercent < 0 ? 'negative' : '') + '">' + formatNumber(totals.pnlPercent, 2) + ' %</span></div><div><span>إجمالي الكاش من البيع:</span> <span>' + formatWithCommas(totals.cashFromSales, 2) + ' $</span></div><div><span>الكاش المدخل يدوياً:</span> <span>' + formatWithCommas(availableCash, 2) + ' $</span></div><div><span>الكاش المتاح الكلي:</span> <span>' + formatWithCommas(availableCash + Math.max(0, totalSalesCash), 2) + ' $</span></div></div></div><div class="print-section"><h2>تفاصيل العملات</h2>';
-if (summaryRows.length === 0) {
-reportHTML += '<p>لا توجد عملات مضافة حالياً.</p>';
-} else {
+if (summaryRows.length === 0) reportHTML += '<p>لا توجد عملات مضافة حالياً.</p>';
+else {
 reportHTML += '<table class="print-table"><thead><tr><th>العملة</th><th>الكمية</th><th>المستثمر $</th><th>متوسط الدخول</th><th>السعر الحالي</th><th>القيمة الحالية $</th><th>الربح/الخسارة $</th><th>الربح/الخسارة %</th><th>الكاش من البيع $</th><th>تاريخ الشراء</th><th>عدد التعزيزات</th></tr></thead><tbody>';
 summaryRows.forEach(item => {
 const data = allCoinData[item.symbol];
@@ -4717,17 +4457,11 @@ function updatePortfolioChart() {
 const container = document.getElementById('portfolioChartContainer');
 if (!container) return;
 const { summaryRows } = calculateSummaryData();
-if (summaryRows.length === 0) {
-container.innerHTML = '<div class="no-data-chart">لا توجد بيانات كافية لعرض توزيع المحفظة</div>';
-return;
-}
+if (summaryRows.length === 0) { container.innerHTML = '<div class="no-data-chart">لا توجد بيانات كافية لعرض توزيع المحفظة</div>'; return; }
 const totalValue = summaryRows.reduce((sum, item) => sum + (item.currentPortfolioValue || 0), 0);
 const totalCash = availableCash + Math.max(0, getNetSalesCash());
 const grandTotal = totalValue + totalCash;
-if (grandTotal <= 0) {
-container.innerHTML = '<div class="no-data-chart">لا توجد استثمارات نشطة لعرضها</div>';
-return;
-}
+if (grandTotal <= 0) { container.innerHTML = '<div class="no-data-chart">لا توجد استثمارات نشطة لعرضها</div>'; return; }
 let html = '';
 const colors = ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796', '#5a5c69', '#6f42c1', '#e83e8c', '#fd7e14'];
 summaryRows.forEach((item, index) => {
@@ -4765,10 +4499,7 @@ document.getElementById('tpPrice1').textContent = formatNumber(0, 8);
 document.getElementById('tpPrice2').textContent = formatNumber(0, 8);
 document.getElementById('tpPrice3').textContent = formatNumber(0, 8);
 document.getElementById('slPrice').textContent = formatNumber(0, 8);
-if (!activeCoinSymbol || !allCoinData[activeCoinSymbol]) {
-updateAvailableQtyForSale();
-return;
-}
+if (!activeCoinSymbol || !allCoinData[activeCoinSymbol]) { updateAvailableQtyForSale(); return; }
 const data = allCoinData[activeCoinSymbol];
 const marketPrice = currentMarketPrices[activeCoinSymbol] || 0;
 const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
@@ -4796,13 +4527,8 @@ const initialPnlElement = document.getElementById('initialPnl');
 const initialPnlPercentElement = document.getElementById('initialPnlPercent');
 initialPnlElement.className = 'output-field';
 initialPnlPercentElement.className = 'output-field';
-if (initialPnl > 0) {
-initialPnlElement.classList.add('pnl-positive');
-initialPnlPercentElement.classList.add('pnl-positive');
-} else if (initialPnl < 0) {
-initialPnlElement.classList.add('pnl-negative');
-initialPnlPercentElement.classList.add('pnl-negative');
-}
+if (initialPnl > 0) { initialPnlElement.classList.add('pnl-positive'); initialPnlPercentElement.classList.add('pnl-positive'); }
+else if (initialPnl < 0) { initialPnlElement.classList.add('pnl-negative'); initialPnlPercentElement.classList.add('pnl-negative'); }
 let totalCoinQty = initialRemainingQty;
 let totalInvestedAmount = initialCoinQty > 0 ? initialAmountDollars * (initialRemainingQty / initialCoinQty) : 0;
 let totalCashFromSales = initialCashFromSales;
@@ -4836,16 +4562,9 @@ pnlAmountElement.textContent = formatWithCommas(pnlAmount, 2);
 pnlPercentElement.textContent = formatNumber(pnlPercent, 2) + '%';
 pnlAmountElement.className = 'value';
 pnlPercentElement.className = 'value';
-if (pnlAmount > 0) {
-pnlAmountElement.classList.add('pnl-positive');
-pnlPercentElement.classList.add('pnl-positive');
-} else if (pnlAmount < 0) {
-pnlAmountElement.classList.add('pnl-negative');
-pnlPercentElement.classList.add('pnl-negative');
-} else {
-pnlAmountElement.classList.add('pnl-neutral');
-pnlPercentElement.classList.add('pnl-neutral');
-}
+if (pnlAmount > 0) { pnlAmountElement.classList.add('pnl-positive'); pnlPercentElement.classList.add('pnl-positive'); }
+else if (pnlAmount < 0) { pnlAmountElement.classList.add('pnl-negative'); pnlPercentElement.classList.add('pnl-negative'); }
+else { pnlAmountElement.classList.add('pnl-neutral'); pnlPercentElement.classList.add('pnl-neutral'); }
 const tpP1 = parseFormattedNumber(document.getElementById('tpPercent1').value);
 const tpP2 = parseFormattedNumber(document.getElementById('tpPercent2').value);
 const tpP3 = parseFormattedNumber(document.getElementById('tpPercent3').value);
@@ -4869,10 +4588,7 @@ updatePortfolioChart();
 function addOrSwitchCoin() {
 const inputSymbol = newCoinNameInput.value.trim().toUpperCase();
 if (!inputSymbol) { showError("يرجى إدخال رمز العملة (مثل BTCUSDT)."); return; }
-if (!/^[A-Z0-9]{3,15}$/.test(inputSymbol)) {
-showError('رمز العملة "' + inputSymbol + '" غير صالح. يجب أن يحتوي على أحرف وأرقام فقط (3-15 حرف).');
-return;
-}
+if (!/^[A-Z0-9]{3,15}$/.test(inputSymbol)) { showError('رمز العملة "' + inputSymbol + '" غير صالح.'); return; }
 const existingKeys = Object.keys(allCoinData).filter(k => getBaseSymbolFromKey(k) === inputSymbol);
 if (existingKeys.length > 0) {
 showPopup(
@@ -4976,10 +4692,7 @@ apiStatusDiv.style.color = 'var(--text-muted)';
 });
 }
 function sellAllCoinsWithDCA() {
-if (Object.keys(allCoinData).length === 0) {
-showError("لا توجد عملات للبيع");
-return;
-}
+if (Object.keys(allCoinData).length === 0) { showError("لا توجد عملات للبيع"); return; }
 const coinsAvailable = [];
 Object.keys(allCoinData).forEach(symbol => {
 const data = allCoinData[symbol];
@@ -5001,28 +4714,11 @@ const repurchaseQty = repurchasePrice > 0 ? repurchaseAmount / repurchasePrice :
 const sales = rp.sales || [];
 const totalSoldQty = calculateTotalSoldQty(sales);
 const remainingQty = Math.max(0, repurchaseQty - totalSoldQty);
-if (remainingQty > 0.00000001) {
-coinQty += remainingQty;
-hasDCA = true;
-dcaCount++;
-}
+if (remainingQty > 0.00000001) { coinQty += remainingQty; hasDCA = true; dcaCount++; }
 });
-if (coinQty > 0.00000001) {
-coinsAvailable.push({
-symbol: symbol,
-qty: coinQty,
-price: marketPrice,
-value: coinQty * marketPrice,
-hasDCA: hasDCA,
-dcaCount: dcaCount,
-initialRemainingQty: initialRemainingQty
+if (coinQty > 0.00000001) coinsAvailable.push({ symbol: symbol, qty: coinQty, price: marketPrice, value: coinQty * marketPrice, hasDCA: hasDCA, dcaCount: dcaCount, initialRemainingQty: initialRemainingQty });
 });
-}
-});
-if (coinsAvailable.length === 0) {
-showError("لا توجد كمية متبقية للبيع أو لا توجد أسعار متوفرة");
-return;
-}
+if (coinsAvailable.length === 0) { showError("لا توجد كمية متبقية للبيع أو لا توجد أسعار متوفرة"); return; }
 let checkboxesHTML = '<div class="coins-checkboxes-container">';
 checkboxesHTML += '<button class="select-all-btn" onclick="toggleAllCoinsCheckboxes()">✓ تحديد/إلغاء تحديد الكل</button>';
 coinsAvailable.forEach((coin, index) => {
@@ -5044,10 +4740,7 @@ const symbol = checkbox.dataset.symbol;
 const coin = coinsAvailable.find(c => c.symbol === symbol);
 if (coin) selectedCoins.push(coin);
 });
-if (selectedCoins.length === 0) {
-showError("لم تختر أي عملة للبيع");
-return;
-}
+if (selectedCoins.length === 0) { showError("لم تختر أي عملة للبيع"); return; }
 const selectedTotalValue = selectedCoins.reduce((sum, coin) => sum + coin.value, 0);
 const coinsList = selectedCoins.map(c => '• ' + getDisplayNameFromKey(c.symbol) + ': ' + formatNumber(c.qty, 4) + ' × ' + formatNumber(c.price, 4) + ' = ' + formatWithCommas(c.value, 2) + ' $').join('\n');
 showConfirm('تأكيد بيع ' + selectedCoins.length + ' عملة:\n' + coinsList + '\nالإجمالي: ' + formatWithCommas(selectedTotalValue, 2) + ' $\nسيتم تصفير جميع الكميات بعد البيع.', () => {
@@ -5077,21 +4770,14 @@ const initialRemainingQty = Math.max(0, initialCoinQty - initialTotalSoldQty);
 if (initialRemainingQty > 0.00000001) {
 const investedAmountForSale = initialCoinQty > 0 ? initialAmountDollars * (initialRemainingQty / initialCoinQty) : 0;
 const saleId = generateUniqueId();
-initialSales.push({
-id: saleId,
-qty: initialRemainingQty,
-price: marketPrice,
-investedAmount: investedAmountForSale,
-date: new Date().toLocaleDateString('ar-EG'),
-cashRecordId: null
-});
+initialSales.push({ id: saleId, qty: initialRemainingQty, price: marketPrice, investedAmount: investedAmountForSale, date: new Date().toLocaleDateString('ar-EG'), cashRecordId: null });
 data.initialSales = initialSales;
 data.initialTotalSoldQty = calculateTotalInitialSoldQty(initialSales).toString();
 const saleAmount = initialRemainingQty * marketPrice;
 const cashRecordId = addSalesCashDeposit(saleAmount, 'بيع الكل من ' + getDisplayNameFromKey(symbol) + ' (دخول)', saleId);
 if (cashRecordId) {
 const saleIndex = initialSales.findIndex(s => s.id === saleId);
-if (saleIndex !== -1) { initialSales[saleIndex].cashRecordId = cashRecordId; }
+if (saleIndex !== -1) initialSales[saleIndex].cashRecordId = cashRecordId;
 }
 }
 (data.repurchases || []).forEach(rp => {
@@ -5104,21 +4790,14 @@ const remainingQty = Math.max(0, repurchaseQty - totalSoldQty);
 if (remainingQty > 0.00000001) {
 const investedAmountForSale = repurchaseQty > 0 ? repurchaseAmount * (remainingQty / repurchaseQty) : 0;
 const saleId = generateUniqueId();
-sales.push({
-id: saleId,
-qty: remainingQty,
-price: marketPrice,
-investedAmount: investedAmountForSale,
-date: new Date().toLocaleDateString('ar-EG'),
-cashRecordId: null
-});
+sales.push({ id: saleId, qty: remainingQty, price: marketPrice, investedAmount: investedAmountForSale, date: new Date().toLocaleDateString('ar-EG'), cashRecordId: null });
 rp.sales = sales;
 rp.totalSoldQty = calculateTotalSoldQty(sales).toString();
 const saleAmount = remainingQty * marketPrice;
 const cashRecordId = addSalesCashDeposit(saleAmount, 'بيع الكل من ' + getDisplayNameFromKey(symbol) + ' (تعزيز)', saleId);
 if (cashRecordId) {
 const saleIndex = sales.findIndex(s => s.id === saleId);
-if (saleIndex !== -1) { sales[saleIndex].cashRecordId = cashRecordId; }
+if (saleIndex !== -1) sales[saleIndex].cashRecordId = cashRecordId;
 }
 }
 });
@@ -5162,16 +4841,7 @@ const averageEntryPrice = totalCoinQty > 0 ? totalInvestedAmount / totalCoinQty 
 const currentValue = totalCoinQty * marketPrice;
 const pnlAmount = currentValue - totalInvestedAmount;
 const pnlPercent = totalInvestedAmount > 0 ? (pnlAmount / totalInvestedAmount) * 100 : 0;
-coinsData.push({
-symbol: symbol,
-totalCoinQty: totalCoinQty,
-totalInvestedAmount: totalInvestedAmount,
-averageEntryPrice: averageEntryPrice,
-marketPrice: marketPrice,
-currentValue: currentValue,
-pnlAmount: pnlAmount,
-pnlPercent: pnlPercent
-});
+coinsData.push({ symbol: symbol, totalCoinQty: totalCoinQty, totalInvestedAmount: totalInvestedAmount, averageEntryPrice: averageEntryPrice, marketPrice: marketPrice, currentValue: currentValue, pnlAmount: pnlAmount, pnlPercent: pnlPercent });
 }
 });
 if (coinsData.length === 0) { showError("لا توجد عملات بكميات متبقية للبيع"); return; }
@@ -5194,8 +4864,8 @@ coinsData.forEach((coin, idx) => { updateEstimateCalculation(idx); });
 function saveEstimatePriceForSymbol(symbol, idx) {
 const estimatePriceInput = document.getElementById('estimatePrice_' + idx);
 const estimatePrice = parseFormattedNumber(estimatePriceInput?.value);
-if (estimatePrice > 0) { savedEstimatePrices[symbol] = estimatePrice; }
-else { delete savedEstimatePrices[symbol]; }
+if (estimatePrice > 0) savedEstimatePrices[symbol] = estimatePrice;
+else delete savedEstimatePrices[symbol];
 saveEstimatePrices();
 }
 function saveAllEstimatePrices() {
@@ -5204,7 +4874,7 @@ allRows.forEach((row, idx) => {
 const symbol = row.dataset.symbol;
 const estimatePriceInput = document.getElementById('estimatePrice_' + idx);
 const estimatePrice = parseFormattedNumber(estimatePriceInput?.value);
-if (estimatePrice > 0) { savedEstimatePrices[symbol] = estimatePrice; }
+if (estimatePrice > 0) savedEstimatePrices[symbol] = estimatePrice;
 });
 saveEstimatePrices();
 showSuccess('✅ تم حفظ جميع الأسعار التقديرية بنجاح');
@@ -5273,19 +4943,10 @@ function migrateOldData() {
 let migrated = false;
 for (const symbol in allCoinData) {
 const data = allCoinData[symbol];
-if (data.initialSales) {
-data.initialSales.forEach(sale => { if (!sale.id) { sale.id = generateUniqueId(); migrated = true; } });
+if (data.initialSales) data.initialSales.forEach(sale => { if (!sale.id) { sale.id = generateUniqueId(); migrated = true; } });
+if (data.repurchases) data.repurchases.forEach(rp => { if (rp.sales) rp.sales.forEach(sale => { if (!sale.id) { sale.id = generateUniqueId(); migrated = true; } }); });
 }
-if (data.repurchases) {
-data.repurchases.forEach(rp => {
-if (rp.sales) { rp.sales.forEach(sale => { if (!sale.id) { sale.id = generateUniqueId(); migrated = true; } }); }
-});
-}
-}
-if (migrated) {
-saveAllDataToLocalStorage();
-console.log('✅ تم ترحيل البيانات القديمة');
-}
+if (migrated) { saveAllDataToLocalStorage(); console.log('✅ تم ترحيل البيانات القديمة'); }
 }
 let refreshObserver = null;
 function setupFloatingRefreshButton() {
@@ -5295,8 +4956,8 @@ if (!refreshBtn || !floatingBtn) return;
 if ('IntersectionObserver' in window) {
 refreshObserver = new IntersectionObserver((entries) => {
 entries.forEach(entry => {
-if (entry.isIntersecting) { floatingBtn.classList.remove('visible'); }
-else { floatingBtn.classList.add('visible'); }
+if (entry.isIntersecting) floatingBtn.classList.remove('visible');
+else floatingBtn.classList.add('visible');
 });
 }, { root: null, rootMargin: '0px', threshold: 0.1 });
 refreshObserver.observe(refreshBtn);
@@ -5304,8 +4965,8 @@ refreshObserver.observe(refreshBtn);
 window.addEventListener('scroll', () => {
 const rect = refreshBtn.getBoundingClientRect();
 const isVisible = (rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth));
-if (isVisible) { floatingBtn.classList.remove('visible'); }
-else { floatingBtn.classList.add('visible'); }
+if (isVisible) floatingBtn.classList.remove('visible');
+else floatingBtn.classList.add('visible');
 });
 }
 }
@@ -5317,7 +4978,11 @@ setTimeout(() => { location.reload(); }, 300);
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript الميزات الإضافية
+   🎯 شريط المتحدث — نسخة Osoul Pro
+   ✅ Skeleton → بيانات حقيقية (من Binance API)
+   ✅ أيقونات العملات من coincap.io
+   ✅ padding على كل عنصر (لحام مثالي 100%)
+   ✅ نسختان متطابقتان مباشرتان داخل .ticker-scroll
    ═══════════════════════════════════════════════════════════════ */
 
 const TOP_COINS_TICKER = [
@@ -5327,6 +4992,12 @@ const TOP_COINS_TICKER = [
 'WLDUSDT', 'APTUSDT', 'CHZUSDT', 'GRTUSDT', 'ENJUSDT', 'CHRUSDT'
 ];
 let tickerData = {};
+
+/* خريطة الأيقونات: رمز Binance → رمز Coincap */
+function getCoinIconUrl(binanceSymbol) {
+const shortSymbol = binanceSymbol.replace('USDT', '').toLowerCase();
+return 'https://assets.coincap.io/assets/icons/' + shortSymbol + '@2x.png';
+}
 
 async function updateCryptoTicker() {
 const ticker = document.getElementById('cryptoTicker');
@@ -5347,30 +5018,35 @@ volume: parseFloat(data.quoteVolume)
 await Promise.all(promises);
 renderCryptoTicker();
 }
+
 function renderCryptoTicker() {
 const ticker = document.getElementById('cryptoTicker');
 if (!ticker || Object.keys(tickerData).length === 0) return;
-let html = '';
-for (let i = 0; i < 2; i++) {
+
+let itemsHtml = '';
 Object.keys(tickerData).forEach(symbol => {
 const data = tickerData[symbol];
 const shortSymbol = symbol.replace('USDT', '');
+const iconUrl = getCoinIconUrl(symbol);
 const changeClass = data.change >= 0 ? 'up' : 'down';
-const changeIcon = data.change >= 0 ? '▲' : '▼';
-html += `
+const changeSign = data.change >= 0 ? '+' : '';
+itemsHtml += `
 <div class="ticker-item">
+<img class="ticker-icon" src="${iconUrl}" alt="${shortSymbol}" loading="lazy" onerror="this.style.display='none'">
 <span class="ticker-symbol">${shortSymbol}</span>
 <span class="ticker-price">$${formatTickerPrice(data.price)}</span>
-<span class="ticker-change ${changeClass}">${changeIcon} ${Math.abs(data.change).toFixed(2)}%</span>
-</div>
-`;
+<span class="ticker-change ${changeClass}">${changeSign}${data.change.toFixed(2)}%</span>
+</div>`;
 });
+
+// ✅ نسختان متطابقتان مباشرتان داخل .ticker-scroll (بدون wrapper)
+// ✅ padding على كل عنصر يصنع المسافة → لحام رياضي مثالي 100%
+ticker.innerHTML = itemsHtml + itemsHtml;
 }
-ticker.innerHTML = html;
-}
+
 function formatTickerPrice(price) {
-if (price >= 1000) return price.toFixed(2);
-if (price >= 1) return price.toFixed(3);
+if (price >= 1000) return price.toLocaleString('en-US', { maximumFractionDigits: 2 });
+if (price >= 1) return price.toFixed(2);
 if (price >= 0.01) return price.toFixed(4);
 return price.toFixed(6);
 }
@@ -5400,9 +5076,7 @@ drawFngGauge(value);
 const altcoinValue = Math.floor(Math.random() * 100);
 document.getElementById('miAltcoinValue').textContent = altcoinValue + '/100';
 document.getElementById('miAltcoinThumb').style.right = altcoinValue + '%';
-const statusText = altcoinValue >= 75 ? '🪙 موسم العملات البديلة' :
-altcoinValue >= 50 ? '🔄 مرحلة انتقالية' :
-altcoinValue >= 25 ? '🟡 ميل لبيتكوين' : '₿ هيمنة بيتكوين';
+const statusText = altcoinValue >= 75 ? '🪙 موسم العملات البديلة' : altcoinValue >= 50 ? '🔄 مرحلة انتقالية' : altcoinValue >= 25 ? '🟡 ميل لبيتكوين' : '₿ هيمنة بيتكوين';
 document.getElementById('miAltcoinStatus').textContent = statusText;
 } catch (e) { console.error('Market insights error:', e); }
 }
@@ -5414,10 +5088,7 @@ if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
 return num.toFixed(2);
 }
 function translateFngLabel(label) {
-const translations = {
-'Extreme Fear': 'خوف شديد 😨', 'Fear': 'خوف 😟',
-'Neutral': 'محايد 😐', 'Greed': 'طمع 😏', 'Extreme Greed': 'طمع شديد 🤑'
-};
+const translations = { 'Extreme Fear': 'خوف شديد 😨', 'Fear': 'خوف 😟', 'Neutral': 'محايد 😐', 'Greed': 'طمع 😏', 'Extreme Greed': 'طمع شديد 🤑' };
 return translations[label] || label;
 }
 function drawSparkline() {
@@ -5464,14 +5135,8 @@ ctx.stroke();
 }
 
 const LS_KEY_PROFILE_SETTINGS = 'muharraqi_profile_settings';
-function openProfileModal() {
-updateProfileStats();
-loadProfileSettings();
-document.getElementById('profileModal').classList.add('active');
-}
-function closeProfileModal() {
-document.getElementById('profileModal').classList.remove('active');
-}
+function openProfileModal() { updateProfileStats(); loadProfileSettings(); document.getElementById('profileModal').classList.add('active'); }
+function closeProfileModal() { document.getElementById('profileModal').classList.remove('active'); }
 function updateProfileStats() {
 const { totals } = calculateSummaryData();
 const totalAssets = totals.currentValue + availableCash + Math.max(0, getNetSalesCash());
@@ -5484,8 +5149,7 @@ if (assetsEl) assetsEl.textContent = '$' + formatWithCommas(totalAssets, 2);
 if (coinsEl) coinsEl.textContent = totalCoins;
 if (pnlEl) {
 pnlEl.textContent = '$' + formatWithCommas(totalPnl, 2);
-pnlEl.style.color = totalPnl > 0 ? 'var(--positive-color)' :
-totalPnl < 0 ? 'var(--negative-color)' : 'var(--text-color)';
+pnlEl.style.color = totalPnl > 0 ? 'var(--positive-color)' : totalPnl < 0 ? 'var(--negative-color)' : 'var(--text-color)';
 }
 }
 function loadProfileSettings() {
@@ -5533,11 +5197,7 @@ showSuccess('✅ تم حفظ بيانات الملف الشخصي بنجاح');
 
 let selectedBugType = 'bug';
 function openBugReportModal() { document.getElementById('bugReportPopup').classList.add('active'); }
-function closeBugReportModal() {
-document.getElementById('bugReportPopup').classList.remove('active');
-document.getElementById('bugTitle').value = '';
-document.getElementById('bugDescription').value = '';
-}
+function closeBugReportModal() { document.getElementById('bugReportPopup').classList.remove('active'); document.getElementById('bugTitle').value = ''; document.getElementById('bugDescription').value = ''; }
 function selectBugType(el, type) {
 document.querySelectorAll('.bug-type-option').forEach(opt => opt.classList.remove('selected'));
 el.classList.add('selected');
@@ -5574,7 +5234,7 @@ currentDonateMethod = method;
 document.querySelectorAll('.donate-card').forEach(card => card.classList.remove('selected'));
 if (el) el.classList.add('selected');
 const addrBox = document.getElementById('donateAddress');
-if (addrBox && DONATE_ADDRESSES[method]) { addrBox.textContent = DONATE_ADDRESSES[method].address; }
+if (addrBox && DONATE_ADDRESSES[method]) addrBox.textContent = DONATE_ADDRESSES[method].address;
 }
 function copyDonateAddress() {
 const address = document.getElementById('donateAddress').textContent;
@@ -5586,7 +5246,7 @@ let notifications = [];
 function toggleNotificationCenter() {
 const center = document.getElementById('notificationCenter');
 center.classList.toggle('active');
-if (center.classList.contains('active')) { renderNotifications(); }
+if (center.classList.contains('active')) renderNotifications();
 }
 function addNotification(title, message, type = 'info') {
 const notif = { id: Date.now(), title: title, message: message, type: type, time: new Date().toLocaleTimeString('ar-EG'), read: false };
@@ -5600,16 +5260,13 @@ const unread = notifications.filter(n => !n.read).length;
 const badge = document.getElementById('notifBadge');
 if (badge) {
 if (unread > 0) { badge.textContent = unread > 9 ? '9+' : unread; badge.style.display = 'flex'; }
-else { badge.style.display = 'none'; }
+else badge.style.display = 'none';
 }
 }
 function renderNotifications() {
 const list = document.getElementById('notifList');
 if (!list) return;
-if (notifications.length === 0) {
-list.innerHTML = '<div class="notif-empty">🔕 لا توجد تنبيهات حالياً</div>';
-return;
-}
+if (notifications.length === 0) { list.innerHTML = '<div class="notif-empty">🔕 لا توجد تنبيهات حالياً</div>'; return; }
 list.innerHTML = notifications.map(n => `
 <div class="notif-item ${n.read ? '' : 'unread'}" onclick="markNotifRead(${n.id})">
 <div class="notif-title">${n.type === 'price' ? '🔔' : n.type === 'success' ? '✅' : n.type === 'warning' ? '⚠️' : 'ℹ️'} ${n.title}</div>
@@ -5634,9 +5291,7 @@ saveNotifications(); updateNotifBadge(); renderNotifications();
 showSuccess('✅ تم مسح جميع التنبيهات');
 }
 }
-function saveNotifications() {
-try { localStorage.setItem('muharraqi_notifications', JSON.stringify(notifications)); } catch (e) {}
-}
+function saveNotifications() { try { localStorage.setItem('muharraqi_notifications', JSON.stringify(notifications)); } catch (e) {} }
 function loadNotifications() {
 try {
 const saved = localStorage.getItem('muharraqi_notifications');
@@ -5651,11 +5306,7 @@ renderNotifications();
 }
 
 let priceAlerts = [];
-function openPriceAlertsModal() {
-updateAlertSymbolSelector();
-renderAlertsList();
-document.getElementById('priceAlertsPopup').classList.add('active');
-}
+function openPriceAlertsModal() { updateAlertSymbolSelector(); renderAlertsList(); document.getElementById('priceAlertsPopup').classList.add('active'); }
 function closePriceAlertsModal() { document.getElementById('priceAlertsPopup').classList.remove('active'); }
 function updateAlertSymbolSelector() {
 const select = document.getElementById('alertSymbol');
@@ -5691,10 +5342,7 @@ return labels[type] || type;
 function renderAlertsList() {
 const list = document.getElementById('alertsList');
 if (!list) return;
-if (priceAlerts.length === 0) {
-list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);font-style:italic;">لا توجد تنبيهات</div>';
-return;
-}
+if (priceAlerts.length === 0) { list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);font-style:italic;">لا توجد تنبيهات</div>'; return; }
 list.innerHTML = priceAlerts.map(alert => {
 const badgeClass = alert.type === 'above' ? 'above' : alert.type === 'below' ? 'below' : alert.type === 'sl' ? 'sl' : 'tp';
 return `
@@ -5711,15 +5359,8 @@ return `
 `;
 }).join('');
 }
-function deletePriceAlert(id) {
-priceAlerts = priceAlerts.filter(a => a.id !== id);
-savePriceAlerts();
-renderAlertsList();
-showSuccess('✅ تم حذف التنبيه');
-}
-function savePriceAlerts() {
-try { localStorage.setItem('muharraqi_price_alerts', JSON.stringify(priceAlerts)); } catch (e) {}
-}
+function deletePriceAlert(id) { priceAlerts = priceAlerts.filter(a => a.id !== id); savePriceAlerts(); renderAlertsList(); showSuccess('✅ تم حذف التنبيه'); }
+function savePriceAlerts() { try { localStorage.setItem('muharraqi_price_alerts', JSON.stringify(priceAlerts)); } catch (e) {} }
 function loadPriceAlerts() {
 try {
 const saved = localStorage.getItem('muharraqi_price_alerts');
@@ -5744,10 +5385,7 @@ const data = allCoinData[alert.symbol];
 if (data) {
 const avgPrice = calculateAveragePrice(alert.symbol);
 const targetPrice = avgPrice * (1 + (parseFloat(data.targets[alert.type]) || 0) / 100);
-if (currentPrice >= targetPrice) {
-triggered = true;
-message = `🎯 ${getDisplayNameFromKey(alert.symbol)} وصل إلى ${getTypeLabel(alert.type)} عند $${formatNumber(currentPrice, 4)}`;
-}
+if (currentPrice >= targetPrice) { triggered = true; message = `🎯 ${getDisplayNameFromKey(alert.symbol)} وصل إلى ${getTypeLabel(alert.type)} عند $${formatNumber(currentPrice, 4)}`; }
 }
 } else if (alert.type === 'sl') {
 const data = allCoinData[alert.symbol];
@@ -5755,17 +5393,10 @@ if (data) {
 const avgPrice = calculateAveragePrice(alert.symbol);
 const slPercent = parseFloat(data.targets.sl) || 0;
 const slPrice = avgPrice * (1 - slPercent / 100);
-if (currentPrice <= slPrice) {
-triggered = true;
-message = `🛑 ${getDisplayNameFromKey(alert.symbol)} وصل إلى وقف الخسارة عند $${formatNumber(currentPrice, 4)}`;
+if (currentPrice <= slPrice) { triggered = true; message = `🛑 ${getDisplayNameFromKey(alert.symbol)} وصل إلى وقف الخسارة عند $${formatNumber(currentPrice, 4)}`; }
 }
 }
-}
-if (triggered) {
-alert.triggered = true;
-addNotification('تنبيه سعر!', message, 'price');
-playAlertSound();
-}
+if (triggered) { alert.triggered = true; addNotification('تنبيه سعر!', message, 'price'); playAlertSound(); }
 });
 savePriceAlerts();
 renderAlertsList();
@@ -5820,11 +5451,7 @@ vip1: { maker: 0.09, taker: 0.09 },
 vip2: { maker: 0.08, taker: 0.08 },
 vip3: { maker: 0.07, taker: 0.07 }
 };
-function openExchangeSettingsModal() {
-loadExchangeSettings();
-document.getElementById('exchangeSettingsPopup').classList.add('active');
-updateFeeDisplay();
-}
+function openExchangeSettingsModal() { loadExchangeSettings(); document.getElementById('exchangeSettingsPopup').classList.add('active'); updateFeeDisplay(); }
 function closeExchangeSettingsModal() { document.getElementById('exchangeSettingsPopup').classList.remove('active'); }
 function selectExchange(platform, el) {
 document.querySelectorAll('.exchange-option').forEach(opt => opt.classList.remove('selected'));
@@ -5881,7 +5508,7 @@ try { localStorage.setItem('muharraqi_privacy_mode', isActive ? '1' : '0'); } ca
 function loadPrivacyMode() {
 try {
 const saved = localStorage.getItem('muharraqi_privacy_mode');
-if (saved === '1') { toggleFinancialPrivacy(); }
+if (saved === '1') toggleFinancialPrivacy();
 } catch (e) {}
 }
 
@@ -5890,10 +5517,7 @@ let trendChart = null;
 let trendRange = 'ALL';
 let portfolioHistory = [];
 
-function initAdvancedCharts() {
-loadPortfolioHistory();
-updateAdvancedCharts();
-}
+function initAdvancedCharts() { loadPortfolioHistory(); updateAdvancedCharts(); }
 function loadPortfolioHistory() {
 try {
 const saved = localStorage.getItem('muharraqi_portfolio_history');
@@ -5908,7 +5532,7 @@ const { totals } = calculateSummaryData();
 const totalAssets = totals.currentValue + availableCash + Math.max(0, getNetSalesCash());
 if (!lastEntry || (now - lastEntry.time) > 5 * 60 * 1000) {
 portfolioHistory.push({ time: now, value: totalAssets });
-if (portfolioHistory.length > 1000) { portfolioHistory = portfolioHistory.slice(-1000); }
+if (portfolioHistory.length > 1000) portfolioHistory = portfolioHistory.slice(-1000);
 localStorage.setItem('muharraqi_portfolio_history', JSON.stringify(portfolioHistory));
 }
 } catch (e) {}
@@ -5928,34 +5552,17 @@ const labels = [];
 const data = [];
 const colors = ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796', '#5a5c69', '#6f42c1', '#e83e8c', '#fd7e14'];
 summaryRows.forEach((item) => {
-if (item.currentPortfolioValue > 0) {
-labels.push(getDisplayNameFromKey(item.symbol));
-data.push(item.currentPortfolioValue);
-}
+if (item.currentPortfolioValue > 0) { labels.push(getDisplayNameFromKey(item.symbol)); data.push(item.currentPortfolioValue); }
 });
-if (totalCash > 0) {
-labels.push('الكاش');
-data.push(totalCash);
-colors.push('#17a2b8');
-}
+if (totalCash > 0) { labels.push('الكاش'); data.push(totalCash); colors.push('#17a2b8'); }
 const totalValue = data.reduce((s, v) => s + v, 0);
 document.getElementById('donutTotal').textContent = '$' + formatWithCommas(totalValue, 2);
 if (donutChart) donutChart.destroy();
 donutChart = new Chart(canvas, {
 type: 'doughnut',
-data: {
-labels: labels,
-datasets: [{
-data: data,
-backgroundColor: colors.slice(0, data.length),
-borderWidth: 2,
-borderColor: getComputedStyle(document.body).getPropertyValue('--section-bg').trim() || '#fff'
-}]
-},
+data: { labels: labels, datasets: [{ data: data, backgroundColor: colors.slice(0, data.length), borderWidth: 2, borderColor: getComputedStyle(document.body).getPropertyValue('--section-bg').trim() || '#fff' }] },
 options: {
-responsive: true,
-maintainAspectRatio: false,
-cutout: '65%',
+responsive: true, maintainAspectRatio: false, cutout: '65%',
 plugins: {
 legend: { display: false },
 tooltip: {
@@ -5974,12 +5581,7 @@ const legendEl = document.getElementById('donutLegend');
 if (legendEl) {
 legendEl.innerHTML = labels.map((label, i) => {
 const percentage = ((data[i] / totalValue) * 100).toFixed(1);
-return `
-<div class="legend-item">
-<span class="legend-color" style="background:${colors[i]}"></span>
-<span>${label} (${percentage}%)</span>
-</div>
-`;
+return `<div class="legend-item"><span class="legend-color" style="background:${colors[i]}"></span><span>${label} (${percentage}%)</span></div>`;
 }).join('');
 }
 }
@@ -5988,11 +5590,11 @@ const canvas = document.getElementById('trendChart');
 if (!canvas || portfolioHistory.length === 0) return;
 let filteredData = portfolioHistory;
 const now = Date.now();
-if (trendRange === '4H') { filteredData = portfolioHistory.filter(p => (now - p.time) <= 4 * 60 * 60 * 1000); }
-else if (trendRange === '1D') { filteredData = portfolioHistory.filter(p => (now - p.time) <= 24 * 60 * 60 * 1000); }
-else if (trendRange === '1W') { filteredData = portfolioHistory.filter(p => (now - p.time) <= 7 * 24 * 60 * 60 * 1000); }
-else if (trendRange === '1M') { filteredData = portfolioHistory.filter(p => (now - p.time) <= 30 * 24 * 60 * 60 * 1000); }
-else if (trendRange === '3M') { filteredData = portfolioHistory.filter(p => (now - p.time) <= 90 * 24 * 60 * 60 * 1000); }
+if (trendRange === '4H') filteredData = portfolioHistory.filter(p => (now - p.time) <= 4 * 60 * 60 * 1000);
+else if (trendRange === '1D') filteredData = portfolioHistory.filter(p => (now - p.time) <= 24 * 60 * 60 * 1000);
+else if (trendRange === '1W') filteredData = portfolioHistory.filter(p => (now - p.time) <= 7 * 24 * 60 * 60 * 1000);
+else if (trendRange === '1M') filteredData = portfolioHistory.filter(p => (now - p.time) <= 30 * 24 * 60 * 60 * 1000);
+else if (trendRange === '3M') filteredData = portfolioHistory.filter(p => (now - p.time) <= 90 * 24 * 60 * 60 * 1000);
 if (filteredData.length === 0) return;
 const labels = filteredData.map(p => new Date(p.time).toLocaleDateString('ar-EG'));
 const data = filteredData.map(p => p.value);
@@ -6037,17 +5639,12 @@ legend: { display: false },
 tooltip: {
 mode: 'index',
 intersect: false,
-callbacks: {
-label: function(context) { return '$' + formatWithCommas(context.parsed.y, 2); }
-}
+callbacks: { label: function(context) { return '$' + formatWithCommas(context.parsed.y, 2); } }
 }
 },
 scales: {
 x: { grid: { display: false }, ticks: { color: textColor, maxTicksLimit: 6 } },
-y: {
-grid: { color: gridColor },
-ticks: { color: textColor, callback: function(value) { return '$' + formatLargeNumber(value); } }
-}
+y: { grid: { color: gridColor }, ticks: { color: textColor, callback: function(value) { return '$' + formatLargeNumber(value); } } }
 },
 interaction: { mode: 'nearest', axis: 'x', intersect: false }
 }
@@ -6060,12 +5657,8 @@ el.classList.add('active');
 updateTrendChart();
 }
 
-/* 🆕 زر فتح صفقة دخول جديدة — بدون كتابة كلمة "جديد" */
 function openNewEntryTransactionDialog() {
-if (!activeCoinSymbol) {
-showError("لا توجد عملة نشطة. يرجى اختيار عملة أولاً.");
-return;
-}
+if (!activeCoinSymbol) { showError("لا توجد عملة نشطة. يرجى اختيار عملة أولاً."); return; }
 const baseSymbol = getBaseSymbolFromKey(activeCoinSymbol);
 const currentCount = Object.keys(allCoinData).filter(k => getBaseSymbolFromKey(k) === baseSymbol).length;
 showConfirm(
@@ -6109,15 +5702,12 @@ migrateOldData();
 loadProfileSettings();
 updateCoinSelector();
 const importInput = document.getElementById('importTxtFile');
-if (importInput) {
-importInput.addEventListener('change', handleImportTxtFile);
-}
+if (importInput) importInput.addEventListener('change', handleImportTxtFile);
 setTimeout(() => {
 fetchAllPrices().then(() => {
 if (activeCoinSymbol) displayCoinData(activeCoinSymbol);
-else if (coinSelector.value && allCoinData[coinSelector.value]) {
-handleCoinSelectionChange();
-} else clearUIFields();
+else if (coinSelector.value && allCoinData[coinSelector.value]) handleCoinSelectionChange();
+else clearUIFields();
 if (autoRefreshCheckbox.checked) startAutoRefresh();
 });
 setupFloatingRefreshButton();
@@ -6155,6 +5745,7 @@ if (controlsBar) controlsBar.scrollIntoView({ behavior: 'smooth', block: 'start'
 updatePortfolioChart();
 
 loadPrivacyMode();
+// ✅ تشغيل شريط العملات — يستبدل Skeleton بالبيانات الحقيقية
 updateCryptoTicker();
 setInterval(updateCryptoTicker, 60000);
 setInterval(initMarketInsights, 5 * 60 * 1000);
