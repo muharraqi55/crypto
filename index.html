@@ -1475,22 +1475,188 @@ box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
 .estimate-save-btn:hover { background-color: #146c43; }
 .estimate-clear-btn { background-color: var(--negative-color); }
 .estimate-clear-btn:hover { background-color: #c82333; }
+
+/* ═══════════════════════════════════════════════════════
+   🖨️ طباعة احترافية مُحسّنة (Pro Print)
+   ═══════════════════════════════════════════════════════ */
 @media print {
+@page { size: A4; margin: 12mm; }
 body * { visibility: hidden; }
 #printReport, #printReport * { visibility: visible; }
-#printReport { position: absolute; left: 0; top: 0; width: auto; height: auto; margin: 15mm; padding: 10mm; background: white; color: black; font-family: Arial, sans-serif; display: block !important; font-size: 12pt; line-height: 1.4; }
-.print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; page-break-after: avoid; }
-.print-section { margin-bottom: 25px; page-break-inside: avoid; }
-.print-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 10pt; page-break-inside: auto; }
-.print-table th, .print-table td { border: 1px solid #ddd; padding: 6px 8px; text-align: center; word-wrap: break-word; }
-.print-table th { background-color: #f2f2f2; font-weight: bold; page-break-inside: avoid; }
-.positive { color: green; font-weight: bold; }
-.negative { color: red; font-weight: bold; }
-.print-totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; padding: 15px; background-color: #f9f9f9; border: 1px solid #ddd; page-break-inside: avoid; }
-.print-totals div { display: flex; justify-content: space-between; padding: 5px 0; }
-.print-footer { text-align: center; margin-top: 30px; font-size: 10pt; color: #666; border-top: 1px solid #ddd; padding-top: 15px; page-break-before: avoid; }
-.print-table tr { page-break-inside: avoid; page-break-after: auto; }
+#printReport {
+position: absolute;
+left: 0; top: 0;
+width: 100%;
+height: auto;
+margin: 0;
+padding: 0;
+background: #ffffff;
+color: #000;
+font-family: 'Segoe UI', 'Arial', sans-serif;
+display: block !important;
+font-size: 10.5pt;
+line-height: 1.5;
+direction: rtl;
 }
+.print-header {
+text-align: center;
+margin-bottom: 20px;
+padding: 18px;
+border-bottom: 4px double #0056b3;
+background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+border-radius: 8px;
+page-break-after: avoid;
+}
+.print-header h1 {
+font-size: 22pt;
+margin: 0 0 6px 0;
+color: #0056b3;
+letter-spacing: 1px;
+}
+.print-header .print-author {
+font-size: 11pt;
+color: #333;
+font-weight: 600;
+margin: 4px 0;
+}
+.print-header .print-date {
+font-size: 10pt;
+color: #666;
+margin: 4px 0;
+}
+.print-header .print-brand {
+font-size: 9pt;
+color: #888;
+font-style: italic;
+margin-top: 8px;
+}
+.print-section {
+margin-bottom: 22px;
+page-break-inside: auto;
+border: 1px solid #dee2e6;
+border-radius: 8px;
+padding: 12px 15px;
+background: #fff;
+}
+.print-section h2 {
+font-size: 14pt;
+color: #fff;
+background: linear-gradient(135deg, #0056b3, #007bff);
+padding: 8px 14px;
+margin: -12px -15px 14px -15px;
+border-radius: 6px 6px 0 0;
+letter-spacing: 0.5px;
+}
+.print-section h3 {
+font-size: 11pt;
+color: #0056b3;
+margin: 14px 0 8px 0;
+padding: 6px 12px;
+background: #eaf2fb;
+border-right: 4px solid #0056b3;
+border-radius: 4px;
+page-break-after: avoid;
+}
+.print-table {
+width: 100%;
+border-collapse: collapse;
+margin-bottom: 12px;
+font-size: 9pt;
+page-break-inside: auto;
+}
+.print-table th, .print-table td {
+border: 1px solid #adb5bd;
+padding: 5px 7px;
+text-align: center;
+word-wrap: break-word;
+vertical-align: middle;
+}
+.print-table th {
+background: linear-gradient(135deg, #0056b3, #007bff);
+color: #ffffff;
+font-weight: bold;
+font-size: 9pt;
+page-break-inside: avoid;
+}
+.print-table tbody tr:nth-child(even) { background: #f8f9fa; }
+.print-table tbody tr:hover { background: #e9ecef; }
+.print-table tbody td { color: #212529; }
+.print-table .num-col { font-family: 'Consolas', 'Courier New', monospace; direction: ltr; }
+.positive { color: #198754 !important; font-weight: bold; }
+.negative { color: #dc3545 !important; font-weight: bold; }
+.print-totals {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 8px;
+margin-top: 10px;
+padding: 14px;
+background: #f0f7ff;
+border: 2px solid #0056b3;
+border-radius: 8px;
+page-break-inside: avoid;
+}
+.print-totals div {
+display: flex;
+justify-content: space-between;
+padding: 6px 10px;
+border-bottom: 1px dashed #b0c4de;
+font-size: 10pt;
+}
+.print-totals div:last-child { border-bottom: none; }
+.print-totals div span:first-child { color: #495057; }
+.print-totals div span:last-child { font-family: 'Consolas', monospace; font-weight: bold; color: #0056b3; }
+.print-footer {
+text-align: center;
+margin-top: 24px;
+font-size: 9pt;
+color: #666;
+border-top: 3px double #0056b3;
+padding-top: 12px;
+page-break-before: avoid;
+}
+.print-footer p { margin: 4px 0; }
+.print-footer .footer-thanks { color: #0056b3; font-weight: bold; font-size: 10pt; }
+.print-note {
+font-size: 8.5pt;
+color: #666;
+font-style: italic;
+margin: 6px 0;
+padding: 6px 10px;
+background: #fffbea;
+border-right: 3px solid #ffc107;
+border-radius: 4px;
+}
+.print-badge {
+display: inline-block;
+padding: 2px 8px;
+border-radius: 10px;
+font-size: 8pt;
+font-weight: bold;
+white-space: nowrap;
+}
+.print-badge.deposit { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+.print-badge.withdrawal { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+.print-badge.entry { background: #cfe2ff; color: #084298; border: 1px solid #b6d4fe; }
+.print-badge.dca { background: #fff3cd; color: #664d03; border: 1px solid #ffecb5; }
+.print-summary-cards {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 8px;
+margin-bottom: 12px;
+}
+.print-summary-card {
+background: #f8f9fa;
+border: 1px solid #dee2e6;
+border-radius: 6px;
+padding: 8px;
+text-align: center;
+}
+.print-summary-card .label { font-size: 8pt; color: #6c757d; margin-bottom: 3px; }
+.print-summary-card .value { font-size: 11pt; font-weight: bold; font-family: 'Consolas', monospace; }
+.print-table tr { page-break-inside: avoid; page-break-after: auto; }
+.print-section-break { page-break-before: always; }
+}
+
 @media (max-width: 1200px) {
 .horizontal-section { grid-template-columns: 1fr; }
 .color-settings-grid { grid-template-columns: 1fr; }
@@ -1935,39 +2101,8 @@ h2 { font-size: 1.05em; }
 </div>
 
 <!-- ═══════════════════════════════════════════════════════
-     🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول) للمضاربة
+     📊 ملخص الصفقات الكلي (تم نقله لأعلى حاسبة المخاطر)
      ═══════════════════════════════════════════════════════ -->
-<section class="risk-calculator-section card-hover section-custom" id="section-riskCalculator">
-<div class="section-header">
-<h2>🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول) للمضاربة</h2>
-<button class="toggle-btn" onclick="toggleSection('riskCalculator')">طي</button>
-</div>
-<div class="section-content" id="riskCalculatorSectionContent">
-
-<!-- ─────────── بطاقة الوصف ─────────── -->
-<div class="risk-calculator-card">
-<div class="icon">🧮</div>
-<div class="title">حاسبة إدارة المخاطر الاحترافية</div>
-<div class="subtitle">احسب حجم المركز ووقف الخسارة المثالي قبل الدخول</div>
-</div>
-
-<!-- ─────────── زر الفتح ─────────── -->
-<div class="risk-links-grid">
-<a href="risk-calculator.html" target="_blank" rel="noopener noreferrer" class="risk-link-btn">
-<span class="icon">🪟</span>
-<span>افتح في نافذة جديدة</span>
-</a>
-</div>
-
-<!-- ─────────── ملاحظة ─────────── -->
-<div class="risk-note">
-<strong>💡 ملاحظة:</strong>
-<span> الحاسبة تفتح في صفحة منفصلة لتعمل بشكل مستقل دون التأثير على بيانات صفقاتك.</span>
-</div>
-
-</div>
-</section>
-
 <section class="overall-summary-section card-hover section-custom" id="section-summary">
 <div class="section-header summary-header-with-btn">
 <h2>ملخص الصفقات الكلي</h2>
@@ -2011,6 +2146,40 @@ h2 { font-size: 1.05em; }
 <div class="history-content" id="salesCashWithdrawalHistory" style="display: none;"></div>
 </div>
 </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول) — تم نقلها هنا
+     ═══════════════════════════════════════════════════════ -->
+<section class="risk-calculator-section card-hover section-custom" id="section-riskCalculator">
+<div class="section-header">
+<h2>🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول) للمضاربة</h2>
+<button class="toggle-btn" onclick="toggleSection('riskCalculator')">طي</button>
+</div>
+<div class="section-content" id="riskCalculatorSectionContent">
+
+<!-- ─────────── بطاقة الوصف ─────────── -->
+<div class="risk-calculator-card">
+<div class="icon">🧮</div>
+<div class="title">حاسبة إدارة المخاطر الاحترافية</div>
+<div class="subtitle">احسب حجم المركز ووقف الخسارة المثالي قبل الدخول</div>
+</div>
+
+<!-- ─────────── زر الفتح ─────────── -->
+<div class="risk-links-grid">
+<a href="risk-calculator.html" target="_blank" rel="noopener noreferrer" class="risk-link-btn">
+<span class="icon">🪟</span>
+<span>افتح في نافذة جديدة</span>
+</a>
+</div>
+
+<!-- ─────────── ملاحظة ─────────── -->
+<div class="risk-note">
+<strong>💡 ملاحظة:</strong>
+<span> الحاسبة تفتح في صفحة منفصلة لتعمل بشكل مستقل دون التأثير على بيانات صفقاتك.</span>
+</div>
+
 </div>
 </section>
 
@@ -2832,7 +3001,6 @@ if (!salesCashHistory.withdrawals) salesCashHistory.withdrawals = [];
 updateSalesCashHistoryDisplay();
 } catch (e) { console.error("خطأ في تحميل سجل الكاش من البيع:", e); }
 }
-/* ✅ استدعاء واحد في النهاية — بعد تحميل كل البيانات */
 updateCashDisplay();
 }
 
@@ -4186,31 +4354,297 @@ if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
 showInfo('لم يتم فتح TradingView تلقائياً.\nرمز العملة: ' + symbol + '\nيمكنك نسخ الرابط وفتحه يدوياً: ' + tradingViewUrl);
 }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   🖨️ طباعة التقرير — نسخة احترافية مُحسّنة (Pro Print)
+   ═══════════════════════════════════════════════════════════════ */
 function printReport() {
 const { summaryRows, totals } = calculateSummaryData();
 const totalSalesCash = salesCashHistory.deposits.reduce((sum, record) => sum + record.amount, 0) -
 salesCashHistory.withdrawals.reduce((sum, record) => sum + record.amount, 0);
-let reportHTML = '<div class="print-header"><h1>تقرير الصفقات الشاملة</h1><p>تم إنشاء بواسطة: المهندس [Muharraqi]</p><p>تاريخ التقرير: ' + new Date().toLocaleString('ar-EG') + '</p></div><div class="print-section"><h2>ملخص عام</h2><div class="print-totals"><div><span>إجمالي المبلغ المستثمر:</span> <span>' + formatWithCommas(totals.invested, 2) + ' $</span></div><div><span>إجمالي القيمة الحالية:</span> <span>' + formatWithCommas(totals.currentValue, 2) + ' $</span></div><div><span>إجمالي الربح/الخسارة:</span> <span class="' + (totals.pnlAmount > 0 ? 'positive' : totals.pnlAmount < 0 ? 'negative' : '') + '">' + formatWithCommas(totals.pnlAmount, 2) + ' $</span></div><div><span>إجمالي الربح/الخسارة %:</span> <span class="' + (totals.pnlPercent > 0 ? 'positive' : totals.pnlPercent < 0 ? 'negative' : '') + '">' + formatNumber(totals.pnlPercent, 2) + ' %</span></div><div><span>إجمالي الكاش من البيع:</span> <span>' + formatWithCommas(totals.cashFromSales, 2) + ' $</span></div><div><span>الكاش المدخل يدوياً:</span> <span>' + formatWithCommas(availableCash, 2) + ' $</span></div><div><span>الكاش المتاح الكلي:</span> <span>' + formatWithCommas(availableCash + Math.max(0, totalSalesCash), 2) + ' $</span></div></div></div><div class="print-section"><h2>تفاصيل العملات</h2>';
-if (summaryRows.length === 0) reportHTML += '<p>لا توجد عملات مضافة حالياً.</p>';
-else {
-reportHTML += '<table class="print-table"><thead><tr><th>العملة</th><th>الكمية</th><th>المستثمر $</th><th>متوسط الدخول</th><th>السعر الحالي</th><th>القيمة الحالية $</th><th>الربح/الخسارة $</th><th>الربح/الخسارة %</th><th>الكاش من البيع $</th><th>تاريخ الشراء</th><th>عدد التعزيزات</th></tr></thead><tbody>';
-summaryRows.forEach(item => {
-const data = allCoinData[item.symbol];
-const pnlAmountClass = item.pnlAmount > 0 ? 'positive' : (item.pnlAmount < 0 ? 'negative' : '');
-const pnlPercentClass = item.pnlPercent > 0 ? 'positive' : (item.pnlPercent < 0 ? 'negative' : '');
-const purchaseDate = data.initialPurchaseDate || 'غير محدد';
-const dcaCount = (data.repurchases || []).filter(rp => rp.price && rp.amount).length;
-reportHTML += '<tr><td>' + getDisplayNameFromKey(item.symbol) + '</td><td>' + formatNumber(item.totalCoinQty, 4) + '</td><td>' + formatWithCommas(item.totalInvestedAmount, 2) + '</td><td>' + formatNumber(item.averageEntryPrice, guessDecimalPlaces(item.averageEntryPrice)) + '</td><td>' + (item.marketPrice !== null ? formatNumber(item.marketPrice, guessDecimalPlaces(item.marketPrice)) : 'لا يوجد سعر') + '</td><td>' + formatWithCommas(item.currentPortfolioValue, 2) + '</td><td class="' + pnlAmountClass + '">' + formatWithCommas(item.pnlAmount, 2) + '</td><td class="' + pnlPercentClass + '">' + formatNumber(item.pnlPercent, 2) + '%</td><td>' + formatWithCommas(item.totalCashFromSales, 2) + '</td><td>' + purchaseDate + '</td><td>' + dcaCount + '</td></tr>';
-});
-reportHTML += '</tbody></table>';
+const totalCashAvailable = availableCash + Math.max(0, totalSalesCash);
+const reportDate = new Date().toLocaleString('ar-EG');
+
+let reportHTML = '';
+
+/* ─── الهيدر ─── */
+reportHTML += `
+<div class="print-header">
+    <h1>📊 تقرير الصفقات الشاملة</h1>
+    <p class="print-author">👨‍💼 تم إنشاء التقرير بواسطة: المهندس [Muharraqi]</p>
+    <p class="print-date">📅 تاريخ التقرير: ${reportDate}</p>
+    <p class="print-brand">Muharraqi Pro Edition — نظام متابعة الصفقات الاحترافي</p>
+</div>`;
+
+/* ─── الملخص العام ─── */
+reportHTML += `
+<div class="print-section">
+    <h2>📈 الملخص العام</h2>
+    <div class="print-totals">
+        <div><span>إجمالي المبلغ المستثمر:</span> <span>${formatWithCommas(totals.invested, 2)} $</span></div>
+        <div><span>إجمالي القيمة الحالية:</span> <span>${formatWithCommas(totals.currentValue, 2)} $</span></div>
+        <div><span>إجمالي الربح / الخسارة:</span> <span class="${totals.pnlAmount > 0 ? 'positive' : totals.pnlAmount < 0 ? 'negative' : ''}">${formatWithCommas(totals.pnlAmount, 2)} $</span></div>
+        <div><span>نسبة الربح / الخسارة:</span> <span class="${totals.pnlPercent > 0 ? 'positive' : totals.pnlPercent < 0 ? 'negative' : ''}">${formatNumber(totals.pnlPercent, 2)} %</span></div>
+        <div><span>إجمالي الكاش من البيع:</span> <span>${formatWithCommas(totals.cashFromSales, 2)} $</span></div>
+        <div><span>الكاش المُدخل يدوياً:</span> <span>${formatWithCommas(availableCash, 2)} $</span></div>
+        <div><span>صافي الكاش من البيع:</span> <span>${formatWithCommas(Math.max(0, totalSalesCash), 2)} $</span></div>
+        <div><span>إجمالي الكاش المتاح:</span> <span>${formatWithCommas(totalCashAvailable, 2)} $</span></div>
+    </div>
+</div>`;
+
+/* ─── سجل الحركات المالية الكامل مع التواريخ ─── */
+reportHTML += `<div class="print-section"><h2>💰 سجل الحركات المالية الكامل (مع التواريخ)</h2>`;
+
+let hasAnyCashMovement = false;
+
+/* إيداعات الكاش اليدوية */
+if (cashHistory.deposits.length > 0) {
+    hasAnyCashMovement = true;
+    reportHTML += `
+    <h3>📥 إيداعات الكاش اليدوية (${cashHistory.deposits.length})</h3>
+    <table class="print-table">
+        <thead><tr>
+            <th style="width:5%">#</th>
+            <th style="width:15%">المبلغ</th>
+            <th style="width:35%">التاريخ والوقت</th>
+            <th style="width:45%">الملاحظة</th>
+        </tr></thead>
+        <tbody>`;
+    cashHistory.deposits.forEach((record, i) => {
+        reportHTML += `<tr>
+            <td>${i + 1}</td>
+            <td class="positive">+${formatWithCommas(record.amount, 2)} $</td>
+            <td>${record.date}</td>
+            <td>${record.note || '-'}</td>
+        </tr>`;
+    });
+    reportHTML += `</tbody></table>`;
 }
-reportHTML += '</div><div class="print-footer"><p>تم إنشاء هذا التقرير بواسطة نظام متابعة الصفقات الشاملة - Muharraqi</p><p>نسألكم الدعاء بظهر الغيب</p></div>';
+
+/* سحوبات الكاش اليدوية */
+if (cashHistory.withdrawals.length > 0) {
+    hasAnyCashMovement = true;
+    reportHTML += `
+    <h3>📤 سحوبات الكاش اليدوية (${cashHistory.withdrawals.length})</h3>
+    <table class="print-table">
+        <thead><tr>
+            <th style="width:5%">#</th>
+            <th style="width:15%">المبلغ</th>
+            <th style="width:35%">التاريخ والوقت</th>
+            <th style="width:45%">الملاحظة</th>
+        </tr></thead>
+        <tbody>`;
+    cashHistory.withdrawals.forEach((record, i) => {
+        reportHTML += `<tr>
+            <td>${i + 1}</td>
+            <td class="negative">-${formatWithCommas(record.amount, 2)} $</td>
+            <td>${record.date}</td>
+            <td>${record.note || '-'}</td>
+        </tr>`;
+    });
+    reportHTML += `</tbody></table>`;
+}
+
+/* إيداعات الكاش من البيع */
+if (salesCashHistory.deposits.length > 0) {
+    hasAnyCashMovement = true;
+    reportHTML += `
+    <h3>💵 إيداعات الكاش من البيع (${salesCashHistory.deposits.length})</h3>
+    <table class="print-table">
+        <thead><tr>
+            <th style="width:5%">#</th>
+            <th style="width:15%">المبلغ</th>
+            <th style="width:35%">التاريخ والوقت</th>
+            <th style="width:45%">الملاحظة</th>
+        </tr></thead>
+        <tbody>`;
+    salesCashHistory.deposits.forEach((record, i) => {
+        reportHTML += `<tr>
+            <td>${i + 1}</td>
+            <td class="positive">+${formatWithCommas(record.amount, 2)} $</td>
+            <td>${record.date}</td>
+            <td>${record.note || '-'}</td>
+        </tr>`;
+    });
+    reportHTML += `</tbody></table>`;
+}
+
+/* سحوبات الكاش من البيع */
+if (salesCashHistory.withdrawals.length > 0) {
+    hasAnyCashMovement = true;
+    reportHTML += `
+    <h3>💸 سحوبات الكاش من البيع (${salesCashHistory.withdrawals.length})</h3>
+    <table class="print-table">
+        <thead><tr>
+            <th style="width:5%">#</th>
+            <th style="width:15%">المبلغ</th>
+            <th style="width:35%">التاريخ والوقت</th>
+            <th style="width:45%">الملاحظة</th>
+        </tr></thead>
+        <tbody>`;
+    salesCashHistory.withdrawals.forEach((record, i) => {
+        reportHTML += `<tr>
+            <td>${i + 1}</td>
+            <td class="negative">-${formatWithCommas(record.amount, 2)} $</td>
+            <td>${record.date}</td>
+            <td>${record.note || '-'}</td>
+        </tr>`;
+    });
+    reportHTML += `</tbody></table>`;
+}
+
+if (!hasAnyCashMovement) {
+    reportHTML += `<p class="print-note">ℹ️ لا توجد حركات مالية مسجلة حتى الآن.</p>`;
+}
+
+reportHTML += `</div>`;
+
+/* ─── جدول تفاصيل العملات ─── */
+reportHTML += `<div class="print-section"><h2>🪙 تفاصيل العملات</h2>`;
+if (summaryRows.length === 0) {
+    reportHTML += '<p class="print-note">لا توجد عملات مضافة حالياً.</p>';
+} else {
+    reportHTML += `
+    <table class="print-table">
+        <thead><tr>
+            <th>العملة</th>
+            <th>الكمية</th>
+            <th>المستثمر $</th>
+            <th>متوسط الدخول</th>
+            <th>السعر الحالي</th>
+            <th>القيمة الحالية $</th>
+            <th>الربح/الخسارة $</th>
+            <th>الربح/الخسارة %</th>
+            <th>الكاش من البيع $</th>
+            <th>تاريخ الشراء</th>
+            <th>عدد التعزيزات</th>
+        </tr></thead>
+        <tbody>`;
+    summaryRows.forEach(item => {
+        const data = allCoinData[item.symbol];
+        const pnlAmountClass = item.pnlAmount > 0 ? 'positive' : (item.pnlAmount < 0 ? 'negative' : '');
+        const pnlPercentClass = item.pnlPercent > 0 ? 'positive' : (item.pnlPercent < 0 ? 'negative' : '');
+        const purchaseDate = data.initialPurchaseDate || 'غير محدد';
+        const dcaCount = (data.repurchases || []).filter(rp => rp.price && rp.amount).length;
+        reportHTML += `<tr>
+            <td style="font-weight:bold">${getDisplayNameFromKey(item.symbol)}</td>
+            <td class="num-col">${formatNumber(item.totalCoinQty, 4)}</td>
+            <td class="num-col">${formatWithCommas(item.totalInvestedAmount, 2)}</td>
+            <td class="num-col">${formatNumber(item.averageEntryPrice, guessDecimalPlaces(item.averageEntryPrice))}</td>
+            <td class="num-col">${item.marketPrice !== null ? formatNumber(item.marketPrice, guessDecimalPlaces(item.marketPrice)) : '—'}</td>
+            <td class="num-col">${formatWithCommas(item.currentPortfolioValue, 2)}</td>
+            <td class="num-col ${pnlAmountClass}">${formatWithCommas(item.pnlAmount, 2)}</td>
+            <td class="num-col ${pnlPercentClass}">${formatNumber(item.pnlPercent, 2)}%</td>
+            <td class="num-col">${formatWithCommas(item.totalCashFromSales, 2)}</td>
+            <td>${purchaseDate}</td>
+            <td>${dcaCount}</td>
+        </tr>`;
+    });
+    reportHTML += `</tbody></table>`;
+}
+reportHTML += `</div>`;
+
+/* ─── سجل العمليات التفصيلي لكل عملة مع التواريخ ─── */
+if (summaryRows.length > 0) {
+    reportHTML += `<div class="print-section"><h2>📋 سجل العمليات التفصيلي لكل عملة (مع التواريخ)</h2>`;
+    summaryRows.forEach(item => {
+        const data = allCoinData[item.symbol];
+        if (!data) return;
+        const displayName = getDisplayNameFromKey(item.symbol);
+        const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
+        const initialAmountDollars = parseFormattedNumber(data.initialAmountDollars);
+
+        const hasAnyTransaction = (initialEntryPrice > 0 && initialAmountDollars > 0) ||
+            (data.repurchases && data.repurchases.length > 0) ||
+            (data.initialSales && data.initialSales.length > 0);
+        if (!hasAnyTransaction) return;
+
+        reportHTML += `<h3>🪙 ${displayName}</h3>`;
+        reportHTML += `
+        <table class="print-table">
+            <thead><tr>
+                <th style="width:18%">نوع العملية</th>
+                <th style="width:14%">السعر</th>
+                <th style="width:14%">المبلغ $</th>
+                <th style="width:18%">الكمية</th>
+                <th style="width:36%">التاريخ</th>
+            </tr></thead>
+            <tbody>`;
+
+        /* صفقة الدخول */
+        if (initialEntryPrice > 0 && initialAmountDollars > 0) {
+            const initialCoinQty = initialAmountDollars / initialEntryPrice;
+            reportHTML += `<tr>
+                <td><span class="print-badge entry">🟢 شراء دخول</span></td>
+                <td class="num-col">${formatNumber(initialEntryPrice, guessDecimalPlaces(initialEntryPrice))}</td>
+                <td class="num-col">${formatWithCommas(initialAmountDollars, 2)}</td>
+                <td class="num-col">${formatNumber(initialCoinQty, 8)}</td>
+                <td>${data.initialPurchaseDate || 'غير محدد'}</td>
+            </tr>`;
+        }
+
+        /* التعزيزات */
+        (data.repurchases || []).forEach((rp, idx) => {
+            const rpPrice = parseFormattedNumber(rp.price);
+            const rpAmount = parseFormattedNumber(rp.amount);
+            if (rpPrice > 0 && rpAmount > 0) {
+                const rpQty = rpAmount / rpPrice;
+                reportHTML += `<tr>
+                    <td><span class="print-badge dca">🟡 تعزيز #${idx + 1}</span></td>
+                    <td class="num-col">${formatNumber(rpPrice, guessDecimalPlaces(rpPrice))}</td>
+                    <td class="num-col">${formatWithCommas(rpAmount, 2)}</td>
+                    <td class="num-col">${formatNumber(rpQty, 8)}</td>
+                    <td>${rp.purchaseDate || 'غير محدد'}</td>
+                </tr>`;
+            }
+        });
+
+        /* مبيعات الدخول */
+        (data.initialSales || []).forEach((sale, idx) => {
+            const saleAmount = sale.qty * sale.price;
+            reportHTML += `<tr>
+                <td><span class="print-badge withdrawal">🔴 بيع دخول #${idx + 1}</span></td>
+                <td class="num-col">${formatNumber(sale.price, guessDecimalPlaces(sale.price))}</td>
+                <td class="num-col">${formatWithCommas(saleAmount, 2)}</td>
+                <td class="num-col">${formatNumber(sale.qty, 8)}</td>
+                <td>${sale.date || 'غير محدد'}</td>
+            </tr>`;
+        });
+
+        /* مبيعات التعزيزات */
+        (data.repurchases || []).forEach((rp, rpIdx) => {
+            (rp.sales || []).forEach((sale, sIdx) => {
+                const saleAmount = sale.qty * sale.price;
+                reportHTML += `<tr>
+                    <td><span class="print-badge withdrawal">🔴 بيع تعزيز #${rpIdx + 1}-${sIdx + 1}</span></td>
+                    <td class="num-col">${formatNumber(sale.price, guessDecimalPlaces(sale.price))}</td>
+                    <td class="num-col">${formatWithCommas(saleAmount, 2)}</td>
+                    <td class="num-col">${formatNumber(sale.qty, 8)}</td>
+                    <td>${sale.date || 'غير محدد'}</td>
+                </tr>`;
+            });
+        });
+
+        reportHTML += `</tbody></table>`;
+    });
+    reportHTML += `</div>`;
+}
+
+/* ─── الفوتر ─── */
+reportHTML += `
+<div class="print-footer">
+    <p class="footer-thanks">نسألكم الدعاء بظهر الغيب 🤲</p>
+    <p>تم إنشاء هذا التقرير بواسطة نظام متابعة الصفقات الشاملة — Muharraqi Pro Edition</p>
+    <p style="font-size:8pt;color:#999;">جميع البيانات محفوظة محلياً في متصفحك — هذا التقرير سري وخاص</p>
+</div>`;
+
 const printReportDiv = document.getElementById('printReport');
 printReportDiv.innerHTML = reportHTML;
 printReportDiv.style.display = 'block';
 window.print();
-setTimeout(() => { printReportDiv.style.display = 'none'; }, 1000);
+setTimeout(() => { printReportDiv.style.display = 'none'; }, 1500);
 }
+
 function updatePortfolioChart() {
 const container = document.getElementById('portfolioChartContainer');
 if (!container) return;
