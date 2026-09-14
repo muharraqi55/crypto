@@ -543,7 +543,8 @@ html[data-theme="dark"] .t-sell-btn.sold-active{color:#04140d}
 .sl-mode-toggle{
   display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;
 }
-.sl-mode-toggle.triple{grid-template-columns:repeat(3, 1fr)}
+/* ✅ Updated: 4 columns for 1/2/3/4 DCA options */
+.sl-mode-toggle.quad{grid-template-columns:repeat(4, 1fr)}
 .sl-mode-btn{
   font-family:var(--mono);font-size:0.6875rem;font-weight:800;
   padding:9px 10px;border-radius:9px;
@@ -707,82 +708,32 @@ html[data-theme="dark"] .toast{color:#04140d}
   text-transform:uppercase;margin-top:4px;position:relative;z-index:2;
 }
 
-/* ============ PRINT HEADER (hidden on screen) ============ */
 .print-header{display:none;}
 
-/* ============ PRINT STYLES ============ */
 @media print{
-  @page{
-    size:A4;
-    margin:12mm 10mm 14mm 10mm;
-  }
-
+  @page{size:A4;margin:12mm 10mm 14mm 10mm;}
   *{
     -webkit-print-color-adjust:exact !important;
     print-color-adjust:exact !important;
-    box-shadow:none !important;
-    text-shadow:none !important;
-    animation:none !important;
-    transition:none !important;
+    box-shadow:none !important;text-shadow:none !important;
+    animation:none !important;transition:none !important;
   }
-
   html,body{
-    background:#ffffff !important;
-    color:#111111 !important;
-    font-size:10pt !important;
-    padding:0 !important;margin:0 !important;
-    min-height:auto !important;
-    line-height:1.4 !important;
+    background:#ffffff !important;color:#111111 !important;
+    font-size:10pt !important;padding:0 !important;margin:0 !important;
+    min-height:auto !important;line-height:1.4 !important;
   }
-
-  body::before,
-  body::after{
-    display:none !important;
-  }
-
-  .wrap{
-    max-width:100% !important;
-    margin:0 !important;
-    padding:0 !important;
-  }
-
-  /* ---- Hide interactive/UI elements ---- */
-  .controls,
-  .action-btns,
-  .toast,
-  .icon-btn,
-  .ctrl-group,
-  .ctrl-sep,
-  .ctrl-label,
-  .mode-toggle-sm,
-  .btn,
-  .t-sell-btn,
-  .sale-banner .sb-reset,
-  .pc-actions,
-  .panel,
-  .targets-header .mode-toggle-sm,
-  .sl-mode-toggle,
-  .dca-cnt-btn,
-  .footer-credit .made-with .heart{
-    display:none !important;
-  }
-
-  /* Panel completely hidden in print — main area has all info */
+  body::before,body::after{display:none !important;}
+  .wrap{max-width:100% !important;margin:0 !important;padding:0 !important;}
+  .controls,.action-btns,.toast,.icon-btn,.ctrl-group,.ctrl-sep,.ctrl-label,
+  .mode-toggle-sm,.btn,.t-sell-btn,.sale-banner .sb-reset,.pc-actions,
+  .panel,.targets-header .mode-toggle-sm,.sl-mode-toggle,.dca-cnt-btn,
+  .footer-credit .made-with .heart{display:none !important;}
   .panel{display:none !important;}
-
-  .main-grid{
-    display:block !important;
-    grid-template-columns:1fr !important;
-    gap:0 !important;
-  }
-
-  /* ---- Show print header ---- */
+  .main-grid{display:block !important;grid-template-columns:1fr !important;gap:0 !important;}
   .print-header{
-    display:block !important;
-    text-align:center;
-    padding-bottom:12px;
-    margin-bottom:16px;
-    border-bottom:3px double #16c784;
+    display:block !important;text-align:center;
+    padding-bottom:12px;margin-bottom:16px;border-bottom:3px double #16c784;
   }
   .print-header .ph-brand{
     font-size:20pt;font-weight:900;letter-spacing:3px;
@@ -790,132 +741,42 @@ html[data-theme="dark"] .toast{color:#04140d}
     display:flex;align-items:center;justify-content:center;gap:10px;
   }
   .print-header .ph-brand-star{color:#ffd23f;}
-  .print-header .ph-sub{
-    font-size:13pt;color:#333;font-weight:800;margin-bottom:3px;
-    letter-spacing:1.5px;
-  }
+  .print-header .ph-sub{font-size:13pt;color:#333;font-weight:800;margin-bottom:3px;letter-spacing:1.5px;}
   .print-header .ph-sub .sep{color:#999;margin:0 8px;font-weight:400;}
   .print-header .ph-sub .pair-val{color:#16c784;}
-  .print-header .ph-sub .tag-val{
-    color:#0a0e13;background:#e6f7f1;
-    padding:2px 10px;border-radius:4px;
-  }
-  .print-header .ph-meta{
-    font-size:9pt;color:#555;margin-top:4px;
-    letter-spacing:.5px;
-  }
+  .print-header .ph-sub .tag-val{color:#0a0e13;background:#e6f7f1;padding:2px 10px;border-radius:4px;}
+  .print-header .ph-meta{font-size:9pt;color:#555;margin-top:4px;letter-spacing:.5px;}
   .print-header .ph-meta b{color:#16c784;}
-
-  /* ---- Section titles ---- */
-  .sec-title{
-    color:#444 !important;
-    font-size:9pt !important;
-    letter-spacing:2px !important;
-    margin-bottom:6px !important;
-    padding-bottom:4px;
-    border-bottom:1px solid #ddd;
-  }
-  .sec-title::before{
-    background:#16c784 !important;
-    -webkit-print-color-adjust:exact;
-    print-color-adjust:exact;
-  }
+  .sec-title{color:#444 !important;font-size:9pt !important;letter-spacing:2px !important;margin-bottom:6px !important;padding-bottom:4px;border-bottom:1px solid #ddd;}
+  .sec-title::before{background:#16c784 !important;print-color-adjust:exact;}
   .sec-title.targets::before{background:#ffd23f !important;}
   .sec-title.dca::before{background:#ea3943 !important;}
-
   .section{margin-bottom:12px !important;page-break-inside:auto;}
-
-  /* ---- Header block ---- */
-  .header{
-    background:#ffffff !important;
-    border:2px solid #16c784 !important;
-    padding:10px 14px !important;
-    margin-bottom:10px !important;
-    border-radius:8px !important;
-    page-break-inside:avoid;
-  }
+  .header{background:#ffffff !important;border:2px solid #16c784 !important;padding:10px 14px !important;margin-bottom:10px !important;border-radius:8px !important;page-break-inside:avoid;}
   .header::after{display:none !important;}
   .pair{font-size:16pt !important;color:#0a0e13 !important;}
   .pair .star{color:#ffd23f;}
   .pair .quote{color:#0a0e13 !important;}
   .pair .slash{color:#666 !important;}
-  .tag{
-    font-size:10pt !important;
-    background:#e6f7f1 !important;
-    color:#0f9b68 !important;
-    border:1px solid #16c784 !important;
-    padding:4px 12px !important;
-  }
-
-  /* ---- Entry card ---- */
-  .entry-card{
-    background:#f6fffb !important;
-    border:2px solid #16c784 !important;
-    padding:12px 16px !important;
-    margin-bottom:12px !important;
-    border-radius:8px !important;
-    page-break-inside:avoid;
-  }
+  .tag{font-size:10pt !important;background:#e6f7f1 !important;color:#0f9b68 !important;border:1px solid #16c784 !important;padding:4px 12px !important;}
+  .entry-card{background:#f6fffb !important;border:2px solid #16c784 !important;padding:12px 16px !important;margin-bottom:12px !important;border-radius:8px !important;page-break-inside:avoid;}
   .entry-icon{background:#e6f7f1 !important;border-color:#16c784 !important;}
   .entry-label{color:#0f9b68 !important;}
   .entry-price{color:#0a0e13 !important;font-size:20pt !important;}
   .entry-price small{color:#666 !important;}
-
-  /* ---- Allocation bar ---- */
-  .alloc-bar{
-    height:28px !important;
-    border-radius:6px !important;
-    page-break-inside:avoid;
-  }
+  .alloc-bar{height:28px !important;border-radius:6px !important;page-break-inside:avoid;}
   .alloc-seg{font-size:9pt !important;color:#ffffff !important;font-weight:800 !important;}
-  .alloc-legend{
-    font-size:9pt !important;
-    gap:6px 14px !important;
-    color:#444 !important;
-    margin-bottom:10px;
-  }
+  .alloc-legend{font-size:9pt !important;gap:6px 14px !important;color:#444 !important;margin-bottom:10px;}
   .alloc-legend b{color:#0a0e13 !important;}
-  .dot{
-    -webkit-print-color-adjust:exact;
-    print-color-adjust:exact;
-  }
-
-  /* ---- Targets info bar ---- */
-  .targets-info-bar{
-    background:#e6f7f1 !important;
-    border:1px solid #16c784 !important;
-    padding:6px 10px !important;
-    font-size:9pt !important;
-    margin-bottom:8px !important;
-    page-break-inside:avoid;
-  }
+  .dot{print-color-adjust:exact;}
+  .targets-info-bar{background:#e6f7f1 !important;border:1px solid #16c784 !important;padding:6px 10px !important;font-size:9pt !important;margin-bottom:8px !important;page-break-inside:avoid;}
   .targets-info-bar .ti-label{color:#555 !important;}
   .targets-info-bar .ti-value{color:#0f9b68 !important;}
   .targets-info-bar .ti-value.blue{color:#0a4d7a !important;}
-
-  /* ---- Targets grid ---- */
-  .targets-grid{
-    grid-template-columns:repeat(4,1fr) !important;
-    gap:6px !important;
-    page-break-inside:avoid;
-  }
-  .t-card{
-    background:#ffffff !important;
-    border:1.5px solid #ddd !important;
-    padding:8px 6px !important;
-    border-radius:6px !important;
-    gap:2px !important;
-  }
-  .t-card::before{
-    background:currentColor !important;
-    opacity:.85;
-    -webkit-print-color-adjust:exact;
-    print-color-adjust:exact;
-  }
-  .t-card.sold{
-    border-color:#16c784 !important;
-    box-shadow:none !important;
-  }
+  .targets-grid{grid-template-columns:repeat(4,1fr) !important;gap:6px !important;page-break-inside:avoid;}
+  .t-card{background:#ffffff !important;border:1.5px solid #ddd !important;padding:8px 6px !important;border-radius:6px !important;gap:2px !important;}
+  .t-card::before{background:currentColor !important;opacity:.85;print-color-adjust:exact;}
+  .t-card.sold{border-color:#16c784 !important;box-shadow:none !important;}
   .t-medal{font-size:14pt !important;}
   .t-pct{font-size:8pt !important;color:#c8930a !important;}
   .t-price{font-size:9pt !important;color:#0a0e13 !important;}
@@ -928,134 +789,41 @@ html[data-theme="dark"] .toast{color:#04140d}
   .t-scale-row .v.gold{color:#c8930a !important;}
   .t-scale-row .v.blue{color:#0a4d7a !important;}
   .t-scale-row .v.orange{color:#c9751f !important;}
-
-  /* ---- DCA items ---- */
   .dca-list{gap:8px !important;}
-  .dca-item{
-    background:#ffffff !important;
-    border:1px solid #ddd !important;
-    border-inline-end:3px solid #ea3943 !important;
-    padding:10px 12px !important;
-    border-radius:6px !important;
-    page-break-inside:avoid;
-  }
+  .dca-item{background:#ffffff !important;border:1px solid #ddd !important;border-inline-end:3px solid #ea3943 !important;padding:10px 12px !important;border-radius:6px !important;page-break-inside:avoid;}
   .dca-item:hover{background:#ffffff !important;box-shadow:none !important;}
-  .dca-badge{
-    width:32px !important;height:32px !important;
-    font-size:10pt !important;
-    background:#fee !important;
-    color:#d62a35 !important;
-    border-color:#ea3943 !important;
-  }
-  .dca-price{
-    font-size:11pt !important;
-    color:#d62a35 !important;
-  }
-  .dca-drop{
-    background:#fee !important;
-    color:#d62a35 !important;
-    border-color:#ea3943 !important;
-    font-size:8pt !important;
-  }
-  .dca-alloc{
-    background:#f5f5f5 !important;
-    color:#555 !important;
-    border-color:#ccc !important;
-    font-size:8pt !important;
-  }
+  .dca-badge{width:32px !important;height:32px !important;font-size:10pt !important;background:#fee !important;color:#d62a35 !important;border-color:#ea3943 !important;}
+  .dca-price{font-size:11pt !important;color:#d62a35 !important;}
+  .dca-drop{background:#fee !important;color:#d62a35 !important;border-color:#ea3943 !important;font-size:8pt !important;}
+  .dca-alloc{background:#f5f5f5 !important;color:#555 !important;border-color:#ccc !important;font-size:8pt !important;}
   .dca-arrow{display:none !important;}
-
-  .portfolio-grid{
-    background:#f9f9f9 !important;
-    border:1px solid #e0e0e0 !important;
-    padding:8px !important;
-    gap:6px !important;
-    page-break-inside:avoid;
-  }
+  .portfolio-grid{background:#f9f9f9 !important;border:1px solid #e0e0e0 !important;padding:8px !important;gap:6px !important;page-break-inside:avoid;}
   .pg-item .k{font-size:7pt !important;color:#666 !important;}
   .pg-item .v{font-size:9pt !important;color:#0a0e13 !important;}
-  .pg-item.highlight{
-    background:#fff7d6 !important;
-    border:1px solid #ffd23f !important;
-  }
+  .pg-item.highlight{background:#fff7d6 !important;border:1px solid #ffd23f !important;}
   .pg-item.highlight .k{color:#8a6700 !important;}
   .pg-item.highlight .v{color:#8a6700 !important;}
-  .pg-item.avg{
-    background:#fff0e0 !important;
-    border:1px solid #ff9d3d !important;
-  }
+  .pg-item.avg{background:#fff0e0 !important;border:1px solid #ff9d3d !important;}
   .pg-item.avg .k{color:#9a5400 !important;}
   .pg-item.avg .v{color:#9a5400 !important;}
-
-  .unrealized-loss{
-    background:#fff0f0 !important;
-    border:1px dashed #d62a35 !important;
-    font-size:8pt !important;
-    padding:6px 10px !important;
-    margin-bottom:6px !important;
-  }
+  .unrealized-loss{background:#fff0f0 !important;border:1px dashed #d62a35 !important;font-size:8pt !important;padding:6px 10px !important;margin-bottom:6px !important;}
   .unrealized-loss .k{color:#555 !important;}
   .unrealized-loss .v{color:#d62a35 !important;}
-
-  .sell-banner-dca{
-    background:#f0fff7 !important;
-    border:1px solid #16c784 !important;
-    padding:8px 10px !important;
-    page-break-inside:avoid;
-  }
+  .sell-banner-dca{background:#f0fff7 !important;border:1px solid #16c784 !important;padding:8px 10px !important;page-break-inside:avoid;}
   .sell-banner-dca .icon{font-size:14pt !important;}
   .sell-banner-dca .info .title{color:#0f9b68 !important;font-size:8pt !important;}
   .sell-banner-dca .info .target{font-size:11pt !important;color:#0a0e13 !important;}
   .sell-banner-dca div[style*="text-align:end"] div:first-child{font-size:7pt !important;color:#666 !important;}
   .sell-banner-dca div[style*="text-align:end"] div:nth-child(2){font-size:12pt !important;color:#0f9b68 !important;}
-
-  /* ---- Stop Loss card ---- */
-  .sl-card{
-    background:#fff5f5 !important;
-    border:2px solid #ea3943 !important;
-    padding:12px 14px !important;
-    page-break-inside:avoid;
-    margin-top:2px !important;
-  }
+  .sl-card{background:#fff5f5 !important;border:2px solid #ea3943 !important;padding:12px 14px !important;page-break-inside:avoid;margin-top:2px !important;}
   .sl-card::before{display:none !important;}
-  .sl-card .dca-badge{
-    background:#ea3943 !important;
-    color:#ffffff !important;
-    box-shadow:none !important;
-  }
+  .sl-card .dca-badge{background:#ea3943 !important;color:#ffffff !important;box-shadow:none !important;}
   .sl-card .dca-price{color:#d62a35 !important;}
-  .sl-card .sl-pill{
-    background:#ea3943 !important;
-    color:#ffffff !important;
-    font-size:8pt !important;
-  }
-  .sl-warning{
-    background:#ffe0e0 !important;
-    border:1px solid #ea3943 !important;
-    color:#c1212b !important;
-    font-size:9pt !important;
-    padding:8px 10px !important;
-    page-break-inside:avoid;
-  }
-  .sl-quote{
-    background:#ffe8e8 !important;
-    border-inline-start:3px solid #ea3943 !important;
-    color:#c1212b !important;
-    font-size:9pt !important;
-    font-style:italic;
-    padding:10px 12px !important;
-    margin-top:8px !important;
-    page-break-inside:avoid;
-  }
+  .sl-card .sl-pill{background:#ea3943 !important;color:#ffffff !important;font-size:8pt !important;}
+  .sl-warning{background:#ffe0e0 !important;border:1px solid #ea3943 !important;color:#c1212b !important;font-size:9pt !important;padding:8px 10px !important;page-break-inside:avoid;}
+  .sl-quote{background:#ffe8e8 !important;border-inline-start:3px solid #ea3943 !important;color:#c1212b !important;font-size:9pt !important;font-style:italic;padding:10px 12px !important;margin-top:8px !important;page-break-inside:avoid;}
   .sl-quote::before,.sl-quote::after{font-size:10pt;}
-
-  /* ---- Sale banner / progress ---- */
-  .sale-banner{
-    background:#f0fff7 !important;
-    border:1px solid #16c784 !important;
-    padding:10px 12px !important;
-    page-break-inside:avoid;
-  }
+  .sale-banner{background:#f0fff7 !important;border:1px solid #16c784 !important;padding:10px 12px !important;page-break-inside:avoid;}
   .sale-banner .sb-title{color:#0f9b68 !important;}
   .sale-banner .sb-icon{color:#16c784 !important;}
   .sale-banner .sb-item{background:#ffffff !important;border-color:#ddd !important;}
@@ -1063,106 +831,32 @@ html[data-theme="dark"] .toast{color:#04140d}
   .sale-banner .sb-item .v{color:#0a0e13 !important;}
   .sale-banner .sb-item .v.green{color:#0f9b68 !important;}
   .sale-banner .sb-item .v.gold{color:#c8930a !important;}
-
-  .progress-wrap{
-    background:#ffffff !important;
-    border:1px solid #ddd !important;
-    padding:10px 12px !important;
-    page-break-inside:avoid;
-  }
+  .progress-wrap{background:#ffffff !important;border:1px solid #ddd !important;padding:10px 12px !important;page-break-inside:avoid;}
   .progress-title{color:#d62a35 !important;}
   .progress-pct{color:#d62a35 !important;}
-  .progress-bar{
-    height:8px !important;
-    background:#eee !important;
-    border-radius:4px !important;
-  }
-  .progress-fill{
-    background:linear-gradient(90deg,#ea3943,#ff9d3d) !important;
-    -webkit-print-color-adjust:exact;
-    print-color-adjust:exact;
-  }
-  .progress-tag{
-    background:#fee !important;
-    color:#d62a35 !important;
-    border-color:#ea3943 !important;
-  }
-
-  /* ---- Position closed ---- */
-  .position-closed{
-    background:#f0fff7 !important;
-    border:2px dashed #16c784 !important;
-    padding:16px !important;
-    page-break-inside:avoid;
-  }
+  .progress-bar{height:8px !important;background:#eee !important;border-radius:4px !important;}
+  .progress-fill{background:linear-gradient(90deg,#ea3943,#ff9d3d) !important;print-color-adjust:exact;}
+  .progress-tag{background:#fee !important;color:#d62a35 !important;border-color:#ea3943 !important;}
+  .position-closed{background:#f0fff7 !important;border:2px dashed #16c784 !important;padding:16px !important;page-break-inside:avoid;}
   .position-closed .pc-title{color:#0f9b68 !important;}
   .position-closed .pc-icon{color:#16c784 !important;}
   .position-closed .pc-desc{color:#555 !important;}
-
-  /* ---- Disclaimer ---- */
-  .disclaimer-section{
-    background:#fffbea !important;
-    border:1.5px solid #c8930a !important;
-    padding:14px 16px !important;
-    margin-top:14px !important;
-    page-break-inside:avoid;
-  }
-  .disclaimer-section .disc-title{
-    color:#a37400 !important;
-    font-size:10pt !important;
-    border-bottom:1px dashed #c8930a !important;
-  }
-  .disclaimer-section .disc-body{
-    color:#222 !important;
-    font-size:9pt !important;
-    line-height:1.7 !important;
-  }
+  .disclaimer-section{background:#fffbea !important;border:1.5px solid #c8930a !important;padding:14px 16px !important;margin-top:14px !important;page-break-inside:avoid;}
+  .disclaimer-section .disc-title{color:#a37400 !important;font-size:10pt !important;border-bottom:1px dashed #c8930a !important;}
+  .disclaimer-section .disc-body{color:#222 !important;font-size:9pt !important;line-height:1.7 !important;}
   .disclaimer-section .disc-body strong{color:#c1212b !important;}
   .disclaimer-section .disc-body .em-green{color:#0f9b68 !important;}
   .disclaimer-section .disc-body .em-red{color:#c1212b !important;}
-
-  /* ---- Footer ---- */
-  .footer-credit{
-    background:#f9f9f9 !important;
-    border:1px solid #ddd !important;
-    padding:16px 12px !important;
-    margin-top:14px !important;
-    page-break-inside:avoid;
-  }
+  .footer-credit{background:#f9f9f9 !important;border:1px solid #ddd !important;padding:16px 12px !important;margin-top:14px !important;page-break-inside:avoid;}
   .footer-credit::before{display:none !important;}
-  .footer-credit .brand{
-    font-size:13pt !important;
-    color:#0a0e13 !important;
-  }
-  .footer-credit .brand-name{
-    background:none !important;
-    -webkit-text-fill-color:#16c784 !important;
-    color:#16c784 !important;
-  }
-  .footer-credit .divider{
-    background:linear-gradient(90deg,transparent,#16c784,transparent) !important;
-  }
-  .footer-credit .made-with{
-    color:#555 !important;
-    font-size:10pt !important;
-  }
-  .footer-credit .made-with .author{
-    background:#e6f7f1 !important;
-    color:#0f9b68 !important;
-    border-color:#16c784 !important;
-    font-size:11pt !important;
-  }
-  .footer-credit .rights{
-    color:#555 !important;
-    font-size:9pt !important;
-  }
+  .footer-credit .brand{font-size:13pt !important;color:#0a0e13 !important;}
+  .footer-credit .brand-name{background:none !important;-webkit-text-fill-color:#16c784 !important;color:#16c784 !important;}
+  .footer-credit .divider{background:linear-gradient(90deg,transparent,#16c784,transparent) !important;}
+  .footer-credit .made-with{color:#555 !important;font-size:10pt !important;}
+  .footer-credit .made-with .author{background:#e6f7f1 !important;color:#0f9b68 !important;border-color:#16c784 !important;font-size:11pt !important;}
+  .footer-credit .rights{color:#555 !important;font-size:9pt !important;}
   .footer-credit .rights b{color:#0a0e13 !important;}
-  .footer-credit .tagline{
-    color:#666 !important;
-    font-size:8pt !important;
-  }
-
-  /* ---- Utility ---- */
+  .footer-credit .tagline{color:#666 !important;font-size:8pt !important;}
   .header, .entry-card, .alloc-bar, .targets-info-bar,
   .targets-grid, .dca-item, .sl-card, .sale-banner,
   .progress-wrap, .position-closed, .disclaimer-section,
@@ -1171,15 +865,9 @@ html[data-theme="dark"] .toast{color:#04140d}
     -webkit-print-color-adjust:exact;
     print-color-adjust:exact;
   }
-
-  .targets-total{
-    background:#f5f0ff !important;
-    border:1px solid #7c5bd1 !important;
-    padding:8px 12px !important;
-  }
+  .targets-total{background:#f5f0ff !important;border:1px solid #7c5bd1 !important;padding:8px 12px !important;}
   .targets-total .tt-label{color:#7c5bd1 !important;}
   .targets-total .tt-value{color:#0f9b68 !important;font-size:12pt !important;}
-
   a[href]:after{content:"" !important;}
 }
 
@@ -1217,7 +905,6 @@ html[data-theme="dark"] .toast{color:#04140d}
 <body>
 <div class="wrap">
 
-  <!-- Print header (hidden on screen) -->
   <div class="print-header" id="printHeader"></div>
 
   <header class="header">
@@ -1336,7 +1023,8 @@ html[data-theme="dark"] .toast{color:#04140d}
 
         <div class="group" style="border-color:color-mix(in srgb,var(--red) 40%, transparent)">
           <div class="group-title" style="color:var(--red)">🔢 <span data-i18n="dcaCountTitle">عدد مستويات DCA</span></div>
-          <div class="sl-mode-toggle triple">
+          <div class="sl-mode-toggle quad">
+            <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt1" onclick="setDCACount(1)">1 DCA</button>
             <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt2" onclick="setDCACount(2)">2 DCA</button>
             <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt3" onclick="setDCACount(3)">3 DCA</button>
             <button class="sl-mode-btn dca-cnt-btn active" id="dcaCnt4" onclick="setDCACount(4)">4 DCA</button>
@@ -1393,7 +1081,8 @@ html[data-theme="dark"] .toast{color:#04140d}
 
         <div class="group" style="border-color:color-mix(in srgb,var(--red) 40%, transparent)">
           <div class="group-title" style="color:var(--red)">🔢 <span data-i18n="dcaCountTitle">عدد مستويات DCA</span></div>
-          <div class="sl-mode-toggle triple">
+          <div class="sl-mode-toggle quad">
+            <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt1M" onclick="setDCACount(1)">1 DCA</button>
             <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt2M" onclick="setDCACount(2)">2 DCA</button>
             <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt3M" onclick="setDCACount(3)">3 DCA</button>
             <button class="sl-mode-btn dca-cnt-btn active" id="dcaCnt4M" onclick="setDCACount(4)">4 DCA</button>
@@ -1433,7 +1122,7 @@ html[data-theme="dark"] .toast{color:#04140d}
           <div class="group-title" data-i18n="allocGroup">💰 توزيع رأس المال (%)</div>
           <div class="alloc-row"><span class="lbl" data-i18n="allocEntryRow">الدخول</span><input type="number" min="0" max="100" id="inA0" value="30"></div>
           <div class="alloc-row"><span class="lbl">DCA 1</span><input type="number" min="0" max="100" id="inA1" value="15"></div>
-          <div class="alloc-row"><span class="lbl">DCA 2</span><input type="number" min="0" max="100" id="inA2" value="15"></div>
+          <div class="alloc-row" id="alloc2Row"><span class="lbl">DCA 2</span><input type="number" min="0" max="100" id="inA2" value="15"></div>
           <div class="alloc-row" id="alloc3Row"><span class="lbl">DCA 3</span><input type="number" min="0" max="100" id="inA3" value="20"></div>
           <div class="alloc-row" id="alloc4Row" style="margin-bottom:0"><span class="lbl">DCA 4</span><input type="number" min="0" max="100" id="inA4" value="20"></div>
           <div class="alloc-warn ok" id="allocWarn">المجموع: 100% ✓</div>
@@ -1611,8 +1300,8 @@ const I18N = {
     slModeAutoMsg:'⚡ وقف الخسارة تلقائي',
     slModeManualMsg:'✏️ وقف الخسارة يدوي',
     dcaCountTitle:'عدد مستويات DCA',
-    dcaCountMsg:(n)=>`🔢 تم تفعيل ${n} مستويات DCA`,
-    dcaCountInfo:(n)=>`✓ ${n} مستويات مُفعَّلة`,
+    dcaCountMsg:(n)=>`🔢 تم تفعيل ${n} ${n===1?'مستوى DCA واحد':'مستويات DCA'}`,
+    dcaCountInfo:(n)=>`✓ ${n} ${n===1?'مستوى DCA مُفعَّل':'مستويات مُفعَّلة'}`,
     slAfterDca:(n)=>`بعد DCA ${n}`,
     slBelowDca:(n)=>`تحت DCA${n}`,
     targetsEntryLabel:'رأس المال المُستثمَر في الدخول:',
@@ -1723,8 +1412,8 @@ const I18N = {
     slModeAutoMsg:'⚡ Stop Loss: Auto',
     slModeManualMsg:'✏️ Stop Loss: Manual',
     dcaCountTitle:'Number of DCA Levels',
-    dcaCountMsg:(n)=>`🔢 ${n} DCA levels activated`,
-    dcaCountInfo:(n)=>`✓ ${n} levels active`,
+    dcaCountMsg:(n)=>`🔢 ${n} ${n===1?'DCA level':'DCA levels'} activated`,
+    dcaCountInfo:(n)=>`✓ ${n} ${n===1?'level active':'levels active'}`,
     slAfterDca:(n)=>`After DCA ${n}`,
     slBelowDca:(n)=>`below DCA${n}`,
     targetsEntryLabel:'Entry amount invested:',
@@ -1741,6 +1430,7 @@ const AUTO = {
   targetPcts:[5,10,15,20],
   dcaPcts:[-7.9963235294, -17.9963235294, -30.0, -45.0],
   allocByCount:{
+    1: [30, 70, 0, 0, 0],
     2: [30, 35, 35, 0, 0],
     3: [30, 25, 25, 20, 0],
     4: [30, 15, 15, 20, 20]
@@ -1794,12 +1484,12 @@ const pctOf = (a,b) => b===0 ? 0 : ((a-b)/b)*100;
 
 function loadPrefs(){
   try{
-    const raw = localStorage.getItem('xrpeth_prefs_v25');
+    const raw = localStorage.getItem('xrpeth_prefs_v26');
     if(raw) prefs = Object.assign(prefs, JSON.parse(raw));
   }catch(e){}
 }
 function savePrefs(){
-  try{ localStorage.setItem('xrpeth_prefs_v25', JSON.stringify(prefs)); }catch(e){}
+  try{ localStorage.setItem('xrpeth_prefs_v26', JSON.stringify(prefs)); }catch(e){}
 }
 function applyPrefs(){
   document.documentElement.lang = prefs.lang;
@@ -1834,18 +1524,24 @@ function applyAutoMode(){
 function setDCACount(n){
   state.dcaCount = n;
   state.alloc = [...AUTO.allocByCount[n]];
-  [2,3,4].forEach(k=>{
+  // ✅ Now loops 1,2,3,4
+  [1,2,3,4].forEach(k=>{
     const a = $('dcaCnt'+k);
     const b = $('dcaCnt'+k+'M');
     if(a) a.classList.toggle('active', k === n);
     if(b) b.classList.toggle('active', k === n);
   });
+  // Show/hide DCA fields
+  $('dca2Field').style.display = n >= 2 ? '' : 'none';
   $('dca3Field').style.display = n >= 3 ? '' : 'none';
   $('dca4Field').style.display = n >= 4 ? '' : 'none';
+  $('alloc2Row').style.display = n >= 2 ? '' : 'none';
   $('alloc3Row').style.display = n >= 3 ? '' : 'none';
   $('alloc4Row').style.display = n >= 4 ? '' : 'none';
+  // Update info text
   const infoEl = $('dcaCountInfo');
   if(infoEl) infoEl.textContent = t('dcaCountInfo')(n);
+  // Update auto-info sidebar
   const dcaLabels = ['−8%','−18%','−30%','−45%'].slice(0, n).join(' · ');
   const allocNums = state.alloc.slice(0, n+1).join(' / ');
   if($('autoDcaInfo')) $('autoDcaInfo').textContent = dcaLabels;
@@ -2406,8 +2102,10 @@ function syncInputs(){
   const allocNums = state.alloc.slice(0, state.dcaCount+1).join(' / ');
   if($('autoDcaInfo')) $('autoDcaInfo').textContent = dcaLabels;
   if($('autoAllocInfo')) $('autoAllocInfo').textContent = allocNums;
+  $('dca2Field').style.display = state.dcaCount >= 2 ? '' : 'none';
   $('dca3Field').style.display = state.dcaCount >= 3 ? '' : 'none';
   $('dca4Field').style.display = state.dcaCount >= 4 ? '' : 'none';
+  $('alloc2Row').style.display = state.dcaCount >= 2 ? '' : 'none';
   $('alloc3Row').style.display = state.dcaCount >= 3 ? '' : 'none';
   $('alloc4Row').style.display = state.dcaCount >= 4 ? '' : 'none';
   const infoEl = $('dcaCountInfo');
@@ -2415,7 +2113,6 @@ function syncInputs(){
 }
 function syncManualFromState(){ syncInputs(); }
 
-/* ==================== PRINT REPORT ==================== */
 function printReport(){
   const now = new Date();
   const locale = prefs.lang === 'ar' ? 'ar-EG' : 'en-US';
@@ -2434,9 +2131,7 @@ function printReport(){
     <div class="ph-meta">${metaLabel} <b>${dateStr}</b></div>
   `;
 
-  setTimeout(() => {
-    window.print();
-  }, 120);
+  setTimeout(() => { window.print(); }, 120);
 }
 
 $('inPair').addEventListener('input', e => { state.pair = e.target.value; render(); });
@@ -2532,12 +2227,12 @@ function copyEntry(){
   }
 }
 function savePlan(){
-  try{ localStorage.setItem('xrpeth_plan_v25', JSON.stringify(state)); showToast(t('saved')); }
+  try{ localStorage.setItem('xrpeth_plan_v26', JSON.stringify(state)); showToast(t('saved')); }
   catch(e){ showToast(t('saveFailed')); }
 }
 function loadPlan(){
   try{
-    const raw = localStorage.getItem('xrpeth_plan_v25');
+    const raw = localStorage.getItem('xrpeth_plan_v26');
     if(raw){
       const saved = JSON.parse(raw);
       state = Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)), saved);
