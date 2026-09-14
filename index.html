@@ -311,7 +311,7 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 /* ═══════════════════════════════════════════════════════
-   ✅ حاسبة المخاطر — حاوية الوصلات
+   ✅ حاسبة المخاطر — حاوية الوصلة
    ═══════════════════════════════════════════════════════ */
 .risk-calculator-section {
 background-color: var(--section-bg);
@@ -334,8 +334,8 @@ text-align: center;
 .risk-calculator-card .title { font-size: 1.3em; font-weight: bold; margin-bottom: 8px; }
 .risk-calculator-card .subtitle { font-size: 0.95em; opacity: 0.9; }
 .risk-links-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+display: flex;
+justify-content: center;
 gap: 15px;
 }
 .risk-link-btn {
@@ -343,7 +343,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 gap: 10px;
-padding: 18px;
+padding: 18px 30px;
 color: white;
 text-decoration: none;
 border-radius: 10px;
@@ -351,20 +351,12 @@ font-weight: 600;
 font-size: 1em;
 transition: all 0.3s ease;
 cursor: pointer;
-}
-.risk-link-btn.green {
-background: linear-gradient(135deg, #28a745, #20c997);
-box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-}
-.risk-link-btn.green:hover {
-transform: translateY(-3px);
-box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
-}
-.risk-link-btn.purple {
+max-width: 450px;
+width: 100%;
 background: linear-gradient(135deg, #667eea, #764ba2);
 box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
-.risk-link-btn.purple:hover {
+.risk-link-btn:hover {
 transform: translateY(-3px);
 box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
@@ -1147,7 +1139,7 @@ animation: fabPulse 3s ease-in-out infinite;
 .ticker-skeleton { padding: 4px 10px; }
 .skeleton-icon { width: 18px; height: 18px; }
 .market-insights-grid { grid-template-columns: 1fr; }
-.risk-links-grid { grid-template-columns: 1fr; }
+.risk-links-grid { flex-direction: column; align-items: stretch; }
 .notification-center { width: calc(100% - 40px); left: 20px; right: 20px; }
 .charts-grid { grid-template-columns: 1fr; }
 .quick-actions-bar { bottom: 70px; left: 10px; }
@@ -1956,24 +1948,15 @@ h2 { font-size: 1.05em; }
 <div class="risk-calculator-card">
 <div class="icon">🧮</div>
 <div class="title">حاسبة إدارة المخاطر الاحترافية</div>
-<div class="subtitle">احسب حجم المركز، وقف الخسارة، والرافعة المالية المثالية قبل الدخول</div>
+<div class="subtitle">احسب حجم المركز ووقف الخسارة المثالي قبل الدخول</div>
 </div>
 
-<!-- ─────────── أزرار الفتح ─────────── -->
+<!-- ─────────── زر الفتح ─────────── -->
 <div class="risk-links-grid">
-
-<!-- الزر 1: فتح في نفس التبويب -->
-<a href="risk-calculator.html" class="risk-link-btn green">
-<span class="icon">🧮</span>
-<span>افتح الحاسبة</span>
-</a>
-
-<!-- الزر 2: فتح في تبويب جديد -->
-<a href="risk-calculator.html" target="_blank" rel="noopener noreferrer" class="risk-link-btn purple">
+<a href="risk-calculator.html" target="_blank" rel="noopener noreferrer" class="risk-link-btn">
 <span class="icon">🪟</span>
 <span>افتح في نافذة جديدة</span>
 </a>
-
 </div>
 
 <!-- ─────────── ملاحظة ─────────── -->
@@ -2323,7 +2306,7 @@ h2 { font-size: 1.05em; }
 <input type="file" id="importTxtFile" accept=".txt" style="display: none;">
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — نسخة نهائية مع حاوية حاسبة المخاطر
+   JavaScript — نسخة نهائية
    ═══════════════════════════════════════════════════════════════ */
 function generateUniqueId() {
 return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
@@ -2403,7 +2386,6 @@ if (!input) return;
 input.value = input.value.replace(/,/g, '');
 }
 
-/* ✅ تحديث: أضفنا section-riskCalculator */
 const sectionConfigs = [
 { id: 'section-cash', name: 'كم الكاش لديك', defaultColor: '#ffffff' },
 { id: 'section-coinActive', name: 'العملة النشطة', defaultColor: '#ffffff' },
@@ -2551,7 +2533,6 @@ location.reload();
 null
 );
 }
-/* ✅ تحديث: أضفنا riskCalculator إلى sectionMap */
 function toggleSection(sectionName) {
 const sectionMap = {
 'cash': 'cashSectionContent',
@@ -2581,7 +2562,6 @@ const sectionStates = JSON.parse(localStorage.getItem('sectionToggleStates') || 
 sectionStates[sectionName] = content.classList.contains('collapsed');
 localStorage.setItem('sectionToggleStates', JSON.stringify(sectionStates));
 }
-/* ✅ تحديث: أضفنا riskCalculator إلى sectionMap */
 function loadSectionStates() {
 const sectionStates = JSON.parse(localStorage.getItem('sectionToggleStates') || '{}');
 const sectionMap = {
@@ -2829,8 +2809,6 @@ else { saveCashHistory(); updateCashHistoryDisplay(); }
 updateSummaryTable();
 showSuccess(`تم إلغاء ${type === 'deposit' ? 'الإيداع' : 'السحب'} بنجاح`);
 }
-
-/* ✅ إصلاح: تحميل كاش البيع يظهر مباشرة عند فتح الصفحة */
 function loadCashFromStorage() {
 let savedCash = localStorage.getItem(LS_KEY_CASH);
 if (savedCash !== null) {
@@ -2854,7 +2832,7 @@ if (!salesCashHistory.withdrawals) salesCashHistory.withdrawals = [];
 updateSalesCashHistoryDisplay();
 } catch (e) { console.error("خطأ في تحميل سجل الكاش من البيع:", e); }
 }
-/* ✅ الحل: استدعاء واحد في النهاية */
+/* ✅ استدعاء واحد في النهاية — بعد تحميل كل البيانات */
 updateCashDisplay();
 }
 
