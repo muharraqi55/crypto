@@ -132,13 +132,10 @@
 --estimate-text: #ffcc80;
 }
 
-/* ═══════════════════════════════════════════════════════
-   🆕 إخفاء عناصر قسم تفاصيل الدخول
-   ═══════════════════════════════════════════════════════ */
 .entry-info-hidden { display: none !important; }
 
 /* ═══════════════════════════════════════════════════════
-   🆕 نافذة البيع الجزئي — تصميم احترافي
+   نافذة البيع الجزئي
    ═══════════════════════════════════════════════════════ */
 .sell-partial-modal-overlay {
     position: fixed;
@@ -470,7 +467,6 @@
     cursor: not-allowed;
     box-shadow: none;
 }
-/* 🆕 زر المسح */
 .sell-partial-btn-clear {
     background: linear-gradient(135deg, #f59e0b, #d97706);
     color: white;
@@ -516,7 +512,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════
-   ✅ شريط المتحدث
+   شريط المتحدث
    ═══════════════════════════════════════════════════════ */
 .crypto-ticker-wrap {
 background: var(--section-bg);
@@ -955,8 +951,10 @@ h3 { font-size: 1.2em; color: var(--primary-color); margin-bottom: 15px; margin-
 .dca-table input[type="text"]:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px var(--focus-ring-color); }
 .dca-table .sell-btn { padding: 4px 10px; font-size: 0.8em; margin: 0 2px; background-color: var(--positive-color); color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease; }
 .dca-table .sell-btn:hover { background-color: #146c43; }
+.dca-table .sell-btn:disabled { background-color: var(--text-muted); cursor: not-allowed; opacity: 0.5; }
 .dca-table .sell-full-btn { background-color: var(--negative-color); }
 .dca-table .sell-full-btn:hover { background-color: #c82333; }
+.dca-table .sell-full-btn:disabled { background-color: var(--text-muted); cursor: not-allowed; opacity: 0.5; }
 .dca-table .save-dca-btn { padding: 4px 8px; font-size: 0.8em; background-color: var(--positive-color); color: white; border: none; border-radius: 4px; cursor: pointer; }
 .dca-table .sales-history { margin-top: 3px; font-size: 0.75em; max-height: 100px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 4px; padding: 3px; background-color: var(--output-field-bg); }
 .dca-table .sale-record { display: flex; justify-content: space-between; padding: 2px 0; border-bottom: 1px dashed var(--border-color); align-items: center; font-size: 0.9em; }
@@ -979,6 +977,22 @@ h3 { font-size: 1.2em; color: var(--primary-color); margin-bottom: 15px; margin-
 .dca-table .price-mode-btn.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
 .dca-table .percentage-input-group { display: none; margin-top: 3px; }
 .dca-table .percentage-input-group.active { display: block; }
+.dca-table .unsaved-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.7em;
+    font-weight: 700;
+    margin-top: 4px;
+    animation: unsavedPulse 1.5s ease-in-out infinite;
+}
+@keyframes unsavedPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.75; transform: scale(1.03); }
+}
+.dca-table .unsaved-row { background-color: rgba(245, 158, 11, 0.08) !important; }
 .add-dca-btn { background-color: var(--positive-color); color: white; border: none; border-radius: 6px; padding: 6px 15px; font-size: 0.9em; font-weight: var(--font-weight-semibold); cursor: pointer; transition: background-color 0.2s ease; margin-top: 10px; }
 .add-dca-btn:hover { background-color: #146c43; }
 
@@ -1608,7 +1622,7 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <ul class="footer-links">
 <li><a href="#" onclick="showInfo('الإصدار: Pro 2.0.0\nالتاريخ: 12 سبتمبر 2026'); return false;">ℹ️ حول التطبيق</a></li>
 <li><a href="#" onclick="showInfo('جميع البيانات محفوظة محلياً في متصفحك باستخدام localStorage'); return false;">🔒 الخصوصية</a></li>
-<li><a href="#" onclick="showInfo('الأسعار من Binance API و KuCoin API'); return false;">📡 مصادر البيانات</a></li>
+<li><a href="#" onclick="showInfo('الأسعار من Binance API و MEXC و Gate.io و OKX و KuCoin و Bybit'); return false;">📡 مصادر البيانات</a></li>
 </ul>
 </div>
 </div>
@@ -1631,15 +1645,10 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 
 <button class="donate-fab" onclick="openDonateModal()" title="ادعم المشروع">💖</button>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🆕 نافذة البيع الجزئي — النسخة المُحدَّثة
-     ✅ ستسلم | مبلغ الربح | مبلغ الدخول | النسبة | الكمية المتبقية
-     ✅ زر مسح جديد
-     ═══════════════════════════════════════════════════════════════ -->
+<!-- نافذة البيع الجزئي -->
 <div class="sell-partial-modal-overlay" id="sellPartialModalOverlay">
     <div class="sell-partial-modal" onclick="event.stopPropagation();">
 
-        <!-- رأس النافذة -->
         <div class="sell-partial-header">
             <div class="title-block">
                 <div class="title-main">
@@ -1651,10 +1660,8 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
             <button class="sell-partial-close" onclick="closeSellPartialModal()" title="إغلاق">✕</button>
         </div>
 
-        <!-- جسم النافذة -->
         <div class="sell-partial-body">
 
-            <!-- شبكة المعلومات -->
             <div class="sell-partial-info-grid">
                 <div class="sell-partial-info-box">
                     <label>📊 المتاح</label>
@@ -1670,10 +1677,8 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
                 </div>
             </div>
 
-            <!-- شريط تحذير -->
             <div class="sell-partial-warning" id="spWarning"></div>
 
-            <!-- أزرار النسب السريعة -->
             <div class="sell-partial-quick-btns">
                 <button class="sell-partial-quick-btn" onclick="setSellQuickPercent(25, this)">25%</button>
                 <button class="sell-partial-quick-btn" onclick="setSellQuickPercent(50, this)">50%</button>
@@ -1681,7 +1686,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
                 <button class="sell-partial-quick-btn" onclick="setSellQuickPercent(100, this)">100%</button>
             </div>
 
-            <!-- حقل المبلغ بالدولار -->
             <div class="sell-partial-input-group">
                 <label>
                     <span>💰 المبلغ بالدولار ($)</span>
@@ -1697,7 +1701,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
                 <div class="sell-partial-currency-hint" id="spAmountConverted">= 0.00</div>
             </div>
 
-            <!-- حقل الكمية -->
             <div class="sell-partial-input-group">
                 <label>
                     <span>📊 الكمية</span>
@@ -1712,7 +1715,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
                 </div>
             </div>
 
-            <!-- حقل السعر -->
             <div class="sell-partial-input-group">
                 <label>
                     <span>💵 سعر البيع ($)</span>
@@ -1727,7 +1729,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
                 </div>
             </div>
 
-            <!-- ✅ قسم المعاينة المُحدَّث -->
             <div class="sell-partial-preview">
                 <div class="sell-partial-preview-row with-currency">
                     <span class="label">✅ ستسلم</span>
@@ -1753,7 +1754,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 
         </div>
 
-        <!-- الفوتر — 3 أزرار: مسح / إلغاء / تأكيد -->
         <div class="sell-partial-footer">
             <button class="sell-partial-btn-clear" onclick="clearSellPartialFields()" title="مسح الحقول">
                 <span>🔄</span>
@@ -1770,7 +1770,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         </div>
     </div>
 </div>
-<!-- ═══════════════════════════════════════════════════════════════ -->
 
 <div class="profile-modal-overlay" id="profileModal">
 <div class="profile-modal">
@@ -1963,6 +1962,8 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <li>💱 دعم عملات الخليج والعالم العربي</li>
 <li>🎯 نافذة بيع جزئي متقدمة مع أزرار سريعة</li>
 <li>🔄 زر مسح داخل نافذة البيع</li>
+<li>🛡️ حماية التعزيز: لا يمكن البيع قبل الحفظ</li>
+<li>🌐 جلب الأسعار من 6 منصات (Binance, MEXC, Gate.io, OKX, KuCoin, Bybit)</li>
 </ul>
 </div>
 <button onclick="closeUpdatePopup()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">ممتاز!</button>
@@ -2011,8 +2012,15 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <input type="file" id="importTxtFile" accept=".txt" style="display: none;">
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — النسخة النهائية مع نافذة البيع المُحدَّثة
+   JavaScript — النسخة النهائية
+   ✅ إصلاح مشكلة التجمّد (resetAllData)
+   ✅ جلب الأسعار من 6 منصات مع كود CORSProxy (d46fe9fb)
+   ✅ حماية البيع للتعزيز (DCA) قبل الحفظ
+   ✅ إصلاح اسم كلاس زر الحذف
    ═══════════════════════════════════════════════════════════════ */
+
+// 🔑 كود CORSProxy (يُستخدم للمنصات التي لا تدعم CORS)
+const CORSPROXY_API_KEY = 'd46fe9fb';
 
 function generateUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
@@ -2106,291 +2114,109 @@ function fmtUSD(v, dec)   { return formatUSD(v, dec); }
 function fmtPrice(v, dec) { return formatPrice(v, dec); }
 
 const AR_EN_DICT = {
-    'متابعة الصفقات': 'Trade Tracker',
-    'الملف الشخصي': 'Profile',
-    '⚙️ الإعدادات': '⚙️ Settings',
-    '🖨️ طباعة': '🖨️ Print',
-    '📂 استيراد': '📂 Import',
-    '💾 حفظ TXT': '💾 Save TXT',
-    '🔄 ضبط افتراضي': '🔄 Reset Default',
-    'تم التصميم بواسطة: المهندس [Muharraqi]': 'Designed by: Eng. [Muharraqi]',
-    'نسألكم الدعاء بظهر الغيب': 'Please remember us in your prayers',
-    'متابعة الصفقات الشاملة': 'Comprehensive Trade Tracking',
-    '📊 مؤشرات السوق': '📊 Market Insights',
-    '📈 تحليلات المحفظة المتقدمة': '📈 Advanced Portfolio Analytics',
-    'كم الكاش لديك': 'Your Cash',
-    'العملة النشطة': 'Active Coin',
-    'تفاصيل الدخول': 'Entry Details',
-    'الوضع الحالي والأهداف': 'Current Status & Targets',
-    'ملخص الصفقات الكلي': 'Overall Trades Summary',
-    '🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول) للمضاربة': '🧮 Quick Risk Calculator (Pre-Entry)',
-    'طي': 'Collapse',
-    'عرض': 'Show',
-    '💰 القيمة السوقية': '💰 Market Cap',
-    '😨 مؤشر الخوف والطمع': '😨 Fear & Greed Index',
-    '🪙 موسم العملات البديلة': '🪙 Altcoin Season',
-    'جاري التحميل...': 'Loading...',
-    '🥧 توزيع الأصول': '🥧 Asset Allocation',
-    '📈 اتجاه المحفظة': '📈 Portfolio Trend',
-    'القيمة السوقية الحالية': 'Current Market Value',
-    'تاريخ قيمة المحفظة': 'Portfolio Value History',
-    'الإجمالي': 'Total',
-    'الحالية': 'Current',
-    'التغير': 'Change',
-    'أعلى قيمة': 'High',
-    'أدنى قيمة': 'Low',
-    'الكاش': 'Cash',
-    '💰 كاش مدخل يدوياً': '💰 Manual Cash',
-    '💵 الكاش من البيع': '💵 Cash from Sales',
-    '💎 إجمالي الكاش المتاح': '💎 Total Available Cash',
-    'أدخل الكاش المتاح بالدولار:': 'Enter available cash in USD:',
-    'إضافة كاش': 'Add Cash',
-    'سحب كاش': 'Withdraw Cash',
-    '📅 وضع تاريخ عمليات الكاش:': '📅 Cash Transactions Date Mode:',
-    '🤖 تلقائي': '🤖 Auto',
-    '✏️ يدوي': '✏️ Manual',
+    'متابعة الصفقات': 'Trade Tracker', 'الملف الشخصي': 'Profile', '⚙️ الإعدادات': '⚙️ Settings',
+    '🖨️ طباعة': '🖨️ Print', '📂 استيراد': '📂 Import', '💾 حفظ TXT': '💾 Save TXT', '🔄 ضبط افتراضي': '🔄 Reset Default',
+    'تم التصميم بواسطة: المهندس [Muharraqi]': 'Designed by: Eng. [Muharraqi]', 'نسألكم الدعاء بظهر الغيب': 'Please remember us in your prayers',
+    'متابعة الصفقات الشاملة': 'Comprehensive Trade Tracking', '📊 مؤشرات السوق': '📊 Market Insights',
+    '📈 تحليلات المحفظة المتقدمة': '📈 Advanced Portfolio Analytics', 'كم الكاش لديك': 'Your Cash',
+    'العملة النشطة': 'Active Coin', 'تفاصيل الدخول': 'Entry Details', 'الوضع الحالي والأهداف': 'Current Status & Targets',
+    'ملخص الصفقات الكلي': 'Overall Trades Summary', '🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول) للمضاربة': '🧮 Quick Risk Calculator (Pre-Entry)',
+    'طي': 'Collapse', 'عرض': 'Show', '💰 القيمة السوقية': '💰 Market Cap', '😨 مؤشر الخوف والطمع': '😨 Fear & Greed Index',
+    '🪙 موسم العملات البديلة': '🪙 Altcoin Season', 'جاري التحميل...': 'Loading...', '🥧 توزيع الأصول': '🥧 Asset Allocation',
+    '📈 اتجاه المحفظة': '📈 Portfolio Trend', 'القيمة السوقية الحالية': 'Current Market Value',
+    'تاريخ قيمة المحفظة': 'Portfolio Value History', 'الإجمالي': 'Total', 'الحالية': 'Current', 'التغير': 'Change',
+    'أعلى قيمة': 'High', 'أدنى قيمة': 'Low', 'الكاش': 'Cash', '💰 كاش مدخل يدوياً': '💰 Manual Cash',
+    '💵 الكاش من البيع': '💵 Cash from Sales', '💎 إجمالي الكاش المتاح': '💎 Total Available Cash',
+    'أدخل الكاش المتاح بالدولار:': 'Enter available cash in USD:', 'إضافة كاش': 'Add Cash', 'سحب كاش': 'Withdraw Cash',
+    '📅 وضع تاريخ عمليات الكاش:': '📅 Cash Transactions Date Mode:', '🤖 تلقائي': '🤖 Auto', '✏️ يدوي': '✏️ Manual',
     '💡 اختر التاريخ والوقت يدوياً لكل عملية كاش جديدة.': '💡 Choose date & time manually for each new cash transaction.',
     '⚠️ ليس لديك كاش كافٍ لإضافة هذه الصفقة!': '⚠️ Not enough cash for this trade!',
     'ملاحظة: سيتم خصم الكاش فقط عند النقر على زر "💾 حفظ الصفقة" بعد إدخال البيانات.': 'Note: Cash will only be deducted upon clicking "💾 Save Trade".',
-    'سجل الكاش': 'Cash History',
-    'الإيداعات': 'Deposits',
-    'السحوبات': 'Withdrawals',
-    'لا توجد سجلات': 'No records',
-    'سجل الكاش من البيع': 'Sales Cash History',
-    '📅 وضع تاريخ عمليات البيع:': '📅 Sale Transactions Date Mode:',
-    '📅 وضع تاريخ التعزيزات الجديدة:': '📅 New DCA Date Mode:',
-    '📅 وضع تاريخ صفقة الدخول:': '📅 Entry Trade Date Mode:',
-    'العملة النشطة:': 'Active Coin:',
-    'إضافة/بحث:': 'Add/Search:',
-    '➕ إضافة/تبديل': '➕ Add/Switch',
-    '🔄 تحديث': '🔄 Refresh',
-    '🗑️ حذف': '🗑️ Delete',
-    'اختر عملة لجلب السعر': 'Select a coin to fetch price',
-    'اختر عملة أو أضف واحدة جديدة': 'Select a coin or add a new one',
-    'لا عملة محددة': 'No coin selected',
-    'لا توجد عملات للمراقبة.': 'No coins to track.',
-    'أضف عملة للبدء.': 'Add a coin to start.',
-    'أضف عملة للتحديث التلقائي.': 'Add a coin for auto-refresh.',
-    'فشل الجلب': 'Fetch failed',
-    'العملات:': 'Coins:',
-    'سعر الدخول الأولي:': 'Initial Entry Price:',
-    'المبلغ بالدولار $:': 'Amount in USD $:',
-    'السعر الحالي (للعملة النشطة):': 'Current Price (Active Coin):',
-    'تحديث تلقائي للأسعار (كل 30 ثانية)': 'Auto-refresh prices (every 30s)',
-    '💾 حفظ صفقة الدخول': '💾 Save Entry Trade',
-    '🆕 فتح صفقة دخول جديدة': '🆕 Open New Entry Trade',
-    'كمية العملة المحصلة:': 'Coin Quantity Acquired:',
-    'الكمية المباعة:': 'Sold Quantity:',
-    'الكمية المتبقية:': 'Remaining Quantity:',
-    'ربح/خسارة الدخول $:': 'Entry P/L $:',
-    'ربح/خسارة الدخول %:': 'Entry P/L %:',
-    'الكاش من بيع الدخول $:': 'Cash from Entry Sale $:',
-    '📊 الكمية المتاحة للبيع:': '📊 Available Quantity for Sale:',
-    '💰 بيع جزئي': '💰 Partial Sell',
-    '🔥 بيع الكل': '🔥 Sell All',
-    '❌ إلغاء الصفقة': '❌ Cancel Trade',
-    'الكمية': 'Quantity',
-    'سعر البيع': 'Sell Price',
-    '✓ إضافة بيع': '✓ Add Sale',
-    '✗ إلغاء': '✗ Cancel',
-    'إخفاء': 'Hide',
-    'بيع': 'Sell',
-    'إجمالي الكمية:': 'Total Quantity:',
-    'إجمالي المستثمر $:': 'Total Invested $:',
-    'متوسط السعر:': 'Average Price:',
-    'القيمة الحالية $:': 'Current Value $:',
-    'الربح/الخسارة $:': 'Profit/Loss $:',
-    'الربح/الخسارة %:': 'Profit/Loss %:',
-    'إجمالي الكاش من البيع $:': 'Total Cash from Sales $:',
-    'العملة': 'Coin',
-    'المستثمر $': 'Invested $',
-    'متوسط الدخول': 'Avg Entry',
-    'السعر الحالي': 'Current Price',
-    'القيمة الحالية $': 'Current Value $',
-    'الربح/الخسارة $': 'P/L $',
-    'الربح/الخسارة %': 'P/L %',
-    'الكاش من البيع $': 'Cash from Sales $',
-    'إجمالي المبلغ المستثمر': 'Total Invested Amount',
-    'إجمالي الربح / الخسارة $': 'Total Profit / Loss $',
-    'إجمالي القيمة الحالية': 'Total Current Value',
-    'إجمالي الربح / الخسارة %': 'Total Profit / Loss %',
-    'إجمالي الكاش من البيع': 'Total Cash from Sales',
-    '💰 بيع الكل': '💰 Sell All',
-    '📊 البيع التقديري': '📊 Estimated Sale',
+    'سجل الكاش': 'Cash History', 'الإيداعات': 'Deposits', 'السحوبات': 'Withdrawals', 'لا توجد سجلات': 'No records',
+    'سجل الكاش من البيع': 'Sales Cash History', '📅 وضع تاريخ عمليات البيع:': '📅 Sale Transactions Date Mode:',
+    '📅 وضع تاريخ التعزيزات الجديدة:': '📅 New DCA Date Mode:', '📅 وضع تاريخ صفقة الدخول:': '📅 Entry Trade Date Mode:',
+    'العملة النشطة:': 'Active Coin:', 'إضافة/بحث:': 'Add/Search:', '➕ إضافة/تبديل': '➕ Add/Switch',
+    '🔄 تحديث': '🔄 Refresh', '🗑️ حذف': '🗑️ Delete', 'اختر عملة لجلب السعر': 'Select a coin to fetch price',
+    'اختر عملة أو أضف واحدة جديدة': 'Select a coin or add a new one', 'لا عملة محددة': 'No coin selected',
+    'لا توجد عملات للمراقبة.': 'No coins to track.', 'أضف عملة للبدء.': 'Add a coin to start.',
+    'أضف عملة للتحديث التلقائي.': 'Add a coin for auto-refresh.', 'فشل الجلب': 'Fetch failed', 'العملات:': 'Coins:',
+    'سعر الدخول الأولي:': 'Initial Entry Price:', 'المبلغ بالدولار $:': 'Amount in USD $:',
+    'السعر الحالي (للعملة النشطة):': 'Current Price (Active Coin):', 'تحديث تلقائي للأسعار (كل 30 ثانية)': 'Auto-refresh prices (every 30s)',
+    '💾 حفظ صفقة الدخول': '💾 Save Entry Trade', '🆕 فتح صفقة دخول جديدة': '🆕 Open New Entry Trade',
+    'كمية العملة المحصلة:': 'Coin Quantity Acquired:', 'الكمية المباعة:': 'Sold Quantity:', 'الكمية المتبقية:': 'Remaining Quantity:',
+    'ربح/خسارة الدخول $:': 'Entry P/L $:', 'ربح/خسارة الدخول %:': 'Entry P/L %:', 'الكاش من بيع الدخول $:': 'Cash from Entry Sale $:',
+    '📊 الكمية المتاحة للبيع:': '📊 Available Quantity for Sale:', '💰 بيع جزئي': '💰 Partial Sell', '🔥 بيع الكل': '🔥 Sell All',
+    '❌ إلغاء الصفقة': '❌ Cancel Trade', 'الكمية': 'Quantity', 'سعر البيع': 'Sell Price', '✓ إضافة بيع': '✓ Add Sale',
+    '✗ إلغاء': '✗ Cancel', 'إخفاء': 'Hide', 'بيع': 'Sell', 'إجمالي الكمية:': 'Total Quantity:',
+    'إجمالي المستثمر $:': 'Total Invested $:', 'متوسط السعر:': 'Average Price:', 'القيمة الحالية $:': 'Current Value $:',
+    'الربح/الخسارة $:': 'Profit/Loss $:', 'الربح/الخسارة %:': 'Profit/Loss %:', 'إجمالي الكاش من البيع $:': 'Total Cash from Sales $:',
+    'العملة': 'Coin', 'المستثمر $': 'Invested $', 'متوسط الدخول': 'Avg Entry', 'السعر الحالي': 'Current Price',
+    'القيمة الحالية $': 'Current Value $', 'الربح/الخسارة $': 'P/L $', 'الربح/الخسارة %': 'P/L %', 'الكاش من البيع $': 'Cash from Sales $',
+    'إجمالي المبلغ المستثمر': 'Total Invested Amount', 'إجمالي الربح / الخسارة $': 'Total Profit / Loss $',
+    'إجمالي القيمة الحالية': 'Total Current Value', 'إجمالي الربح / الخسارة %': 'Total Profit / Loss %',
+    'إجمالي الكاش من البيع': 'Total Cash from Sales', '💰 بيع الكل': '💰 Sell All', '📊 البيع التقديري': '📊 Estimated Sale',
     'أضف عملة أو قم بتحديث الأسعار لعرض الملخص...': 'Add a coin or refresh prices to display the summary...',
-    'لا توجد عملات مضافة حالياً.': 'No coins added yet.',
-    'التعزيزات لـ': 'DCAs for',
-    'إضافة تعزيز': 'Add DCA',
-    '➕ إضافة تعزيز جديد': '➕ Add New DCA',
-    'لا توجد صفقات مسجلة لهذه العملة': 'No trades recorded for this coin',
-    'دخول': 'Entry',
-    'هبوط %': 'Drop %',
-    'سعر الشراء': 'Buy Price',
-    'المبلغ $': 'Amount $',
-    '📅 التواريخ': '📅 Dates',
-    'المباعة': 'Sold',
-    'المتبقي': 'Remaining',
-    'ربح/خسارة الصفقة $': 'Trade P/L $',
-    'ربح/خسارة الصفقة %': 'Trade P/L %',
-    'حالة البيع': 'Sale Status',
-    'الإجراءات': 'Actions',
-    'نشط': 'Active',
-    'تم البيع': 'Sold',
-    'بيع جزئي': 'Partial Sale',
-    'سعر': 'Price',
-    'نسبة': 'Pct',
-    'النسبة %': 'Pct %',
-    'السعر': 'Price',
-    '🟢 شراء': '🟢 Buy',
-    '🔴 بيع': '🔴 Sell',
-    '🗑️ حذف التعزيز': '🗑️ Delete DCA',
-    'حاسبة إدارة المخاطر الاحترافية': 'Professional Risk Management Calculator',
+    'لا توجد عملات مضافة حالياً.': 'No coins added yet.', 'التعزيزات لـ': 'DCAs for', 'إضافة تعزيز': 'Add DCA',
+    '➕ إضافة تعزيز جديد': '➕ Add New DCA', 'لا توجد صفقات مسجلة لهذه العملة': 'No trades recorded for this coin',
+    'دخول': 'Entry', 'هبوط %': 'Drop %', 'سعر الشراء': 'Buy Price', 'المبلغ $': 'Amount $', '📅 التواريخ': '📅 Dates',
+    'المباعة': 'Sold', 'المتبقي': 'Remaining', 'ربح/خسارة الصفقة $': 'Trade P/L $', 'ربح/خسارة الصفقة %': 'Trade P/L %',
+    'حالة البيع': 'Sale Status', 'الإجراءات': 'Actions', 'نشط': 'Active', 'تم البيع': 'Sold', 'بيع جزئي': 'Partial Sale',
+    'سعر': 'Price', 'نسبة': 'Pct', 'النسبة %': 'Pct %', 'السعر': 'Price', '🟢 شراء': '🟢 Buy', '🔴 بيع': '🔴 Sell',
+    '🗑️ حذف التعزيز': '🗑️ Delete DCA', 'حاسبة إدارة المخاطر الاحترافية': 'Professional Risk Management Calculator',
     'احسب حجم المركز ووقف الخسارة المثالي قبل الدخول': 'Calculate position size and ideal stop-loss',
-    'افتح في نافذة جديدة': 'Open in New Window',
-    '💡 ملاحظة:': '💡 Note:',
+    'افتح في نافذة جديدة': 'Open in New Window', '💡 ملاحظة:': '💡 Note:',
     'منصتك الإحترافية لتتبع صفقاتك بشكل واضح ومنظم. نسخة محسّنة بـ 20 ميزة جديدة.': 'Your professional platform to track trades clearly.',
-    '🔄 تحديث مباشر': '🔄 Live Updates',
-    '🔒 خصوصية محلية': '🔒 Local Privacy',
-    '📊 تحليلات دقيقة': '📊 Accurate Analytics',
-    '🔔 تنبيهات ذكية': '🔔 Smart Alerts',
-    '👥 المجتمع والدعم': '👥 Community & Support',
-    '💖 ادعم المشروع': '💖 Support Project',
-    '🐛 الإبلاغ عن مشكلة': '🐛 Report a Bug',
-    '⚙️ الميزات': '⚙️ Features',
-    '🏦 إعدادات المنصات': '🏦 Exchange Settings',
-    '🔔 تنبيهات الأسعار': '🔔 Price Alerts',
-    '👤 البروفايل': '👤 Profile',
-    '🔄 التحقق من التحديثات': '🔄 Check for Updates',
-    '📚 معلومات': '📚 Information',
-    'ℹ️ حول التطبيق': 'ℹ️ About',
-    '🔒 الخصوصية': '🔒 Privacy',
-    '📡 مصادر البيانات': '📡 Data Sources',
+    '🔄 تحديث مباشر': '🔄 Live Updates', '🔒 خصوصية محلية': '🔒 Local Privacy', '📊 تحليلات دقيقة': '📊 Accurate Analytics',
+    '🔔 تنبيهات ذكية': '🔔 Smart Alerts', '👥 المجتمع والدعم': '👥 Community & Support', '💖 ادعم المشروع': '💖 Support Project',
+    '🐛 الإبلاغ عن مشكلة': '🐛 Report a Bug', '⚙️ الميزات': '⚙️ Features', '🏦 إعدادات المنصات': '🏦 Exchange Settings',
+    '🔔 تنبيهات الأسعار': '🔔 Price Alerts', '👤 البروفايل': '👤 Profile', '🔄 التحقق من التحديثات': '🔄 Check for Updates',
+    '📚 معلومات': '📚 Information', 'ℹ️ حول التطبيق': 'ℹ️ About', '🔒 الخصوصية': '🔒 Privacy', '📡 مصادر البيانات': '📡 Data Sources',
     'نسألكم الدعاء بظهر الغيب 🤲': 'Please remember us in your prayers 🤲',
     '© 2026 Muharraqi Pro Edition - جميع الحقوق محفوظة': '© 2026 Muharraqi Pro Edition - All rights reserved',
-    'إخفاء الأموال': 'Hide Money',
-    'إظهار الأموال': 'Show Money',
-    'حفظ البيانات': 'Save Data',
-    '🔔 مركز التنبيهات': '🔔 Notification Center',
-    'الأسعار والتنبيهات في مكان واحد': 'Prices & alerts in one place',
-    '🔔 التنبيهات': '🔔 Alerts',
-    '🔄 التحديثات': '🔄 Updates',
-    'لا توجد تنبيهات حالياً': 'No alerts yet',
-    '🔕 لا توجد تنبيهات حالياً': '🔕 No alerts yet',
-    '✓ الكل مقروء': '✓ Mark all read',
-    '🗑️ مسح': '🗑️ Clear',
-    'عنوان البوب أب': 'Popup Title',
-    'محتوى البوب أب': 'Popup Content',
-    'موافق': 'OK',
-    'إلغاء': 'Cancel',
-    'تأكيد': 'Confirm',
-    'نعم': 'Yes',
-    'لا': 'No',
-    'نجاح': 'Success',
-    'خطأ': 'Error',
-    'معلومات': 'Info',
-    'مستخدم Muharraqi': 'User Muharraqi',
-    'حساب شخصي محفوظ محلياً': 'Local Personal Account',
-    'إجمالي الأصول': 'Total Assets',
-    'عدد العملات': 'Coins Count',
-    'صافي الربح/الخسارة': 'Net P/L',
-    '✏️ تعديل بيانات الملف الشخصي': '✏️ Edit Profile Data',
-    '👤 اسم المستخدم': '👤 Username',
-    '💼 اسم المحفظة': '💼 Wallet Name',
-    '💾 حفظ التعديلات': '💾 Save Changes',
-    '🌓 تبديل المظهر': '🌓 Toggle Theme',
-    '🗑️ مسح جميع البيانات': '🗑️ Clear All Data',
-    '🗑️ تأكيد حذف العملة': '🗑️ Confirm Coin Deletion',
-    'سجل': 'record',
-    'ساعدنا على تحسين التطبيق': 'Help us improve the app',
-    'نوع المشكلة': 'Issue Type',
-    '🐛 خطأ برمجي': '🐛 Bug',
-    '🎨 مشكلة تصميم': '🎨 UI Issue',
-    '⚡ مشكلة أداء': '⚡ Performance',
-    '💡 اقتراح': '💡 Suggestion',
-    'عنوان المشكلة *': 'Issue Title *',
-    'الوصف التفصيلي *': 'Detailed Description *',
-    'درجة الأهمية': 'Severity',
-    '🟢 منخفضة': '🟢 Low',
-    '🟡 متوسطة': '🟡 Medium',
-    '🟠 عالية': '🟠 High',
-    '🔴 حرجة': '🔴 Critical',
-    '📤 إرسال عبر واتساب': '📤 Send via WhatsApp',
-    'ادعم تطوير المشروع': 'Support Project Development',
-    'مساهمتك تصنع الفرق!': 'Your contribution makes a difference!',
-    '📍 عنوان المحفظة:': '📍 Wallet Address:',
-    '📋 نسخ العنوان': '📋 Copy Address',
-    'تحذير:': 'Warning:',
-    'إغلاق': 'Close',
-    'راقب أهدافك ووقف الخسارة': 'Monitor your targets & stop-loss',
-    '-- اختر عملة --': '-- Select Coin --',
-    'نوع التنبيه': 'Alert Type',
-    '📈 ارتفاع إلى': '📈 Rise to',
-    '📉 هبوط إلى': '📉 Drop to',
-    '🎯 هدف الربح 1': '🎯 TP1',
-    '🎯 هدف الربح 2': '🎯 TP2',
-    '🎯 هدف الربح 3': '🎯 TP3',
-    '🛑 وقف الخسارة': '🛑 Stop Loss',
-    'السعر المستهدف': 'Target Price',
-    '➕ إضافة تنبيه': '➕ Add Alert',
-    '📋 التنبيهات النشطة:': '📋 Active Alerts:',
-    'لا توجد تنبيهات': 'No alerts',
-    '⚙️ إعدادات المنصات': '⚙️ Exchange Settings',
-    'اختر منصتك المفضلة وحساب الرسوم': 'Choose exchange & fee calculation',
-    '🏦 اختر المنصة': '🏦 Choose Exchange',
-    '🌍 البلد': '🌍 Country',
-    '💰 ملف الرسوم': '💰 Fee Profile',
-    'رسوم الشراء (Maker):': 'Buy Fee (Maker):',
-    'رسوم البيع (Taker):': 'Sell Fee (Taker):',
-    '💾 حفظ الإعدادات': '💾 Save Settings',
-    '🎉 أنت على أحدث إصدار!': '🎉 You\'re on the latest version!',
-    'الإصدار: Pro 2.0.0': 'Version: Pro 2.0.0',
-    '✨ أحدث الميزات:': '✨ Latest Features:',
-    'ممتاز!': 'Excellent!',
-    '🌓 الوضع:': '🌓 Mode:',
-    '🌙 ليلي': '🌙 Dark',
-    '☀️ نهاري': '☀️ Light',
-    '🎨 ألوان الحاويات': '🎨 Container Colors',
-    '🔄 إعادة تعيين الكل': '🔄 Reset All',
-    'حاسبة المخاطر': 'Risk Calculator',
-    'مؤشرات السوق': 'Market Insights',
+    'إخفاء الأموال': 'Hide Money', 'إظهار الأموال': 'Show Money', 'حفظ البيانات': 'Save Data',
+    '🔔 مركز التنبيهات': '🔔 Notification Center', 'الأسعار والتنبيهات في مكان واحد': 'Prices & alerts in one place',
+    '🔔 التنبيهات': '🔔 Alerts', '🔄 التحديثات': '🔄 Updates', 'لا توجد تنبيهات حالياً': 'No alerts yet',
+    '🔕 لا توجد تنبيهات حالياً': '🔕 No alerts yet', '✓ الكل مقروء': '✓ Mark all read', '🗑️ مسح': '🗑️ Clear',
+    'عنوان البوب أب': 'Popup Title', 'محتوى البوب أب': 'Popup Content', 'موافق': 'OK', 'إلغاء': 'Cancel',
+    'تأكيد': 'Confirm', 'نعم': 'Yes', 'لا': 'No', 'نجاح': 'Success', 'خطأ': 'Error', 'معلومات': 'Info',
+    'مستخدم Muharraqi': 'User Muharraqi', 'حساب شخصي محفوظ محلياً': 'Local Personal Account', 'إجمالي الأصول': 'Total Assets',
+    'عدد العملات': 'Coins Count', 'صافي الربح/الخسارة': 'Net P/L', '✏️ تعديل بيانات الملف الشخصي': '✏️ Edit Profile Data',
+    '👤 اسم المستخدم': '👤 Username', '💼 اسم المحفظة': '💼 Wallet Name', '💾 حفظ التعديلات': '💾 Save Changes',
+    '🌓 تبديل المظهر': '🌓 Toggle Theme', '🗑️ مسح جميع البيانات': '🗑️ Clear All Data', '🗑️ تأكيد حذف العملة': '🗑️ Confirm Coin Deletion',
+    'سجل': 'record', 'ساعدنا على تحسين التطبيق': 'Help us improve the app', 'نوع المشكلة': 'Issue Type',
+    '🐛 خطأ برمجي': '🐛 Bug', '🎨 مشكلة تصميم': '🎨 UI Issue', '⚡ مشكلة أداء': '⚡ Performance', '💡 اقتراح': '💡 Suggestion',
+    'عنوان المشكلة *': 'Issue Title *', 'الوصف التفصيلي *': 'Detailed Description *', 'درجة الأهمية': 'Severity',
+    '🟢 منخفضة': '🟢 Low', '🟡 متوسطة': '🟡 Medium', '🟠 عالية': '🟠 High', '🔴 حرجة': '🔴 Critical',
+    '📤 إرسال عبر واتساب': '📤 Send via WhatsApp', 'ادعم تطوير المشروع': 'Support Project Development',
+    'مساهمتك تصنع الفرق!': 'Your contribution makes a difference!', '📍 عنوان المحفظة:': '📍 Wallet Address:',
+    '📋 نسخ العنوان': '📋 Copy Address', 'تحذير:': 'Warning:', 'إغلاق': 'Close', 'راقب أهدافك ووقف الخسارة': 'Monitor your targets & stop-loss',
+    '-- اختر عملة --': '-- Select Coin --', 'نوع التنبيه': 'Alert Type', '📈 ارتفاع إلى': '📈 Rise to', '📉 هبوط إلى': '📉 Drop to',
+    '🎯 هدف الربح 1': '🎯 TP1', '🎯 هدف الربح 2': '🎯 TP2', '🎯 هدف الربح 3': '🎯 TP3', '🛑 وقف الخسارة': '🛑 Stop Loss',
+    'السعر المستهدف': 'Target Price', '➕ إضافة تنبيه': '➕ Add Alert', '📋 التنبيهات النشطة:': '📋 Active Alerts:',
+    'لا توجد تنبيهات': 'No alerts', '⚙️ إعدادات المنصات': '⚙️ Exchange Settings',
+    'اختر منصتك المفضلة وحساب الرسوم': 'Choose exchange & fee calculation', '🏦 اختر المنصة': '🏦 Choose Exchange',
+    '🌍 البلد': '🌍 Country', '💰 ملف الرسوم': '💰 Fee Profile', 'رسوم الشراء (Maker):': 'Buy Fee (Maker):',
+    'رسوم البيع (Taker):': 'Sell Fee (Taker):', '💾 حفظ الإعدادات': '💾 Save Settings', '🎉 أنت على أحدث إصدار!': '🎉 You\'re on the latest version!',
+    'الإصدار: Pro 2.0.0': 'Version: Pro 2.0.0', '✨ أحدث الميزات:': '✨ Latest Features:', 'ممتاز!': 'Excellent!',
+    '🌓 الوضع:': '🌓 Mode:', '🌙 ليلي': '🌙 Dark', '☀️ نهاري': '☀️ Light', '🎨 ألوان الحاويات': '🎨 Container Colors',
+    '🔄 إعادة تعيين الكل': '🔄 Reset All', 'حاسبة المخاطر': 'Risk Calculator', 'مؤشرات السوق': 'Market Insights',
     'تحليلات المحفظة المتقدمة': 'Advanced Portfolio Analytics',
     '💡 أدخل السعر التقديري الذي تتوقع بيع العملة به، وسيتم حساب الربح المتوقع تلقائياً.': '💡 Enter estimated sell price.',
-    '📊 الإجماليات التقديرية': '📊 Estimated Totals',
-    'إجمالي المستثمر': 'Total Invested',
-    'إجمالي القيمة التقديرية': 'Total Estimated Value',
-    'إجمالي الربح/الخسارة المتوقع': 'Total Expected P/L',
-    'نسبة الربح/الخسارة المتوقعة': 'Expected P/L %',
-    '💾 حفظ جميع الأسعار': '💾 Save All Prices',
-    '🗑️ مسح جميع الأسعار التقديرية': '🗑️ Clear All Estimated Prices',
-    'السعر التقديري': 'Estimated Price',
-    'الربح المتوقع $': 'Expected Profit $',
-    'الربح المتوقع %': 'Expected Profit %',
-    '📊 البيع التقديري - حاسبة الأرباح المتوقعة': '📊 Estimated Sale Calculator',
-    'اختر عملة': 'Select a coin',
-    'اختر سعر': 'Select price',
-    'بدون': 'None',
-    'مرتبط ببيع:': 'Linked to sale:',
-    'سجل البيع محذوف': 'Sale record deleted',
-    'حذف': 'Delete',
-    'بيع جزئي — دخول': 'Partial Sell — Entry',
-    'بيع جزئي — تعزيز': 'Partial Sell — DCA',
-    '📊 المتاح': '📊 Available',
-    '💵 السعر الحالي': '💵 Current Price',
-    '💎 القيمة الإجمالية': '💎 Total Value',
-    '💰 المبلغ بالدولار ($)': '💰 Amount in USD ($)',
-    '📊 الكمية': '📊 Quantity',
-    '💵 سعر البيع ($)': '💵 Sell Price ($)',
-    '✅ ستسلم': '✅ You will deliver',
-    '📊 الكمية المتبقية': '📊 Remaining Quantity',
-    '💰 مبلغ الربح': '💰 Profit Amount',
-    '📊 مبلغ الدخول': '📊 Entry Amount',
-    '📈 نسبة الربح/الخسارة': '📈 P/L %',
-    '✓ تأكيد البيع': '✓ Confirm Sale',
-    '🔄 مسح': '🔄 Clear',
-    'مسح': 'Clear',
-    '⚠️ القيم غير صحيحة': '⚠️ Invalid values',
-    '⚠️ الكمية تتجاوز المتاح': '⚠️ Quantity exceeds available',
-    '⚠️ المبلغ يتجاوز القيمة المتاحة': '⚠️ Amount exceeds available value'
+    '📊 الإجماليات التقديرية': '📊 Estimated Totals', 'إجمالي المستثمر': 'Total Invested',
+    'إجمالي القيمة التقديرية': 'Total Estimated Value', 'إجمالي الربح/الخسارة المتوقع': 'Total Expected P/L',
+    'نسبة الربح/الخسارة المتوقعة': 'Expected P/L %', '💾 حفظ جميع الأسعار': '💾 Save All Prices',
+    '🗑️ مسح جميع الأسعار التقديرية': '🗑️ Clear All Estimated Prices', 'السعر التقديري': 'Estimated Price',
+    'الربح المتوقع $': 'Expected Profit $', 'الربح المتوقع %': 'Expected Profit %',
+    '📊 البيع التقديري - حاسبة الأرباح المتوقعة': '📊 Estimated Sale Calculator', 'اختر عملة': 'Select a coin',
+    'اختر سعر': 'Select price', 'بدون': 'None', 'مرتبط ببيع:': 'Linked to sale:', 'سجل البيع محذوف': 'Sale record deleted',
+    'حذف': 'Delete', 'بيع جزئي — دخول': 'Partial Sell — Entry', 'بيع جزئي — تعزيز': 'Partial Sell — DCA',
+    '📊 المتاح': '📊 Available', '💵 السعر الحالي': '💵 Current Price', '💎 القيمة الإجمالية': '💎 Total Value',
+    '💰 المبلغ بالدولار ($)': '💰 Amount in USD ($)', '📊 الكمية': '📊 Quantity', '💵 سعر البيع ($)': '💵 Sell Price ($)',
+    '✅ ستسلم': '✅ You will deliver', '📊 الكمية المتبقية': '📊 Remaining Quantity', '💰 مبلغ الربح': '💰 Profit Amount',
+    '📊 مبلغ الدخول': '📊 Entry Amount', '📈 نسبة الربح/الخسارة': '📈 P/L %', '✓ تأكيد البيع': '✓ Confirm Sale',
+    '🔄 مسح': '🔄 Clear', 'مسح': 'Clear', '⚠️ القيم غير صحيحة': '⚠️ Invalid values',
+    '⚠️ الكمية تتجاوز المتاح': '⚠️ Quantity exceeds available', '⚠️ المبلغ يتجاوز القيمة المتاحة': '⚠️ Amount exceeds available value',
+    '⚠️ غير محفوظ': '⚠️ Not Saved', '⚠️ يجب حفظ التعزيز أولاً قبل البيع': '⚠️ Save the DCA first before selling'
 };
 
 function translateDOM(root, direction) {
@@ -2511,14 +2337,10 @@ function updateAllSectionTitles() {
 }
 function updateToggleButtonsText() {
     const sectionMap = {
-        'cash': 'cashSectionContent',
-        'coinActive': 'coinActiveSectionContent',
-        'entryDetails': 'entryDetailsSectionContent',
-        'currentStatus': 'currentStatusSectionContent',
-        'riskCalculator': 'riskCalculatorSectionContent',
-        'summary': 'summarySectionContent',
-        'salesCashHistory': 'salesCashHistorySectionContent',
-        'marketInsights': 'marketInsightsSectionContent',
+        'cash': 'cashSectionContent', 'coinActive': 'coinActiveSectionContent',
+        'entryDetails': 'entryDetailsSectionContent', 'currentStatus': 'currentStatusSectionContent',
+        'riskCalculator': 'riskCalculatorSectionContent', 'summary': 'summarySectionContent',
+        'salesCashHistory': 'salesCashHistorySectionContent', 'marketInsights': 'marketInsightsSectionContent',
         'advancedCharts': 'advancedChartsSectionContent'
     };
     Object.values(sectionMap).forEach(contentId => {
@@ -2652,6 +2474,7 @@ const LS_KEY_SALES_CASH_HISTORY = 'cryptoTrackerUniversal_v41_sales_cash_history
 const LS_KEY_EXPANDED_COINS = 'cryptoTrackerUniversal_v41_expanded_coins';
 const LS_KEY_ESTIMATE_PRICES = 'cryptoTrackerUniversal_v41_estimate_prices';
 const LS_KEY_PROFILE_SETTINGS = 'muharraqi_profile_settings';
+const LS_KEY_THEME = 'cryptoTrackerUniversal_v41_theme';
 let allCoinData = {};
 let currentMarketPrices = {};
 let activeCoinSymbol = null;
@@ -2660,24 +2483,14 @@ let cashHistory = { deposits: [], withdrawals: [] };
 let salesCashHistory = { deposits: [], withdrawals: [] };
 let expandedCoins = new Set();
 let savedEstimatePrices = {};
-
 let cashDateMode = 'auto';
 let salesCashDateMode = 'auto';
 let entryDateMode = 'auto';
 let dcaDateMode = 'auto';
 
-/* ═══════════════════════════════════════════════════════════════
-   🆕 حالة نافذة البيع الجزئي
-   ═══════════════════════════════════════════════════════════════ */
 let sellModalState = {
-    isOpen: false,
-    type: null,
-    symbol: null,
-    dcaIndex: null,
-    availableQty: 0,
-    investedForAvailable: 0,
-    currentPrice: 0,
-    lastEditedField: null
+    isOpen: false, type: null, symbol: null, dcaIndex: null,
+    availableQty: 0, investedForAvailable: 0, currentPrice: 0, lastEditedField: null
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2930,8 +2743,7 @@ function getDefaultCoinDataStructure() {
     return {
         initialEntryPrice: '', initialAmountDollars: '', initialSavedAmount: 0,
         initialSales: [], initialTotalSoldQty: '0', initialPurchaseDate: '',
-        initialPurchaseDateRaw: '',
-        isEntrySaved: false, repurchases: []
+        initialPurchaseDateRaw: '', isEntrySaved: false, repurchases: []
     };
 }
 function saveAllDataToLocalStorage() {
@@ -3077,6 +2889,8 @@ function updateSellAllGlobalBtnText() {
         const initialRemainingQty = Math.max(0, initialCoinQty - initialTotalSoldQty);
         let coinQty = initialRemainingQty;
         (data.repurchases || []).forEach(rp => {
+            const savedAmount = rp.savedAmount || 0;
+            if (savedAmount <= 0.0001) return;
             const repurchasePrice = parseFormattedNumber(rp.price);
             const repurchaseAmount = parseFormattedNumber(rp.amount);
             const repurchaseQty = repurchasePrice > 0 ? repurchaseAmount / repurchasePrice : 0;
@@ -3135,14 +2949,21 @@ function calculateTotalInitialSoldQty(sales) { return sales.reduce((total, sale)
 function calculateInitialCashFromSales(sales) { return sales.reduce((total, sale) => total + (sale.qty * sale.price), 0); }
 
 /* ═══════════════════════════════════════════════════════════════
-   🆕 نافذة البيع الجزئي — الدوال الرئيسية
+   دوال التحقق من حفظ التعزيز
    ═══════════════════════════════════════════════════════════════ */
+function isDCASaved(rp) {
+    if (!rp) return false;
+    const savedAmount = rp.savedAmount || 0;
+    if (savedAmount <= 0.0001) return false;
+    const repurchaseAmount = parseFormattedNumber(rp.amount);
+    return Math.abs(repurchaseAmount - savedAmount) <= 0.001;
+}
 
+/* ═══════════════════════════════════════════════════════════════
+   نافذة البيع الجزئي
+   ═══════════════════════════════════════════════════════════════ */
 function openSellPartialModalForEntry(symbol) {
-    if (!symbol || !allCoinData[symbol]) {
-        showError(currentLang === 'en' ? "Coin not found" : "العملة غير موجودة");
-        return;
-    }
+    if (!symbol || !allCoinData[symbol]) { showError(currentLang === 'en' ? "Coin not found" : "العملة غير موجودة"); return; }
     const data = allCoinData[symbol];
     const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
     const initialAmountDollars = parseFormattedNumber(data.initialAmountDollars);
@@ -3150,53 +2971,33 @@ function openSellPartialModalForEntry(symbol) {
     const currentSales = data.initialSales || [];
     const totalSoldQty = calculateTotalInitialSoldQty(currentSales);
     const remainingQty = Math.max(0, initialCoinQty - totalSoldQty);
-
-    if (remainingQty <= 0.00000001) {
-        showError(currentLang === 'en' ? "No remaining quantity to sell" : "لا توجد كمية متبقية للبيع");
-        return;
-    }
-
+    if (remainingQty <= 0.00000001) { showError(currentLang === 'en' ? "No remaining quantity to sell" : "لا توجد كمية متبقية للبيع"); return; }
     const remainingInvested = initialCoinQty > 0 ? initialAmountDollars * (remainingQty / initialCoinQty) : 0;
-
-    openSellPartialModal({
-        type: 'entry',
-        symbol: symbol,
-        dcaIndex: null,
-        availableQty: remainingQty,
-        investedForAvailable: remainingInvested,
-        currentPrice: currentMarketPrices[symbol] || 0
-    });
+    openSellPartialModal({ type: 'entry', symbol: symbol, dcaIndex: null, availableQty: remainingQty, investedForAvailable: remainingInvested, currentPrice: currentMarketPrices[symbol] || 0 });
 }
 
 function openSellPartialModalForDCA(symbol, dcaIndex) {
     const data = allCoinData[symbol];
-    if (!data || !data.repurchases || !data.repurchases[dcaIndex]) {
-        showError(currentLang === 'en' ? "DCA not found" : "التعزيز غير موجود");
+    if (!data || !data.repurchases || !data.repurchases[dcaIndex]) { showError(currentLang === 'en' ? "DCA not found" : "التعزيز غير موجود"); return; }
+    const rp = data.repurchases[dcaIndex];
+    const savedAmount = rp.savedAmount || 0;
+    if (savedAmount <= 0.0001) {
+        showError(currentLang === 'en' ? "⚠️ You must save this DCA first (click 💾 button) before selling." : "⚠️ يجب حفظ التعزيز أولاً (اضغط زر 💾) قبل البيع.");
         return;
     }
-    const rp = data.repurchases[dcaIndex];
     const repurchasePrice = parseFormattedNumber(rp.price);
     const repurchaseAmount = parseFormattedNumber(rp.amount);
+    if (Math.abs(repurchaseAmount - savedAmount) > 0.001) {
+        showError(currentLang === 'en' ? "⚠️ The entered amount differs from the saved amount.\nPlease save your changes first (click 💾)." : "⚠️ المبلغ المُدخل مختلف عن المبلغ المحفوظ.\nيرجى حفظ التعديلات أولاً (اضغط 💾).");
+        return;
+    }
     const repurchaseQty = repurchasePrice > 0 ? repurchaseAmount / repurchasePrice : 0;
     const sales = rp.sales || [];
     const totalSoldQty = calculateTotalSoldQty(sales);
     const remainingQty = Math.max(0, repurchaseQty - totalSoldQty);
-
-    if (remainingQty <= 0.00000001) {
-        showError(currentLang === 'en' ? "No remaining quantity to sell" : "لا توجد كمية متبقية للبيع");
-        return;
-    }
-
+    if (remainingQty <= 0.00000001) { showError(currentLang === 'en' ? "No remaining quantity to sell" : "لا توجد كمية متبقية للبيع"); return; }
     const remainingInvested = repurchaseQty > 0 ? repurchaseAmount * (remainingQty / repurchaseQty) : 0;
-
-    openSellPartialModal({
-        type: 'dca',
-        symbol: symbol,
-        dcaIndex: dcaIndex,
-        availableQty: remainingQty,
-        investedForAvailable: remainingInvested,
-        currentPrice: currentMarketPrices[symbol] || 0
-    });
+    openSellPartialModal({ type: 'dca', symbol: symbol, dcaIndex: dcaIndex, availableQty: remainingQty, investedForAvailable: remainingInvested, currentPrice: currentMarketPrices[symbol] || 0 });
 }
 
 function openSellPartialModal(config) {
@@ -3208,37 +3009,21 @@ function openSellPartialModal(config) {
     sellModalState.investedForAvailable = config.investedForAvailable;
     sellModalState.currentPrice = config.currentPrice;
     sellModalState.lastEditedField = null;
-
     const titleMain = document.getElementById('sellPartialTitleMain');
     const titleSub = document.getElementById('sellPartialTitleSub');
     const baseSymbol = getBaseSymbolFromKey(config.symbol);
     const displayName = getDisplayNameFromKey(config.symbol);
-
-    if (config.type === 'entry') {
-        titleMain.textContent = currentLang === 'en' ? '💰 Partial Sell — Entry' : '💰 بيع جزئي — دخول';
-    } else {
-        titleMain.textContent = (currentLang === 'en' ? '💰 Partial Sell — DCA #' : '💰 بيع جزئي — تعزيز #') + (config.dcaIndex + 1);
-    }
+    if (config.type === 'entry') titleMain.textContent = currentLang === 'en' ? '💰 Partial Sell — Entry' : '💰 بيع جزئي — دخول';
+    else titleMain.textContent = (currentLang === 'en' ? '💰 Partial Sell — DCA #' : '💰 بيع جزئي — تعزيز #') + (config.dcaIndex + 1);
     titleSub.textContent = displayName;
-
-    const availableQtyEl = document.getElementById('spAvailableQty');
-    const currentPriceEl = document.getElementById('spCurrentPrice');
-    const totalValueEl = document.getElementById('spTotalValue');
-
-    availableQtyEl.textContent = formatNumber(config.availableQty, 8) + ' ' + baseSymbol.replace('USDT', '');
-    currentPriceEl.textContent = config.currentPrice > 0 ? fmtPrice(config.currentPrice) : '---';
+    document.getElementById('spAvailableQty').textContent = formatNumber(config.availableQty, 8) + ' ' + baseSymbol.replace('USDT', '');
+    document.getElementById('spCurrentPrice').textContent = config.currentPrice > 0 ? fmtPrice(config.currentPrice) : '---';
     const totalValue = config.availableQty * config.currentPrice;
-    totalValueEl.textContent = config.currentPrice > 0 ? fmtMoney(totalValue, 2) : '---';
-
+    document.getElementById('spTotalValue').textContent = config.currentPrice > 0 ? fmtMoney(totalValue, 2) : '---';
     document.getElementById('spQtySymbol').textContent = baseSymbol.replace('USDT', '');
-
     const priceInput = document.getElementById('spPrice');
-    if (config.currentPrice > 0) {
-        priceInput.value = formatWithCommas(config.currentPrice, 8);
-    } else {
-        priceInput.value = '';
-    }
-
+    if (config.currentPrice > 0) priceInput.value = formatWithCommas(config.currentPrice, 8);
+    else priceInput.value = '';
     document.getElementById('spAmountUsd').value = '';
     document.getElementById('spQty').value = '';
     document.getElementById('spAmountConverted').textContent = '= 0.00';
@@ -3247,16 +3032,10 @@ function openSellPartialModal(config) {
     document.getElementById('spPriceHint').textContent = '';
     document.getElementById('spWarning').classList.remove('show');
     document.querySelectorAll('.sell-partial-quick-btn').forEach(b => b.classList.remove('active'));
-
     document.getElementById('spConfirmBtn').disabled = true;
-
     document.getElementById('sellPartialModalOverlay').classList.add('active');
-
     updateSellPartialPreview();
-
-    setTimeout(() => {
-        document.getElementById('spAmountUsd').focus();
-    }, 150);
+    setTimeout(() => { document.getElementById('spAmountUsd').focus(); }, 150);
 }
 
 function closeSellPartialModal() {
@@ -3268,53 +3047,34 @@ function closeSellPartialModal() {
     document.getElementById('sellPartialModalOverlay').classList.remove('active');
 }
 
-/* 🆕 مسح جميع الحقول في نافذة البيع الجزئي */
 function clearSellPartialFields() {
     if (!sellModalState.isOpen) return;
-
     document.getElementById('spAmountUsd').value = '';
     document.getElementById('spQty').value = '';
-
     const priceInput = document.getElementById('spPrice');
-    if (sellModalState.currentPrice > 0) {
-        priceInput.value = formatWithCommas(sellModalState.currentPrice, 8);
-    } else {
-        priceInput.value = '';
-    }
-
+    if (sellModalState.currentPrice > 0) priceInput.value = formatWithCommas(sellModalState.currentPrice, 8);
+    else priceInput.value = '';
     document.getElementById('spAmountConverted').textContent = '= 0.00';
-
     document.querySelectorAll('.sell-partial-quick-btn').forEach(b => b.classList.remove('active'));
-
     document.getElementById('spWarning').classList.remove('show');
     document.getElementById('spQty').classList.remove('error');
     document.getElementById('spPrice').classList.remove('error');
-
     document.getElementById('spConfirmBtn').disabled = true;
-
     updateSellPartialPreview();
-
     document.getElementById('spAmountUsd').focus();
 }
 
 function setSellQuickPercent(percent, btn) {
     if (!sellModalState.isOpen) return;
-    if (sellModalState.availableQty <= 0 || sellModalState.currentPrice <= 0) {
-        showError(currentLang === 'en' ? "Price not available" : "السعر غير متوفر");
-        return;
-    }
-
+    if (sellModalState.availableQty <= 0 || sellModalState.currentPrice <= 0) { showError(currentLang === 'en' ? "Price not available" : "السعر غير متوفر"); return; }
     document.querySelectorAll('.sell-partial-quick-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
-
     const qtyToSell = sellModalState.availableQty * (percent / 100);
     const price = sellModalState.currentPrice;
     const amount = qtyToSell * price;
-
     document.getElementById('spQty').value = formatNumber(qtyToSell, 8);
     document.getElementById('spAmountUsd').value = formatWithCommas(amount, 2);
     document.getElementById('spPrice').value = formatWithCommas(price, 8);
-
     updateAmountConvertedHint(amount);
     updateSellPartialPreview();
 }
@@ -3323,20 +3083,16 @@ function onSellAmountUsdChange() {
     if (!sellModalState.isOpen) return;
     sellModalState.lastEditedField = 'amount';
     document.querySelectorAll('.sell-partial-quick-btn').forEach(b => b.classList.remove('active'));
-
     const amountInput = document.getElementById('spAmountUsd');
     const cleanedAmount = amountInput.value.replace(/,/g, '');
     const amount = parseFloat(cleanedAmount) || 0;
-
     const price = parseFormattedNumber(document.getElementById('spPrice').value);
-
     if (amount > 0 && price > 0) {
         const qty = amount / price;
         document.getElementById('spQty').value = formatNumber(qty, 8);
     } else if (amount <= 0) {
         document.getElementById('spQty').value = '';
     }
-
     updateAmountConvertedHint(amount);
     updateSellPartialPreview();
 }
@@ -3345,13 +3101,10 @@ function onSellQtyChange() {
     if (!sellModalState.isOpen) return;
     sellModalState.lastEditedField = 'qty';
     document.querySelectorAll('.sell-partial-quick-btn').forEach(b => b.classList.remove('active'));
-
     const qtyInput = document.getElementById('spQty');
     const cleanedQty = qtyInput.value.replace(/,/g, '');
     const qty = parseFloat(cleanedQty) || 0;
-
     const price = parseFormattedNumber(document.getElementById('spPrice').value);
-
     if (qty > 0 && price > 0) {
         const amount = qty * price;
         document.getElementById('spAmountUsd').value = formatWithCommas(amount, 2);
@@ -3360,7 +3113,6 @@ function onSellQtyChange() {
         document.getElementById('spAmountUsd').value = '';
         document.getElementById('spAmountConverted').textContent = '= 0.00';
     }
-
     updateSellPartialPreview();
 }
 
@@ -3369,9 +3121,7 @@ function onSellPriceChange() {
     const previousField = sellModalState.lastEditedField;
     sellModalState.lastEditedField = 'price';
     document.querySelectorAll('.sell-partial-quick-btn').forEach(b => b.classList.remove('active'));
-
     const price = parseFormattedNumber(document.getElementById('spPrice').value);
-
     if (previousField === 'amount' || previousField === null) {
         const amount = parseFormattedNumber(document.getElementById('spAmountUsd').value);
         if (amount > 0 && price > 0) {
@@ -3386,26 +3136,20 @@ function onSellPriceChange() {
             updateAmountConvertedHint(amount);
         }
     }
-
     updateSellPartialPreview();
 }
 
 function updateAmountConvertedHint(amountUsd) {
     const el = document.getElementById('spAmountConverted');
     if (!el) return;
-    if (amountUsd > 0) {
-        el.textContent = '= ' + fmtMoney(amountUsd, 2);
-    } else {
-        el.textContent = '= 0.00';
-    }
+    if (amountUsd > 0) el.textContent = '= ' + fmtMoney(amountUsd, 2);
+    else el.textContent = '= 0.00';
 }
 
-/* ✅ دالة تحديث المعاينة المُحدَّثة — 5 قيم */
 function updateSellPartialPreview() {
     const qty = parseFormattedNumber(document.getElementById('spQty').value);
     const price = parseFormattedNumber(document.getElementById('spPrice').value);
     const amount = qty * price;
-
     const receiveEl = document.getElementById('spPreviewReceive');
     const pnlEl = document.getElementById('spPreviewPnl');
     const investedEl = document.getElementById('spPreviewInvested');
@@ -3413,86 +3157,44 @@ function updateSellPartialPreview() {
     const remainingEl = document.getElementById('spPreviewRemaining');
     const warningEl = document.getElementById('spWarning');
     const confirmBtn = document.getElementById('spConfirmBtn');
-
     const remainingQty = sellModalState.availableQty - qty;
-
-    let pnl = 0;
-    let pnlPercent = 0;
-    let investedForSale = 0;
-
+    let pnl = 0, pnlPercent = 0, investedForSale = 0;
     if (sellModalState.availableQty > 0 && qty > 0) {
         investedForSale = sellModalState.investedForAvailable * (qty / sellModalState.availableQty);
         pnl = amount - investedForSale;
         pnlPercent = investedForSale > 0 ? (pnl / investedForSale) * 100 : 0;
     }
-
-    /* 1. ستسلم */
-    if (amount > 0) {
-        receiveEl.textContent = fmtMoney(amount, 2);
-        receiveEl.classList.remove('positive', 'negative');
-    } else {
-        receiveEl.textContent = fmtMoney(0, 2);
-    }
-
-    /* 2. مبلغ الربح */
+    if (amount > 0) { receiveEl.textContent = fmtMoney(amount, 2); receiveEl.classList.remove('positive', 'negative'); }
+    else receiveEl.textContent = fmtMoney(0, 2);
     if (qty > 0 && price > 0) {
         pnlEl.textContent = fmtMoney(pnl, 2);
         pnlEl.classList.remove('positive', 'negative');
-        if (pnl > 0) pnlEl.classList.add('positive');
-        else if (pnl < 0) pnlEl.classList.add('negative');
-    } else {
-        pnlEl.textContent = fmtMoney(0, 2);
-        pnlEl.classList.remove('positive', 'negative');
-    }
-
-    /* 3. مبلغ الدخول */
+        if (pnl > 0) pnlEl.classList.add('positive'); else if (pnl < 0) pnlEl.classList.add('negative');
+    } else { pnlEl.textContent = fmtMoney(0, 2); pnlEl.classList.remove('positive', 'negative'); }
     investedEl.textContent = fmtMoney(investedForSale, 2);
-
-    /* 4. نسبة الربح/الخسارة */
     if (qty > 0 && price > 0) {
         pnlPercentEl.textContent = formatNumber(pnlPercent, 2) + '%';
         pnlPercentEl.classList.remove('positive', 'negative');
-        if (pnl > 0) pnlPercentEl.classList.add('positive');
-        else if (pnl < 0) pnlPercentEl.classList.add('negative');
-    } else {
-        pnlPercentEl.textContent = '0.00%';
-        pnlPercentEl.classList.remove('positive', 'negative');
-    }
-
-    /* 5. الكمية المتبقية */
+        if (pnl > 0) pnlPercentEl.classList.add('positive'); else if (pnl < 0) pnlPercentEl.classList.add('negative');
+    } else { pnlPercentEl.textContent = '0.00%'; pnlPercentEl.classList.remove('positive', 'negative'); }
     if (remainingQty >= 0) {
         const baseSymbol = getBaseSymbolFromKey(sellModalState.symbol).replace('USDT', '');
         remainingEl.textContent = formatNumber(remainingQty, 8) + ' ' + baseSymbol;
     }
-
-    /* التحقق من الصحة */
-    let isValid = true;
-    let warningMsg = '';
+    let isValid = true, warningMsg = '';
     if (qty > sellModalState.availableQty + 0.00000001) {
         isValid = false;
-        warningMsg = currentLang === 'en'
-            ? '⚠️ Quantity exceeds available (' + formatNumber(sellModalState.availableQty, 8) + ')'
-            : '⚠️ الكمية تتجاوز المتاح (' + formatNumber(sellModalState.availableQty, 8) + ')';
+        warningMsg = currentLang === 'en' ? '⚠️ Quantity exceeds available (' + formatNumber(sellModalState.availableQty, 8) + ')' : '⚠️ الكمية تتجاوز المتاح (' + formatNumber(sellModalState.availableQty, 8) + ')';
         document.getElementById('spQty').classList.add('error');
-    } else {
-        document.getElementById('spQty').classList.remove('error');
-    }
+    } else document.getElementById('spQty').classList.remove('error');
     if (price <= 0 && qty > 0) {
         isValid = false;
         warningMsg = currentLang === 'en' ? '⚠️ Please enter a valid price' : '⚠️ يرجى إدخال سعر صحيح';
         document.getElementById('spPrice').classList.add('error');
-    } else {
-        document.getElementById('spPrice').classList.remove('error');
-    }
+    } else document.getElementById('spPrice').classList.remove('error');
     if (qty <= 0 || price <= 0) isValid = false;
-
-    if (!isValid && warningMsg) {
-        warningEl.textContent = warningMsg;
-        warningEl.classList.add('show');
-    } else {
-        warningEl.classList.remove('show');
-    }
-
+    if (!isValid && warningMsg) { warningEl.textContent = warningMsg; warningEl.classList.add('show'); }
+    else warningEl.classList.remove('show');
     confirmBtn.disabled = !isValid;
 }
 
@@ -3500,137 +3202,81 @@ function confirmSellPartial() {
     if (!sellModalState.isOpen) return;
     const qty = parseFormattedNumber(document.getElementById('spQty').value);
     const price = parseFormattedNumber(document.getElementById('spPrice').value);
-
     if (qty <= 0) { showError(currentLang === 'en' ? "Please enter a valid quantity" : "يرجى إدخال كمية صحيحة"); return; }
     if (price <= 0) { showError(currentLang === 'en' ? "Please enter a valid sell price" : "يرجى إدخال سعر بيع صحيح"); return; }
     if (qty > sellModalState.availableQty + 0.00000001) {
-        showError(currentLang === 'en'
-            ? 'Quantity exceeds available (' + formatNumber(sellModalState.availableQty, 8) + ')'
-            : 'الكمية تتجاوز المتاح (' + formatNumber(sellModalState.availableQty, 8) + ')');
+        showError(currentLang === 'en' ? 'Quantity exceeds available (' + formatNumber(sellModalState.availableQty, 8) + ')' : 'الكمية تتجاوز المتاح (' + formatNumber(sellModalState.availableQty, 8) + ')');
         return;
     }
-
-    if (sellModalState.type === 'entry') {
-        executePartialSellEntry(sellModalState.symbol, qty, price);
-    } else if (sellModalState.type === 'dca') {
-        executePartialSellDCA(sellModalState.symbol, sellModalState.dcaIndex, qty, price);
-    }
-
+    if (sellModalState.type === 'entry') executePartialSellEntry(sellModalState.symbol, qty, price);
+    else if (sellModalState.type === 'dca') executePartialSellDCA(sellModalState.symbol, sellModalState.dcaIndex, qty, price);
     closeSellPartialModal();
 }
 
 function executePartialSellEntry(symbol, soldQty, soldPrice) {
     const data = allCoinData[symbol];
     if (!data) return;
-
     const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
     const initialAmountDollars = parseFormattedNumber(data.initialAmountDollars);
     const initialCoinQty = initialEntryPrice > 0 ? initialAmountDollars / initialEntryPrice : 0;
     const currentSales = data.initialSales || [];
     const totalSoldQty = calculateTotalInitialSoldQty(currentSales);
-
-    if (totalSoldQty + soldQty > initialCoinQty + 0.00000001) {
-        showError(currentLang === 'en' ? "Total sold exceeds entry quantity" : "الكمية المباعة الإجمالية أكبر من كمية الدخول");
-        return;
-    }
-
+    if (totalSoldQty + soldQty > initialCoinQty + 0.00000001) { showError(currentLang === 'en' ? "Total sold exceeds entry quantity" : "الكمية المباعة الإجمالية أكبر من كمية الدخول"); return; }
     const investedAmountForSale = initialCoinQty > 0 ? initialAmountDollars * (soldQty / initialCoinQty) : 0;
     const saleId = generateUniqueId();
-    currentSales.push({
-        id: saleId,
-        qty: soldQty,
-        price: soldPrice,
-        investedAmount: investedAmountForSale,
-        date: new Date().toLocaleDateString(currentLang === 'en' ? 'en-US' : 'ar-EG'),
-        cashRecordId: null
-    });
+    currentSales.push({ id: saleId, qty: soldQty, price: soldPrice, investedAmount: investedAmountForSale, date: new Date().toLocaleDateString(currentLang === 'en' ? 'en-US' : 'ar-EG'), cashRecordId: null });
     data.initialSales = currentSales;
     data.initialTotalSoldQty = calculateTotalInitialSoldQty(currentSales).toString();
     updateInitialSalesHistory(currentSales);
-
     const saleAmount = soldQty * soldPrice;
     const cashRecordId = addSalesCashDeposit(saleAmount, (currentLang === 'en' ? 'Partial sale from ' : 'بيع جزئي من ') + getDisplayNameFromKey(symbol) + (currentLang === 'en' ? ' (Entry)' : ' (دخول)'), saleId);
-
     if (cashRecordId) {
-        const updatedSales = data.initialSales;
-        const saleIndex = updatedSales.findIndex(s => s.id === saleId);
-        if (saleIndex !== -1) {
-            updatedSales[saleIndex].cashRecordId = cashRecordId;
-            updateInitialSalesHistory(updatedSales);
-        }
+        const saleIndex = data.initialSales.findIndex(s => s.id === saleId);
+        if (saleIndex !== -1) { data.initialSales[saleIndex].cashRecordId = cashRecordId; updateInitialSalesHistory(data.initialSales); }
     }
-
     saveAllDataToLocalStorage();
     calculateAndDisplay();
-    showSuccess((currentLang === 'en' ? 'Sale completed: ' : 'تم البيع بنجاح: ')
-        + formatNumber(soldQty, 8) + (currentLang === 'en' ? ' at ' : ' بسعر ') + formatNumber(soldPrice, 8)
-        + (currentLang === 'en' ? '\nAmount: ' : '\nالمبلغ: ') + fmtMoney(saleAmount, 2));
+    showSuccess((currentLang === 'en' ? 'Sale completed: ' : 'تم البيع بنجاح: ') + formatNumber(soldQty, 8) + (currentLang === 'en' ? ' at ' : ' بسعر ') + formatNumber(soldPrice, 8) + (currentLang === 'en' ? '\nAmount: ' : '\nالمبلغ: ') + fmtMoney(saleAmount, 2));
 }
 
 function executePartialSellDCA(symbol, dcaIndex, soldQty, soldPrice) {
     const data = allCoinData[symbol];
     if (!data || !data.repurchases || !data.repurchases[dcaIndex]) return;
-
     const rp = data.repurchases[dcaIndex];
+    const savedAmount = rp.savedAmount || 0;
+    if (savedAmount <= 0.0001) { showError(currentLang === 'en' ? "⚠️ Cannot sell: DCA is not saved" : "⚠️ لا يمكن البيع: التعزيز غير محفوظ"); return; }
     const repurchasePrice = parseFormattedNumber(rp.price);
     const repurchaseAmount = parseFormattedNumber(rp.amount);
+    if (Math.abs(repurchaseAmount - savedAmount) > 0.001) { showError(currentLang === 'en' ? "⚠️ Saved amount differs. Please save first (💾)." : "⚠️ المبلغ المحفوظ مختلف. يرجى الحفظ أولاً (💾)."); return; }
     const repurchaseQty = repurchasePrice > 0 ? repurchaseAmount / repurchasePrice : 0;
     const currentSales = rp.sales || [];
     const totalSoldQty = calculateTotalSoldQty(currentSales);
-
-    if (totalSoldQty + soldQty > repurchaseQty + 0.00000001) {
-        showError(currentLang === 'en' ? "Total sold exceeds DCA quantity" : "الكمية المباعة الإجمالية أكبر من كمية التعزيز");
-        return;
-    }
-
+    if (totalSoldQty + soldQty > repurchaseQty + 0.00000001) { showError(currentLang === 'en' ? "Total sold exceeds DCA quantity" : "الكمية المباعة الإجمالية أكبر من كمية التعزيز"); return; }
     const investedAmountForSale = repurchaseQty > 0 ? repurchaseAmount * (soldQty / repurchaseQty) : 0;
     const saleId = generateUniqueId();
-    currentSales.push({
-        id: saleId,
-        qty: soldQty,
-        price: soldPrice,
-        investedAmount: investedAmountForSale,
-        date: new Date().toLocaleDateString(currentLang === 'en' ? 'en-US' : 'ar-EG'),
-        cashRecordId: null
-    });
+    currentSales.push({ id: saleId, qty: soldQty, price: soldPrice, investedAmount: investedAmountForSale, date: new Date().toLocaleDateString(currentLang === 'en' ? 'en-US' : 'ar-EG'), cashRecordId: null });
     rp.sales = currentSales;
     rp.totalSoldQty = calculateTotalSoldQty(currentSales).toString();
-
     const saleAmount = soldQty * soldPrice;
     const cashRecordId = addSalesCashDeposit(saleAmount, (currentLang === 'en' ? 'Partial sale from ' : 'بيع جزئي من ') + getDisplayNameFromKey(symbol) + (currentLang === 'en' ? ' (DCA #' : ' (تعزيز #') + (dcaIndex + 1) + ')', saleId);
-
     if (cashRecordId) {
         const saleIndex = rp.sales.findIndex(s => s.id === saleId);
         if (saleIndex !== -1) rp.sales[saleIndex].cashRecordId = cashRecordId;
     }
-
     saveAllDataToLocalStorage();
     updateSummaryTable();
     calculateAndDisplay();
-    showSuccess((currentLang === 'en' ? 'Sale completed: ' : 'تم البيع بنجاح: ')
-        + formatNumber(soldQty, 8) + (currentLang === 'en' ? ' at ' : ' بسعر ') + formatNumber(soldPrice, 8)
-        + (currentLang === 'en' ? '\nAmount: ' : '\nالمبلغ: ') + fmtMoney(saleAmount, 2));
+    showSuccess((currentLang === 'en' ? 'Sale completed: ' : 'تم البيع بنجاح: ') + formatNumber(soldQty, 8) + (currentLang === 'en' ? ' at ' : ' بسعر ') + formatNumber(soldPrice, 8) + (currentLang === 'en' ? '\nAmount: ' : '\nالمبلغ: ') + fmtMoney(saleAmount, 2));
 }
 
 function toggleInitialSellForm() {
-    if (!activeCoinSymbol) {
-        showError(currentLang === 'en' ? "No active coin" : "لا توجد عملة نشطة");
-        return;
-    }
+    if (!activeCoinSymbol) { showError(currentLang === 'en' ? "No active coin" : "لا توجد عملة نشطة"); return; }
     openSellPartialModalForEntry(activeCoinSymbol);
 }
-
-function toggleDCASellForm(symbol, index) {
-    openSellPartialModalForDCA(symbol, index);
-}
-
-function applyInitialSale() {
-    showInfo(currentLang === 'en' ? 'Please use the Sell button' : 'يرجى استخدام زر البيع');
-}
+function toggleDCASellForm(symbol, index) { openSellPartialModalForDCA(symbol, index); }
+function applyInitialSale() { showInfo(currentLang === 'en' ? 'Please use the Sell button' : 'يرجى استخدام زر البيع'); }
 function cancelInitialSale() {}
-function applyDCASale(symbol, index) {
-    showInfo(currentLang === 'en' ? 'Please use the Sell button' : 'يرجى استخدام زر البيع');
-}
+function applyDCASale(symbol, index) { showInfo(currentLang === 'en' ? 'Please use the Sell button' : 'يرجى استخدام زر البيع'); }
 function cancelDCASale(symbol, index) {}
 
 /* ═══════════════════════════════════════════════════════════════
@@ -3654,7 +3300,6 @@ function sellAllInitial() {
     const sellAtMarket = currentLang === 'en' ? 'Sell at Market Price' : 'بيع بالسعر الحالي';
     const manualPrice = currentLang === 'en' ? 'Enter Manual Price' : 'إدخال سعر يدوي';
     const setPrice = currentLang === 'en' ? 'Set your own price' : 'حدد السعر بنفسك';
-
     let choiceMessage = '<div style="text-align: center; padding: 15px; background: var(--output-field-bg); border-radius: 8px; margin-bottom: 15px;"><div style="font-size: 1.1em; font-weight: bold; margin-bottom: 10px;">' + detailsTitle + '</div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: ' + (currentLang === 'en' ? 'left' : 'right') + ';"><div>' + remLabel + '</div><div style="font-family: \'Roboto Mono\', monospace; direction: ltr;">' + formatNumber(remainingQty, 8) + '</div><div>' + priceLabel + '</div><div style="font-family: \'Roboto Mono\', monospace; direction: ltr;">' + (marketPrice > 0 ? fmtPrice(marketPrice) : notAvail) + '</div><div>' + expLabel + '</div><div style="font-family: \'Roboto Mono\', monospace; direction: ltr; color: var(--positive-color); font-weight: bold;">' + (marketPrice > 0 ? fmtMoney(expectedValue, 2) : '---') + '</div></div></div><div style="margin-top: 15px;"><div style="font-weight: bold; margin-bottom: 10px; text-align: center;">' + chooseLabel + '</div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><button onclick="executeSellAllInitialAtMarketPrice()" style="padding: 15px; background: var(--positive-color); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1em;" ' + (marketPrice <= 0 ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : '') + '>📊<br>' + sellAtMarket + '<br><small>' + (marketPrice > 0 ? formatNumber(marketPrice, 4) : notAvail) + '</small></button><button onclick="promptManualPriceForSellAll()" style="padding: 15px; background: var(--secondary-color); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1em;">✏️<br>' + manualPrice + '<br><small>' + setPrice + '</small></button></div></div>';
     showPopup(title, choiceMessage, currentLang === 'en' ? 'Close' : 'إغلاق', '', () => {}, null);
 }
@@ -3673,9 +3318,7 @@ function promptManualPriceForSellAll() {
     const sellPrice = parseFloat(userPrice);
     if (isNaN(sellPrice) || sellPrice <= 0) { showError(currentLang === 'en' ? "Please enter a valid sell price" : "يرجى إدخال سعر بيع صحيح"); return; }
     const expectedValue = remainingQty * sellPrice;
-    showConfirm((currentLang === 'en' ? 'Confirm manual price sale:\n• Quantity: ' : 'تأكيد البيع بالسعر اليدوي:\n• الكمية: ') + formatNumber(remainingQty, 8) + (currentLang === 'en' ? '\n• Price: ' : '\n• السعر: ') + formatNumber(sellPrice, 8) + (currentLang === 'en' ? '\n• Expected Amount: ' : '\n• المبلغ المتوقع: ') + fmtMoney(expectedValue, 2), () => {
-        executeSellAllInitialWithPrice(sellPrice);
-    });
+    showConfirm((currentLang === 'en' ? 'Confirm manual price sale:\n• Quantity: ' : 'تأكيد البيع بالسعر اليدوي:\n• الكمية: ') + formatNumber(remainingQty, 8) + (currentLang === 'en' ? '\n• Price: ' : '\n• السعر: ') + formatNumber(sellPrice, 8) + (currentLang === 'en' ? '\n• Expected Amount: ' : '\n• المبلغ المتوقع: ') + fmtMoney(expectedValue, 2), () => { executeSellAllInitialWithPrice(sellPrice); });
 }
 function executeSellAllInitialWithPrice(sellPrice) {
     const initialCoinQty = parseFormattedNumber(document.getElementById('initialCoinQty').textContent);
@@ -3706,9 +3349,7 @@ function executeSellAllInitialWithPrice(sellPrice) {
     showSuccess((currentLang === 'en' ? 'Sold all: ' : 'تم بيع الكل:\n• الكمية: ') + formatNumber(remainingQty, 8) + (currentLang === 'en' ? '\n• Price: ' : '\n• السعر: ') + formatNumber(sellPrice, 8) + (currentLang === 'en' ? '\n• Amount: ' : '\n• المبلغ: ') + fmtMoney(saleAmount, 2));
 }
 function removeInitialSale(saleIndex) {
-    const msg = currentLang === 'en'
-        ? "Delete this sale?\n⚠️ The linked cash deposit will also be cancelled."
-        : "هل تريد حذف هذا البيع؟\n⚠️ سيتم أيضاً إلغاء إيداع الكاش المرتبط.";
+    const msg = currentLang === 'en' ? "Delete this sale?\n⚠️ The linked cash deposit will also be cancelled." : "هل تريد حذف هذا البيع؟\n⚠️ سيتم أيضاً إلغاء إيداع الكاش المرتبط.";
     showConfirm(msg, () => {
         const currentSales = getInitialSalesHistory();
         const removedSale = currentSales[saleIndex];
@@ -3744,11 +3385,7 @@ function cancelInitialTransaction() {
     const savedAmount = data.initialSavedAmount || 0;
     const refundAmount = initialCoinQty > 0 ? savedAmount * (remainingQty / initialCoinQty) : 0;
     const totalRefund = refundAmount + salesCashToRefund;
-    const msg = (currentLang === 'en'
-        ? 'Cancel entry trade?\n• Refund remaining quantity cash: '
-        : 'هل تريد إلغاء صفقة الدخول؟\n• استرجاع كاش الكمية المتبقية: ') + fmtUSD(refundAmount, 2) +
-        (currentLang === 'en' ? '\n• Refund previous sales cash: ' : '\n• استرجاع كاش المبيعات السابقة: ') + fmtUSD(salesCashToRefund, 2) +
-        (currentLang === 'en' ? '\n• Total: ' : '\n• الإجمالي: ') + fmtUSD(totalRefund, 2);
+    const msg = (currentLang === 'en' ? 'Cancel entry trade?\n• Refund remaining quantity cash: ' : 'هل تريد إلغاء صفقة الدخول؟\n• استرجاع كاش الكمية المتبقية: ') + fmtUSD(refundAmount, 2) + (currentLang === 'en' ? '\n• Refund previous sales cash: ' : '\n• استرجاع كاش المبيعات السابقة: ') + fmtUSD(salesCashToRefund, 2) + (currentLang === 'en' ? '\n• Total: ' : '\n• الإجمالي: ') + fmtUSD(totalRefund, 2);
     showConfirm(msg, () => {
         if (refundAmount > 0) { availableCash += refundAmount; localStorage.setItem(LS_KEY_CASH, availableCash.toString()); }
         if (salesCashToRefund > 0) addSalesCashDeposit(salesCashToRefund, (currentLang === 'en' ? 'Refund for cancel ' : 'استرجاع إلغاء صفقة ') + getDisplayNameFromKey(activeCoinSymbol), null);
@@ -3831,9 +3468,7 @@ function saveEntryTransaction() {
     if (isAlreadySaved) {
         const diff = initialAmountDollars - oldAmount;
         if (Math.abs(diff) > 0.001) {
-            showSuccess(diff > 0
-                ? (currentLang === 'en' ? 'Entry trade updated and ' : 'تم تحديث صفقة الدخول وخصم الفرق ') + fmtUSD(diff, 2)
-                : (currentLang === 'en' ? 'Entry trade updated and ' : 'تم تحديث صفقة الدخول وإضافة ') + fmtUSD(Math.abs(diff), 2));
+            showSuccess(diff > 0 ? (currentLang === 'en' ? 'Entry trade updated and ' : 'تم تحديث صفقة الدخول وخصم الفرق ') + fmtUSD(diff, 2) : (currentLang === 'en' ? 'Entry trade updated and ' : 'تم تحديث صفقة الدخول وإضافة ') + fmtUSD(Math.abs(diff), 2));
         } else showSuccess(currentLang === 'en' ? 'Entry trade updated (no cash change)' : 'تم تحديث صفقة الدخول (بدون تغيير في الكاش)');
     } else showSuccess((currentLang === 'en' ? 'Entry trade saved for ' : 'تم حفظ صفقة الدخول لـ ') + getDisplayNameFromKey(activeCoinSymbol) + (currentLang === 'en' ? ' and deducted ' : ' بنجاح وخصم ') + fmtUSD(initialAmountDollars, 2));
 }
@@ -3888,21 +3523,14 @@ function saveDCATransaction(symbol, index) {
     if (isAlreadySaved) {
         const diff = repurchaseAmount - oldAmount;
         if (Math.abs(diff) > 0.001) {
-            showSuccess(diff > 0
-                ? (currentLang === 'en' ? 'DCA ' + (index+1) + ' updated and deducted ' : 'تم تحديث التعزيز ' + (index+1) + ' وخصم ') + fmtUSD(diff, 2)
-                : (currentLang === 'en' ? 'DCA ' + (index+1) + ' updated and added ' : 'تم تحديث التعزيز ' + (index+1) + ' وإضافة ') + fmtUSD(Math.abs(diff), 2));
+            showSuccess(diff > 0 ? (currentLang === 'en' ? 'DCA ' + (index+1) + ' updated and deducted ' : 'تم تحديث التعزيز ' + (index+1) + ' وخصم ') + fmtUSD(diff, 2) : (currentLang === 'en' ? 'DCA ' + (index+1) + ' updated and added ' : 'تم تحديث التعزيز ' + (index+1) + ' وإضافة ') + fmtUSD(Math.abs(diff), 2));
         } else showSuccess((currentLang === 'en' ? 'DCA ' + (index+1) + ' updated (no cash change)' : 'تم تحديث التعزيز ' + (index+1) + ' (بدون تغيير في الكاش)'));
     } else showSuccess((currentLang === 'en' ? 'DCA ' + (index+1) + ' saved for ' : 'تم حفظ صفقة التعزيز ' + (index+1) + ' لـ ') + getDisplayNameFromKey(symbol) + (currentLang === 'en' ? ' and deducted ' : ' بنجاح وخصم ') + fmtUSD(repurchaseAmount, 2));
 }
 function addDCAForCoin(symbol) {
     if (!symbol || !allCoinData[symbol]) { showError(currentLang === 'en' ? "Please select a coin first" : "يرجى اختيار عملة أولاً"); return; }
     const data = allCoinData[symbol];
-    const newRepurchase = {
-        price: '', amount: '', sales: [], totalSoldQty: '0', priceMode: 'price',
-        purchaseDate: getDCARecordDate(),
-        purchaseDateRaw: getDCARecordDateRaw(),
-        savedAmount: 0
-    };
+    const newRepurchase = { price: '', amount: '', sales: [], totalSoldQty: '0', priceMode: 'price', purchaseDate: getDCARecordDate(), purchaseDateRaw: getDCARecordDateRaw(), savedAmount: 0 };
     data.repurchases.push(newRepurchase);
     saveAllDataToLocalStorage();
     updateSummaryTable();
@@ -3970,23 +3598,17 @@ function getDCARowsHTML(symbol, data) {
     const initialRemainingQty = Math.max(0, initialCoinQty - initialTotalSoldQty);
     const initialCashFromSales = calculateInitialCashFromSales(initialSales);
     const hasEntry = initialEntryPrice > 0 && initialAmountDollars > 0;
-
     if (!data || ((!data.repurchases || data.repurchases.length === 0) && !hasEntry)) {
         return '<div style="text-align:center; padding:15px; color:var(--text-muted);">' + (currentLang === 'en' ? 'No trades recorded for this coin' : 'لا توجد صفقات مسجلة لهذه العملة') + '<br><button class="add-dca-btn" onclick="addDCAForCoin(\'' + symbol + '\')">➕ ' + (currentLang === 'en' ? 'Add DCA' : 'إضافة تعزيز') + '</button></div>';
     }
-
     let html = '<table class="dca-table"><thead><tr><th>#</th><th>' + (currentLang === 'en' ? 'Drop %' : 'هبوط %') + '</th><th>' + (currentLang === 'en' ? 'Buy Price' : 'سعر الشراء') + '</th><th>' + (currentLang === 'en' ? 'Amount $' : 'المبلغ $') + '</th><th>' + (currentLang === 'en' ? '📅 Dates' : '📅 التواريخ') + '</th><th>' + (currentLang === 'en' ? 'Quantity' : 'الكمية') + '</th><th>' + (currentLang === 'en' ? 'Sold' : 'المباعة') + '</th><th>' + (currentLang === 'en' ? 'Remaining' : 'المتبقي') + '</th><th>' + (currentLang === 'en' ? 'Trade P/L $' : 'ربح/خسارة الصفقة $') + '</th><th>' + (currentLang === 'en' ? 'Trade P/L %' : 'ربح/خسارة الصفقة %') + '</th><th>' + (currentLang === 'en' ? 'Cash from Sales $' : 'الكاش من البيع $') + '</th><th>' + (currentLang === 'en' ? 'Sale Status' : 'حالة البيع') + '</th><th>' + (currentLang === 'en' ? 'Actions' : 'الإجراءات') + '</th></tr></thead><tbody>';
-
     const marketPrice = currentMarketPrices[symbol] || 0;
-
     if (hasEntry) {
-        let entryPnlAmount = 0;
-        let entryPnlPercent = 0;
+        let entryPnlAmount = 0, entryPnlPercent = 0;
         if (marketPrice > 0 && initialCoinQty > 0) {
             const currentValue = initialRemainingQty * marketPrice;
             const remainingInvested = initialAmountDollars * (initialRemainingQty / initialCoinQty);
-            let totalInvestedForSales = 0;
-            let totalSaleAmount = 0;
+            let totalInvestedForSales = 0, totalSaleAmount = 0;
             initialSales.forEach(sale => {
                 totalSaleAmount += sale.qty * sale.price;
                 totalInvestedForSales += sale.investedAmount || (initialAmountDollars * (sale.qty / initialCoinQty));
@@ -4002,12 +3624,10 @@ function getDCARowsHTML(symbol, data) {
         const entryPriceDisplay = fmtPrice(initialEntryPrice);
         const entryAmountDisplay = fmtMoney(initialAmountDollars, 2);
         const entryDateRaw = data.initialPurchaseDateRaw || '';
-
         let datesHtml = '<div class="date-item"><span class="date-label buy">🟢 ' + (currentLang === 'en' ? 'Buy' : 'شراء') + '</span><input type="datetime-local" class="date-input" value="' + entryDateRaw + '" onchange="updateEntryPurchaseDate(\'' + symbol + '\', this.value);" title="' + (currentLang === 'en' ? 'Entry buy date' : 'تاريخ شراء الدخول') + '"></div>';
         initialSales.forEach((sale, si) => {
             datesHtml += '<div class="date-item"><span class="date-label sell">🔴 ' + (currentLang === 'en' ? 'Sell' : 'بيع') + ' ' + (si + 1) + '</span><span class="date-value">' + (sale.date || '—') + '</span></div>';
         });
-
         html += '<tr class="entry-row">';
         html += '<td><span class="dca-badge" style="background:var(--primary-color); color:white;">' + (currentLang === 'en' ? 'Entry' : 'دخول') + '</span></td>';
         html += '<td><span style="color:var(--text-muted); font-size:0.85em;">—</span></td>';
@@ -4027,7 +3647,6 @@ function getDCARowsHTML(symbol, data) {
         html += '<button class="cancel-btn" onclick="ensureActiveCoin(\'' + symbol + '\'); setTimeout(function(){ cancelInitialTransaction(); }, 120);" title="' + (currentLang === 'en' ? 'Cancel Entry Trade' : 'إلغاء صفقة الدخول') + '">' + (currentLang === 'en' ? 'Cancel' : 'إلغاء') + '</button>';
         html += '</td></tr>';
     }
-
     (data.repurchases || []).forEach((rp, index) => {
         const repurchasePrice = parseFormattedNumber(rp.price);
         const repurchaseAmount = parseFormattedNumber(rp.amount);
@@ -4038,13 +3657,13 @@ function getDCARowsHTML(symbol, data) {
         const cashFromSales = calculateCashFromSales(sales);
         let changePercent = 0;
         if (initialEntryPrice > 0 && repurchasePrice > 0) changePercent = ((repurchasePrice - initialEntryPrice) / initialEntryPrice) * 100;
-        let totalTradePnlAmount = 0;
-        let totalTradePnlPercent = 0;
-        if (marketPrice > 0 && repurchaseQty > 0) {
+        const savedAmount = rp.savedAmount || 0;
+        const isSaved = savedAmount > 0.0001 && Math.abs(repurchaseAmount - savedAmount) <= 0.001;
+        let totalTradePnlAmount = 0, totalTradePnlPercent = 0;
+        if (isSaved && marketPrice > 0 && repurchaseQty > 0) {
             const currentValue = remainingQty * marketPrice;
             const remainingInvested = repurchaseAmount * (remainingQty / repurchaseQty);
-            let totalInvestedForSales = 0;
-            let totalSaleAmount = 0;
+            let totalInvestedForSales = 0, totalSaleAmount = 0;
             sales.forEach(sale => {
                 totalSaleAmount += sale.qty * sale.price;
                 totalInvestedForSales += sale.investedAmount || (repurchaseAmount * (sale.qty / repurchaseQty));
@@ -4054,40 +3673,63 @@ function getDCARowsHTML(symbol, data) {
             const totalInvested = totalInvestedForSales + remainingInvested;
             totalTradePnlPercent = totalInvested > 0 ? (totalTradePnlAmount / totalInvested) * 100 : 0;
         }
-        const status = totalSoldQty >= repurchaseQty - 0.00000001 ? (currentLang === 'en' ? 'Sold' : 'تم البيع') : (totalSoldQty > 0 ? (currentLang === 'en' ? 'Partial Sale' : 'بيع جزئي') : (currentLang === 'en' ? 'Active' : 'نشط'));
-        const statusClass = (status === 'Sold' || status === 'تم البيع') ? 'sold-btn' : ((status === 'Partial Sale' || status === 'بيع جزئي') ? 'partial-sold-btn' : '');
-        const tradePnlClass = totalTradePnlAmount > 0 ? 'pnl-positive' : (totalTradePnlAmount < 0 ? 'pnl-negative' : '');
+        let status = currentLang === 'en' ? 'Active' : 'نشط';
+        let statusClass = '';
+        if (!isSaved) {
+            status = currentLang === 'en' ? '⚠️ Not Saved' : '⚠️ غير محفوظ';
+        } else {
+            status = totalSoldQty >= repurchaseQty - 0.00000001 ? (currentLang === 'en' ? 'Sold' : 'تم البيع') : (totalSoldQty > 0 ? (currentLang === 'en' ? 'Partial Sale' : 'بيع جزئي') : (currentLang === 'en' ? 'Active' : 'نشط'));
+            statusClass = (status === 'Sold' || status === 'تم البيع') ? 'sold-btn' : ((status === 'Partial Sale' || status === 'بيع جزئي') ? 'partial-sold-btn' : '');
+        }
+        const tradePnlClass = (isSaved && totalTradePnlAmount > 0) ? 'pnl-positive' : ((isSaved && totalTradePnlAmount < 0) ? 'pnl-negative' : '');
         const changeClass = changePercent < 0 ? 'negative' : (changePercent > 0 ? 'positive' : '');
         const priceMode = rp.priceMode || 'price';
         const displayPrice = repurchasePrice > 0 ? formatWithCommas(repurchasePrice, 8) : '';
         const displayAmount = repurchaseAmount > 0 ? fmtMoney(repurchaseAmount, 2) : '';
         const dcaDateRaw = rp.purchaseDateRaw || '';
-
         let datesHtml = '<div class="date-item"><span class="date-label buy">🟢 ' + (currentLang === 'en' ? 'Buy' : 'شراء') + '</span><input type="datetime-local" class="date-input" value="' + dcaDateRaw + '" onchange="updateDCAPurchaseDate(\'' + symbol + '\', ' + index + ', this.value);" title="' + (currentLang === 'en' ? 'DCA buy date' : 'تاريخ شراء التعزيز') + '"></div>';
         sales.forEach((sale, si) => {
             datesHtml += '<div class="date-item"><span class="date-label sell">🔴 ' + (currentLang === 'en' ? 'Sell' : 'بيع') + ' ' + (si + 1) + '</span><span class="date-value">' + (sale.date || '—') + '</span></div>';
         });
-
-        html += '<tr id="dca_row_' + symbol + '_' + index + '" class="' + (statusClass === 'sold-btn' ? 'sold-row' : (statusClass === 'partial-sold-btn' ? 'partial-sold-row' : '')) + '">';
-        html += '<td>' + (index + 1) + '</td>';
+        const rowClasses = (!isSaved ? 'unsaved-row' : '') + ' ' + (statusClass === 'sold-btn' ? 'sold-row' : (statusClass === 'partial-sold-btn' ? 'partial-sold-row' : ''));
+        html += '<tr id="dca_row_' + symbol + '_' + index + '" class="' + rowClasses + '">';
+        html += '<td>' + (index + 1);
+        if (!isSaved) html += '<div><span class="unsaved-badge">' + (currentLang === 'en' ? '⚠️ Not Saved' : '⚠️ غير محفوظ') + '</span></div>';
+        html += '</td>';
         html += '<td><span class="down-percent ' + changeClass + '">' + (changePercent !== 0 && isFinite(changePercent) ? formatNumber(changePercent, 2) + '%' : '-%') + '</span></td>';
-        html += '<td><input type="text" id="dca_price_' + symbol + '_' + index + '" placeholder="' + (currentLang === 'en' ? 'Price' : 'السعر') + '" value="' + displayPrice + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs(\'' + symbol + '\', ' + index + '); calculateAndDisplay();" onfocus="removeCommasFromInput(this)" inputmode="decimal"><div class="percentage-input-group ' + (priceMode === 'percentage' ? 'active' : '') + '" id="dca_percentageGroup_' + symbol + '_' + index + '"><input type="text" id="dca_percentage_' + symbol + '_' + index + '" placeholder="' + (currentLang === 'en' ? 'Pct %' : 'النسبة %') + '" value="' + formatNumber(changePercent, 2) + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); handleDCAPercentageInput(\'' + symbol + '\', ' + index + ');" onfocus="removeCommasFromInput(this)" inputmode="decimal"></div><div class="price-mode-toggle"><button class="price-mode-btn ' + (priceMode === 'price' ? 'active' : '') + '" id="dca_priceModeBtn_' + symbol + '_' + index + '" onclick="switchDCAPriceMode(\'' + symbol + '\', ' + index + ', \'price\')">' + (currentLang === 'en' ? 'Price' : 'سعر') + '</button><button class="price-mode-btn ' + (priceMode === 'percentage' ? 'active' : '') + '" id="dca_percentageModeBtn_' + symbol + '_' + index + '" onclick="switchDCAPriceMode(\'' + symbol + '\', ' + index + ', \'percentage\')">' + (currentLang === 'en' ? 'Pct' : 'نسبة') + '</button></div></td>';
-        html += '<td><input type="text" id="dca_amount_' + symbol + '_' + index + '" placeholder="$" value="' + displayAmount + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs(\'' + symbol + '\', ' + index + '); calculateAndDisplay();" onfocus="removeCommasFromInput(this)" inputmode="decimal"></td>';
+        html += '<td><input type="text" id="dca_price_' + symbol + '_' + index + '" placeholder="' + (currentLang === 'en' ? 'Price' : 'السعر') + '" value="' + displayPrice + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs(\'' + symbol + '\', ' + index + '); calculateAndDisplay(); updateSummaryTable();" onfocus="removeCommasFromInput(this)" inputmode="decimal"><div class="percentage-input-group ' + (priceMode === 'percentage' ? 'active' : '') + '" id="dca_percentageGroup_' + symbol + '_' + index + '"><input type="text" id="dca_percentage_' + symbol + '_' + index + '" placeholder="' + (currentLang === 'en' ? 'Pct %' : 'النسبة %') + '" value="' + formatNumber(changePercent, 2) + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); handleDCAPercentageInput(\'' + symbol + '\', ' + index + ');" onfocus="removeCommasFromInput(this)" inputmode="decimal"></div><div class="price-mode-toggle"><button class="price-mode-btn ' + (priceMode === 'price' ? 'active' : '') + '" id="dca_priceModeBtn_' + symbol + '_' + index + '" onclick="switchDCAPriceMode(\'' + symbol + '\', ' + index + ', \'price\')">' + (currentLang === 'en' ? 'Price' : 'سعر') + '</button><button class="price-mode-btn ' + (priceMode === 'percentage' ? 'active' : '') + '" id="dca_percentageModeBtn_' + symbol + '_' + index + '" onclick="switchDCAPriceMode(\'' + symbol + '\', ' + index + ', \'percentage\')">' + (currentLang === 'en' ? 'Pct' : 'نسبة') + '</button></div></td>';
+        html += '<td><input type="text" id="dca_amount_' + symbol + '_' + index + '" placeholder="$" value="' + displayAmount + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs(\'' + symbol + '\', ' + index + '); calculateAndDisplay(); updateSummaryTable();" onfocus="removeCommasFromInput(this)" inputmode="decimal"></td>';
         html += '<td class="date-column">' + datesHtml + '</td>';
-        html += '<td><div class="output-field">' + formatNumber(repurchaseQty, 8) + '</div></td>';
-        html += '<td><div class="output-field">' + formatNumber(totalSoldQty, 8) + '</div></td>';
-        html += '<td><div class="output-field ' + (remainingQty > 0 ? 'remaining-info' : '') + '">' + formatNumber(remainingQty, 8) + '</div></td>';
-        html += '<td><div class="output-field ' + tradePnlClass + '">' + fmtMoney(totalTradePnlAmount, 2) + '</div></td>';
-        html += '<td><div class="output-field ' + tradePnlClass + '">' + formatNumber(totalTradePnlPercent, 2) + '%</div></td>';
-        html += '<td><div class="output-field cash-positive">' + fmtMoney(cashFromSales, 2) + '</div></td>';
+        if (isSaved) {
+            html += '<td><div class="output-field">' + formatNumber(repurchaseQty, 8) + '</div></td>';
+            html += '<td><div class="output-field">' + formatNumber(totalSoldQty, 8) + '</div></td>';
+            html += '<td><div class="output-field ' + (remainingQty > 0 ? 'remaining-info' : '') + '">' + formatNumber(remainingQty, 8) + '</div></td>';
+            html += '<td><div class="output-field ' + tradePnlClass + '">' + fmtMoney(totalTradePnlAmount, 2) + '</div></td>';
+            html += '<td><div class="output-field ' + tradePnlClass + '">' + formatNumber(totalTradePnlPercent, 2) + '%</div></td>';
+            html += '<td><div class="output-field cash-positive">' + fmtMoney(cashFromSales, 2) + '</div></td>';
+        } else {
+            html += '<td><div class="output-field" style="opacity:0.4;">—</div></td>';
+            html += '<td><div class="output-field" style="opacity:0.4;">—</div></td>';
+            html += '<td><div class="output-field" style="opacity:0.4;">—</div></td>';
+            html += '<td><div class="output-field" style="opacity:0.4;">—</div></td>';
+            html += '<td><div class="output-field" style="opacity:0.4;">—</div></td>';
+            html += '<td><div class="output-field" style="opacity:0.4;">—</div></td>';
+        }
         html += '<td><span class="' + statusClass + '">' + status + '</span></td>';
         html += '<td>';
-        html += '<button class="sell-btn" onclick="openSellPartialModalForDCA(\'' + symbol + '\', ' + index + ')">' + (currentLang === 'en' ? 'Sell' : 'بيع') + '</button>';
-        html += '<button class="sell-btn sell-full-btn" onclick="sellAllDCA(\'' + symbol + '\', ' + index + ')" title="' + (currentLang === 'en' ? 'Sell All' : 'بيع الكل') + '">' + (currentLang === 'en' ? 'Sell All' : 'بيع الكل') + '</button>';
-        html += '<button class="cancel-btn" onclick="cancelDCATransaction(\'' + symbol + '\', ' + index + ')" title="' + (currentLang === 'en' ? 'Cancel DCA Trade' : 'إلغاء صفقة التعزيز') + '">' + (currentLang === 'en' ? 'Cancel' : 'إلغاء') + '</button>';
-        html += '<button class="save-dca-btn" onclick="saveDCATransaction(\'' + symbol + '\', ' + index + ')" style="margin-top:4px;">💾</button>';
-        html += '<button class="cancel-btn" onclick="removeDCAForCoin(\'' + symbol + '\', ' + index + ')" style="margin-top:4px; font-size:0.7em; padding:2px 8px;">🗑️ ' + (currentLang === 'en' ? 'Delete DCA' : 'حذف التعزيز') + '</button>';
-        if (sales.length > 0) {
+        if (isSaved) {
+            html += '<button class="sell-btn" onclick="openSellPartialModalForDCA(\'' + symbol + '\', ' + index + ')">' + (currentLang === 'en' ? 'Sell' : 'بيع') + '</button>';
+            html += '<button class="sell-btn sell-full-btn" onclick="sellAllDCA(\'' + symbol + '\', ' + index + ')" title="' + (currentLang === 'en' ? 'Sell All' : 'بيع الكل') + '">' + (currentLang === 'en' ? 'Sell All' : 'بيع الكل') + '</button>';
+            html += '<button class="cancel-btn" onclick="cancelDCATransaction(\'' + symbol + '\', ' + index + ')" title="' + (currentLang === 'en' ? 'Cancel DCA Trade' : 'إلغاء صفقة التعزيز') + '">' + (currentLang === 'en' ? 'Cancel' : 'إلغاء') + '</button>';
+            html += '<button class="save-dca-btn" onclick="saveDCATransaction(\'' + symbol + '\', ' + index + ')" style="margin-top:4px;">💾</button>';
+            html += '<button class="cancel-btn" onclick="removeDCAForCoin(\'' + symbol + '\', ' + index + ')" style="margin-top:4px; font-size:0.7em; padding:2px 8px;">🗑️ ' + (currentLang === 'en' ? 'Delete DCA' : 'حذف التعزيز') + '</button>';
+        } else {
+            html += '<button class="sell-btn" disabled title="' + (currentLang === 'en' ? 'Save DCA first' : 'احفظ التعزيز أولاً') + '">' + (currentLang === 'en' ? 'Sell' : 'بيع') + '</button>';
+            html += '<button class="sell-btn sell-full-btn" disabled title="' + (currentLang === 'en' ? 'Save DCA first' : 'احفظ التعزيز أولاً') + '">' + (currentLang === 'en' ? 'Sell All' : 'بيع الكل') + '</button>';
+            html += '<button class="cancel-btn" onclick="removeDCAForCoin(\'' + symbol + '\', ' + index + ')" title="' + (currentLang === 'en' ? 'Delete DCA' : 'حذف التعزيز') + '">🗑️</button>';
+            html += '<button class="save-dca-btn" onclick="saveDCATransaction(\'' + symbol + '\', ' + index + ')" style="margin-top:4px; animation: unsavedPulse 1.5s ease-in-out infinite;">💾 ' + (currentLang === 'en' ? 'Save' : 'حفظ') + '</button>';
+        }
+        if (sales.length > 0 && isSaved) {
             html += '<div class="sales-history" id="dca_salesHistory_' + symbol + '_' + index + '">' + sales.map((sale, si) => '<div class="sale-record"><div class="sale-record-info"><div>' + (currentLang === 'en' ? 'Sale ' : 'بيع ') + (si+1) + ': ' + formatNumber(sale.qty, 4) + (currentLang === 'en' ? ' at ' : ' بسعر ') + formatNumber(sale.price, 8) + '</div><div class="sale-record-details"><span>' + (currentLang === 'en' ? 'Amount: ' : 'المبلغ: ') + fmtMoney(sale.qty * sale.price, 2) + '</span><span>' + (sale.date || '') + '</span></div></div><div class="sale-record-actions"><button onclick="removeDCASale(\'' + symbol + '\', ' + index + ', ' + si + ')" title="' + (currentLang === 'en' ? 'Delete sale' : 'حذف البيع') + '">×</button></div></div>').join('') + '</div>';
         }
         html += '</td></tr>';
@@ -4142,8 +3784,17 @@ function sellAllDCA(symbol, index) {
     const data = allCoinData[symbol];
     if (!data || index < 0 || index >= data.repurchases.length) { showError(currentLang === 'en' ? "DCA data not found" : "بيانات التعزيز غير موجودة"); return; }
     const rp = data.repurchases[index];
+    const savedAmount = rp.savedAmount || 0;
+    if (savedAmount <= 0.0001) {
+        showError(currentLang === 'en' ? "⚠️ You must save this DCA first (click 💾 button) before selling." : "⚠️ يجب حفظ التعزيز أولاً (اضغط زر 💾) قبل البيع.");
+        return;
+    }
     const repurchasePrice = parseFormattedNumber(rp.price);
     const repurchaseAmount = parseFormattedNumber(rp.amount);
+    if (Math.abs(repurchaseAmount - savedAmount) > 0.001) {
+        showError(currentLang === 'en' ? "⚠️ The entered amount differs from the saved amount.\nPlease save your changes first (click 💾)." : "⚠️ المبلغ المُدخل مختلف عن المبلغ المحفوظ.\nيرجى حفظ التعديلات أولاً (اضغط 💾).");
+        return;
+    }
     const repurchaseQty = repurchasePrice > 0 ? repurchaseAmount / repurchasePrice : 0;
     const currentSales = rp.sales || [];
     const totalSoldQty = calculateTotalSoldQty(currentSales);
@@ -4156,9 +3807,7 @@ function sellAllDCA(symbol, index) {
         if (!userPrice || isNaN(parseFloat(userPrice)) || parseFloat(userPrice) <= 0) { showError(currentLang === 'en' ? "Please enter a valid sell price" : "يرجى إدخال سعر بيع صحيح"); return; }
         sellPrice = parseFloat(userPrice);
     } else {
-        const confirmMsg = currentLang === 'en'
-            ? 'Sell remaining quantity (' + formatNumber(remainingQty, 4) + ') at current price ' + formatNumber(marketPrice, 8) + '?'
-            : 'بيع الكمية المتبقية (' + formatNumber(remainingQty, 4) + ') بالسعر الحالي ' + formatNumber(marketPrice, 8) + '؟';
+        const confirmMsg = currentLang === 'en' ? 'Sell remaining quantity (' + formatNumber(remainingQty, 4) + ') at current price ' + formatNumber(marketPrice, 8) + '?' : 'بيع الكمية المتبقية (' + formatNumber(remainingQty, 4) + ') بالسعر الحالي ' + formatNumber(marketPrice, 8) + '؟';
         if (!confirm(confirmMsg)) return;
     }
     const investedAmountForSale = repurchaseQty > 0 ? repurchaseAmount * (remainingQty / repurchaseQty) : 0;
@@ -4178,9 +3827,7 @@ function sellAllDCA(symbol, index) {
     showSuccess((currentLang === 'en' ? 'Sold all: ' : 'تم بيع الكل: ') + formatNumber(remainingQty, 4) + (currentLang === 'en' ? ' at ' : ' بسعر ') + formatNumber(sellPrice, 8));
 }
 function removeDCASale(symbol, repurchaseIndex, saleIndex) {
-    const msg = currentLang === 'en'
-        ? "Delete this sale?\n⚠️ The linked cash deposit will also be cancelled."
-        : "هل تريد حذف هذا البيع؟\n⚠️ سيتم أيضاً إلغاء إيداع الكاش المرتبط.";
+    const msg = currentLang === 'en' ? "Delete this sale?\n⚠️ The linked cash deposit will also be cancelled." : "هل تريد حذف هذا البيع؟\n⚠️ سيتم أيضاً إلغاء إيداع الكاش المرتبط.";
     showConfirm(msg, () => {
         const data = allCoinData[symbol];
         if (!data || repurchaseIndex < 0 || repurchaseIndex >= data.repurchases.length) { showError(currentLang === 'en' ? "DCA data not found" : "بيانات التعزيز غير موجودة"); return; }
@@ -4219,11 +3866,7 @@ function cancelDCATransaction(symbol, index) {
     const salesCashToRefund = calculateTotalSalesCashFromSales(sales);
     const totalRefund = remainingAmount + salesCashToRefund;
     if (totalRefund <= 0.0001) { showError(currentLang === 'en' ? "No remaining value in DCA trade" : "لا توجد قيمة متبقية في صفقة التعزيز"); return; }
-    const msg = (currentLang === 'en'
-        ? 'Cancel DCA trade?\n• Refund remaining cash: '
-        : 'هل تريد إلغاء صفقة التعزيز؟\n• استرجاع كاش الكمية المتبقية: ') + fmtUSD(remainingAmount, 2) +
-        (currentLang === 'en' ? '\n• Refund previous sales cash: ' : '\n• استرجاع كاش المبيعات السابقة: ') + fmtUSD(salesCashToRefund, 2) +
-        (currentLang === 'en' ? '\n• Total: ' : '\n• الإجمالي: ') + fmtUSD(totalRefund, 2);
+    const msg = (currentLang === 'en' ? 'Cancel DCA trade?\n• Refund remaining cash: ' : 'هل تريد إلغاء صفقة التعزيز؟\n• استرجاع كاش الكمية المتبقية: ') + fmtUSD(remainingAmount, 2) + (currentLang === 'en' ? '\n• Refund previous sales cash: ' : '\n• استرجاع كاش المبيعات السابقة: ') + fmtUSD(salesCashToRefund, 2) + (currentLang === 'en' ? '\n• Total: ' : '\n• الإجمالي: ') + fmtUSD(totalRefund, 2);
     showConfirm(msg, () => {
         if (remainingAmount > 0) { availableCash += remainingAmount; localStorage.setItem(LS_KEY_CASH, availableCash.toString()); }
         if (salesCashToRefund > 0) addSalesCashDeposit(salesCashToRefund, (currentLang === 'en' ? 'Refund cancel DCA ' : 'استرجاع إلغاء تعزيز ') + getDisplayNameFromKey(symbol) + ' #' + (index+1), null);
@@ -4301,8 +3944,11 @@ function calculateSummaryData() {
         let totalInvestedAmount = initialCoinQty > 0 ? initialAmountDollars * (initialRemainingQty / initialCoinQty) : 0;
         let coinCashFromSales = initialCashFromSales;
         (data.repurchases || []).forEach(rp => {
+            const savedAmount = rp.savedAmount || 0;
             const repurchasePrice = parseFormattedNumber(rp.price);
             const repurchaseAmount = parseFormattedNumber(rp.amount);
+            const isSaved = savedAmount > 0.0001 && Math.abs(repurchaseAmount - savedAmount) <= 0.001;
+            if (!isSaved) return;
             if (repurchasePrice > 0 && repurchaseAmount > 0) {
                 const repurchaseQty = repurchaseAmount / repurchasePrice;
                 const sales = rp.sales || [];
@@ -4417,39 +4063,110 @@ function loadExpandedCoins() {
         try { expandedCoins = new Set(JSON.parse(savedExpandedCoins)); } catch (e) {}
     }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   🌐 جلب الأسعار من 6 منصات (Binance مباشرة + CORSProxy للبقية)
+   ═══════════════════════════════════════════════════════════════ */
 async function fetchSinglePrice(symbol) {
     const baseSymbol = getBaseSymbolFromKey(symbol);
     if (!baseSymbol || typeof baseSymbol !== 'string' || baseSymbol.length < 4) {
         return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'Invalid symbol' : 'رمز غير صالح' };
     }
-    const binanceApiUrl = 'https://api.binance.com/api/v3/ticker/price?symbol=' + baseSymbol;
-    const kucoinSymbol = baseSymbol.endsWith('USDT') ? baseSymbol.slice(0, -4) + '-USDT' : baseSymbol;
-    const kucoinApiUrl = 'https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=' + kucoinSymbol;
+
+    const exchanges = [
+        {
+            name: 'Binance',
+            url: 'https://api.binance.com/api/v3/ticker/price?symbol=' + baseSymbol,
+            needsProxy: false,
+            extract: (data) => data.price
+        },
+        {
+            name: 'MEXC',
+            url: 'https://api.mexc.com/api/v3/ticker/price?symbol=' + baseSymbol,
+            needsProxy: true,
+            extract: (data) => data.price
+        },
+        {
+            name: 'Gate.io',
+            url: 'https://api.gateio.ws/api/v4/spot/tickers?currency_pair=' + baseSymbol.replace('USDT', '_USDT'),
+            needsProxy: true,
+            extract: (data) => Array.isArray(data) && data[0] ? data[0].last : null
+        },
+        {
+            name: 'OKX',
+            url: 'https://www.okx.com/api/v5/market/ticker?instId=' + baseSymbol.replace('USDT', '-USDT'),
+            needsProxy: true,
+            extract: (data) => data.data && data.data[0] ? data.data[0].last : null
+        },
+        {
+            name: 'KuCoin',
+            url: 'https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=' + baseSymbol.replace('USDT', '-USDT'),
+            needsProxy: true,
+            extract: (data) => data.code === '200000' && data.data ? data.data.price : null
+        },
+        {
+            name: 'Bybit',
+            url: 'https://api.bybit.com/v5/market/tickers?category=spot&symbol=' + baseSymbol,
+            needsProxy: true,
+            extract: (data) => data.result && data.result.list && data.result.list[0] ? data.result.list[0].lastPrice : null
+        }
+    ];
+
     let price = null;
     let source = '';
-    let error = null;
-    try {
-        const response = await fetch(binanceApiUrl);
-        if (response.ok) {
-            const data = await response.json();
-            if (data && data.price && !isNaN(parseFloat(data.price))) { price = parseFloat(data.price); source = 'Binance'; }
-        }
-    } catch (e) {}
-    if (price === null) {
+    let lastError = null;
+
+    for (const exchange of exchanges) {
         try {
-            const kucoinResponse = await fetch(kucoinApiUrl);
-            if (kucoinResponse.ok) {
-                const kucoinData = await kucoinResponse.json();
-                if (kucoinData.code === '200000' && kucoinData.data && kucoinData.data.price && !isNaN(parseFloat(kucoinData.data.price))) {
-                    price = parseFloat(kucoinData.data.price);
-                    source = 'KuCoin';
-                }
+            let fetchUrl = exchange.url;
+            if (exchange.needsProxy) {
+                // ✅ استخدام corsproxy.io مع مفتاح API
+                fetchUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(exchange.url);
             }
-        } catch (e) {}
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+            const response = await fetch(fetchUrl, { signal: controller.signal });
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+                lastError = exchange.name + ': HTTP ' + response.status;
+                console.warn('⚠️ ' + exchange.name + ' فشل (HTTP ' + response.status + ') لـ ' + symbol);
+                continue;
+            }
+
+            const data = await response.json();
+            const extractedPrice = exchange.extract(data);
+
+            if (extractedPrice && !isNaN(parseFloat(extractedPrice))) {
+                price = parseFloat(extractedPrice);
+                source = exchange.name;
+                console.log('✅ تم جلب السعر من ' + source + ': ' + price + ' لـ ' + symbol);
+                break;
+            } else {
+                lastError = exchange.name + ': لا يوجد سعر للزوج';
+                console.warn('⚠️ ' + exchange.name + ': لا يوجد سعر لـ ' + baseSymbol);
+            }
+        } catch (e) {
+            if (e.name === 'AbortError') {
+                lastError = exchange.name + ': انتهت المهلة';
+            } else {
+                lastError = exchange.name + ': ' + (e.message || 'خطأ');
+            }
+            console.warn('❌ فشل جلب السعر من ' + exchange.name + ' لـ ' + symbol + ':', e.message || e);
+        }
     }
+
     if (price !== null) return { symbol: symbol, price: price, source: source, error: null };
-    else return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'Failed to fetch price' : 'فشل جلب السعر' };
+    return {
+        symbol: symbol,
+        price: null,
+        source: null,
+        error: currentLang === 'en' ? ('Failed: ' + (lastError || 'No price available')) : ('فشل: ' + (lastError || 'لا يوجد سعر متاح'))
+    };
 }
+
 async function fetchAllPrices(isAutoRefresh = false) {
     const trackedSymbols = Object.keys(allCoinData);
     if (trackedSymbols.length === 0) {
@@ -4563,10 +4280,7 @@ function sanitizeTxtField(value) {
 }
 function downloadAllDataAsTxt() {
     const hasCoins = allCoinData && Object.keys(allCoinData).length > 0;
-    if (!hasCoins && availableCash <= 0 && cashHistory.deposits.length === 0) {
-        showError(currentLang === 'en' ? "No data to save." : "لا توجد بيانات لحفظها.");
-        return;
-    }
+    if (!hasCoins && availableCash <= 0 && cashHistory.deposits.length === 0) { showError(currentLang === 'en' ? "No data to save." : "لا توجد بيانات لحفظها."); return; }
     let content = "";
     content += "═══════════════════════════════════════════════════════════\n";
     content += "   بيانات متابعة الصفقات الشاملة — Muharraqi Pro Edition\n";
@@ -4574,30 +4288,21 @@ function downloadAllDataAsTxt() {
     content += "تاريخ الإنشاء: " + new Date().toLocaleString('ar-EG') + "\n";
     content += "الإصدار: Pro 2.0.0\n\n";
     content += "=== ملخص الكاش ===\n";
-    const totalSalesCash = salesCashHistory.deposits.reduce((sum, r) => sum + r.amount, 0) -
-                            salesCashHistory.withdrawals.reduce((sum, r) => sum + r.amount, 0);
+    const totalSalesCash = salesCashHistory.deposits.reduce((sum, r) => sum + r.amount, 0) - salesCashHistory.withdrawals.reduce((sum, r) => sum + r.amount, 0);
     content += "availableCash=" + availableCash + "\n";
     content += "totalSalesCash=" + Math.max(0, totalSalesCash) + "\n\n";
     content += "=== سجل إيداعات الكاش اليدوية ===\n";
     if (!cashHistory.deposits || cashHistory.deposits.length === 0) content += "(لا توجد سجلات)\n";
-    else cashHistory.deposits.forEach(record => {
-        content += "DEPOSIT|" + record.id + "|" + record.amount + "|" + sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "\n";
-    });
+    else cashHistory.deposits.forEach(record => { content += "DEPOSIT|" + record.id + "|" + record.amount + "|" + sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "\n"; });
     content += "\n=== سجل سحوبات الكاش اليدوية ===\n";
     if (!cashHistory.withdrawals || cashHistory.withdrawals.length === 0) content += "(لا توجد سجلات)\n";
-    else cashHistory.withdrawals.forEach(record => {
-        content += "WITHDRAWAL|" + record.id + "|" + record.amount + "|" + sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "\n";
-    });
+    else cashHistory.withdrawals.forEach(record => { content += "WITHDRAWAL|" + record.id + "|" + record.amount + "|" + sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "\n"; });
     content += "\n=== سجل إيداعات الكاش من البيع ===\n";
     if (!salesCashHistory.deposits || salesCashHistory.deposits.length === 0) content += "(لا توجد سجلات)\n";
-    else salesCashHistory.deposits.forEach(record => {
-        content += "SALES_DEPOSIT|" + record.id + "|" + record.amount + "|" + sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "|" + sanitizeTxtField(record.saleId) + "\n";
-    });
+    else salesCashHistory.deposits.forEach(record => { content += "SALES_DEPOSIT|" + record.id + "|" + record.amount + "|" + sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "|" + sanitizeTxtField(record.saleId) + "\n"; });
     content += "\n=== سجل سحوبات الكاش من البيع ===\n";
     if (!salesCashHistory.withdrawals || salesCashHistory.withdrawals.length === 0) content += "(لا توجد سجلات)\n";
-    else salesCashHistory.withdrawals.forEach(record => {
-        content += "SALES_WITHDRAWAL|" + record.id + "|" + record.amount + "|" + sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "\n";
-    });
+    else salesCashHistory.withdrawals.forEach(record => { content += "SALES_WITHDRAWAL|" + record.id + "|" + record.amount + "|" + sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "\n"; });
     content += "\n=== بيانات العملات ===\n";
     if (!hasCoins) content += "(لا توجد عملات)\n";
     else for (const [symbol, data] of Object.entries(allCoinData)) {
@@ -4611,27 +4316,18 @@ function downloadAllDataAsTxt() {
         content += "isEntrySaved=" + (data.isEntrySaved ? 'true' : 'false') + "\n";
         content += "--- مبيعات الدخول ---\n";
         if (!data.initialSales || data.initialSales.length === 0) content += "(لا توجد مبيعات)\n";
-        else data.initialSales.forEach(sale => {
-            content += "SALE|" + sanitizeTxtField(sale.id) + "|" + sale.qty + "|" + sale.price + "|" + (sale.investedAmount || 0) + "|" + sanitizeTxtField(sale.date) + "|" + sanitizeTxtField(sale.cashRecordId) + "\n";
-        });
+        else data.initialSales.forEach(sale => { content += "SALE|" + sanitizeTxtField(sale.id) + "|" + sale.qty + "|" + sale.price + "|" + (sale.investedAmount || 0) + "|" + sanitizeTxtField(sale.date) + "|" + sanitizeTxtField(sale.cashRecordId) + "\n"; });
         content += "--- التعزيزات ---\n";
         if (!data.repurchases || data.repurchases.length === 0) content += "(لا توجد تعزيزات)\n";
         else data.repurchases.forEach((rp, idx) => {
             content += "DCA|" + idx + "|" + sanitizeTxtField(rp.price) + "|" + sanitizeTxtField(rp.amount) + "|" + sanitizeTxtField(rp.totalSoldQty) + "|" + sanitizeTxtField(rp.priceMode || 'price') + "|" + sanitizeTxtField(rp.purchaseDate) + "|" + sanitizeTxtField(rp.purchaseDateRaw) + "|" + (rp.savedAmount || 0) + "\n";
-            if (rp.sales && rp.sales.length > 0) {
-                rp.sales.forEach(sale => {
-                    content += "DCA_SALE|" + idx + "|" + sanitizeTxtField(sale.id) + "|" + sale.qty + "|" + sale.price + "|" + (sale.investedAmount || 0) + "|" + sanitizeTxtField(sale.date) + "|" + sanitizeTxtField(sale.cashRecordId) + "\n";
-                });
-            }
+            if (rp.sales && rp.sales.length > 0) rp.sales.forEach(sale => { content += "DCA_SALE|" + idx + "|" + sanitizeTxtField(sale.id) + "|" + sale.qty + "|" + sale.price + "|" + (sale.investedAmount || 0) + "|" + sanitizeTxtField(sale.date) + "|" + sanitizeTxtField(sale.cashRecordId) + "\n"; });
         });
     }
     content += "\n=== الأسعار الحالية ===\n";
     const priceKeys = Object.keys(currentMarketPrices);
     if (priceKeys.length === 0) content += "(لا توجد أسعار)\n";
-    else priceKeys.forEach(symbol => {
-        const price = currentMarketPrices[symbol];
-        if (price !== null && price !== undefined) content += symbol + "=" + price + "\n";
-    });
+    else priceKeys.forEach(symbol => { const price = currentMarketPrices[symbol]; if (price !== null && price !== undefined) content += symbol + "=" + price + "\n"; });
     content += "\n";
     const { totals } = calculateSummaryData();
     content += "=== الإحصائيات الكلية ===\n";
@@ -4642,18 +4338,14 @@ function downloadAllDataAsTxt() {
     content += "totalCashFromSales=" + totals.cashFromSales + "\n\n";
     content += "=== الأسعار التقديرية المحفوظة ===\n";
     if (Object.keys(savedEstimatePrices).length === 0) content += "(لا توجد أسعار تقديرية)\n";
-    else Object.keys(savedEstimatePrices).forEach(symbol => {
-        content += symbol + "=" + savedEstimatePrices[symbol] + "\n";
-    });
+    else Object.keys(savedEstimatePrices).forEach(symbol => { content += symbol + "=" + savedEstimatePrices[symbol] + "\n"; });
     content += "\n=== إعدادات المنصة ===\n";
     content += "platform=" + (exchangeSettings.platform || 'binance') + "\n";
     content += "country=" + (exchangeSettings.country || 'sa') + "\n";
     content += "feeProfile=" + (exchangeSettings.feeProfile || 'standard') + "\n\n";
     content += "=== تنبيهات الأسعار ===\n";
     if (!priceAlerts || priceAlerts.length === 0) content += "(لا توجد تنبيهات)\n";
-    else priceAlerts.forEach(alert => {
-        content += "ALERT|" + alert.id + "|" + sanitizeTxtField(alert.symbol) + "|" + sanitizeTxtField(alert.type) + "|" + alert.price + "|" + (alert.triggered ? 'true' : 'false') + "|" + sanitizeTxtField(alert.createdAt) + "\n";
-    });
+    else priceAlerts.forEach(alert => { content += "ALERT|" + alert.id + "|" + sanitizeTxtField(alert.symbol) + "|" + sanitizeTxtField(alert.type) + "|" + alert.price + "|" + (alert.triggered ? 'true' : 'false') + "|" + sanitizeTxtField(alert.createdAt) + "\n"; });
     content += "\n=== الملف الشخصي ===\n";
     try {
         const profileSaved = localStorage.getItem(LS_KEY_PROFILE_SETTINGS);
@@ -4665,9 +4357,7 @@ function downloadAllDataAsTxt() {
     } catch (e) { content += "(خطأ في القراءة)\n"; }
     content += "\n=== الإشعارات ===\n";
     if (!notifications || notifications.length === 0) content += "(لا توجد إشعارات)\n";
-    else notifications.forEach(n => {
-        content += "NOTIF|" + n.id + "|" + sanitizeTxtField(n.title) + "|" + sanitizeTxtField(n.message) + "|" + sanitizeTxtField(n.type) + "|" + sanitizeTxtField(n.time) + "|" + (n.read ? 'true' : 'false') + "\n";
-    });
+    else notifications.forEach(n => { content += "NOTIF|" + n.id + "|" + sanitizeTxtField(n.title) + "|" + sanitizeTxtField(n.message) + "|" + sanitizeTxtField(n.type) + "|" + sanitizeTxtField(n.time) + "|" + (n.read ? 'true' : 'false') + "\n"; });
     content += "\n=== الإعدادات العامة ===\n";
     try {
         content += "privacyMode=" + (localStorage.getItem('muharraqi_privacy_mode') || '0') + "\n";
@@ -4694,23 +4384,14 @@ function handleImportTxtFile(event) {
     reader.onload = function(e) {
         const content = e.target.result;
         const lines = content.split('\n');
-        let currentSection = '';
-        let currentCoinSymbol = null;
-        let coinData = null;
-        const importedCoins = {};
-        const importedPrices = {};
-        const importedEstimates = {};
+        let currentSection = '', currentCoinSymbol = null, coinData = null;
+        const importedCoins = {}, importedPrices = {}, importedEstimates = {};
         const importedCashHistory = { deposits: [], withdrawals: [] };
         const importedSalesCashHistory = { deposits: [], withdrawals: [] };
-        const importedAlerts = [];
-        const importedNotifications = [];
-        let importedProfile = null;
-        let importedExchangeSettings = null;
-        let importedPrivacyMode = null;
-        let importedTheme = null;
-        let importedAvailableCash = null;
-        let importedLang = null;
-        let importedCurrency = null;
+        const importedAlerts = [], importedNotifications = [];
+        let importedProfile = null, importedExchangeSettings = null;
+        let importedPrivacyMode = null, importedTheme = null, importedAvailableCash = null;
+        let importedLang = null, importedCurrency = null;
         lines.forEach(rawLine => {
             const line = rawLine.replace(/\r$/, '').trim();
             if (!line) return;
@@ -4726,38 +4407,23 @@ function handleImportTxtFile(event) {
                 return;
             }
             if (currentSection.includes('ملخص الكاش')) {
-                if (line.startsWith('availableCash=')) {
-                    const v = parseFloat(line.split('=')[1]);
-                    if (!isNaN(v)) importedAvailableCash = v;
-                }
+                if (line.startsWith('availableCash=')) { const v = parseFloat(line.split('=')[1]); if (!isNaN(v)) importedAvailableCash = v; }
                 return;
             }
             if (currentSection.includes('سجل إيداعات الكاش اليدوية')) {
-                if (line.startsWith('DEPOSIT|')) {
-                    const p = line.split('|');
-                    if (p.length >= 5) importedCashHistory.deposits.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'deposit', note: p[4] || '' });
-                }
+                if (line.startsWith('DEPOSIT|')) { const p = line.split('|'); if (p.length >= 5) importedCashHistory.deposits.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'deposit', note: p[4] || '' }); }
                 return;
             }
             if (currentSection.includes('سجل سحوبات الكاش اليدوية')) {
-                if (line.startsWith('WITHDRAWAL|')) {
-                    const p = line.split('|');
-                    if (p.length >= 5) importedCashHistory.withdrawals.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'withdrawal', note: p[4] || '' });
-                }
+                if (line.startsWith('WITHDRAWAL|')) { const p = line.split('|'); if (p.length >= 5) importedCashHistory.withdrawals.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'withdrawal', note: p[4] || '' }); }
                 return;
             }
             if (currentSection.includes('سجل إيداعات الكاش من البيع')) {
-                if (line.startsWith('SALES_DEPOSIT|')) {
-                    const p = line.split('|');
-                    if (p.length >= 6) importedSalesCashHistory.deposits.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'deposit', note: p[4] || '', saleId: p[5] || null });
-                }
+                if (line.startsWith('SALES_DEPOSIT|')) { const p = line.split('|'); if (p.length >= 6) importedSalesCashHistory.deposits.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'deposit', note: p[4] || '', saleId: p[5] || null }); }
                 return;
             }
             if (currentSection.includes('سجل سحوبات الكاش من البيع')) {
-                if (line.startsWith('SALES_WITHDRAWAL|')) {
-                    const p = line.split('|');
-                    if (p.length >= 5) importedSalesCashHistory.withdrawals.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'withdrawal', note: p[4] || '' });
-                }
+                if (line.startsWith('SALES_WITHDRAWAL|')) { const p = line.split('|'); if (p.length >= 5) importedSalesCashHistory.withdrawals.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'withdrawal', note: p[4] || '' }); }
                 return;
             }
             if (currentSection.includes('بيانات العملات') && currentCoinSymbol && coinData) {
@@ -4771,81 +4437,25 @@ function handleImportTxtFile(event) {
                 else if (line.startsWith('isEntrySaved=')) coinData.isEntrySaved = line.split('=')[1] === 'true';
                 else if (line.startsWith('SALE|')) {
                     const p = line.split('|');
-                    if (p.length >= 7) {
-                        if (!coinData.initialSales) coinData.initialSales = [];
-                        coinData.initialSales.push({ id: p[1] || generateUniqueId(), qty: parseFloat(p[2]) || 0, price: parseFloat(p[3]) || 0, investedAmount: parseFloat(p[4]) || 0, date: p[5] || '', cashRecordId: p[6] ? (parseInt(p[6]) || null) : null });
-                    }
+                    if (p.length >= 7) { if (!coinData.initialSales) coinData.initialSales = []; coinData.initialSales.push({ id: p[1] || generateUniqueId(), qty: parseFloat(p[2]) || 0, price: parseFloat(p[3]) || 0, investedAmount: parseFloat(p[4]) || 0, date: p[5] || '', cashRecordId: p[6] ? (parseInt(p[6]) || null) : null }); }
                 }
                 else if (line.startsWith('DCA|')) {
                     const p = line.split('|');
-                    if (p.length >= 9) {
-                        if (!coinData.repurchases) coinData.repurchases = [];
-                        coinData.repurchases.push({ price: p[2] || '', amount: p[3] || '', totalSoldQty: p[4] || '0', priceMode: p[5] || 'price', purchaseDate: p[6] || '', purchaseDateRaw: p[7] || '', savedAmount: parseFloat(p[8]) || 0, sales: [] });
-                    }
+                    if (p.length >= 9) { if (!coinData.repurchases) coinData.repurchases = []; coinData.repurchases.push({ price: p[2] || '', amount: p[3] || '', totalSoldQty: p[4] || '0', priceMode: p[5] || 'price', purchaseDate: p[6] || '', purchaseDateRaw: p[7] || '', savedAmount: parseFloat(p[8]) || 0, sales: [] }); }
                 }
                 else if (line.startsWith('DCA_SALE|')) {
                     const p = line.split('|');
-                    if (p.length >= 8) {
-                        const dcaIdx = parseInt(p[1]);
-                        if (!isNaN(dcaIdx) && coinData.repurchases && coinData.repurchases[dcaIdx]) {
-                            coinData.repurchases[dcaIdx].sales.push({ id: p[2] || generateUniqueId(), qty: parseFloat(p[3]) || 0, price: parseFloat(p[4]) || 0, investedAmount: parseFloat(p[5]) || 0, date: p[6] || '', cashRecordId: p[7] ? (parseInt(p[7]) || null) : null });
-                        }
-                    }
+                    if (p.length >= 8) { const dcaIdx = parseInt(p[1]); if (!isNaN(dcaIdx) && coinData.repurchases && coinData.repurchases[dcaIdx]) coinData.repurchases[dcaIdx].sales.push({ id: p[2] || generateUniqueId(), qty: parseFloat(p[3]) || 0, price: parseFloat(p[4]) || 0, investedAmount: parseFloat(p[5]) || 0, date: p[6] || '', cashRecordId: p[7] ? (parseInt(p[7]) || null) : null }); }
                 }
                 return;
             }
-            if (currentSection.includes('الأسعار الحالية')) {
-                const eqIdx = line.indexOf('=');
-                if (eqIdx > 0) {
-                    const sym = line.substring(0, eqIdx).trim();
-                    const price = parseFloat(line.substring(eqIdx + 1).trim());
-                    if (sym && !isNaN(price)) importedPrices[sym] = price;
-                }
-                return;
-            }
-            if (currentSection.includes('الأسعار التقديرية المحفوظة')) {
-                const eqIdx = line.indexOf('=');
-                if (eqIdx > 0) {
-                    const sym = line.substring(0, eqIdx).trim();
-                    const price = parseFloat(line.substring(eqIdx + 1).trim());
-                    if (sym && !isNaN(price)) importedEstimates[sym] = price;
-                }
-                return;
-            }
-            if (currentSection.includes('إعدادات المنصة')) {
-                if (!importedExchangeSettings) importedExchangeSettings = {};
-                if (line.startsWith('platform=')) importedExchangeSettings.platform = line.split('=')[1].trim();
-                else if (line.startsWith('country=')) importedExchangeSettings.country = line.split('=')[1].trim();
-                else if (line.startsWith('feeProfile=')) importedExchangeSettings.feeProfile = line.split('=')[1].trim();
-                return;
-            }
-            if (currentSection.includes('تنبيهات الأسعار')) {
-                if (line.startsWith('ALERT|')) {
-                    const p = line.split('|');
-                    if (p.length >= 7) importedAlerts.push({ id: parseInt(p[1]) || Date.now(), symbol: p[2], type: p[3], price: parseFloat(p[4]) || 0, triggered: p[5] === 'true', createdAt: p[6] });
-                }
-                return;
-            }
-            if (currentSection.includes('الملف الشخصي')) {
-                if (!importedProfile) importedProfile = {};
-                if (line.startsWith('username=')) importedProfile.username = line.split('=')[1].trim();
-                else if (line.startsWith('walletName=')) importedProfile.walletName = line.split('=')[1].trim();
-                return;
-            }
-            if (currentSection.includes('الإشعارات')) {
-                if (line.startsWith('NOTIF|')) {
-                    const p = line.split('|');
-                    if (p.length >= 7) importedNotifications.push({ id: parseInt(p[1]) || Date.now(), title: p[2], message: p[3], type: p[4], time: p[5], read: p[6] === 'true' });
-                }
-                return;
-            }
-            if (currentSection.includes('الإعدادات العامة')) {
-                if (line.startsWith('privacyMode=')) importedPrivacyMode = line.split('=')[1].trim();
-                else if (line.startsWith('theme=')) importedTheme = line.split('=')[1].trim();
-                else if (line.startsWith('lang=')) importedLang = line.split('=')[1].trim();
-                else if (line.startsWith('currency=')) importedCurrency = line.split('=')[1].trim();
-                return;
-            }
+            if (currentSection.includes('الأسعار الحالية')) { const eqIdx = line.indexOf('='); if (eqIdx > 0) { const sym = line.substring(0, eqIdx).trim(); const price = parseFloat(line.substring(eqIdx + 1).trim()); if (sym && !isNaN(price)) importedPrices[sym] = price; } return; }
+            if (currentSection.includes('الأسعار التقديرية المحفوظة')) { const eqIdx = line.indexOf('='); if (eqIdx > 0) { const sym = line.substring(0, eqIdx).trim(); const price = parseFloat(line.substring(eqIdx + 1).trim()); if (sym && !isNaN(price)) importedEstimates[sym] = price; } return; }
+            if (currentSection.includes('إعدادات المنصة')) { if (!importedExchangeSettings) importedExchangeSettings = {}; if (line.startsWith('platform=')) importedExchangeSettings.platform = line.split('=')[1].trim(); else if (line.startsWith('country=')) importedExchangeSettings.country = line.split('=')[1].trim(); else if (line.startsWith('feeProfile=')) importedExchangeSettings.feeProfile = line.split('=')[1].trim(); return; }
+            if (currentSection.includes('تنبيهات الأسعار')) { if (line.startsWith('ALERT|')) { const p = line.split('|'); if (p.length >= 7) importedAlerts.push({ id: parseInt(p[1]) || Date.now(), symbol: p[2], type: p[3], price: parseFloat(p[4]) || 0, triggered: p[5] === 'true', createdAt: p[6] }); } return; }
+            if (currentSection.includes('الملف الشخصي')) { if (!importedProfile) importedProfile = {}; if (line.startsWith('username=')) importedProfile.username = line.split('=')[1].trim(); else if (line.startsWith('walletName=')) importedProfile.walletName = line.split('=')[1].trim(); return; }
+            if (currentSection.includes('الإشعارات')) { if (line.startsWith('NOTIF|')) { const p = line.split('|'); if (p.length >= 7) importedNotifications.push({ id: parseInt(p[1]) || Date.now(), title: p[2], message: p[3], type: p[4], time: p[5], read: p[6] === 'true' }); } return; }
+            if (currentSection.includes('الإعدادات العامة')) { if (line.startsWith('privacyMode=')) importedPrivacyMode = line.split('=')[1].trim(); else if (line.startsWith('theme=')) importedTheme = line.split('=')[1].trim(); else if (line.startsWith('lang=')) importedLang = line.split('=')[1].trim(); else if (line.startsWith('currency=')) importedCurrency = line.split('=')[1].trim(); return; }
         });
         if (currentCoinSymbol && coinData) importedCoins[currentCoinSymbol] = coinData;
         if (Object.keys(importedCoins).length > 0) allCoinData = importedCoins;
@@ -4898,10 +4508,7 @@ function getNowForDatetimeInput() {
 function getCashRecordDate() {
     if (cashDateMode === 'manual') {
         const input = document.getElementById('cashManualDateInput');
-        if (input && input.value) {
-            const d = new Date(input.value);
-            if (!isNaN(d.getTime())) return d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
-        }
+        if (input && input.value) { const d = new Date(input.value); if (!isNaN(d.getTime())) return d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG'); }
     }
     return new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
 }
@@ -4911,19 +4518,13 @@ function setCashDateMode(mode) {
     buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
     const input = document.getElementById('cashManualDateInput');
     const hint = document.getElementById('cashDateHint');
-    if (input) {
-        if (mode === 'manual') { input.style.display = 'inline-block'; if (!input.value) input.value = getNowForDatetimeInput(); }
-        else input.style.display = 'none';
-    }
+    if (input) { if (mode === 'manual') { input.style.display = 'inline-block'; if (!input.value) input.value = getNowForDatetimeInput(); } else input.style.display = 'none'; }
     if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
 }
 function getSalesCashRecordDate() {
     if (salesCashDateMode === 'manual') {
         const input = document.getElementById('salesCashManualDateInput');
-        if (input && input.value) {
-            const d = new Date(input.value);
-            if (!isNaN(d.getTime())) return d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
-        }
+        if (input && input.value) { const d = new Date(input.value); if (!isNaN(d.getTime())) return d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG'); }
     }
     return new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
 }
@@ -4933,27 +4534,18 @@ function setSalesCashDateMode(mode) {
     buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
     const input = document.getElementById('salesCashManualDateInput');
     const hint = document.getElementById('salesCashDateHint');
-    if (input) {
-        if (mode === 'manual') { input.style.display = 'inline-block'; if (!input.value) input.value = getNowForDatetimeInput(); }
-        else input.style.display = 'none';
-    }
+    if (input) { if (mode === 'manual') { input.style.display = 'inline-block'; if (!input.value) input.value = getNowForDatetimeInput(); } else input.style.display = 'none'; }
     if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
 }
 function getEntryRecordDate() {
     if (entryDateMode === 'manual') {
         const input = document.getElementById('entryManualDateInput');
-        if (input && input.value) {
-            const d = new Date(input.value);
-            if (!isNaN(d.getTime())) return d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
-        }
+        if (input && input.value) { const d = new Date(input.value); if (!isNaN(d.getTime())) return d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG'); }
     }
     return new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
 }
 function getEntryRecordDateRaw() {
-    if (entryDateMode === 'manual') {
-        const input = document.getElementById('entryManualDateInput');
-        if (input && input.value) return input.value;
-    }
+    if (entryDateMode === 'manual') { const input = document.getElementById('entryManualDateInput'); if (input && input.value) return input.value; }
     return getNowForDatetimeInput();
 }
 function setEntryDateMode(mode) {
@@ -4962,27 +4554,18 @@ function setEntryDateMode(mode) {
     buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
     const input = document.getElementById('entryManualDateInput');
     const hint = document.getElementById('entryDateHint');
-    if (input) {
-        if (mode === 'manual') { input.style.display = 'inline-block'; if (!input.value) input.value = getNowForDatetimeInput(); }
-        else input.style.display = 'none';
-    }
+    if (input) { if (mode === 'manual') { input.style.display = 'inline-block'; if (!input.value) input.value = getNowForDatetimeInput(); } else input.style.display = 'none'; }
     if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
 }
 function getDCARecordDate() {
     if (dcaDateMode === 'manual') {
         const input = document.getElementById('dcaManualDateInput');
-        if (input && input.value) {
-            const d = new Date(input.value);
-            if (!isNaN(d.getTime())) return d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
-        }
+        if (input && input.value) { const d = new Date(input.value); if (!isNaN(d.getTime())) return d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG'); }
     }
     return new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
 }
 function getDCARecordDateRaw() {
-    if (dcaDateMode === 'manual') {
-        const input = document.getElementById('dcaManualDateInput');
-        if (input && input.value) return input.value;
-    }
+    if (dcaDateMode === 'manual') { const input = document.getElementById('dcaManualDateInput'); if (input && input.value) return input.value; }
     return getNowForDatetimeInput();
 }
 function setDCADateMode(mode) {
@@ -4991,34 +4574,21 @@ function setDCADateMode(mode) {
     buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
     const input = document.getElementById('dcaManualDateInput');
     const hint = document.getElementById('dcaDateHint');
-    if (input) {
-        if (mode === 'manual') { input.style.display = 'inline-block'; if (!input.value) input.value = getNowForDatetimeInput(); }
-        else input.style.display = 'none';
-    }
+    if (input) { if (mode === 'manual') { input.style.display = 'inline-block'; if (!input.value) input.value = getNowForDatetimeInput(); } else input.style.display = 'none'; }
     if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
 }
 function updateDCAPurchaseDate(symbol, index, value) {
     const data = allCoinData[symbol];
     if (!data || !data.repurchases || !data.repurchases[index]) return;
-    if (value) {
-        const d = new Date(value);
-        if (!isNaN(d.getTime())) {
-            data.repurchases[index].purchaseDate = d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
-            data.repurchases[index].purchaseDateRaw = value;
-        }
-    } else data.repurchases[index].purchaseDateRaw = '';
+    if (value) { const d = new Date(value); if (!isNaN(d.getTime())) { data.repurchases[index].purchaseDate = d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG'); data.repurchases[index].purchaseDateRaw = value; } }
+    else data.repurchases[index].purchaseDateRaw = '';
     saveAllDataToLocalStorage();
 }
 function updateEntryPurchaseDate(symbol, value) {
     const data = allCoinData[symbol];
     if (!data) return;
-    if (value) {
-        const d = new Date(value);
-        if (!isNaN(d.getTime())) {
-            data.initialPurchaseDate = d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
-            data.initialPurchaseDateRaw = value;
-        }
-    } else data.initialPurchaseDateRaw = '';
+    if (value) { const d = new Date(value); if (!isNaN(d.getTime())) { data.initialPurchaseDate = d.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG'); data.initialPurchaseDateRaw = value; } }
+    else data.initialPurchaseDateRaw = '';
     saveAllDataToLocalStorage();
 }
 function ensureActiveCoin(symbol) {
@@ -5065,35 +4635,21 @@ function calculateCoinRefundAmount(symbol) {
 function executeDeleteCoin(symbolToDelete, keepRecords) {
     const displayName = getDisplayNameFromKey(symbolToDelete);
     const data = allCoinData[symbolToDelete];
-    let deletedSalesCashDeposits = 0, deletedSalesCashWithdrawals = 0, deletedWithdrawalsCount = 0, deletedDepositsCount = 0;
     const refundInfo = calculateCoinRefundAmount(symbolToDelete);
     const totalRefundToWallet = refundInfo.total;
     if (data) {
         const saleCashRecordIds = [];
         (data.initialSales || []).forEach(s => { if (s.cashRecordId) saleCashRecordIds.push(s.cashRecordId); });
-        (data.repurchases || []).forEach(rp => {
-            (rp.sales || []).forEach(s => { if (s.cashRecordId) saleCashRecordIds.push(s.cashRecordId); });
-        });
-        const beforeDeposits = salesCashHistory.deposits.length;
+        (data.repurchases || []).forEach(rp => { (rp.sales || []).forEach(s => { if (s.cashRecordId) saleCashRecordIds.push(s.cashRecordId); }); });
         salesCashHistory.deposits = salesCashHistory.deposits.filter(d => {
             if (saleCashRecordIds.length > 0 && saleCashRecordIds.includes(d.id)) return false;
             if (d.note && noteBelongsToCoin(d.note, displayName)) return false;
-            if (d.saleId) {
-                const saleInfo = findSaleById(d.saleId);
-                if (saleInfo && saleInfo.symbol === symbolToDelete) return false;
-            }
+            if (d.saleId) { const saleInfo = findSaleById(d.saleId); if (saleInfo && saleInfo.symbol === symbolToDelete) return false; }
             return true;
         });
-        deletedSalesCashDeposits = beforeDeposits - salesCashHistory.deposits.length;
-        const beforeSalesWithdrawals = salesCashHistory.withdrawals.length;
         salesCashHistory.withdrawals = salesCashHistory.withdrawals.filter(w => !noteBelongsToCoin(w.note, displayName));
-        deletedSalesCashWithdrawals = beforeSalesWithdrawals - salesCashHistory.withdrawals.length;
-        const beforeWithdrawals = cashHistory.withdrawals.length;
         cashHistory.withdrawals = cashHistory.withdrawals.filter(w => !noteBelongsToCoin(w.note, displayName));
-        deletedWithdrawalsCount = beforeWithdrawals - cashHistory.withdrawals.length;
-        const beforeCashDeposits = cashHistory.deposits.length;
         cashHistory.deposits = cashHistory.deposits.filter(d => !noteBelongsToCoin(d.note, displayName));
-        deletedDepositsCount = beforeCashDeposits - cashHistory.deposits.length;
         saveCashHistory();
         saveSalesCashHistory();
     }
@@ -5116,9 +4672,7 @@ function executeDeleteCoin(symbolToDelete, keepRecords) {
     updateSalesCashHistoryDisplay();
     document.getElementById('popupOverlay').classList.remove('active');
     document.getElementById('popupFooter').style.display = '';
-    const refundMsg = totalRefundToWallet > 0.01
-        ? (currentLang === 'en' ? '\n\n💰 Refunded ' : '\n\n💰 تم استرجاع ') + fmtUSD(totalRefundToWallet, 2)
-        : '';
+    const refundMsg = totalRefundToWallet > 0.01 ? (currentLang === 'en' ? '\n\n💰 Refunded ' : '\n\n💰 تم استرجاع ') + fmtUSD(totalRefundToWallet, 2) : '';
     showSuccess((currentLang === 'en' ? '✅ Deleted ' : '✅ تم حذف ') + displayName + refundMsg);
     apiStatusDiv.textContent = (currentLang === 'en' ? 'Deleted ' : 'تم حذف ') + displayName + '.';
     apiStatusDiv.style.color = 'var(--text-muted)';
@@ -5166,7 +4720,7 @@ function deleteCurrentCoin() {
     popupOverlay.onclick = (e) => { if (e.target === popupOverlay) closeFn(); };
 }
 function printReport() {
-    const { summaryRows, totals } = calculateSummaryData();
+    const { totals } = calculateSummaryData();
     const reportDate = new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
     let reportHTML = '<div class="print-header"><h1>📊 ' + (currentLang === 'en' ? 'Trades Report' : 'تقرير الصفقات') + '</h1><p>' + reportDate + '</p></div>';
     reportHTML += '<div class="print-section"><h2>📈 ' + (currentLang === 'en' ? 'Summary' : 'الملخص') + '</h2><div class="print-totals">';
@@ -5195,7 +4749,6 @@ function calculateActiveCoinDetails() {
     const totalCashFromSalesEl = document.getElementById('totalCashFromSales');
     const pnlAmountElement = document.getElementById('pnlAmount');
     const pnlPercentElement = document.getElementById('pnlPercent');
-
     if (initialCoinQtyEl) initialCoinQtyEl.textContent = formatNumber(0, 8);
     if (initialSoldQtyDisplayEl) initialSoldQtyDisplayEl.textContent = formatNumber(0, 8);
     if (initialRemainingQtyEl) initialRemainingQtyEl.textContent = formatNumber(0, 8);
@@ -5237,6 +4790,10 @@ function calculateActiveCoinDetails() {
     let totalInvestedAmount = initialCoinQty > 0 ? initialAmountDollars * (initialRemainingQty / initialCoinQty) : 0;
     let totalCashFromSales = initialCashFromSalesVal;
     (data.repurchases || []).forEach(rp => {
+        const savedAmount = rp.savedAmount || 0;
+        const repurchaseAmountCheck = parseFormattedNumber(rp.amount);
+        const isSaved = savedAmount > 0.0001 && Math.abs(repurchaseAmountCheck - savedAmount) <= 0.001;
+        if (!isSaved) return;
         const repurchasePrice = parseFormattedNumber(rp.price);
         const repurchaseAmount = parseFormattedNumber(rp.amount);
         const sales = rp.sales || [];
@@ -5294,18 +4851,10 @@ function addOrSwitchCoin() {
                 displayCoinData(newKey);
                 showSuccess((currentLang === 'en' ? '✅ New trade created: ' : '✅ تم إنشاء صفقة جديدة: ') + getDisplayNameFromKey(newKey));
                 fetchSinglePrice(newKey).then(result => {
-                    if (result.price !== null) {
-                        currentMarketPrices[newKey] = result.price;
-                        if (activeCoinSymbol === newKey) displayCoinData(newKey);
-                        updateSummaryTable();
-                    }
+                    if (result.price !== null) { currentMarketPrices[newKey] = result.price; if (activeCoinSymbol === newKey) displayCoinData(newKey); updateSummaryTable(); }
                 });
             },
-            () => {
-                coinSelector.value = existingKeys[0];
-                handleCoinSelectionChange();
-                newCoinNameInput.value = '';
-            }
+            () => { coinSelector.value = existingKeys[0]; handleCoinSelectionChange(); newCoinNameInput.value = ''; }
         );
     } else {
         allCoinData[inputSymbol] = getDefaultCoinDataStructure();
@@ -5318,11 +4867,7 @@ function addOrSwitchCoin() {
         updateSummaryTable();
         showInfo((currentLang === 'en' ? 'Added ' : 'تمت إضافة ') + inputSymbol);
         fetchSinglePrice(inputSymbol).then(result => {
-            if (result.price !== null) {
-                currentMarketPrices[inputSymbol] = result.price;
-                if (activeCoinSymbol === inputSymbol) displayCoinData(inputSymbol);
-                updateSummaryTable();
-            }
+            if (result.price !== null) { currentMarketPrices[inputSymbol] = result.price; if (activeCoinSymbol === inputSymbol) displayCoinData(inputSymbol); updateSummaryTable(); }
         });
     }
 }
@@ -5360,9 +4905,12 @@ function sellAllCoinsWithDCA() {
         const initialTotalSoldQty = calculateTotalInitialSoldQty(initialSales);
         const initialRemainingQty = Math.max(0, initialCoinQty - initialTotalSoldQty);
         let coinQty = initialRemainingQty;
-        let hasDCA = false;
-        let dcaCount = 0;
+        let hasDCA = false, dcaCount = 0;
         (data.repurchases || []).forEach(rp => {
+            const savedAmount = rp.savedAmount || 0;
+            const repurchaseAmountCheck = parseFormattedNumber(rp.amount);
+            const isSaved = savedAmount > 0.0001 && Math.abs(repurchaseAmountCheck - savedAmount) <= 0.001;
+            if (!isSaved) return;
             const repurchasePrice = parseFormattedNumber(rp.price);
             const repurchaseAmount = parseFormattedNumber(rp.amount);
             const repurchaseQty = repurchasePrice > 0 ? repurchaseAmount / repurchasePrice : 0;
@@ -5426,12 +4974,13 @@ function executeSellSelectedCoins(selectedCoins) {
             data.initialTotalSoldQty = calculateTotalInitialSoldQty(initialSales).toString();
             const saleAmount = initialRemainingQty * marketPrice;
             const cashRecordId = addSalesCashDeposit(saleAmount, (currentLang === 'en' ? 'Sell All from ' : 'بيع الكل من ') + getDisplayNameFromKey(symbol), saleId);
-            if (cashRecordId) {
-                const saleIndex = initialSales.findIndex(s => s.id === saleId);
-                if (saleIndex !== -1) initialSales[saleIndex].cashRecordId = cashRecordId;
-            }
+            if (cashRecordId) { const saleIndex = initialSales.findIndex(s => s.id === saleId); if (saleIndex !== -1) initialSales[saleIndex].cashRecordId = cashRecordId; }
         }
         (data.repurchases || []).forEach(rp => {
+            const savedAmount = rp.savedAmount || 0;
+            const repurchaseAmountCheck = parseFormattedNumber(rp.amount);
+            const isSaved = savedAmount > 0.0001 && Math.abs(repurchaseAmountCheck - savedAmount) <= 0.001;
+            if (!isSaved) return;
             const repurchasePrice = parseFormattedNumber(rp.price);
             const repurchaseAmount = parseFormattedNumber(rp.amount);
             const repurchaseQty = repurchasePrice > 0 ? repurchaseAmount / repurchasePrice : 0;
@@ -5446,10 +4995,7 @@ function executeSellSelectedCoins(selectedCoins) {
                 rp.totalSoldQty = calculateTotalSoldQty(sales).toString();
                 const saleAmount = remainingQty * marketPrice;
                 const cashRecordId = addSalesCashDeposit(saleAmount, (currentLang === 'en' ? 'Sell All from ' : 'بيع الكل من ') + getDisplayNameFromKey(symbol), saleId);
-                if (cashRecordId) {
-                    const saleIndex = sales.findIndex(s => s.id === saleId);
-                    if (saleIndex !== -1) sales[saleIndex].cashRecordId = cashRecordId;
-                }
+                if (cashRecordId) { const saleIndex = sales.findIndex(s => s.id === saleId); if (saleIndex !== -1) sales[saleIndex].cashRecordId = cashRecordId; }
             }
         });
     });
@@ -5473,6 +5019,10 @@ function showEstimateSellPopup() {
         let totalCoinQty = initialRemainingQty;
         let totalInvestedAmount = initialCoinQty > 0 ? initialAmountDollars * (initialRemainingQty / initialCoinQty) : 0;
         (data.repurchases || []).forEach(rp => {
+            const savedAmount = rp.savedAmount || 0;
+            const repurchaseAmountCheck = parseFormattedNumber(rp.amount);
+            const isSaved = savedAmount > 0.0001 && Math.abs(repurchaseAmountCheck - savedAmount) <= 0.001;
+            if (!isSaved) return;
             const repurchasePrice = parseFormattedNumber(rp.price);
             const repurchaseAmount = parseFormattedNumber(rp.amount);
             if (repurchasePrice > 0 && repurchaseAmount > 0) {
@@ -5480,10 +5030,7 @@ function showEstimateSellPopup() {
                 const sales = rp.sales || [];
                 const totalSoldQty = calculateTotalSoldQty(sales);
                 const remainingQty = Math.max(0, repurchaseQty - totalSoldQty);
-                if (remainingQty > 0) {
-                    totalCoinQty += remainingQty;
-                    totalInvestedAmount += repurchaseAmount * (remainingQty / repurchaseQty);
-                }
+                if (remainingQty > 0) { totalCoinQty += remainingQty; totalInvestedAmount += repurchaseAmount * (remainingQty / repurchaseQty); }
             }
         });
         if (totalCoinQty > 0.00000001) {
@@ -5679,11 +5226,7 @@ function drawSparkline() {
     if (!path) return;
     const points = [];
     let y = 20;
-    for (let x = 0; x <= 180; x += 10) {
-        y += (Math.random() - 0.5) * 8;
-        y = Math.max(5, Math.min(35, y));
-        points.push(`${x},${y}`);
-    }
+    for (let x = 0; x <= 180; x += 10) { y += (Math.random() - 0.5) * 8; y = Math.max(5, Math.min(35, y)); points.push(`${x},${y}`); }
     path.setAttribute('d', 'M' + points.join(' L'));
 }
 function drawFngGauge(value) {
@@ -5725,10 +5268,7 @@ function updateProfileStats() {
     const pnlEl = document.getElementById('profileTotalPnl');
     if (assetsEl) assetsEl.textContent = fmtMoney(totalAssets, 2);
     if (coinsEl) coinsEl.textContent = totalCoins;
-    if (pnlEl) {
-        pnlEl.textContent = fmtMoney(totalPnl, 2);
-        pnlEl.style.color = totalPnl > 0 ? 'var(--positive-color)' : totalPnl < 0 ? 'var(--negative-color)' : 'var(--text-color)';
-    }
+    if (pnlEl) { pnlEl.textContent = fmtMoney(totalPnl, 2); pnlEl.style.color = totalPnl > 0 ? 'var(--positive-color)' : totalPnl < 0 ? 'var(--negative-color)' : 'var(--text-color)'; }
 }
 function loadProfileSettings() {
     try {
@@ -5826,10 +5366,7 @@ function addNotification(title, message, type = 'info') {
 function updateNotifBadge() {
     const unread = notifications.filter(n => !n.read).length;
     const badge = document.getElementById('notifBadge');
-    if (badge) {
-        if (unread > 0) { badge.textContent = unread > 9 ? '9+' : unread; badge.style.display = 'flex'; }
-        else badge.style.display = 'none';
-    }
+    if (badge) { if (unread > 0) { badge.textContent = unread > 9 ? '9+' : unread; badge.style.display = 'flex'; } else badge.style.display = 'none'; }
 }
 function renderNotifications() {
     const list = document.getElementById('notifList');
@@ -5847,18 +5384,11 @@ function markAllNotifRead() {
     showSuccess(currentLang === 'en' ? '✅ Marked all' : '✅ تم تحديد الكل');
 }
 function clearAllNotif() {
-    if (confirm(currentLang === 'en' ? 'Clear all?' : 'مسح الكل؟')) {
-        notifications = [];
-        saveNotifications(); updateNotifBadge(); renderNotifications();
-    }
+    if (confirm(currentLang === 'en' ? 'Clear all?' : 'مسح الكل؟')) { notifications = []; saveNotifications(); updateNotifBadge(); renderNotifications(); }
 }
 function saveNotifications() { try { localStorage.setItem('muharraqi_notifications', JSON.stringify(notifications)); } catch (e) {} }
 function loadNotifications() {
-    try {
-        const saved = localStorage.getItem('muharraqi_notifications');
-        if (saved) notifications = JSON.parse(saved);
-        updateNotifBadge();
-    } catch (e) {}
+    try { const saved = localStorage.getItem('muharraqi_notifications'); if (saved) notifications = JSON.parse(saved); updateNotifBadge(); } catch (e) {}
 }
 function switchNotifTab(tab, el) {
     document.querySelectorAll('.notif-tab').forEach(t => t.classList.remove('active'));
@@ -5911,10 +5441,7 @@ function renderAlertsList() {
 function deletePriceAlert(id) { priceAlerts = priceAlerts.filter(a => a.id !== id); savePriceAlerts(); renderAlertsList(); }
 function savePriceAlerts() { try { localStorage.setItem('muharraqi_price_alerts', JSON.stringify(priceAlerts)); } catch (e) {} }
 function loadPriceAlerts() {
-    try {
-        const saved = localStorage.getItem('muharraqi_price_alerts');
-        if (saved) priceAlerts = JSON.parse(saved);
-    } catch (e) {}
+    try { const saved = localStorage.getItem('muharraqi_price_alerts'); if (saved) priceAlerts = JSON.parse(saved); } catch (e) {}
 }
 function checkPriceAlerts() {
     priceAlerts.forEach(alert => {
@@ -5992,20 +5519,14 @@ function toggleFinancialPrivacy() {
     try { localStorage.setItem('muharraqi_privacy_mode', isActive ? '1' : '0'); } catch (e) {}
 }
 function loadPrivacyMode() {
-    try {
-        const saved = localStorage.getItem('muharraqi_privacy_mode');
-        if (saved === '1') toggleFinancialPrivacy();
-    } catch (e) {}
+    try { const saved = localStorage.getItem('muharraqi_privacy_mode'); if (saved === '1') toggleFinancialPrivacy(); } catch (e) {}
 }
 
 let donutChart = null, trendChart = null, trendRange = 'ALL';
 let portfolioHistory = [];
 function initAdvancedCharts() { loadPortfolioHistory(); updateAdvancedCharts(); }
 function loadPortfolioHistory() {
-    try {
-        const saved = localStorage.getItem('muharraqi_portfolio_history');
-        if (saved) portfolioHistory = JSON.parse(saved);
-    } catch (e) { portfolioHistory = []; }
+    try { const saved = localStorage.getItem('muharraqi_portfolio_history'); if (saved) portfolioHistory = JSON.parse(saved); } catch (e) { portfolioHistory = []; }
 }
 function savePortfolioHistory() {
     try {
@@ -6045,7 +5566,7 @@ function updateDonutChart() {
     });
     const legendEl = document.getElementById('donutLegend');
     if (legendEl) legendEl.innerHTML = labels.map((label, i) => {
-        const pct = ((data[i] / totalValue) * 100).toFixed(1);
+        const pct = totalValue > 0 ? ((data[i] / totalValue) * 100).toFixed(1) : '0.0';
         return `<div class="legend-item"><span class="legend-color" style="background:${colors[i]}"></span><span>${label} (${pct}%)</span></div>`;
     }).join('');
 }
@@ -6075,7 +5596,6 @@ function updateTrendChart() {
     if (trendLowEl) trendLowEl.textContent = fmtMoney(low, 2);
     if (trendChart) trendChart.destroy();
     const isDark = document.body.classList.contains('dark-mode');
-    const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
     const textColor = isDark ? '#e0e0e0' : '#212529';
     trendChart = new Chart(canvas, {
         type: 'line',
@@ -6108,11 +5628,7 @@ function openNewEntryTransactionDialog() {
         updateSummaryTable();
         displayCoinData(newKey);
         fetchSinglePrice(newKey).then(result => {
-            if (result.price !== null) {
-                currentMarketPrices[newKey] = result.price;
-                if (activeCoinSymbol === newKey) displayCoinData(newKey);
-                updateSummaryTable();
-            }
+            if (result.price !== null) { currentMarketPrices[newKey] = result.price; if (activeCoinSymbol === newKey) displayCoinData(newKey); updateSummaryTable(); }
         });
         showSuccess((currentLang === 'en' ? '✅ New trade opened: ' : '✅ تم فتح صفقة جديدة: ') + getDisplayNameFromKey(newKey));
     });
@@ -6129,10 +5645,7 @@ const sectionConfigs = [
     { id: 'section-advancedCharts', name: 'تحليلات المحفظة المتقدمة', nameEn: 'Advanced Portfolio Analytics', defaultColor: '#ffffff' }
 ];
 function loadColorSettings() {
-    try {
-        const saved = localStorage.getItem('sectionColors');
-        if (saved) return JSON.parse(saved);
-    } catch (e) {}
+    try { const saved = localStorage.getItem('sectionColors'); if (saved) return JSON.parse(saved); } catch (e) {}
     return {};
 }
 function saveColorSettings(colors) { try { localStorage.setItem('sectionColors', JSON.stringify(colors)); } catch (e) {} }
@@ -6140,26 +5653,15 @@ function applyColorSettings() {
     const colors = loadColorSettings();
     sectionConfigs.forEach(config => {
         const element = document.getElementById(config.id);
-        if (element) {
-            const color = colors[config.id] || config.defaultColor;
-            element.style.backgroundColor = color;
-        }
+        if (element) { const color = colors[config.id] || config.defaultColor; element.style.backgroundColor = color; }
     });
-}
-function isLightColor(hex) {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    if (!result) return true;
-    const r = parseInt(result[1], 16), g = parseInt(result[2], 16), b = parseInt(result[3], 16);
-    return (r * 299 + g * 587 + b * 114) / 1000 > 128;
 }
 function openColorSettings() {
     const popup = document.getElementById('colorSettingsPopup');
     const grid = document.getElementById('colorSettingsGrid');
     const colors = loadColorSettings();
     const isDark = document.body.classList.contains('dark-mode');
-    document.getElementById('settingsThemeBtn').textContent = isDark
-        ? (currentLang === 'en' ? '☀️ Light' : '☀️ نهاري')
-        : (currentLang === 'en' ? '🌙 Dark' : '🌙 ليلي');
+    document.getElementById('settingsThemeBtn').textContent = isDark ? (currentLang === 'en' ? '☀️ Light' : '☀️ نهاري') : (currentLang === 'en' ? '🌙 Dark' : '🌙 ليلي');
     grid.innerHTML = '';
     sectionConfigs.forEach(config => {
         const currentColor = colors[config.id] || config.defaultColor;
@@ -6195,32 +5697,21 @@ function resetAllColors() {
         sectionConfigs.forEach(config => { colors[config.id] = config.defaultColor; });
         saveColorSettings(colors);
         applyColorSettings();
-        sectionConfigs.forEach(config => {
-            const input = document.getElementById('color_' + config.id);
-            if (input) input.value = config.defaultColor;
-        });
+        sectionConfigs.forEach(config => { const input = document.getElementById('color_' + config.id); if (input) input.value = config.defaultColor; });
         showSuccess(currentLang === 'en' ? 'Colors reset' : 'تم إعادة تعيين الألوان');
     }
 }
 
-const LS_KEY_THEME = 'cryptoTrackerUniversal_v41_theme';
 function applyTheme(theme) {
-    if (theme === 'dark') {
-        document.body.classList.add('dark-mode');
-        document.getElementById('topThemeBtn').textContent = '☀️';
-    } else {
-        document.body.classList.remove('dark-mode');
-        document.getElementById('topThemeBtn').textContent = '🌙';
-    }
+    if (theme === 'dark') { document.body.classList.add('dark-mode'); const btn = document.getElementById('topThemeBtn'); if (btn) btn.textContent = '☀️'; }
+    else { document.body.classList.remove('dark-mode'); const btn = document.getElementById('topThemeBtn'); if (btn) btn.textContent = '🌙'; }
 }
 function toggleThemeFromSettings() {
     const isDark = document.body.classList.contains('dark-mode');
     const newTheme = isDark ? 'light' : 'dark';
     applyTheme(newTheme);
     localStorage.setItem(LS_KEY_THEME, newTheme);
-    document.getElementById('settingsThemeBtn').textContent = newTheme === 'dark'
-        ? (currentLang === 'en' ? '☀️ Light' : '☀️ نهاري')
-        : (currentLang === 'en' ? '🌙 Dark' : '🌙 ليلي');
+    document.getElementById('settingsThemeBtn').textContent = newTheme === 'dark' ? (currentLang === 'en' ? '☀️ Light' : '☀️ نهاري') : (currentLang === 'en' ? '🌙 Dark' : '🌙 ليلي');
 }
 function toggleThemeFromTop() {
     const isDark = document.body.classList.contains('dark-mode');
@@ -6228,11 +5719,7 @@ function toggleThemeFromTop() {
     applyTheme(newTheme);
     localStorage.setItem(LS_KEY_THEME, newTheme);
     const settingsBtn = document.getElementById('settingsThemeBtn');
-    if (settingsBtn) {
-        settingsBtn.textContent = newTheme === 'dark'
-            ? (currentLang === 'en' ? '☀️ Light' : '☀️ نهاري')
-            : (currentLang === 'en' ? '🌙 Dark' : '🌙 ليلي');
-    }
+    if (settingsBtn) settingsBtn.textContent = newTheme === 'dark' ? (currentLang === 'en' ? '☀️ Light' : '☀️ نهاري') : (currentLang === 'en' ? '🌙 Dark' : '🌙 ليلي');
     if (typeof updateAdvancedCharts === 'function') updateAdvancedCharts();
 }
 function loadThemePreference() {
@@ -6241,10 +5728,61 @@ function loadThemePreference() {
     applyTheme(preferredTheme);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   ضبط افتراضي — نسخة مُصحّحة
+   ═══════════════════════════════════════════════════════════════ */
 function resetAllData() {
-    const warningMessage = '<div style="text-align: center; padding: 15px; background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; margin-bottom: 15px;"><div style="font-size: 2.5em; margin-bottom: 10px;">⚠️</div><div style="font-size: 1.3em; font-weight: bold; color: #856404; margin-bottom: 10px;">' + (currentLang === 'en' ? 'Warning!' : 'تحذير!') + '</div><div style="color: #856404;">' + (currentLang === 'en' ? 'ALL data will be deleted.' : 'سيتم مسح جميع البيانات.') + '</div></div>';
+    const warningTitle = currentLang === 'en' ? '⚠️ Very Important Warning!' : '⚠️ تحذير هام جداً!';
+    const deleteListTitle = currentLang === 'en' ? 'All data will be deleted permanently:' : 'سيتم مسح جميع البيانات نهائياً:';
+    const item1 = currentLang === 'en' ? '📊 All coins and trades' : '📊 جميع العملات والصفقات';
+    const item2 = currentLang === 'en' ? '💰 All DCAs and sales' : '💰 جميع التعزيزات والمبيعات';
+    const item3 = currentLang === 'en' ? '💵 Cash records, deposits & withdrawals' : '💵 سجلات الكاش والإيداعات والسحوبات';
+    const item4 = currentLang === 'en' ? '⚙️ All settings and colors' : '⚙️ جميع الإعدادات والألوان';
+    const item5 = currentLang === 'en' ? '📊 Saved estimated sale data' : '📊 بيانات البيع التقديري المحفوظة';
+    const dontLoseTitle = currentLang === 'en' ? "💡 If you don't want to lose data," : '💡 إذا كنت لا تريد خسارة البيانات،';
+    const exportFirst = currentLang === 'en' ? 'Export the file first' : 'قم بتصدير الملف أولاً';
+    const useSaveTxt = currentLang === 'en' ? 'Use 💾 Save TXT button from top' : '(استخدم زر 💾 حفظ TXT من الأعلى)';
+    const confirmQuestion = currentLang === 'en' ? 'Are you absolutely sure to continue?' : 'هل أنت متأكد تماماً من المتابعة؟';
+    const textAlign = currentLang === 'en' ? 'left' : 'right';
+    const listPadding = currentLang === 'en' ? 'left' : 'right';
+
+    const warningMessage = `
+        <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #fff3cd, #ffe9a8); border: 3px solid #dc3545; border-radius: 12px; margin-bottom: 18px;">
+            <div style="font-size: 3em; margin-bottom: 10px; animation: unsavedPulse 1.5s ease-in-out infinite;">⚠️</div>
+            <div style="font-size: 1.5em; font-weight: 900; color: #dc3545; margin-bottom: 15px; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                ${warningTitle}
+            </div>
+            <div style="text-align: ${textAlign}; background: rgba(255,255,255,0.7); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+                <div style="font-size: 1.05em; font-weight: 700; color: #856404; margin-bottom: 10px;">
+                    ${deleteListTitle}
+                </div>
+                <ul style="margin: 0; padding-${listPadding}: 22px; color: #856404; line-height: 1.9; font-size: 0.95em;">
+                    <li>${item1}</li>
+                    <li>${item2}</li>
+                    <li>${item3}</li>
+                    <li>${item4}</li>
+                    <li>${item5}</li>
+                </ul>
+            </div>
+            <div style="background: linear-gradient(135deg, #d1ecf1, #bee5eb); border: 2px dashed #17a2b8; border-radius: 10px; padding: 14px; margin-bottom: 15px; text-align: ${textAlign};">
+                <div style="font-size: 1.05em; font-weight: 700; color: #0c5460; margin-bottom: 8px;">
+                    ${dontLoseTitle}
+                </div>
+                <div style="font-size: 0.95em; color: #0c5460; line-height: 1.7;">
+                    ${exportFirst}<br>
+                    <span style="display: inline-block; background: #17a2b8; color: white; padding: 3px 10px; border-radius: 6px; font-weight: 700; margin-top: 6px; font-size: 0.9em;">
+                        ${useSaveTxt}
+                    </span>
+                </div>
+            </div>
+            <div style="font-size: 1.15em; font-weight: 900; color: #dc3545; margin-top: 15px; padding-top: 12px; border-top: 2px solid rgba(220, 53, 69, 0.3);">
+                ${confirmQuestion}
+            </div>
+        </div>
+    `;
+
     showPopup(
-        currentLang === 'en' ? '🔄 Reset' : '🔄 ضبط افتراضي',
+        currentLang === 'en' ? '🔄 Reset Default' : '🔄 ضبط افتراضي',
         warningMessage,
         currentLang === 'en' ? '🗑️ Delete All' : '🗑️ امسح الكل',
         currentLang === 'en' ? '❌ Cancel' : '❌ إلغاء',
@@ -6383,7 +5921,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /* إغلاق نافذة البيع عند النقر خارجها */
     const sellOverlay = document.getElementById('sellPartialModalOverlay');
     if (sellOverlay) {
         sellOverlay.addEventListener('click', function(e) {
