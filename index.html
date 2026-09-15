@@ -1478,7 +1478,7 @@ box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
 .estimate-clear-btn:hover { background-color: #c82333; }
 
 /* ═══════════════════════════════════════════════════════
-   🆕 شريط اختيار وضع التاريخ (تلقائي / يدوي)
+   شريط اختيار وضع التاريخ (تلقائي / يدوي)
    ═══════════════════════════════════════════════════════ */
 .date-mode-bar {
 display: flex;
@@ -1555,7 +1555,7 @@ margin-top: 4px;
 }
 
 /* ═══════════════════════════════════════════════════════
-   🆕 عمود التواريخ (شراء + بيع) في جدول التعزيزات
+   عمود التواريخ (شراء + بيع) في جدول التعزيزات
    ═══════════════════════════════════════════════════════ */
 .dca-table .date-column {
 min-width: 175px;
@@ -1625,7 +1625,37 @@ border-bottom: 2px solid var(--primary-color) !important;
 .dca-table .entry-row td { font-weight: 600; }
 
 /* ═══════════════════════════════════════════════════════
-   🖨️ طباعة احترافية مُحسّنة (Pro Print)
+   نافذة حذف العملة — الخيارات
+   ═══════════════════════════════════════════════════════ */
+.delete-coin-options-grid {
+display: grid;
+gap: 12px;
+}
+.delete-coin-option-btn {
+padding: 16px;
+border: none;
+border-radius: 10px;
+cursor: pointer;
+font-weight: bold;
+font-size: 1em;
+text-align: center;
+line-height: 1.5;
+transition: all 0.2s ease;
+}
+.delete-coin-option-btn.keep {
+background: linear-gradient(135deg, #28a745, #20c997);
+color: white;
+box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+.delete-coin-option-btn.delete-all {
+background: linear-gradient(135deg, #dc3545, #c82333);
+color: white;
+box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+.delete-coin-option-btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+
+/* ═══════════════════════════════════════════════════════
+   طباعة احترافية
    ═══════════════════════════════════════════════════════ */
 @media print {
 @page { size: A4; margin: 12mm; }
@@ -1891,7 +1921,7 @@ h2 { font-size: 1.05em; }
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     ✅ شريط العملات المتحرك — نسخة Osoul Pro (Skeleton + أيقونات)
+     ✅ شريط العملات المتحرك — نسخة Osoul Pro
      ═══════════════════════════════════════════════════════ -->
 <div class="crypto-ticker-wrap">
 <div class="ticker-scroll" id="cryptoTicker" data-dashboard-loading-scope="boot ticker">
@@ -2033,7 +2063,7 @@ h2 { font-size: 1.05em; }
 <button onclick="withdrawCashFromWallet()" style="align-self: flex-end; margin-bottom: 8px; background-color: var(--negative-color);" class="btn-pulse">سحب كاش</button>
 </div>
 
-<!-- 🆕 شريط اختيار وضع التاريخ لعمليات الكاش -->
+<!-- شريط اختيار وضع التاريخ لعمليات الكاش -->
 <div class="date-mode-bar">
     <span class="date-mode-label">📅 وضع تاريخ عمليات الكاش:</span>
     <button class="date-mode-btn" data-mode="auto" onclick="setCashDateMode('auto')" title="استخدام تاريخ ووقت الجهاز الحالي">
@@ -2089,7 +2119,7 @@ h2 { font-size: 1.05em; }
 </div>
 <div class="section-content" id="entryDetailsSectionContent">
 
-<!-- 🆕 شريط وضع تاريخ صفقة الدخول -->
+<!-- شريط وضع تاريخ صفقة الدخول -->
 <div class="date-mode-bar">
     <span class="date-mode-label">📅 وضع تاريخ صفقة الدخول:</span>
     <button class="date-mode-btn" data-mode="auto" data-mode-group="entry" onclick="setEntryDateMode('auto')" title="سيتم استخدام تاريخ ووقت الجهاز عند الحفظ">
@@ -2174,7 +2204,7 @@ h2 { font-size: 1.05em; }
 </div>
 <div class="section-content" id="summarySectionContent">
 
-<!-- 🆕 شريط وضع تاريخ التعزيزات - موجود هنا -->
+<!-- شريط وضع تاريخ التعزيزات -->
 <div class="date-mode-bar">
     <span class="date-mode-label">📅 وضع تاريخ التعزيزات الجديدة:</span>
     <button class="date-mode-btn" data-mode="auto" data-mode-group="dca" onclick="setDCADateMode('auto')" title="سيتم استخدام تاريخ ووقت الجهاز عند إنشاء تعزيز">
@@ -2217,7 +2247,7 @@ h2 { font-size: 1.05em; }
 <button class="history-tab" onclick="showSalesCashHistory('withdrawal')">السحوبات</button>
 </div>
 
-<!-- 🆕 شريط اختيار وضع التاريخ لعمليات الكاش من البيع -->
+<!-- شريط اختيار وضع التاريخ لعمليات الكاش من البيع -->
 <div class="date-mode-bar">
     <span class="date-mode-label">📅 وضع تاريخ عمليات البيع:</span>
     <button class="date-mode-btn" data-mode="auto" onclick="setSalesCashDateMode('auto')" title="كل عملية بيع تسجل بتاريخها الحالي تلقائياً">
@@ -2238,7 +2268,7 @@ h2 { font-size: 1.05em; }
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول) — تحت الملخص
+     🧮 حاسبة سريعة لإدارة المخاطر — تحت الملخص
      ═══════════════════════════════════════════════════════ -->
 <section class="risk-calculator-section card-hover section-custom" id="section-riskCalculator">
 <div class="section-header">
@@ -2512,6 +2542,7 @@ h2 { font-size: 1.05em; }
 <li>⚙️ إعدادات المنصات المتعددة</li>
 <li>🆕 صفقات متعددة لنفس العملة</li>
 <li>🧮 حاسبة إدارة المخاطر المنفصلة</li>
+<li>🗑️ حذف ذكي مع استرجاع الكاش</li>
 </ul>
 </div>
 <button onclick="closeUpdatePopup()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">ممتاز!</button>
@@ -2934,11 +2965,11 @@ let salesCashHistory = { deposits: [], withdrawals: [] };
 let expandedCoins = new Set();
 let savedEstimatePrices = {};
 
-/* 🆕 متغيرات وضع التاريخ */
-let cashDateMode = localStorage.getItem('muharraqi_cashDateMode') || 'auto';
-let salesCashDateMode = localStorage.getItem('muharraqi_salesCashDateMode') || 'auto';
-let entryDateMode = localStorage.getItem('muharraqi_entryDateMode') || 'auto';
-let dcaDateMode = localStorage.getItem('muharraqi_dcaDateMode') || 'auto';
+/* متغيرات وضع التاريخ — دائماً تبدأ على "تلقائي" عند فتح الصفحة */
+let cashDateMode = 'auto';
+let salesCashDateMode = 'auto';
+let entryDateMode = 'auto';
+let dcaDateMode = 'auto';
 
 function updateCashDisplay() {
 const totalSalesCash = salesCashHistory.deposits.reduce((sum, record) => sum + record.amount, 0) -
@@ -3283,7 +3314,6 @@ const entryPriceVal = parseFormattedNumber(data.initialEntryPrice);
 const amountVal = parseFormattedNumber(data.initialAmountDollars);
 document.getElementById('initialEntryPrice').value = entryPriceVal > 0 ? formatWithCommas(entryPriceVal, 8) : (data.initialEntryPrice || '');
 document.getElementById('initialAmountDollars').value = amountVal > 0 ? formatWithCommas(amountVal, 2) : (data.initialAmountDollars || '');
-/* 🆕 تعبئة حقل التاريخ اليدوي للدخول */
 const entryDateInput = document.getElementById('entryManualDateInput');
 if (entryDateInput) {
 entryDateInput.value = data.initialPurchaseDateRaw || getNowForDatetimeInput();
@@ -3605,7 +3635,6 @@ updateCashDisplay();
 }
 }
 }
-/* 🆕 التحكم بتاريخ صفقة الدخول */
 data.initialPurchaseDate = getEntryRecordDate();
 data.initialPurchaseDateRaw = getEntryRecordDateRaw();
 
@@ -3662,7 +3691,6 @@ updateCashDisplay();
 rp.savedAmount = repurchaseAmount;
 rp.price = repurchasePrice.toString();
 rp.amount = repurchaseAmount.toString();
-/* 🆕 التحكم بتاريخ التعزيز - إذا لم يكن هناك تاريخ مسجل، استخدم الوضع الحالي */
 if (!rp.purchaseDateRaw) {
     rp.purchaseDate = getDCARecordDate();
     rp.purchaseDateRaw = getDCARecordDateRaw();
@@ -3745,7 +3773,7 @@ function calculateTotalSoldQty(sales) { return sales.reduce((total, sale) => tot
 function calculateCashFromSales(sales) { return sales.reduce((total, sale) => total + (sale.qty * sale.price), 0); }
 
 /* ═══════════════════════════════════════════════════════════════
-   🆕 getDCARowsHTML — نسخة محسّنة تعرض صف الدخول + عمود التواريخ (شراء + بيع)
+   getDCARowsHTML — جدول التعزيزات + صف الدخول + عمود التواريخ
    ═══════════════════════════════════════════════════════════════ */
 function getDCARowsHTML(symbol, data) {
 const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
@@ -3765,7 +3793,6 @@ let html = '<table class="dca-table"><thead><tr><th>#</th><th>هبوط %</th><th
 
 const marketPrice = currentMarketPrices[symbol] || 0;
 
-/* ═══════════════════ صف العملة الرئيسية (الدخول) ═══════════════════ */
 if (hasEntry) {
 let entryPnlAmount = 0;
 let entryPnlPercent = 0;
@@ -3815,7 +3842,6 @@ html += '<button class="cancel-btn" onclick="ensureActiveCoin(\'' + symbol + '\'
 html += '</td></tr>';
 }
 
-/* ═══════════════════ صفوف التعزيزات ═══════════════════ */
 (data.repurchases || []).forEach((rp, index) => {
 const repurchasePrice = parseFormattedNumber(rp.price);
 const repurchaseAmount = parseFormattedNumber(rp.amount);
@@ -4386,170 +4412,581 @@ if (num >= 0.001) return 6;
 if (num >= 0.0001) return 7;
 return 8;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   💾 تصدير كامل لجميع البيانات كملف TXT شامل
+   ═══════════════════════════════════════════════════════════════ */
+function sanitizeTxtField(value) {
+    if (value === null || value === undefined) return '';
+    return String(value).replace(/\|/g, '¦').replace(/\n/g, ' ').replace(/\r/g, '').trim();
+}
+
 function downloadAllDataAsTxt() {
-if (!allCoinData || Object.keys(allCoinData).length === 0) { showError("لا توجد بيانات لحفظها."); return; }
-let content = "=== بيانات متابعة الصفقات الشاملة ===\n";
-content += "تم إنشاء بواسطة: المهندس [Muharraqi]\n";
-content += "تاريخ الإنشاء: " + new Date().toLocaleString('ar-EG') + "\n";
-content += "=== بيانات الكاش ===\n";
-content += "الكاش المدخل يدوياً: " + formatWithCommas(availableCash, 2) + " $\n";
-const totalSalesCash = salesCashHistory.deposits.reduce((sum, record) => sum + record.amount, 0) -
-salesCashHistory.withdrawals.reduce((sum, record) => sum + record.amount, 0);
-content += "الكاش من البيع: " + formatWithCommas(Math.max(0, totalSalesCash), 2) + " $\n";
-content += "إجمالي الكاش المتاح: " + formatWithCommas(availableCash + Math.max(0, totalSalesCash), 2) + " $\n";
-if (cashHistory.deposits.length > 0) {
-content += "--- سجل إيداعات الكاش ---\n";
-cashHistory.deposits.forEach(record => { content += "إيداع: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n"; });
-content += "\n";
+    const hasCoins = allCoinData && Object.keys(allCoinData).length > 0;
+    const hasCashHistory = (cashHistory.deposits && cashHistory.deposits.length > 0) ||
+                            (cashHistory.withdrawals && cashHistory.withdrawals.length > 0);
+    const hasSalesCashHistory = (salesCashHistory.deposits && salesCashHistory.deposits.length > 0) ||
+                                 (salesCashHistory.withdrawals && salesCashHistory.withdrawals.length > 0);
+    const hasAlerts = priceAlerts && priceAlerts.length > 0;
+    const hasNotifs = notifications && notifications.length > 0;
+
+    if (!hasCoins && !hasCashHistory && !hasSalesCashHistory && !hasAlerts && !hasNotifs && availableCash <= 0) {
+        showError("لا توجد بيانات لحفظها.");
+        return;
+    }
+
+    let content = "";
+
+    content += "═══════════════════════════════════════════════════════════\n";
+    content += "   بيانات متابعة الصفقات الشاملة — Muharraqi Pro Edition\n";
+    content += "═══════════════════════════════════════════════════════════\n";
+    content += "تم إنشاء بواسطة: المهندس [Muharraqi]\n";
+    content += "تاريخ الإنشاء: " + new Date().toLocaleString('ar-EG') + "\n";
+    content += "الإصدار: Pro 2.0.0\n\n";
+
+    content += "=== ملخص الكاش ===\n";
+    const totalSalesCash = salesCashHistory.deposits.reduce((sum, r) => sum + r.amount, 0) -
+                            salesCashHistory.withdrawals.reduce((sum, r) => sum + r.amount, 0);
+    content += "availableCash=" + availableCash + "\n";
+    content += "totalSalesCash=" + Math.max(0, totalSalesCash) + "\n";
+    content += "totalCashAvailable=" + (availableCash + Math.max(0, totalSalesCash)) + "\n\n";
+
+    content += "=== سجل إيداعات الكاش اليدوية ===\n";
+    if (!cashHistory.deposits || cashHistory.deposits.length === 0) {
+        content += "(لا توجد سجلات)\n";
+    } else {
+        cashHistory.deposits.forEach(record => {
+            content += "DEPOSIT|" + record.id + "|" + record.amount + "|" +
+                        sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "\n";
+        });
+    }
+    content += "\n";
+
+    content += "=== سجل سحوبات الكاش اليدوية ===\n";
+    if (!cashHistory.withdrawals || cashHistory.withdrawals.length === 0) {
+        content += "(لا توجد سجلات)\n";
+    } else {
+        cashHistory.withdrawals.forEach(record => {
+            content += "WITHDRAWAL|" + record.id + "|" + record.amount + "|" +
+                        sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "\n";
+        });
+    }
+    content += "\n";
+
+    content += "=== سجل إيداعات الكاش من البيع ===\n";
+    if (!salesCashHistory.deposits || salesCashHistory.deposits.length === 0) {
+        content += "(لا توجد سجلات)\n";
+    } else {
+        salesCashHistory.deposits.forEach(record => {
+            content += "SALES_DEPOSIT|" + record.id + "|" + record.amount + "|" +
+                        sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "|" +
+                        sanitizeTxtField(record.saleId) + "\n";
+        });
+    }
+    content += "\n";
+
+    content += "=== سجل سحوبات الكاش من البيع ===\n";
+    if (!salesCashHistory.withdrawals || salesCashHistory.withdrawals.length === 0) {
+        content += "(لا توجد سجلات)\n";
+    } else {
+        salesCashHistory.withdrawals.forEach(record => {
+            content += "SALES_WITHDRAWAL|" + record.id + "|" + record.amount + "|" +
+                        sanitizeTxtField(record.date) + "|" + sanitizeTxtField(record.note) + "\n";
+        });
+    }
+    content += "\n";
+
+    content += "=== بيانات العملات ===\n";
+    if (!hasCoins) {
+        content += "(لا توجد عملات)\n";
+    } else {
+        for (const [symbol, data] of Object.entries(allCoinData)) {
+            content += "\n--- " + symbol + " ---\n";
+            content += "initialEntryPrice=" + sanitizeTxtField(data.initialEntryPrice) + "\n";
+            content += "initialAmountDollars=" + sanitizeTxtField(data.initialAmountDollars) + "\n";
+            content += "initialSavedAmount=" + (data.initialSavedAmount || 0) + "\n";
+            content += "initialPurchaseDate=" + sanitizeTxtField(data.initialPurchaseDate) + "\n";
+            content += "initialPurchaseDateRaw=" + sanitizeTxtField(data.initialPurchaseDateRaw) + "\n";
+            content += "initialTotalSoldQty=" + sanitizeTxtField(data.initialTotalSoldQty) + "\n";
+            content += "isEntrySaved=" + (data.isEntrySaved ? 'true' : 'false') + "\n";
+
+            content += "--- مبيعات الدخول ---\n";
+            if (!data.initialSales || data.initialSales.length === 0) {
+                content += "(لا توجد مبيعات)\n";
+            } else {
+                data.initialSales.forEach(sale => {
+                    content += "SALE|" + sanitizeTxtField(sale.id) + "|" + sale.qty + "|" + sale.price + "|" +
+                                (sale.investedAmount || 0) + "|" + sanitizeTxtField(sale.date) + "|" +
+                                sanitizeTxtField(sale.cashRecordId) + "\n";
+                });
+            }
+
+            content += "--- التعزيزات ---\n";
+            if (!data.repurchases || data.repurchases.length === 0) {
+                content += "(لا توجد تعزيزات)\n";
+            } else {
+                data.repurchases.forEach((rp, idx) => {
+                    content += "DCA|" + idx + "|" + sanitizeTxtField(rp.price) + "|" + sanitizeTxtField(rp.amount) + "|" +
+                                sanitizeTxtField(rp.totalSoldQty) + "|" + sanitizeTxtField(rp.priceMode || 'price') + "|" +
+                                sanitizeTxtField(rp.purchaseDate) + "|" + sanitizeTxtField(rp.purchaseDateRaw) + "|" +
+                                (rp.savedAmount || 0) + "\n";
+                    if (rp.sales && rp.sales.length > 0) {
+                        rp.sales.forEach(sale => {
+                            content += "DCA_SALE|" + idx + "|" + sanitizeTxtField(sale.id) + "|" + sale.qty + "|" +
+                                        sale.price + "|" + (sale.investedAmount || 0) + "|" +
+                                        sanitizeTxtField(sale.date) + "|" + sanitizeTxtField(sale.cashRecordId) + "\n";
+                        });
+                    }
+                });
+            }
+        }
+    }
+    content += "\n";
+
+    content += "=== الأسعار الحالية ===\n";
+    const priceKeys = Object.keys(currentMarketPrices);
+    if (priceKeys.length === 0) {
+        content += "(لا توجد أسعار)\n";
+    } else {
+        priceKeys.forEach(symbol => {
+            const price = currentMarketPrices[symbol];
+            if (price !== null && price !== undefined) content += symbol + "=" + price + "\n";
+        });
+    }
+    content += "\n";
+
+    const { totals } = calculateSummaryData();
+    content += "=== الإحصائيات الكلية ===\n";
+    content += "totalInvested=" + totals.invested + "\n";
+    content += "totalCurrentValue=" + totals.currentValue + "\n";
+    content += "totalPnlAmount=" + totals.pnlAmount + "\n";
+    content += "totalPnlPercent=" + totals.pnlPercent + "\n";
+    content += "totalCashFromSales=" + totals.cashFromSales + "\n\n";
+
+    content += "=== الأسعار التقديرية المحفوظة ===\n";
+    if (Object.keys(savedEstimatePrices).length === 0) {
+        content += "(لا توجد أسعار تقديرية)\n";
+    } else {
+        Object.keys(savedEstimatePrices).forEach(symbol => {
+            content += symbol + "=" + savedEstimatePrices[symbol] + "\n";
+        });
+    }
+    content += "\n";
+
+    content += "=== إعدادات المنصة ===\n";
+    content += "platform=" + (exchangeSettings.platform || 'binance') + "\n";
+    content += "country=" + (exchangeSettings.country || 'sa') + "\n";
+    content += "feeProfile=" + (exchangeSettings.feeProfile || 'standard') + "\n\n";
+
+    content += "=== تنبيهات الأسعار ===\n";
+    if (!priceAlerts || priceAlerts.length === 0) {
+        content += "(لا توجد تنبيهات)\n";
+    } else {
+        priceAlerts.forEach(alert => {
+            content += "ALERT|" + alert.id + "|" + sanitizeTxtField(alert.symbol) + "|" +
+                        sanitizeTxtField(alert.type) + "|" + alert.price + "|" +
+                        (alert.triggered ? 'true' : 'false') + "|" +
+                        sanitizeTxtField(alert.createdAt) + "\n";
+        });
+    }
+    content += "\n";
+
+    content += "=== الملف الشخصي ===\n";
+    try {
+        const profileSaved = localStorage.getItem(LS_KEY_PROFILE_SETTINGS);
+        if (profileSaved) {
+            const pd = JSON.parse(profileSaved);
+            content += "username=" + sanitizeTxtField(pd.username) + "\n";
+            content += "walletName=" + sanitizeTxtField(pd.walletName) + "\n";
+        } else {
+            content += "(لم يتم تعيين بروفايل)\n";
+        }
+    } catch (e) { content += "(خطأ في القراءة)\n"; }
+    content += "\n";
+
+    content += "=== الإشعارات ===\n";
+    if (!notifications || notifications.length === 0) {
+        content += "(لا توجد إشعارات)\n";
+    } else {
+        notifications.forEach(n => {
+            content += "NOTIF|" + n.id + "|" + sanitizeTxtField(n.title) + "|" +
+                        sanitizeTxtField(n.message) + "|" + sanitizeTxtField(n.type) + "|" +
+                        sanitizeTxtField(n.time) + "|" + (n.read ? 'true' : 'false') + "\n";
+        });
+    }
+    content += "\n";
+
+    content += "=== الإعدادات العامة ===\n";
+    try {
+        content += "privacyMode=" + (localStorage.getItem('muharraqi_privacy_mode') || '0') + "\n";
+        content += "theme=" + (localStorage.getItem(LS_KEY_THEME) || 'light') + "\n";
+    } catch (e) {}
+    content += "\n";
+
+    content += "═══════════════════════════════════════════════════════════\n";
+    content += "نهاية الملف — نسألكم الدعاء بظهر الغيب 🤲\n";
+    content += "═══════════════════════════════════════════════════════════\n";
+
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const link = document.createElement('a');
+    const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+    link.download = 'بيانات_الصفقات_' + timestamp + '.txt';
+    link.href = URL.createObjectURL(blob);
+    link.click();
+    showSuccess("✅ تم حفظ جميع البيانات (السجلات + العملات + التنبيهات + الإعدادات) في ملف TXT");
 }
-if (cashHistory.withdrawals.length > 0) {
-content += "--- سجل سحوبات الكاش ---\n";
-cashHistory.withdrawals.forEach(record => { content += "سحب: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n"; });
-content += "\n";
-}
-if (salesCashHistory.deposits.length > 0 || salesCashHistory.withdrawals.length > 0) {
-content += "=== سجل الكاش من البيع ===\n";
-if (salesCashHistory.deposits.length > 0) {
-content += "--- إيداعات الكاش من البيع ---\n";
-salesCashHistory.deposits.forEach(record => { content += "إيداع: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n"; });
-content += "\n";
-}
-if (salesCashHistory.withdrawals.length > 0) {
-content += "--- سحوبات الكاش من البيع ---\n";
-salesCashHistory.withdrawals.forEach(record => { content += "سحب: " + formatWithCommas(record.amount, 2) + " $ - " + record.date + (record.note ? ' - ' + record.note : '') + "\n"; });
-content += "\n";
-}
-}
-content += "=== بيانات العملات ===\n";
-for (const [symbol, data] of Object.entries(allCoinData)) {
-content += "--- " + symbol + " ---\n";
-content += "سعر الدخول: " + (data.initialEntryPrice || 0) + "\n";
-content += "المبلغ: " + (data.initialAmountDollars || 0) + "\n";
-content += "تاريخ شراء الدخول: " + (data.initialPurchaseDate || 'غير محدد') + "\n";
-if (data.initialSales && data.initialSales.length > 0) {
-content += "مبيعات الدخول: " + data.initialSales.length + "\n";
-data.initialSales.forEach((sale, saleIndex) => { content += "  بيع " + (saleIndex + 1) + ": " + sale.qty + ", " + sale.price + ", " + (sale.investedAmount || 0) + ", " + (sale.date || '') + "\n"; });
-} else content += "مبيعات الدخول: 0\n";
-content += "التعزيزات: " + (data.repurchases || []).filter(rp => rp.price && rp.amount).length + "\n";
-(data.repurchases || []).forEach((rp, i) => {
-if (rp.price && rp.amount) {
-content += "  تعزيز " + (i + 1) + ": " + rp.price + ", " + rp.amount + ", " + (rp.totalSoldQty || 0) + ", " + (rp.priceMode || 'price') + ", " + (rp.purchaseDate || 'غير محدد') + "\n";
-if (rp.sales && rp.sales.length > 0) {
-rp.sales.forEach((sale, saleIndex) => { content += "    بيع " + (i + 1) + "-" + (saleIndex + 1) + ": " + sale.qty + ", " + sale.price + ", " + (sale.investedAmount || 0) + ", " + (sale.date || '') + "\n"; });
-}
-}
-});
-content += "\n";
-}
-content += "=== الأسعار الحالية ===\n";
-Object.keys(currentMarketPrices).forEach(symbol => {
-const price = currentMarketPrices[symbol];
-if (price !== null && price !== undefined) content += symbol + ": " + formatNumber(price, guessDecimalPlaces(price)) + "\n";
-});
-content += "\n";
-const { totals } = calculateSummaryData();
-content += "=== الإحصائيات الكلية ===\n";
-content += "إجمالي المبلغ المستثمر: " + formatWithCommas(totals.invested, 2) + " $\n";
-content += "إجمالي القيمة الحالية: " + formatWithCommas(totals.currentValue, 2) + " $\n";
-content += "إجمالي الربح/الخسارة: " + formatWithCommas(totals.pnlAmount, 2) + " $ (" + formatNumber(totals.pnlPercent, 2) + "%)\n";
-content += "إجمالي الكاش من البيع: " + formatWithCommas(totals.cashFromSales, 2) + " $\n";
-if (Object.keys(savedEstimatePrices).length > 0) {
-content += "\n=== الأسعار التقديرية المحفوظة ===\n";
-Object.keys(savedEstimatePrices).forEach(symbol => { content += symbol + ": " + formatNumber(savedEstimatePrices[symbol], 8) + "\n"; });
-}
-const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-const link = document.createElement('a');
-const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-link.download = 'بيانات_الصفقات_' + timestamp + '.txt';
-link.href = URL.createObjectURL(blob);
-link.click();
-showSuccess("تم حفظ جميع البيانات بنجاح في ملف TXT");
-}
+
+/* ═══════════════════════════════════════════════════════════════
+   📂 استيراد كامل لجميع البيانات من ملف TXT
+   ═══════════════════════════════════════════════════════════════ */
 function handleImportTxtFile(event) {
-const file = event.target.files[0];
-if (!file) return;
-const reader = new FileReader();
-reader.onload = function(e) {
-const content = e.target.result;
-const lines = content.split('\n');
-let currentSection = '';
-let symbol = null;
-let coinData = getDefaultCoinDataStructure();
-lines.forEach(line => {
-line = line.trim();
-if (!line) return;
-if (line.startsWith('===')) { currentSection = line; return; }
-if (line.startsWith('---')) {
-const symbolMatch = line.match(/--- ([A-Z0-9_]+) ---/);
-if (symbolMatch) {
-if (symbol && coinData) allCoinData[symbol] = coinData;
-symbol = symbolMatch[1];
-coinData = getDefaultCoinDataStructure();
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const content = e.target.result;
+        const lines = content.split('\n');
+
+        let currentSection = '';
+        let currentCoinSymbol = null;
+        let coinData = null;
+
+        const importedCoins = {};
+        const importedPrices = {};
+        const importedEstimates = {};
+        const importedCashHistory = { deposits: [], withdrawals: [] };
+        const importedSalesCashHistory = { deposits: [], withdrawals: [] };
+        const importedAlerts = [];
+        const importedNotifications = [];
+        let importedProfile = null;
+        let importedExchangeSettings = null;
+        let importedPrivacyMode = null;
+        let importedTheme = null;
+        let importedAvailableCash = null;
+
+        lines.forEach(rawLine => {
+            const line = rawLine.replace(/\r$/, '').trim();
+            if (!line) return;
+            if (line.startsWith('════') || line.startsWith('   بيانات') || line.startsWith('تم إنشاء') || 
+                line.startsWith('تاريخ الإنشاء') || line.startsWith('الإصدار') ||
+                line.startsWith('نهاية الملف')) return;
+
+            if (line.startsWith('===')) {
+                currentSection = line.replace(/=/g, '').trim();
+                return;
+            }
+
+            if (line.startsWith('---')) {
+                const coinMatch = line.match(/---\s+([A-Z0-9_]+)\s+---/);
+                if (coinMatch) {
+                    if (currentCoinSymbol && coinData) {
+                        importedCoins[currentCoinSymbol] = coinData;
+                    }
+                    currentCoinSymbol = coinMatch[1];
+                    coinData = getDefaultCoinDataStructure();
+                }
+                return;
+            }
+
+            if (currentSection.includes('ملخص الكاش')) {
+                if (line.startsWith('availableCash=')) {
+                    const v = parseFloat(line.split('=')[1]);
+                    if (!isNaN(v)) importedAvailableCash = v;
+                }
+                return;
+            }
+
+            if (currentSection.includes('سجل إيداعات الكاش اليدوية')) {
+                if (line.startsWith('DEPOSIT|')) {
+                    const p = line.split('|');
+                    if (p.length >= 5) {
+                        importedCashHistory.deposits.push({
+                            id: parseInt(p[1]) || Date.now(),
+                            amount: parseFloat(p[2]) || 0,
+                            date: p[3] || '',
+                            type: 'deposit',
+                            note: p[4] || ''
+                        });
+                    }
+                }
+                return;
+            }
+
+            if (currentSection.includes('سجل سحوبات الكاش اليدوية')) {
+                if (line.startsWith('WITHDRAWAL|')) {
+                    const p = line.split('|');
+                    if (p.length >= 5) {
+                        importedCashHistory.withdrawals.push({
+                            id: parseInt(p[1]) || Date.now(),
+                            amount: parseFloat(p[2]) || 0,
+                            date: p[3] || '',
+                            type: 'withdrawal',
+                            note: p[4] || ''
+                        });
+                    }
+                }
+                return;
+            }
+
+            if (currentSection.includes('سجل إيداعات الكاش من البيع')) {
+                if (line.startsWith('SALES_DEPOSIT|')) {
+                    const p = line.split('|');
+                    if (p.length >= 6) {
+                        importedSalesCashHistory.deposits.push({
+                            id: parseInt(p[1]) || Date.now(),
+                            amount: parseFloat(p[2]) || 0,
+                            date: p[3] || '',
+                            type: 'deposit',
+                            note: p[4] || '',
+                            saleId: p[5] || null
+                        });
+                    }
+                }
+                return;
+            }
+
+            if (currentSection.includes('سجل سحوبات الكاش من البيع')) {
+                if (line.startsWith('SALES_WITHDRAWAL|')) {
+                    const p = line.split('|');
+                    if (p.length >= 5) {
+                        importedSalesCashHistory.withdrawals.push({
+                            id: parseInt(p[1]) || Date.now(),
+                            amount: parseFloat(p[2]) || 0,
+                            date: p[3] || '',
+                            type: 'withdrawal',
+                            note: p[4] || ''
+                        });
+                    }
+                }
+                return;
+            }
+
+            if (currentSection.includes('بيانات العملات') && currentCoinSymbol && coinData) {
+                if (line === '(لا توجد مبيعات)' || line === '(لا توجد تعزيزات)') return;
+
+                if (line.startsWith('initialEntryPrice=')) coinData.initialEntryPrice = line.split('=')[1];
+                else if (line.startsWith('initialAmountDollars=')) coinData.initialAmountDollars = line.split('=')[1];
+                else if (line.startsWith('initialSavedAmount=')) coinData.initialSavedAmount = parseFloat(line.split('=')[1]) || 0;
+                else if (line.startsWith('initialPurchaseDate=')) coinData.initialPurchaseDate = line.split('=')[1];
+                else if (line.startsWith('initialPurchaseDateRaw=')) coinData.initialPurchaseDateRaw = line.split('=')[1];
+                else if (line.startsWith('initialTotalSoldQty=')) coinData.initialTotalSoldQty = line.split('=')[1];
+                else if (line.startsWith('isEntrySaved=')) coinData.isEntrySaved = line.split('=')[1] === 'true';
+                else if (line.startsWith('SALE|')) {
+                    const p = line.split('|');
+                    if (p.length >= 7) {
+                        if (!coinData.initialSales) coinData.initialSales = [];
+                        coinData.initialSales.push({
+                            id: p[1] || generateUniqueId(),
+                            qty: parseFloat(p[2]) || 0,
+                            price: parseFloat(p[3]) || 0,
+                            investedAmount: parseFloat(p[4]) || 0,
+                            date: p[5] || '',
+                            cashRecordId: p[6] ? (parseInt(p[6]) || null) : null
+                        });
+                    }
+                }
+                else if (line.startsWith('DCA|')) {
+                    const p = line.split('|');
+                    if (p.length >= 9) {
+                        if (!coinData.repurchases) coinData.repurchases = [];
+                        coinData.repurchases.push({
+                            price: p[2] || '',
+                            amount: p[3] || '',
+                            totalSoldQty: p[4] || '0',
+                            priceMode: p[5] || 'price',
+                            purchaseDate: p[6] || '',
+                            purchaseDateRaw: p[7] || '',
+                            savedAmount: parseFloat(p[8]) || 0,
+                            sales: []
+                        });
+                    }
+                }
+                else if (line.startsWith('DCA_SALE|')) {
+                    const p = line.split('|');
+                    if (p.length >= 8) {
+                        const dcaIdx = parseInt(p[1]);
+                        if (!isNaN(dcaIdx) && coinData.repurchases && coinData.repurchases[dcaIdx]) {
+                            coinData.repurchases[dcaIdx].sales.push({
+                                id: p[2] || generateUniqueId(),
+                                qty: parseFloat(p[3]) || 0,
+                                price: parseFloat(p[4]) || 0,
+                                investedAmount: parseFloat(p[5]) || 0,
+                                date: p[6] || '',
+                                cashRecordId: p[7] ? (parseInt(p[7]) || null) : null
+                            });
+                        }
+                    }
+                }
+                return;
+            }
+
+            if (currentSection.includes('الأسعار الحالية')) {
+                const eqIdx = line.indexOf('=');
+                if (eqIdx > 0) {
+                    const sym = line.substring(0, eqIdx).trim();
+                    const price = parseFloat(line.substring(eqIdx + 1).trim());
+                    if (sym && !isNaN(price)) importedPrices[sym] = price;
+                }
+                return;
+            }
+
+            if (currentSection.includes('الأسعار التقديرية المحفوظة')) {
+                const eqIdx = line.indexOf('=');
+                if (eqIdx > 0) {
+                    const sym = line.substring(0, eqIdx).trim();
+                    const price = parseFloat(line.substring(eqIdx + 1).trim());
+                    if (sym && !isNaN(price)) importedEstimates[sym] = price;
+                }
+                return;
+            }
+
+            if (currentSection.includes('إعدادات المنصة')) {
+                if (!importedExchangeSettings) importedExchangeSettings = {};
+                if (line.startsWith('platform=')) importedExchangeSettings.platform = line.split('=')[1].trim();
+                else if (line.startsWith('country=')) importedExchangeSettings.country = line.split('=')[1].trim();
+                else if (line.startsWith('feeProfile=')) importedExchangeSettings.feeProfile = line.split('=')[1].trim();
+                return;
+            }
+
+            if (currentSection.includes('تنبيهات الأسعار')) {
+                if (line.startsWith('ALERT|')) {
+                    const p = line.split('|');
+                    if (p.length >= 7) {
+                        importedAlerts.push({
+                            id: parseInt(p[1]) || Date.now(),
+                            symbol: p[2],
+                            type: p[3],
+                            price: parseFloat(p[4]) || 0,
+                            triggered: p[5] === 'true',
+                            createdAt: p[6]
+                        });
+                    }
+                }
+                return;
+            }
+
+            if (currentSection.includes('الملف الشخصي')) {
+                if (!importedProfile) importedProfile = {};
+                if (line.startsWith('username=')) importedProfile.username = line.split('=')[1].trim();
+                else if (line.startsWith('walletName=')) importedProfile.walletName = line.split('=')[1].trim();
+                return;
+            }
+
+            if (currentSection.includes('الإشعارات')) {
+                if (line.startsWith('NOTIF|')) {
+                    const p = line.split('|');
+                    if (p.length >= 7) {
+                        importedNotifications.push({
+                            id: parseInt(p[1]) || Date.now(),
+                            title: p[2],
+                            message: p[3],
+                            type: p[4],
+                            time: p[5],
+                            read: p[6] === 'true'
+                        });
+                    }
+                }
+                return;
+            }
+
+            if (currentSection.includes('الإعدادات العامة')) {
+                if (line.startsWith('privacyMode=')) importedPrivacyMode = line.split('=')[1].trim();
+                else if (line.startsWith('theme=')) importedTheme = line.split('=')[1].trim();
+                return;
+            }
+        });
+
+        if (currentCoinSymbol && coinData) {
+            importedCoins[currentCoinSymbol] = coinData;
+        }
+
+        if (Object.keys(importedCoins).length > 0) {
+            allCoinData = importedCoins;
+        }
+
+        if (Object.keys(importedPrices).length > 0) {
+            Object.keys(importedPrices).forEach(sym => {
+                currentMarketPrices[sym] = importedPrices[sym];
+            });
+        }
+
+        if (Object.keys(importedEstimates).length > 0) {
+            savedEstimatePrices = importedEstimates;
+            saveEstimatePrices();
+        }
+
+        if (importedCashHistory.deposits.length > 0 || importedCashHistory.withdrawals.length > 0) {
+            cashHistory = importedCashHistory;
+            saveCashHistory();
+        }
+
+        if (importedSalesCashHistory.deposits.length > 0 || importedSalesCashHistory.withdrawals.length > 0) {
+            salesCashHistory = importedSalesCashHistory;
+            saveSalesCashHistory();
+        }
+
+        if (importedAlerts.length > 0) {
+            priceAlerts = importedAlerts;
+            savePriceAlerts();
+        }
+
+        if (importedNotifications.length > 0) {
+            notifications = importedNotifications;
+            saveNotifications();
+        }
+
+        if (importedProfile) {
+            try { localStorage.setItem(LS_KEY_PROFILE_SETTINGS, JSON.stringify(importedProfile)); } catch (e) {}
+        }
+
+        if (importedExchangeSettings) {
+            exchangeSettings = Object.assign({ platform: 'binance', country: 'sa', feeProfile: 'standard' }, importedExchangeSettings);
+            try { localStorage.setItem('muharraqi_pro_settings', JSON.stringify(exchangeSettings)); } catch (e) {}
+        }
+
+        if (importedAvailableCash !== null) {
+            availableCash = importedAvailableCash;
+        }
+
+        if (importedTheme) {
+            localStorage.setItem(LS_KEY_THEME, importedTheme);
+            applyTheme(importedTheme);
+        }
+
+        if (importedPrivacyMode === '1') {
+            try {
+                localStorage.setItem('muharraqi_privacy_mode', '1');
+                if (!document.body.classList.contains('financial-privacy')) toggleFinancialPrivacy();
+            } catch (e) {}
+        } else if (importedPrivacyMode === '0') {
+            try {
+                localStorage.setItem('muharraqi_privacy_mode', '0');
+                if (document.body.classList.contains('financial-privacy')) toggleFinancialPrivacy();
+            } catch (e) {}
+        }
+
+        saveAllDataToLocalStorage();
+        localStorage.setItem(LS_KEY_CASH, availableCash.toString());
+        updateCashDisplay();
+        updateCashHistoryDisplay();
+        updateSalesCashHistoryDisplay();
+        updateCoinSelector();
+        updateSummaryTable();
+        updatePortfolioChart();
+        renderAlertsList();
+        renderNotifications();
+        loadProfileSettings();
+        loadExchangeSettings();
+        initDateModeToggles();
+        updateProfileStats();
+
+        showSuccess("✅ تم استيراد جميع البيانات بنجاح!\n\n📊 تم استرجاع:\n• العملات والصفقات\n• سجلات الكاش (إيداعات/سحوبات)\n• سجلات البيع\n• التنبيهات والإشعارات\n• الإعدادات والأوضاع");
+        event.target.value = '';
+    };
+    reader.readAsText(file);
 }
-return;
-}
-if (currentSection.includes('بيانات الكاش')) {
-if (line.startsWith('الكاش المدخل يدوياً:')) {
-const amount = parseFloat(line.split(':')[1].replace('$', '').replace(/,/g, '').trim());
-if (!isNaN(amount)) { availableCash = amount; localStorage.setItem(LS_KEY_CASH, availableCash.toString()); updateCashDisplay(); }
-}
-}
-if (currentSection.includes('بيانات العملات') && symbol) {
-if (line.startsWith('سعر الدخول:')) coinData.initialEntryPrice = line.split(':')[1].trim();
-else if (line.startsWith('المبلغ:')) coinData.initialAmountDollars = line.split(':')[1].trim();
-else if (line.startsWith('تاريخ شراء الدخول:')) coinData.initialPurchaseDate = line.split(':')[1].trim();
-else if (line.startsWith('  بيع')) {
-const parts = line.split(':')[1].split(',');
-if (parts.length >= 2) {
-if (!coinData.initialSales) coinData.initialSales = [];
-coinData.initialSales.push({ qty: parseFloat(parts[0].trim()), price: parseFloat(parts[1].trim()), investedAmount: parts.length >= 3 ? parseFloat(parts[2].trim()) : 0, date: parts.length >= 4 ? parts[3].trim() : new Date().toLocaleDateString('ar-EG') });
-}
-} else if (line.startsWith('  تعزيز')) {
-const parts = line.split(':')[1].split(',');
-if (parts.length >= 2) {
-const rp = { price: parts[0].trim(), amount: parts[1].trim(), sales: [], totalSoldQty: parts.length >= 3 ? parts[2].trim() : '0', priceMode: parts.length >= 4 ? parts[3].trim() : 'price', purchaseDate: parts.length >= 5 ? parts[4].trim() : '', savedAmount: 0 };
-coinData.repurchases.push(rp);
-}
-} else if (line.startsWith('    بيع')) {
-const parts = line.split(':')[1].split(',');
-if (parts.length >= 2) {
-const saleParts = line.split('بيع ')[1].split('-');
-if (saleParts.length >= 2) {
-const repIndexFromSale = parseInt(saleParts[0]) - 1;
-if (repIndexFromSale >= 0 && repIndexFromSale < coinData.repurchases.length) {
-coinData.repurchases[repIndexFromSale].sales.push({ qty: parseFloat(parts[0].trim()), price: parseFloat(parts[1].trim()), investedAmount: parts.length >= 3 ? parseFloat(parts[2].trim()) : 0, date: parts.length >= 4 ? parts[3].trim() : new Date().toLocaleDateString('ar-EG') });
-}
-}
-}
-}
-}
-if (currentSection.includes('الأسعار الحالية')) {
-const priceMatch = line.match(/([A-Z0-9_]+): (\d+\.?\d*)/);
-if (priceMatch) {
-const sym = priceMatch[1];
-const price = parseFloat(priceMatch[2]);
-if (!isNaN(price)) currentMarketPrices[sym] = price;
-}
-}
-if (currentSection.includes('الأسعار التقديرية المحفوظة')) {
-const estimateMatch = line.match(/([A-Z0-9_]+): (\d+\.?\d*)/);
-if (estimateMatch) {
-const sym = estimateMatch[1];
-const price = parseFloat(estimateMatch[2]);
-if (!isNaN(price)) savedEstimatePrices[sym] = price;
-}
-}
-});
-if (symbol && coinData) allCoinData[symbol] = coinData;
-saveAllDataToLocalStorage();
-saveEstimatePrices();
-updateCoinSelector();
-updateSummaryTable();
-updatePortfolioChart();
-showSuccess("تم استيراد البيانات بنجاح. اختر عملة لعرض تفاصيلها.");
-};
-reader.readAsText(file);
-}
+
 function openTradingView() {
 if (!activeCoinSymbol) { showError("يرجى اختيار عملة أولاً"); return; }
 let symbol = getBaseSymbolFromKey(activeCoinSymbol);
@@ -4562,7 +4999,7 @@ showInfo('لم يتم فتح TradingView تلقائياً.\nرمز العملة:
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   🆕 دوال وضع التاريخ (تلقائي / يدوي)
+   دوال وضع التاريخ (تلقائي / يدوي) — دائماً تبدأ على تلقائي
    ═══════════════════════════════════════════════════════════════ */
 
 function getNowForDatetimeInput() {
@@ -4571,7 +5008,6 @@ function getNowForDatetimeInput() {
     return now.toISOString().slice(0, 16);
 }
 
-/* ─── دوال تاريخ الكاش اليدوي ─── */
 function getCashRecordDate() {
     if (cashDateMode === 'manual') {
         const input = document.getElementById('cashManualDateInput');
@@ -4584,7 +5020,6 @@ function getCashRecordDate() {
 }
 function setCashDateMode(mode) {
     cashDateMode = mode;
-    localStorage.setItem('muharraqi_cashDateMode', mode);
     const buttons = document.querySelectorAll('#cashSectionContent .date-mode-btn');
     buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
     const input = document.getElementById('cashManualDateInput');
@@ -4600,7 +5035,6 @@ function setCashDateMode(mode) {
     if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
 }
 
-/* ─── دوال تاريخ الكاش من البيع ─── */
 function getSalesCashRecordDate() {
     if (salesCashDateMode === 'manual') {
         const input = document.getElementById('salesCashManualDateInput');
@@ -4613,7 +5047,6 @@ function getSalesCashRecordDate() {
 }
 function setSalesCashDateMode(mode) {
     salesCashDateMode = mode;
-    localStorage.setItem('muharraqi_salesCashDateMode', mode);
     const buttons = document.querySelectorAll('#salesCashHistorySectionContent .date-mode-btn');
     buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
     const input = document.getElementById('salesCashManualDateInput');
@@ -4629,7 +5062,6 @@ function setSalesCashDateMode(mode) {
     if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
 }
 
-/* ─── دوال تاريخ صفقة الدخول ─── */
 function getEntryRecordDate() {
     if (entryDateMode === 'manual') {
         const input = document.getElementById('entryManualDateInput');
@@ -4649,7 +5081,6 @@ function getEntryRecordDateRaw() {
 }
 function setEntryDateMode(mode) {
     entryDateMode = mode;
-    localStorage.setItem('muharraqi_entryDateMode', mode);
     const buttons = document.querySelectorAll('.date-mode-btn[data-mode-group="entry"]');
     buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
     const input = document.getElementById('entryManualDateInput');
@@ -4665,7 +5096,6 @@ function setEntryDateMode(mode) {
     if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
 }
 
-/* ─── دوال تاريخ التعزيزات ─── */
 function getDCARecordDate() {
     if (dcaDateMode === 'manual') {
         const input = document.getElementById('dcaManualDateInput');
@@ -4685,7 +5115,6 @@ function getDCARecordDateRaw() {
 }
 function setDCADateMode(mode) {
     dcaDateMode = mode;
-    localStorage.setItem('muharraqi_dcaDateMode', mode);
     const buttons = document.querySelectorAll('.date-mode-btn[data-mode-group="dca"]');
     buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
     const input = document.getElementById('dcaManualDateInput');
@@ -4701,7 +5130,6 @@ function setDCADateMode(mode) {
     if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
 }
 
-/* 🆕 تحديث تاريخ شراء التعزيز من الجدول مباشرة */
 function updateDCAPurchaseDate(symbol, index, value) {
     const data = allCoinData[symbol];
     if (!data || !data.repurchases || !data.repurchases[index]) return;
@@ -4717,7 +5145,6 @@ function updateDCAPurchaseDate(symbol, index, value) {
     saveAllDataToLocalStorage();
 }
 
-/* 🆕 تحديث تاريخ شراء الدخول من الجدول مباشرة */
 function updateEntryPurchaseDate(symbol, value) {
     const data = allCoinData[symbol];
     if (!data) return;
@@ -4733,7 +5160,6 @@ function updateEntryPurchaseDate(symbol, value) {
     saveAllDataToLocalStorage();
 }
 
-/* 🆕 تفعيل عملة معينة (لأزرار الدخول في جدول التعزيزات) */
 function ensureActiveCoin(symbol) {
     if (!symbol || !allCoinData[symbol]) return;
     if (activeCoinSymbol === symbol) return;
@@ -4741,7 +5167,6 @@ function ensureActiveCoin(symbol) {
     handleCoinSelectionChange();
 }
 
-/* 🆕 الانتقال لحاوية تفاصيل الدخول */
 function scrollToEntrySection() {
     const entrySection = document.getElementById('section-entryDetails');
     if (entrySection) {
@@ -4757,7 +5182,279 @@ function initDateModeToggles() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   🖨️ طباعة التقرير — نسخة احترافية مُحسّنة (Pro Print)
+   🆕 حذف العملة مع استرجاع الكاش — النسخة النهائية المُصححة
+   ✅ التعديل الجديد: معالجة مشكلة تعدد النسخ في noteBelongsToCoin
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1️⃣ هل الملاحظة تنتمي لهذه العملة؟ (نسخة محسّنة لتعدد النسخ) */
+function noteBelongsToCoin(note, displayName) {
+    if (!note || !displayName) return false;
+    const trimmedNote = String(note).trim();
+
+    // المحاولة 1: مطابقة الـ displayName الكامل (مثل "BTCUSDT 1")
+    const escapedDisplay = displayName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regexDisplay = new RegExp(escapedDisplay + '(\\s*#\\d+)?(\\([^)]*\\))?$');
+    if (regexDisplay.test(trimmedNote)) return true;
+
+    // المحاولة 2: إذا كان displayName يحتوي رقم نسخة، نجرّب الاسم الأساسي بدون رقم
+    // مثال: displayName = "BTCUSDT 1" → نجرّب مطابقة "BTCUSDT" في نهاية الملاحظة
+    const instanceMatch = displayName.match(/^(.+?)\s+(\d+)$/);
+    if (instanceMatch) {
+        const baseName = instanceMatch[1].trim();
+        const escapedBase = baseName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regexBase = new RegExp(escapedBase + '(\\s*#\\d+)?(\\([^)]*\\))?$');
+        if (regexBase.test(trimmedNote)) return true;
+    }
+
+    return false;
+}
+
+/* 2️⃣ حساب المبلغ الذي يجب استرجاعه عند حذف العملة
+   ✅ نُرجع فقط تكلفة الشراء (المبلغ المخصوم من الكاش المتاح)
+   ❌ لا نُرجع كاش المبيعات — سيُحذف نهائياً */
+function calculateCoinRefundAmount(symbol) {
+    const data = allCoinData[symbol];
+    if (!data) return { total: 0, entryRefund: 0, dcaRefunds: [], salesCashToRefund: 0 };
+
+    let entryRefund = 0;
+    const dcaRefunds = [];
+
+    /* --- استرجاع كامل مبلغ الدخول المخصوم من الكاش المتاح --- */
+    const initialSavedAmount = data.initialSavedAmount || 0;
+    if (initialSavedAmount > 0) {
+        entryRefund = initialSavedAmount;
+    }
+
+    /* --- استرجاع كامل مبالغ التعزيزات المخصومة من الكاش المتاح --- */
+    (data.repurchases || []).forEach((rp, idx) => {
+        const rpSavedAmount = rp.savedAmount || 0;
+        dcaRefunds.push({ index: idx, refund: rpSavedAmount });
+    });
+
+    /* --- ❌ لا نُرجع كاش المبيعات — سيُحذف نهائياً --- */
+    const salesCashToRefund = 0;
+
+    const total = entryRefund + dcaRefunds.reduce((s, d) => s + d.refund, 0);
+    return { total, entryRefund, dcaRefunds, salesCashToRefund };
+}
+
+/* 3️⃣ تنفيذ الحذف الفعلي
+   ✅ يُرجع فقط تكلفة الشراء للكاش المتاح
+   ✅ يحذف كاش المبيعات (الإيداعات + السحوبات) نهائياً دون إضافته للكاش
+   ✅ يحذف جميع سجلات الكاش اليدوي (السحوبات والإيداعات) المرتبطة بالعملة */
+function executeDeleteCoin(symbolToDelete, keepRecords) {
+    const displayName = getDisplayNameFromKey(symbolToDelete);
+    const data = allCoinData[symbolToDelete];
+
+    let deletedSalesCashDeposits = 0;
+    let deletedSalesCashWithdrawals = 0;
+    let deletedWithdrawalsCount = 0;
+    let deletedDepositsCount = 0;
+
+    /* 1) حساب المبلغ المُسترجَع (فقط تكلفة الشراء) */
+    const refundInfo = calculateCoinRefundAmount(symbolToDelete);
+    const costBasisRefund = refundInfo.total;
+    const totalRefundToWallet = costBasisRefund; /* ✅ فقط تكلفة الشراء */
+
+    /* 2) حذف جميع سجلات كاش البيع المرتبطة (إيداعات + سحوبات) */
+    if (data) {
+        const saleCashRecordIds = [];
+        (data.initialSales || []).forEach(s => { if (s.cashRecordId) saleCashRecordIds.push(s.cashRecordId); });
+        (data.repurchases || []).forEach(rp => {
+            (rp.sales || []).forEach(s => { if (s.cashRecordId) saleCashRecordIds.push(s.cashRecordId); });
+        });
+
+        /* حذف إيداعات كاش البيع المرتبطة */
+        const beforeDeposits = salesCashHistory.deposits.length;
+        salesCashHistory.deposits = salesCashHistory.deposits.filter(d => {
+            if (saleCashRecordIds.length > 0 && saleCashRecordIds.includes(d.id)) return false;
+            if (d.note && noteBelongsToCoin(d.note, displayName)) return false;
+            if (d.saleId) {
+                const saleInfo = findSaleById(d.saleId);
+                if (saleInfo && saleInfo.symbol === symbolToDelete) return false;
+            }
+            return true;
+        });
+        deletedSalesCashDeposits = beforeDeposits - salesCashHistory.deposits.length;
+
+        /* حذف سحوبات كاش البيع المرتبطة */
+        const beforeSalesWithdrawals = salesCashHistory.withdrawals.length;
+        salesCashHistory.withdrawals = salesCashHistory.withdrawals.filter(w => !noteBelongsToCoin(w.note, displayName));
+        deletedSalesCashWithdrawals = beforeSalesWithdrawals - salesCashHistory.withdrawals.length;
+
+        /* 3) حذف سجلات الشراء (الخصومات من الكاش اليدوي) */
+        const beforeWithdrawals = cashHistory.withdrawals.length;
+        cashHistory.withdrawals = cashHistory.withdrawals.filter(w => !noteBelongsToCoin(w.note, displayName));
+        deletedWithdrawalsCount = beforeWithdrawals - cashHistory.withdrawals.length;
+
+        /* حذف الاسترجاعات المرتبطة من الكاش اليدوي */
+        const beforeCashDeposits = cashHistory.deposits.length;
+        cashHistory.deposits = cashHistory.deposits.filter(d => !noteBelongsToCoin(d.note, displayName));
+        deletedDepositsCount = beforeCashDeposits - cashHistory.deposits.length;
+
+        saveCashHistory();
+        saveSalesCashHistory();
+    }
+
+    /* 4) إضافة المبلغ المُسترجَع إلى الكاش المتاح (فقط تكلفة الشراء) */
+    if (totalRefundToWallet > 0.0001) {
+        availableCash += totalRefundToWallet;
+        localStorage.setItem(LS_KEY_CASH, availableCash.toString());
+    }
+
+    /* 5) حذف بيانات العملة */
+    delete allCoinData[symbolToDelete];
+    delete currentMarketPrices[symbolToDelete];
+    expandedCoins.delete(symbolToDelete);
+    saveExpandedCoins();
+
+    activeCoinSymbol = null;
+    updateCoinSelector();
+    saveAllDataToLocalStorage();
+    if (!coinSelector.value) clearUIFields();
+    updateSummaryTable();
+    updateCoinStatus();
+    updateCashDisplay();
+    updateCashHistoryDisplay();
+    updateSalesCashHistoryDisplay();
+
+    /* 6) إغلاق البوب أب */
+    document.getElementById('popupOverlay').classList.remove('active');
+    document.getElementById('popupFooter').style.display = '';
+
+    /* 7) رسالة النجاح */
+    const refundMsg = totalRefundToWallet > 0.01
+        ? '\n\n💰 تم استرجاع ' + formatWithCommas(totalRefundToWallet, 2) + ' $ إلى الكاش المتاح\n(تكلفة الشراء الأصلية فقط)'
+        : '';
+
+    const summaryParts = [];
+    if (deletedSalesCashDeposits > 0) summaryParts.push('• ' + deletedSalesCashDeposits + ' سجل إيداع من البيع (أُلغي)');
+    if (deletedSalesCashWithdrawals > 0) summaryParts.push('• ' + deletedSalesCashWithdrawals + ' سحب من كاش البيع (أُلغي)');
+    if (deletedWithdrawalsCount > 0) summaryParts.push('• ' + deletedWithdrawalsCount + ' عملية شراء/خصم (أُلغيت)');
+    if (deletedDepositsCount > 0) summaryParts.push('• ' + deletedDepositsCount + ' عملية استرجاع (أُلغيت)');
+    const summaryText = summaryParts.length > 0 ? '\n\n🗑️ تم حذف:\n' + summaryParts.join('\n') : '';
+
+    if (keepRecords) {
+        showSuccess('✅ تم حذف ' + displayName + ' مع الاحتفاظ بسجلات الشراء' + refundMsg + summaryText);
+    } else {
+        showSuccess('✅ تم حذف ' + displayName + ' وكل سجلاته نهائياً' + refundMsg + summaryText);
+    }
+
+    apiStatusDiv.textContent = 'تم حذف ' + displayName + '.';
+    apiStatusDiv.style.color = 'var(--text-muted)';
+}
+
+/* 4️⃣ نافذة تأكيد الحذف */
+function deleteCurrentCoin() {
+    if (!activeCoinSymbol) { showError("لا توجد عملة محددة لحذفها."); return; }
+    const symbolToDelete = activeCoinSymbol;
+    const displayName = getDisplayNameFromKey(symbolToDelete);
+    const data = allCoinData[symbolToDelete];
+
+    const refundInfo = calculateCoinRefundAmount(symbolToDelete);
+    const costBasisRefund = refundInfo.total;
+    const totalRefund = costBasisRefund;
+
+    /* جمع السجلات المرتبطة لعرضها */
+    const saleCashRecordIds = [];
+    if (data) {
+        (data.initialSales || []).forEach(s => { if (s.cashRecordId) saleCashRecordIds.push(s.cashRecordId); });
+        (data.repurchases || []).forEach(rp => {
+            (rp.sales || []).forEach(s => { if (s.cashRecordId) saleCashRecordIds.push(s.cashRecordId); });
+        });
+    }
+    const relatedSalesDeposits = salesCashHistory.deposits.filter(d => saleCashRecordIds.includes(d.id) || (d.note && noteBelongsToCoin(d.note, displayName)));
+    const relatedCashWithdrawals = cashHistory.withdrawals.filter(w => noteBelongsToCoin(w.note, displayName));
+    const relatedCashDeposits = cashHistory.deposits.filter(d => noteBelongsToCoin(d.note, displayName));
+    const relatedSalesWithdrawals = salesCashHistory.withdrawals.filter(w => noteBelongsToCoin(w.note, displayName));
+
+    /* حساب كاش البيع المرتبط (للعرض فقط — سيُحذف) */
+    const relatedSalesCashAmount = relatedSalesDeposits.reduce((sum, d) => sum + d.amount, 0) -
+                                    relatedSalesWithdrawals.reduce((sum, w) => sum + w.amount, 0);
+
+    const totalRelated = relatedSalesDeposits.length + relatedCashWithdrawals.length + relatedCashDeposits.length + relatedSalesWithdrawals.length;
+
+    const popupHTML = `
+        <div style="text-align:center; padding: 18px; background: linear-gradient(135deg, #fff3cd, #ffe9a8); border: 2px solid #ffc107; border-radius: 12px; margin-bottom: 18px;">
+            <div style="font-size: 2.5em; margin-bottom: 8px;">⚠️</div>
+            <div style="font-size: 1.3em; font-weight: bold; color: #856404; margin-bottom: 8px;">حذف ${displayName}</div>
+            <div style="color: #856404; line-height: 1.7; font-size: 0.92em;">اختر طريقة الحذف المناسبة</div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #d4edda, #c3e6cb); border: 2px solid #28a745; border-radius: 10px; padding: 14px; margin-bottom: 18px; text-align: center;">
+            <div style="font-size: 0.85em; color: #155724; margin-bottom: 4px; font-weight: 600;">💰 المبلغ الذي سيرجع للكاش المتاح:</div>
+            <div style="font-size: 1.8em; font-weight: bold; color: #155724; font-family: 'Roboto Mono', monospace;">${formatWithCommas(totalRefund, 2)} $</div>
+            <div style="font-size: 0.78em; color: #155724; margin-top: 6px; line-height: 1.6;">
+                ✅ تكلفة الشراء الأصلية فقط<br>
+                (المبلغ الذي خُصم من الكاش المتاح)
+            </div>
+        </div>
+
+        ${relatedSalesCashAmount > 0.01 || relatedSalesDeposits.length > 0 ? `
+        <div style="background: linear-gradient(135deg, #f8d7da, #f5c6cb); border: 2px solid #dc3545; border-radius: 10px; padding: 12px; margin-bottom: 18px; text-align: center;">
+            <div style="font-size: 0.85em; color: #721c24; margin-bottom: 4px; font-weight: 600;">🗑️ سيتم حذف كاش البيع نهائياً (دون استرجاعه):</div>
+            <div style="font-size: 1.3em; font-weight: bold; color: #721c24; font-family: 'Roboto Mono', monospace;">${formatWithCommas(Math.max(0, relatedSalesCashAmount), 2)} $</div>
+            <div style="font-size: 0.75em; color: #721c24; margin-top: 4px;">
+                (${relatedSalesDeposits.length} سجل إيداع — ${relatedSalesWithdrawals.length} سجل سحب)
+            </div>
+        </div>
+        ` : ''}
+
+        <div style="background: var(--bg-color); border-radius: 8px; padding: 12px 15px; margin-bottom: 18px; font-size: 0.88em; border: 1px solid var(--border-color);">
+            <div style="font-weight: 700; margin-bottom: 10px; color: var(--primary-color); text-align: center;">📊 السجلات المرتبطة بهذه العملة:</div>
+            <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed var(--border-color);">
+                <span>💵 كاش من البيع (سيُحذف):</span>
+                <strong style="color: var(--negative-color);">${relatedSalesDeposits.length} سجل</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed var(--border-color);">
+                <span>💳 خصومات (شراء/تعزيز):</span>
+                <strong style="color: var(--primary-color);">${relatedCashWithdrawals.length} سجل</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed var(--border-color);">
+                <span>↩️ استرجاعات:</span>
+                <strong style="color: var(--primary-color);">${relatedCashDeposits.length} سجل</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 5px 0;">
+                <span>📤 سحوبات كاش البيع (ستُحذف):</span>
+                <strong style="color: var(--negative-color);">${relatedSalesWithdrawals.length} سجل</strong>
+            </div>
+        </div>
+
+        <div class="delete-coin-options-grid">
+            <button class="delete-coin-option-btn keep" onclick="executeDeleteCoin('${symbolToDelete}', true)">
+                💾 حذف العملة + استرجاع تكلفة الشراء
+                <br><small style="font-weight: normal; opacity: 0.95; font-size: 0.82em;">سجل الشراء يبقى في الأرشيف — استرجاع ${formatWithCommas(totalRefund, 2)} $ — حذف كاش البيع</small>
+            </button>
+            <button class="delete-coin-option-btn delete-all" onclick="executeDeleteCoin('${symbolToDelete}', false)">
+                🗑️ حذف العملة وكل السجلات نهائياً
+                <br><small style="font-weight: normal; opacity: 0.95; font-size: 0.82em;">حذف ${totalRelated} سجل — استرجاع ${formatWithCommas(totalRefund, 2)} $ — حذف كاش البيع</small>
+            </button>
+        </div>
+    `;
+
+    const popupOverlay = document.getElementById('popupOverlay');
+    const popupTitle = document.getElementById('popupTitle');
+    const popupBody = document.getElementById('popupBody');
+    const popupFooter = document.getElementById('popupFooter');
+
+    popupTitle.textContent = '🗑️ تأكيد حذف العملة';
+    popupBody.innerHTML = popupHTML;
+    popupFooter.style.display = 'none';
+    popupOverlay.classList.add('active');
+
+    const popupClose = document.getElementById('popupClose');
+    const closeFn = () => {
+        popupOverlay.classList.remove('active');
+        popupFooter.style.display = '';
+        popupClose.onclick = null;
+        popupOverlay.onclick = null;
+    };
+    popupClose.onclick = closeFn;
+    popupOverlay.onclick = (e) => { if (e.target === popupOverlay) closeFn(); };
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   🖨️ طباعة التقرير — نسخة احترافية
    ═══════════════════════════════════════════════════════════════ */
 function printReport() {
 const { summaryRows, totals } = calculateSummaryData();
@@ -5154,24 +5851,6 @@ clearUIFields();
 saveAllDataToLocalStorage();
 updateCoinStatus();
 }
-}
-function deleteCurrentCoin() {
-if (!activeCoinSymbol) { showError("لا توجد عملة محددة لحذفها."); return; }
-const symbolToDelete = activeCoinSymbol;
-const displayName = getDisplayNameFromKey(symbolToDelete);
-showConfirm('هل أنت متأكد أنك تريد حذف ' + displayName + '؟', () => {
-delete allCoinData[symbolToDelete];
-delete currentMarketPrices[symbolToDelete];
-activeCoinSymbol = null;
-updateCoinSelector();
-saveAllDataToLocalStorage();
-if (!coinSelector.value) clearUIFields();
-updateSummaryTable();
-updateCoinStatus();
-showSuccess('تم حذف ' + displayName + '.');
-apiStatusDiv.textContent = 'تم حذف ' + displayName + '.';
-apiStatusDiv.style.color = 'var(--text-muted)';
-});
 }
 function sellAllCoinsWithDCA() {
 if (Object.keys(allCoinData).length === 0) { showError("لا توجد عملات للبيع"); return; }
@@ -6156,11 +6835,8 @@ newCoinNameInput.addEventListener('keypress', (e) => {
 if (e.key === 'Enter') { e.preventDefault(); addOrSwitchCoin(); }
 });
 
-/* 🆕 معالج النقر على جدول الملخص - تم إصلاح مشكلة زر + */
 summaryTableBody.addEventListener('click', (event) => {
-/* إذا تم الضغط على زر التوسيع (+) — يُوسّع/يُطوي بدون الانتقال للأعلى */
 if (event.target.closest('.expand-btn')) return;
-/* تجاهل أي ضغطة داخل جدول التعزيزات أو داخل الحاويات التفاعلية */
 if (event.target.closest('.dca-table')) return;
 if (event.target.closest('.coin-details')) return;
 if (event.target.closest('input')) return;
