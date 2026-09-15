@@ -1332,6 +1332,7 @@ h3 { font-size: 1.2em; color: var(--primary-color); margin-bottom: 15px; margin-
 .dca-table .output-field { font-size: 0.9em; padding: 4px 6px; min-height: 28px; background-color: transparent; border: none; font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace; font-weight: var(--font-weight-bold); color: var(--text-color); text-align: center; display: inline-block; width: auto; }
 .dca-table input[type="text"] { width: 85px; padding: 4px 6px; font-size: 0.85em; text-align: center; margin: 0 auto; display: inline-block; box-shadow: none; border: 1px solid var(--input-border); border-radius: 4px; background-color: var(--input-bg); color: var(--text-color); }
 .dca-table input[type="text"]:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px var(--focus-ring-color); }
+
 .dca-table .sell-btn { padding: 4px 10px; font-size: 0.8em; margin: 0 2px; background-color: var(--positive-color); color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease; }
 .dca-table .sell-btn:hover { background-color: #146c43; }
 .dca-table .sell-full-btn { background-color: var(--negative-color); }
@@ -1477,6 +1478,153 @@ box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
 .estimate-clear-btn:hover { background-color: #c82333; }
 
 /* ═══════════════════════════════════════════════════════
+   🆕 شريط اختيار وضع التاريخ (تلقائي / يدوي)
+   ═══════════════════════════════════════════════════════ */
+.date-mode-bar {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 10px 14px;
+background: linear-gradient(135deg, var(--bg-color), var(--section-bg));
+border: 1px solid var(--border-color);
+border-radius: 10px;
+margin: 12px 0;
+flex-wrap: wrap;
+box-shadow: 0 2px 6px var(--shadow-color);
+}
+.date-mode-bar .date-mode-label {
+font-weight: 700;
+color: var(--text-color);
+font-size: 0.9em;
+display: flex;
+align-items: center;
+gap: 6px;
+padding-left: 8px;
+border-left: 1px solid var(--border-color);
+}
+.date-mode-btn {
+padding: 7px 16px;
+border: 2px solid var(--border-color);
+background: var(--section-bg);
+color: var(--text-muted);
+border-radius: 8px;
+cursor: pointer;
+font-weight: 700;
+font-size: 0.85em;
+transition: all 0.2s ease;
+display: inline-flex;
+align-items: center;
+gap: 6px;
+}
+.date-mode-btn:hover {
+border-color: var(--primary-color);
+color: var(--primary-color);
+transform: translateY(-1px);
+}
+.date-mode-btn.active {
+background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+color: white;
+border-color: var(--primary-color);
+box-shadow: 0 3px 10px rgba(0, 86, 179, 0.3);
+}
+.date-mode-btn.active:hover {
+transform: translateY(-1px);
+}
+.date-mode-input {
+padding: 7px 12px;
+border: 2px solid var(--primary-color);
+border-radius: 8px;
+background: var(--input-bg);
+color: var(--text-color);
+font-size: 0.85em;
+font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
+direction: ltr;
+box-shadow: 0 2px 8px rgba(0, 86, 179, 0.15);
+transition: all 0.2s ease;
+}
+.date-mode-input:focus {
+outline: none;
+box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+.date-mode-hint {
+font-size: 0.75em;
+color: var(--text-muted);
+font-style: italic;
+width: 100%;
+margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   🆕 عمود التواريخ (شراء + بيع) في جدول التعزيزات
+   ═══════════════════════════════════════════════════════ */
+.dca-table .date-column {
+min-width: 175px;
+padding: 5px 6px !important;
+vertical-align: top;
+background: var(--bg-color);
+}
+.dca-table .date-item {
+display: flex;
+align-items: center;
+gap: 5px;
+margin-bottom: 3px;
+justify-content: flex-end;
+flex-wrap: nowrap;
+}
+.dca-table .date-item:last-child { margin-bottom: 0; }
+.dca-table .date-label {
+font-size: 0.68em;
+font-weight: 700;
+padding: 2px 6px;
+border-radius: 4px;
+white-space: nowrap;
+flex-shrink: 0;
+}
+.dca-table .date-label.buy {
+background: rgba(25, 135, 84, 0.15);
+color: var(--positive-color);
+border: 1px solid rgba(25, 135, 84, 0.35);
+}
+.dca-table .date-label.sell {
+background: rgba(220, 53, 69, 0.15);
+color: var(--negative-color);
+border: 1px solid rgba(220, 53, 69, 0.35);
+}
+.dca-table .date-value {
+font-size: 0.7em;
+font-family: 'Roboto Mono', 'Consolas', monospace;
+color: var(--text-muted);
+direction: ltr;
+white-space: nowrap;
+background: var(--output-field-bg);
+padding: 2px 6px;
+border-radius: 4px;
+}
+.dca-table .date-input {
+width: 138px;
+font-size: 0.68em;
+padding: 3px 5px;
+border: 1px solid var(--input-border);
+border-radius: 4px;
+background: var(--input-bg);
+color: var(--text-color);
+direction: ltr;
+font-family: 'Roboto Mono', 'Consolas', monospace;
+box-shadow: none;
+}
+.dca-table .date-input:focus {
+outline: none;
+border-color: var(--primary-color);
+box-shadow: 0 0 0 2px var(--focus-ring-color);
+}
+.dca-table .entry-row {
+background: rgba(0, 86, 179, 0.08) !important;
+border-top: 2px solid var(--primary-color) !important;
+border-bottom: 2px solid var(--primary-color) !important;
+}
+.dca-table .entry-row td { font-weight: 600; }
+
+/* ═══════════════════════════════════════════════════════
    🖨️ طباعة احترافية مُحسّنة (Pro Print)
    ═══════════════════════════════════════════════════════ */
 @media print {
@@ -1498,163 +1646,38 @@ font-size: 10.5pt;
 line-height: 1.5;
 direction: rtl;
 }
-.print-header {
-text-align: center;
-margin-bottom: 20px;
-padding: 18px;
-border-bottom: 4px double #0056b3;
-background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
-border-radius: 8px;
-page-break-after: avoid;
-}
-.print-header h1 {
-font-size: 22pt;
-margin: 0 0 6px 0;
-color: #0056b3;
-letter-spacing: 1px;
-}
-.print-header .print-author {
-font-size: 11pt;
-color: #333;
-font-weight: 600;
-margin: 4px 0;
-}
-.print-header .print-date {
-font-size: 10pt;
-color: #666;
-margin: 4px 0;
-}
-.print-header .print-brand {
-font-size: 9pt;
-color: #888;
-font-style: italic;
-margin-top: 8px;
-}
-.print-section {
-margin-bottom: 22px;
-page-break-inside: auto;
-border: 1px solid #dee2e6;
-border-radius: 8px;
-padding: 12px 15px;
-background: #fff;
-}
-.print-section h2 {
-font-size: 14pt;
-color: #fff;
-background: linear-gradient(135deg, #0056b3, #007bff);
-padding: 8px 14px;
-margin: -12px -15px 14px -15px;
-border-radius: 6px 6px 0 0;
-letter-spacing: 0.5px;
-}
-.print-section h3 {
-font-size: 11pt;
-color: #0056b3;
-margin: 14px 0 8px 0;
-padding: 6px 12px;
-background: #eaf2fb;
-border-right: 4px solid #0056b3;
-border-radius: 4px;
-page-break-after: avoid;
-}
-.print-table {
-width: 100%;
-border-collapse: collapse;
-margin-bottom: 12px;
-font-size: 9pt;
-page-break-inside: auto;
-}
-.print-table th, .print-table td {
-border: 1px solid #adb5bd;
-padding: 5px 7px;
-text-align: center;
-word-wrap: break-word;
-vertical-align: middle;
-}
-.print-table th {
-background: linear-gradient(135deg, #0056b3, #007bff);
-color: #ffffff;
-font-weight: bold;
-font-size: 9pt;
-page-break-inside: avoid;
-}
+.print-header { text-align: center; margin-bottom: 20px; padding: 18px; border-bottom: 4px double #0056b3; background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%); border-radius: 8px; page-break-after: avoid; }
+.print-header h1 { font-size: 22pt; margin: 0 0 6px 0; color: #0056b3; letter-spacing: 1px; }
+.print-header .print-author { font-size: 11pt; color: #333; font-weight: 600; margin: 4px 0; }
+.print-header .print-date { font-size: 10pt; color: #666; margin: 4px 0; }
+.print-header .print-brand { font-size: 9pt; color: #888; font-style: italic; margin-top: 8px; }
+.print-section { margin-bottom: 22px; page-break-inside: auto; border: 1px solid #dee2e6; border-radius: 8px; padding: 12px 15px; background: #fff; }
+.print-section h2 { font-size: 14pt; color: #fff; background: linear-gradient(135deg, #0056b3, #007bff); padding: 8px 14px; margin: -12px -15px 14px -15px; border-radius: 6px 6px 0 0; letter-spacing: 0.5px; }
+.print-section h3 { font-size: 11pt; color: #0056b3; margin: 14px 0 8px 0; padding: 6px 12px; background: #eaf2fb; border-right: 4px solid #0056b3; border-radius: 4px; page-break-after: avoid; }
+.print-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 9pt; page-break-inside: auto; }
+.print-table th, .print-table td { border: 1px solid #adb5bd; padding: 5px 7px; text-align: center; word-wrap: break-word; vertical-align: middle; }
+.print-table th { background: linear-gradient(135deg, #0056b3, #007bff); color: #ffffff; font-weight: bold; font-size: 9pt; page-break-inside: avoid; }
 .print-table tbody tr:nth-child(even) { background: #f8f9fa; }
 .print-table tbody tr:hover { background: #e9ecef; }
 .print-table tbody td { color: #212529; }
 .print-table .num-col { font-family: 'Consolas', 'Courier New', monospace; direction: ltr; }
 .positive { color: #198754 !important; font-weight: bold; }
 .negative { color: #dc3545 !important; font-weight: bold; }
-.print-totals {
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: 8px;
-margin-top: 10px;
-padding: 14px;
-background: #f0f7ff;
-border: 2px solid #0056b3;
-border-radius: 8px;
-page-break-inside: avoid;
-}
-.print-totals div {
-display: flex;
-justify-content: space-between;
-padding: 6px 10px;
-border-bottom: 1px dashed #b0c4de;
-font-size: 10pt;
-}
+.print-totals { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; padding: 14px; background: #f0f7ff; border: 2px solid #0056b3; border-radius: 8px; page-break-inside: avoid; }
+.print-totals div { display: flex; justify-content: space-between; padding: 6px 10px; border-bottom: 1px dashed #b0c4de; font-size: 10pt; }
 .print-totals div:last-child { border-bottom: none; }
 .print-totals div span:first-child { color: #495057; }
 .print-totals div span:last-child { font-family: 'Consolas', monospace; font-weight: bold; color: #0056b3; }
-.print-footer {
-text-align: center;
-margin-top: 24px;
-font-size: 9pt;
-color: #666;
-border-top: 3px double #0056b3;
-padding-top: 12px;
-page-break-before: avoid;
-}
+.print-footer { text-align: center; margin-top: 24px; font-size: 9pt; color: #666; border-top: 3px double #0056b3; padding-top: 12px; page-break-before: avoid; }
 .print-footer p { margin: 4px 0; }
 .print-footer .footer-thanks { color: #0056b3; font-weight: bold; font-size: 10pt; }
-.print-note {
-font-size: 8.5pt;
-color: #666;
-font-style: italic;
-margin: 6px 0;
-padding: 6px 10px;
-background: #fffbea;
-border-right: 3px solid #ffc107;
-border-radius: 4px;
-}
-.print-badge {
-display: inline-block;
-padding: 2px 8px;
-border-radius: 10px;
-font-size: 8pt;
-font-weight: bold;
-white-space: nowrap;
-}
+.print-note { font-size: 8.5pt; color: #666; font-style: italic; margin: 6px 0; padding: 6px 10px; background: #fffbea; border-right: 3px solid #ffc107; border-radius: 4px; }
+.print-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 8pt; font-weight: bold; white-space: nowrap; }
 .print-badge.deposit { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
 .print-badge.withdrawal { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 .print-badge.entry { background: #cfe2ff; color: #084298; border: 1px solid #b6d4fe; }
 .print-badge.dca { background: #fff3cd; color: #664d03; border: 1px solid #ffecb5; }
-.print-summary-cards {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 8px;
-margin-bottom: 12px;
-}
-.print-summary-card {
-background: #f8f9fa;
-border: 1px solid #dee2e6;
-border-radius: 6px;
-padding: 8px;
-text-align: center;
-}
-.print-summary-card .label { font-size: 8pt; color: #6c757d; margin-bottom: 3px; }
-.print-summary-card .value { font-size: 11pt; font-weight: bold; font-family: 'Consolas', monospace; }
 .print-table tr { page-break-inside: avoid; page-break-after: auto; }
-.print-section-break { page-break-before: always; }
 }
 
 @media (max-width: 1200px) {
@@ -1684,6 +1707,10 @@ h3 { font-size: 1em; }
 .summary-table th, .summary-table td { padding: 6px 5px; white-space: nowrap; font-size: 0.85em; }
 .dca-table th, .dca-table td { padding: 4px 3px; font-size: 0.75em; }
 .dca-table input[type="text"] { width: 55px; padding: 3px 4px; font-size: 0.75em; }
+.dca-table .date-input { width: 120px; font-size: 0.65em; }
+.dca-table .date-column { min-width: 150px; }
+.dca-table .date-label { font-size: 0.62em; padding: 1px 4px; }
+.dca-table .date-value { font-size: 0.62em; padding: 1px 4px; }
 .dca-table .sell-form input[type="text"] { width: 45px; }
 .dca-table .sell-btn, .dca-table .cancel-btn, .dca-table .save-dca-btn { padding: 3px 6px; font-size: 0.7em; margin: 1px; }
 .dca-table .sales-history { max-height: 80px; font-size: 0.7em; }
@@ -1740,6 +1767,9 @@ label { font-size: 0.85em; margin-bottom: 5px; }
 .estimate-actions { flex-direction: column; }
 .estimate-actions button { width: 100%; }
 .floating-refresh-btn { top: 75px; left: 10px; width: 48px; height: 48px; font-size: 1.4em; }
+.date-mode-bar { flex-direction: column; align-items: stretch; }
+.date-mode-bar .date-mode-label { border-left: none; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; padding-left: 0; }
+.date-mode-btn { justify-content: center; }
 }
 @media (max-width: 480px) {
 body { font-size: 12px; }
@@ -1752,6 +1782,8 @@ h2 { font-size: 1.05em; }
 .dca-table { min-width: 650px; font-size: 0.7em; }
 .dca-table th, .dca-table td { padding: 3px 2px; }
 .dca-table input[type="text"] { width: 50px; }
+.dca-table .date-input { width: 110px; font-size: 0.6em; }
+.dca-table .date-column { min-width: 135px; }
 .dca-table .sell-btn, .dca-table .cancel-btn { padding: 2px 5px; font-size: 0.65em; }
 .summary-totals { grid-template-columns: 1fr; gap: 8px; }
 .summary-grid { grid-template-columns: 1fr; }
@@ -2000,6 +2032,20 @@ h2 { font-size: 1.05em; }
 <button onclick="addCashToWallet()" style="align-self: flex-end; margin-bottom: 8px;" class="btn-pulse">إضافة كاش</button>
 <button onclick="withdrawCashFromWallet()" style="align-self: flex-end; margin-bottom: 8px; background-color: var(--negative-color);" class="btn-pulse">سحب كاش</button>
 </div>
+
+<!-- 🆕 شريط اختيار وضع التاريخ لعمليات الكاش -->
+<div class="date-mode-bar">
+    <span class="date-mode-label">📅 وضع تاريخ عمليات الكاش:</span>
+    <button class="date-mode-btn" data-mode="auto" onclick="setCashDateMode('auto')" title="استخدام تاريخ ووقت الجهاز الحالي">
+        🤖 تلقائي
+    </button>
+    <button class="date-mode-btn" data-mode="manual" onclick="setCashDateMode('manual')" title="اختيار التاريخ والوقت يدوياً">
+        ✏️ يدوي
+    </button>
+    <input type="datetime-local" id="cashManualDateInput" class="date-mode-input" style="display:none;">
+    <span class="date-mode-hint" id="cashDateHint" style="display:none;">💡 اختر التاريخ والوقت يدوياً لكل عملية كاش جديدة.</span>
+</div>
+
 <div class="cash-warning" id="cashWarning">⚠️ ليس لديك كاش كافٍ لإضافة هذه الصفقة!</div>
 <div class="cash-explanation" id="cashExplanation">ملاحظة: سيتم خصم الكاش فقط عند النقر على زر "💾 حفظ الصفقة" بعد إدخال البيانات.</div>
 <div class="cash-history">
@@ -2042,6 +2088,20 @@ h2 { font-size: 1.05em; }
 <button class="toggle-btn" onclick="toggleSection('entryDetails')">طي</button>
 </div>
 <div class="section-content" id="entryDetailsSectionContent">
+
+<!-- 🆕 شريط وضع تاريخ صفقة الدخول -->
+<div class="date-mode-bar">
+    <span class="date-mode-label">📅 وضع تاريخ صفقة الدخول:</span>
+    <button class="date-mode-btn" data-mode="auto" data-mode-group="entry" onclick="setEntryDateMode('auto')" title="سيتم استخدام تاريخ ووقت الجهاز عند الحفظ">
+        🤖 تلقائي
+    </button>
+    <button class="date-mode-btn" data-mode="manual" data-mode-group="entry" onclick="setEntryDateMode('manual')" title="اختر التاريخ والوقت يدوياً">
+        ✏️ يدوي
+    </button>
+    <input type="datetime-local" id="entryManualDateInput" class="date-mode-input" style="display:none;">
+    <span class="date-mode-hint" id="entryDateHint" style="display:none;">💡 سيتم تسجيل صفقة الدخول بالتاريخ والوقت المختارين عند الحفظ. يمكنك تغييره في أي وقت.</span>
+</div>
+
 <div class="form-grid initial-purchase-grid">
 <div class="form-group"><label for="initialEntryPrice">سعر الدخول الأولي:</label>
 <input type="text" id="initialEntryPrice" placeholder="0.00" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); calculateInitialCoinQty();" onfocus="removeCommasFromInput(this)" inputmode="decimal"></div>
@@ -2101,7 +2161,7 @@ h2 { font-size: 1.05em; }
 </div>
 
 <!-- ═══════════════════════════════════════════════════════
-     📊 ملخص الصفقات الكلي (تم نقله لأعلى حاسبة المخاطر)
+     📊 ملخص الصفقات الكلي
      ═══════════════════════════════════════════════════════ -->
 <section class="overall-summary-section card-hover section-custom" id="section-summary">
 <div class="section-header summary-header-with-btn">
@@ -2113,6 +2173,20 @@ h2 { font-size: 1.05em; }
 <button class="toggle-btn" onclick="toggleSection('summary')">طي</button>
 </div>
 <div class="section-content" id="summarySectionContent">
+
+<!-- 🆕 شريط وضع تاريخ التعزيزات - موجود هنا -->
+<div class="date-mode-bar">
+    <span class="date-mode-label">📅 وضع تاريخ التعزيزات الجديدة:</span>
+    <button class="date-mode-btn" data-mode="auto" data-mode-group="dca" onclick="setDCADateMode('auto')" title="سيتم استخدام تاريخ ووقت الجهاز عند إنشاء تعزيز">
+        🤖 تلقائي
+    </button>
+    <button class="date-mode-btn" data-mode="manual" data-mode-group="dca" onclick="setDCADateMode('manual')" title="اختر تاريخاً افتراضياً للتعزيزات الجديدة">
+        ✏️ يدوي
+    </button>
+    <input type="datetime-local" id="dcaManualDateInput" class="date-mode-input" style="display:none;">
+    <span class="date-mode-hint" id="dcaDateHint" style="display:none;">💡 سيتم تسجيل كل تعزيز جديد بالتاريخ المختار. يمكنك تعديل تاريخ كل تعزيز من عمود "📅 التواريخ" في الجدول.</span>
+</div>
+
 <div class="summary-table-container">
 <table class="summary-table table-hover-effect">
 <thead><tr>
@@ -2142,6 +2216,20 @@ h2 { font-size: 1.05em; }
 <button class="history-tab active" onclick="showSalesCashHistory('deposit')">الإيداعات</button>
 <button class="history-tab" onclick="showSalesCashHistory('withdrawal')">السحوبات</button>
 </div>
+
+<!-- 🆕 شريط اختيار وضع التاريخ لعمليات الكاش من البيع -->
+<div class="date-mode-bar">
+    <span class="date-mode-label">📅 وضع تاريخ عمليات البيع:</span>
+    <button class="date-mode-btn" data-mode="auto" onclick="setSalesCashDateMode('auto')" title="كل عملية بيع تسجل بتاريخها الحالي تلقائياً">
+        🤖 تلقائي
+    </button>
+    <button class="date-mode-btn" data-mode="manual" onclick="setSalesCashDateMode('manual')" title="كل عملية بيع تسجل بالتاريخ الذي تختاره">
+        ✏️ يدوي
+    </button>
+    <input type="datetime-local" id="salesCashManualDateInput" class="date-mode-input" style="display:none;">
+    <span class="date-mode-hint" id="salesCashDateHint" style="display:none;">💡 اضبط التاريخ قبل تنفيذ أي عملية بيع، وسيُسجَّل به.</span>
+</div>
+
 <div class="history-content" id="salesCashDepositHistory"></div>
 <div class="history-content" id="salesCashWithdrawalHistory" style="display: none;"></div>
 </div>
@@ -2150,7 +2238,7 @@ h2 { font-size: 1.05em; }
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول) — تم نقلها هنا
+     🧮 حاسبة سريعة لإدارة المخاطر (قبل الدخول) — تحت الملخص
      ═══════════════════════════════════════════════════════ -->
 <section class="risk-calculator-section card-hover section-custom" id="section-riskCalculator">
 <div class="section-header">
@@ -2159,14 +2247,12 @@ h2 { font-size: 1.05em; }
 </div>
 <div class="section-content" id="riskCalculatorSectionContent">
 
-<!-- ─────────── بطاقة الوصف ─────────── -->
 <div class="risk-calculator-card">
 <div class="icon">🧮</div>
 <div class="title">حاسبة إدارة المخاطر الاحترافية</div>
 <div class="subtitle">احسب حجم المركز ووقف الخسارة المثالي قبل الدخول</div>
 </div>
 
-<!-- ─────────── زر الفتح ─────────── -->
 <div class="risk-links-grid">
 <a href="risk-calculator.html" target="_blank" rel="noopener noreferrer" class="risk-link-btn">
 <span class="icon">🪟</span>
@@ -2174,7 +2260,6 @@ h2 { font-size: 1.05em; }
 </a>
 </div>
 
-<!-- ─────────── ملاحظة ─────────── -->
 <div class="risk-note">
 <strong>💡 ملاحظة:</strong>
 <span> الحاسبة تفتح في صفحة منفصلة لتعمل بشكل مستقل دون التأثير على بيانات صفقاتك.</span>
@@ -2849,6 +2934,12 @@ let salesCashHistory = { deposits: [], withdrawals: [] };
 let expandedCoins = new Set();
 let savedEstimatePrices = {};
 
+/* 🆕 متغيرات وضع التاريخ */
+let cashDateMode = localStorage.getItem('muharraqi_cashDateMode') || 'auto';
+let salesCashDateMode = localStorage.getItem('muharraqi_salesCashDateMode') || 'auto';
+let entryDateMode = localStorage.getItem('muharraqi_entryDateMode') || 'auto';
+let dcaDateMode = localStorage.getItem('muharraqi_dcaDateMode') || 'auto';
+
 function updateCashDisplay() {
 const totalSalesCash = salesCashHistory.deposits.reduce((sum, record) => sum + record.amount, 0) -
 salesCashHistory.withdrawals.reduce((sum, record) => sum + record.amount, 0);
@@ -2869,7 +2960,7 @@ if (amount <= 0) { showError("يرجى إدخال مبلغ صحيح للإيدا
 availableCash += amount;
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
 updateCashDisplay();
-const depositRecord = { id: Date.now(), amount: amount, date: new Date().toLocaleString('ar-EG'), type: 'deposit', note: 'إيداع يدوي' };
+const depositRecord = { id: Date.now(), amount: amount, date: getCashRecordDate(), type: 'deposit', note: 'إيداع يدوي' };
 cashHistory.deposits.push(depositRecord);
 saveCashHistory();
 updateCashHistoryDisplay();
@@ -2895,7 +2986,7 @@ remainingNeeded -= deductFromCash;
 if (remainingNeeded > 0.0001) addSalesCashWithdrawal(remainingNeeded, 'سحب يدوي');
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
 updateCashDisplay();
-const withdrawalRecord = { id: Date.now(), amount: amount, date: new Date().toLocaleString('ar-EG'), type: 'withdrawal', note: 'سحب يدوي' };
+const withdrawalRecord = { id: Date.now(), amount: amount, date: getCashRecordDate(), type: 'withdrawal', note: 'سحب يدوي' };
 cashHistory.withdrawals.push(withdrawalRecord);
 saveCashHistory();
 updateCashHistoryDisplay();
@@ -2906,7 +2997,7 @@ updateSummaryTable();
 function addSalesCashDeposit(amount, note = 'إيداع من بيع', saleId = null) {
 if (amount <= 0.0001) return null;
 const cashRecordId = Date.now() + Math.floor(Math.random() * 1000);
-const depositRecord = { id: cashRecordId, amount: amount, date: new Date().toLocaleString('ar-EG'), type: 'deposit', note: note, saleId: saleId };
+const depositRecord = { id: cashRecordId, amount: amount, date: getSalesCashRecordDate(), type: 'deposit', note: note, saleId: saleId };
 salesCashHistory.deposits.push(depositRecord);
 saveSalesCashHistory();
 updateSalesCashHistoryDisplay();
@@ -2916,7 +3007,7 @@ return cashRecordId;
 }
 function addSalesCashWithdrawal(amount, note = 'سحب من كاش البيع') {
 if (amount <= 0.0001) return;
-const withdrawalRecord = { id: Date.now(), amount: amount, date: new Date().toLocaleString('ar-EG'), type: 'withdrawal', note: note };
+const withdrawalRecord = { id: Date.now(), amount: amount, date: getSalesCashRecordDate(), type: 'withdrawal', note: note };
 salesCashHistory.withdrawals.push(withdrawalRecord);
 saveSalesCashHistory();
 updateSalesCashHistoryDisplay();
@@ -3083,7 +3174,7 @@ return false;
 }
 addSalesCashWithdrawal(remainingAmount, note);
 }
-const withdrawalRecord = { id: Date.now() + 1, amount: amount, date: new Date().toLocaleString('ar-EG'), type: 'withdrawal', note: note };
+const withdrawalRecord = { id: Date.now() + 1, amount: amount, date: getCashRecordDate(), type: 'withdrawal', note: note };
 cashHistory.withdrawals.push(withdrawalRecord);
 saveCashHistory();
 updateCashHistoryDisplay();
@@ -3095,6 +3186,7 @@ function getDefaultCoinDataStructure() {
 return {
 initialEntryPrice: '', initialAmountDollars: '', initialSavedAmount: 0,
 initialSales: [], initialTotalSoldQty: '0', initialPurchaseDate: '',
+initialPurchaseDateRaw: '',
 isEntrySaved: false, repurchases: []
 };
 }
@@ -3121,6 +3213,7 @@ if (!allCoinData[symbol].repurchases) allCoinData[symbol].repurchases = [];
 if (!allCoinData[symbol].initialSales) allCoinData[symbol].initialSales = [];
 if (!allCoinData[symbol].initialTotalSoldQty) allCoinData[symbol].initialTotalSoldQty = '0';
 if (!allCoinData[symbol].initialPurchaseDate) allCoinData[symbol].initialPurchaseDate = '';
+if (!allCoinData[symbol].initialPurchaseDateRaw) allCoinData[symbol].initialPurchaseDateRaw = '';
 if (allCoinData[symbol].isEntrySaved === undefined) allCoinData[symbol].isEntrySaved = false;
 if (allCoinData[symbol].initialSavedAmount === undefined) allCoinData[symbol].initialSavedAmount = 0;
 if (allCoinData[symbol].targets) delete allCoinData[symbol].targets;
@@ -3128,6 +3221,8 @@ if (allCoinData[symbol].targets) delete allCoinData[symbol].targets;
 if (rp.savedAmount === undefined) rp.savedAmount = 0;
 if (!rp.sales) rp.sales = [];
 if (!rp.totalSoldQty) rp.totalSoldQty = '0';
+if (!rp.purchaseDate) rp.purchaseDate = '';
+if (!rp.purchaseDateRaw) rp.purchaseDateRaw = '';
 });
 currentMarketPrices[symbol] = null;
 });
@@ -3188,6 +3283,11 @@ const entryPriceVal = parseFormattedNumber(data.initialEntryPrice);
 const amountVal = parseFormattedNumber(data.initialAmountDollars);
 document.getElementById('initialEntryPrice').value = entryPriceVal > 0 ? formatWithCommas(entryPriceVal, 8) : (data.initialEntryPrice || '');
 document.getElementById('initialAmountDollars').value = amountVal > 0 ? formatWithCommas(amountVal, 2) : (data.initialAmountDollars || '');
+/* 🆕 تعبئة حقل التاريخ اليدوي للدخول */
+const entryDateInput = document.getElementById('entryManualDateInput');
+if (entryDateInput) {
+entryDateInput.value = data.initialPurchaseDateRaw || getNowForDatetimeInput();
+}
 updateInitialSalesHistory(data.initialSales || []);
 const activeCoinPrice = currentMarketPrices[symbol];
 if (activeCoinPrice !== null && activeCoinPrice !== undefined && !isNaN(activeCoinPrice)) {
@@ -3467,9 +3567,6 @@ currentData.initialEntryPrice = document.getElementById('initialEntryPrice').val
 currentData.initialAmountDollars = document.getElementById('initialAmountDollars').value;
 currentData.initialSales = getInitialSalesHistory();
 currentData.initialTotalSoldQty = calculateTotalInitialSoldQty(currentData.initialSales).toString();
-if (!currentData.initialPurchaseDate && currentData.initialEntryPrice && currentData.initialAmountDollars) {
-currentData.initialPurchaseDate = new Date().toLocaleDateString('ar-EG');
-}
 }
 function calculateInitialCoinQty() {
 const initialEntryPrice = parseFormattedNumber(document.getElementById('initialEntryPrice').value);
@@ -3500,7 +3597,7 @@ if (!deductCash(difference, 'خصم فرق تعديل ' + getDisplayNameFromKey(
 const refundAmount = Math.abs(difference);
 availableCash += refundAmount;
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
-const refundRecord = { id: Date.now(), amount: refundAmount, date: new Date().toLocaleString('ar-EG'), type: 'deposit', note: 'استرجاع فرق تعديل ' + getDisplayNameFromKey(activeCoinSymbol) };
+const refundRecord = { id: Date.now(), amount: refundAmount, date: getCashRecordDate(), type: 'deposit', note: 'استرجاع فرق تعديل ' + getDisplayNameFromKey(activeCoinSymbol) };
 cashHistory.deposits.push(refundRecord);
 saveCashHistory();
 updateCashHistoryDisplay();
@@ -3508,6 +3605,10 @@ updateCashDisplay();
 }
 }
 }
+/* 🆕 التحكم بتاريخ صفقة الدخول */
+data.initialPurchaseDate = getEntryRecordDate();
+data.initialPurchaseDateRaw = getEntryRecordDateRaw();
+
 data.initialSavedAmount = initialAmountDollars;
 const initialCoinQty = initialEntryPrice > 0 ? initialAmountDollars / initialEntryPrice : 0;
 if (data.initialSales && data.initialSales.length > 0 && initialCoinQty > 0) {
@@ -3550,7 +3651,7 @@ if (!deductCash(difference, 'خصم فرق تعديل تعزيز ' + getDisplayN
 const refundAmount = Math.abs(difference);
 availableCash += refundAmount;
 localStorage.setItem(LS_KEY_CASH, availableCash.toString());
-const refundRecord = { id: Date.now(), amount: refundAmount, date: new Date().toLocaleString('ar-EG'), type: 'deposit', note: 'استرجاع فرق تعديل تعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1) };
+const refundRecord = { id: Date.now(), amount: refundAmount, date: getCashRecordDate(), type: 'deposit', note: 'استرجاع فرق تعديل تعزيز ' + getDisplayNameFromKey(symbol) + ' #' + (index+1) };
 cashHistory.deposits.push(refundRecord);
 saveCashHistory();
 updateCashHistoryDisplay();
@@ -3561,7 +3662,11 @@ updateCashDisplay();
 rp.savedAmount = repurchaseAmount;
 rp.price = repurchasePrice.toString();
 rp.amount = repurchaseAmount.toString();
-if (!rp.purchaseDate) rp.purchaseDate = new Date().toLocaleDateString('ar-EG');
+/* 🆕 التحكم بتاريخ التعزيز - إذا لم يكن هناك تاريخ مسجل، استخدم الوضع الحالي */
+if (!rp.purchaseDateRaw) {
+    rp.purchaseDate = getDCARecordDate();
+    rp.purchaseDateRaw = getDCARecordDateRaw();
+}
 const repurchaseQty = repurchasePrice > 0 ? repurchaseAmount / repurchasePrice : 0;
 if (rp.sales && rp.sales.length > 0 && repurchaseQty > 0) {
 rp.sales.forEach(sale => { sale.investedAmount = repurchaseAmount * (sale.qty / repurchaseQty); });
@@ -3579,7 +3684,12 @@ showSuccess(diff > 0 ? 'تم تحديث التعزيز ' + (index+1) + ' وخص�
 function addDCAForCoin(symbol) {
 if (!symbol || !allCoinData[symbol]) { showError("يرجى اختيار عملة أولاً"); return; }
 const data = allCoinData[symbol];
-const newRepurchase = { price: '', amount: '', sales: [], totalSoldQty: '0', priceMode: 'price', purchaseDate: '', savedAmount: 0 };
+const newRepurchase = {
+    price: '', amount: '', sales: [], totalSoldQty: '0', priceMode: 'price',
+    purchaseDate: getDCARecordDate(),
+    purchaseDateRaw: getDCARecordDateRaw(),
+    savedAmount: 0
+};
 data.repurchases.push(newRepurchase);
 saveAllDataToLocalStorage();
 updateSummaryTable();
@@ -3633,14 +3743,80 @@ calculateAndDisplay();
 }
 function calculateTotalSoldQty(sales) { return sales.reduce((total, sale) => total + sale.qty, 0); }
 function calculateCashFromSales(sales) { return sales.reduce((total, sale) => total + (sale.qty * sale.price), 0); }
+
+/* ═══════════════════════════════════════════════════════════════
+   🆕 getDCARowsHTML — نسخة محسّنة تعرض صف الدخول + عمود التواريخ (شراء + بيع)
+   ═══════════════════════════════════════════════════════════════ */
 function getDCARowsHTML(symbol, data) {
-if (!data || !data.repurchases || data.repurchases.length === 0) {
-return '<div style="text-align:center; padding:15px; color:var(--text-muted);">لا توجد تعزيزات مسجلة لهذه العملة<br><button class="add-dca-btn" onclick="addDCAForCoin(\'' + symbol + '\')">➕ إضافة تعزيز</button></div>';
-}
-let html = '<table class="dca-table"><thead><tr><th>#</th><th>هبوط %</th><th>سعر التعزيز</th><th>المبلغ $</th><th>الكمية</th><th>المباعة</th><th>المتبقي</th><th>ربح/خسارة الصفقة $</th><th>ربح/خسارة الصفقة %</th><th>الكاش من البيع $</th><th>حالة البيع</th><th>الإجراءات</th></tr></thead><tbody>';
 const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
+const initialAmountDollars = parseFormattedNumber(data.initialAmountDollars);
+const initialSales = data.initialSales || [];
+const initialCoinQty = initialEntryPrice > 0 ? initialAmountDollars / initialEntryPrice : 0;
+const initialTotalSoldQty = calculateTotalInitialSoldQty(initialSales);
+const initialRemainingQty = Math.max(0, initialCoinQty - initialTotalSoldQty);
+const initialCashFromSales = calculateInitialCashFromSales(initialSales);
+const hasEntry = initialEntryPrice > 0 && initialAmountDollars > 0;
+
+if (!data || ((!data.repurchases || data.repurchases.length === 0) && !hasEntry)) {
+return '<div style="text-align:center; padding:15px; color:var(--text-muted);">لا توجد صفقات مسجلة لهذه العملة<br><button class="add-dca-btn" onclick="addDCAForCoin(\'' + symbol + '\')">➕ إضافة تعزيز</button></div>';
+}
+
+let html = '<table class="dca-table"><thead><tr><th>#</th><th>هبوط %</th><th>سعر الشراء</th><th>المبلغ $</th><th>📅 التواريخ</th><th>الكمية</th><th>المباعة</th><th>المتبقي</th><th>ربح/خسارة الصفقة $</th><th>ربح/خسارة الصفقة %</th><th>الكاش من البيع $</th><th>حالة البيع</th><th>الإجراءات</th></tr></thead><tbody>';
+
 const marketPrice = currentMarketPrices[symbol] || 0;
-data.repurchases.forEach((rp, index) => {
+
+/* ═══════════════════ صف العملة الرئيسية (الدخول) ═══════════════════ */
+if (hasEntry) {
+let entryPnlAmount = 0;
+let entryPnlPercent = 0;
+if (marketPrice > 0 && initialCoinQty > 0) {
+const currentValue = initialRemainingQty * marketPrice;
+const remainingInvested = initialAmountDollars * (initialRemainingQty / initialCoinQty);
+let totalInvestedForSales = 0;
+let totalSaleAmount = 0;
+initialSales.forEach(sale => {
+totalSaleAmount += sale.qty * sale.price;
+totalInvestedForSales += sale.investedAmount || (initialAmountDollars * (sale.qty / initialCoinQty));
+});
+const pnlFromSales = totalSaleAmount - totalInvestedForSales;
+entryPnlAmount = pnlFromSales + (currentValue - remainingInvested);
+const totalInvested = totalInvestedForSales + remainingInvested;
+entryPnlPercent = totalInvested > 0 ? (entryPnlAmount / totalInvested) * 100 : 0;
+}
+const entryStatus = initialTotalSoldQty >= initialCoinQty - 0.00000001 ? 'تم البيع' : (initialTotalSoldQty > 0 ? 'بيع جزئي' : 'نشط');
+const entryStatusClass = entryStatus === 'تم البيع' ? 'sold-btn' : (entryStatus === 'بيع جزئي' ? 'partial-sold-btn' : '');
+const entryPnlClass = entryPnlAmount > 0 ? 'pnl-positive' : (entryPnlAmount < 0 ? 'pnl-negative' : '');
+const entryPriceDisplay = formatWithCommas(initialEntryPrice, 8);
+const entryAmountDisplay = formatWithCommas(initialAmountDollars, 2);
+const entryDateRaw = data.initialPurchaseDateRaw || '';
+
+let datesHtml = '<div class="date-item"><span class="date-label buy">🟢 شراء</span><input type="datetime-local" class="date-input" value="' + entryDateRaw + '" onchange="updateEntryPurchaseDate(\'' + symbol + '\', this.value);" title="تاريخ شراء الدخول - قابل للتعديل"></div>';
+initialSales.forEach((sale, si) => {
+datesHtml += '<div class="date-item"><span class="date-label sell">🔴 بيع ' + (si + 1) + '</span><span class="date-value">' + (sale.date || '—') + '</span></div>';
+});
+
+html += '<tr class="entry-row">';
+html += '<td><span class="dca-badge" style="background:var(--primary-color); color:white;">دخول</span></td>';
+html += '<td><span style="color:var(--text-muted); font-size:0.85em;">—</span></td>';
+html += '<td><div class="output-field" style="color:var(--primary-color); font-weight:bold;">' + entryPriceDisplay + '</div></td>';
+html += '<td><div class="output-field" style="color:var(--primary-color); font-weight:bold;">' + entryAmountDisplay + '</div></td>';
+html += '<td class="date-column">' + datesHtml + '</td>';
+html += '<td><div class="output-field">' + formatNumber(initialCoinQty, 8) + '</div></td>';
+html += '<td><div class="output-field">' + formatNumber(initialTotalSoldQty, 8) + '</div></td>';
+html += '<td><div class="output-field ' + (initialRemainingQty > 0 ? 'remaining-info' : '') + '">' + formatNumber(initialRemainingQty, 8) + '</div></td>';
+html += '<td><div class="output-field ' + entryPnlClass + '">' + formatWithCommas(entryPnlAmount, 2) + '</div></td>';
+html += '<td><div class="output-field ' + entryPnlClass + '">' + formatNumber(entryPnlPercent, 2) + '%</div></td>';
+html += '<td><div class="output-field cash-positive">' + formatWithCommas(initialCashFromSales, 2) + '</div></td>';
+html += '<td><span class="' + entryStatusClass + '">' + entryStatus + '</span></td>';
+html += '<td>';
+html += '<button class="sell-btn" onclick="ensureActiveCoin(\'' + symbol + '\'); setTimeout(function(){ toggleInitialSellForm(); scrollToEntrySection(); }, 120);">بيع</button>';
+html += '<button class="sell-btn sell-full-btn" onclick="ensureActiveCoin(\'' + symbol + '\'); setTimeout(function(){ sellAllInitial(); }, 120);" title="بيع الكل">بيع الكل</button>';
+html += '<button class="cancel-btn" onclick="ensureActiveCoin(\'' + symbol + '\'); setTimeout(function(){ cancelInitialTransaction(); }, 120);" title="إلغاء صفقة الدخول">إلغاء</button>';
+html += '</td></tr>';
+}
+
+/* ═══════════════════ صفوف التعزيزات ═══════════════════ */
+(data.repurchases || []).forEach((rp, index) => {
 const repurchasePrice = parseFormattedNumber(rp.price);
 const repurchaseAmount = parseFormattedNumber(rp.amount);
 const sales = rp.sales || [];
@@ -3673,11 +3849,41 @@ const changeClass = changePercent < 0 ? 'negative' : (changePercent > 0 ? 'posit
 const priceMode = rp.priceMode || 'price';
 const displayPrice = repurchasePrice > 0 ? formatWithCommas(repurchasePrice, 8) : '';
 const displayAmount = repurchaseAmount > 0 ? formatWithCommas(repurchaseAmount, 2) : '';
-html += '<tr id="dca_row_' + symbol + '_' + index + '" class="' + (status === 'تم البيع' ? 'sold-row' : (status === 'بيع جزئي' ? 'partial-sold-row' : '')) + '"><td>' + (index + 1) + '</td><td><span class="down-percent ' + changeClass + '">' + (changePercent !== 0 && isFinite(changePercent) ? formatNumber(changePercent, 2) + '%' : '-%') + '</span></td><td><input type="text" id="dca_price_' + symbol + '_' + index + '" placeholder="السعر" value="' + displayPrice + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs(\'' + symbol + '\', ' + index + '); calculateAndDisplay();" onfocus="removeCommasFromInput(this)" inputmode="decimal"><div class="percentage-input-group ' + (priceMode === 'percentage' ? 'active' : '') + '" id="dca_percentageGroup_' + symbol + '_' + index + '"><input type="text" id="dca_percentage_' + symbol + '_' + index + '" placeholder="النسبة %" value="' + formatNumber(changePercent, 2) + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); handleDCAPercentageInput(\'' + symbol + '\', ' + index + ');" onfocus="removeCommasFromInput(this)" inputmode="decimal"></div><div class="price-mode-toggle"><button class="price-mode-btn ' + (priceMode === 'price' ? 'active' : '') + '" id="dca_priceModeBtn_' + symbol + '_' + index + '" onclick="switchDCAPriceMode(\'' + symbol + '\', ' + index + ', \'price\')">سعر</button><button class="price-mode-btn ' + (priceMode === 'percentage' ? 'active' : '') + '" id="dca_percentageModeBtn_' + symbol + '_' + index + '" onclick="switchDCAPriceMode(\'' + symbol + '\', ' + index + ', \'percentage\')">نسبة</button></div></td><td><input type="text" id="dca_amount_' + symbol + '_' + index + '" placeholder="$" value="' + displayAmount + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs(\'' + symbol + '\', ' + index + '); calculateAndDisplay();" onfocus="removeCommasFromInput(this)" inputmode="decimal"></td><td><div class="output-field">' + formatNumber(repurchaseQty, 8) + '</div></td><td><div class="output-field">' + formatNumber(totalSoldQty, 8) + '</div></td><td><div class="output-field ' + (remainingQty > 0 ? 'remaining-info' : '') + '">' + formatNumber(remainingQty, 8) + '</div></td><td><div class="output-field ' + tradePnlClass + '">' + formatWithCommas(totalTradePnlAmount, 2) + '</div></td><td><div class="output-field ' + tradePnlClass + '">' + formatNumber(totalTradePnlPercent, 2) + '%</div></td><td><div class="output-field cash-positive">' + formatWithCommas(cashFromSales, 2) + '</div></td><td><span class="' + statusClass + '">' + status + '</span></td><td><button class="sell-btn" onclick="toggleDCASellForm(\'' + symbol + '\', ' + index + ')">بيع</button><button class="sell-btn sell-full-btn" onclick="sellAllDCA(\'' + symbol + '\', ' + index + ')" title="بيع الكل">بيع الكل</button><button class="cancel-btn" onclick="cancelDCATransaction(\'' + symbol + '\', ' + index + ')" title="إلغاء صفقة التعزيز">إلغاء</button><div class="sell-form" id="dca_sellForm_' + symbol + '_' + index + '"><input type="text" id="dca_soldQty_' + symbol + '_' + index + '" placeholder="الكمية" value="0" oninput="validateNumberInput(this)" onblur="formatInputWithCommas(this)" onfocus="removeCommasFromInput(this)" inputmode="decimal"><input type="text" id="dca_soldPrice_' + symbol + '_' + index + '" placeholder="سعر البيع" oninput="validateNumberInput(this)" onblur="formatInputWithCommas(this)" onfocus="removeCommasFromInput(this)" inputmode="decimal"><button onclick="applyDCASale(\'' + symbol + '\', ' + index + ')">إضافة بيع</button><button onclick="cancelDCASale(\'' + symbol + '\', ' + index + ')">إلغاء</button></div><div class="sales-history" id="dca_salesHistory_' + symbol + '_' + index + '">' + (sales.length === 0 ? '<div style="text-align:center; color:var(--text-muted);">لا توجد مبيعات</div>' : '') + sales.map((sale, si) => '<div class="sale-record"><div class="sale-record-info"><div>بيع ' + (si+1) + ': ' + formatNumber(sale.qty, 4) + ' بسعر ' + formatNumber(sale.price, 8) + '</div><div class="sale-record-details"><span>المبلغ: ' + formatWithCommas(sale.qty * sale.price, 2) + ' $</span><span>' + (sale.date || '') + '</span></div></div><div class="sale-record-actions"><button onclick="removeDCASale(\'' + symbol + '\', ' + index + ', ' + si + ')" title="حذف البيع">×</button></div></div>').join('') + '</div><button class="save-dca-btn" onclick="saveDCATransaction(\'' + symbol + '\', ' + index + ')">💾</button><button class="cancel-btn" onclick="removeDCAForCoin(\'' + symbol + '\', ' + index + ')" style="margin-top:4px; font-size:0.7em; padding:2px 8px;">🗑️ حذف التعزيز</button></td></tr>';
+const dcaDateRaw = rp.purchaseDateRaw || '';
+
+let datesHtml = '<div class="date-item"><span class="date-label buy">🟢 شراء</span><input type="datetime-local" class="date-input" value="' + dcaDateRaw + '" onchange="updateDCAPurchaseDate(\'' + symbol + '\', ' + index + ', this.value);" title="تاريخ شراء التعزيز - قابل للتعديل"></div>';
+sales.forEach((sale, si) => {
+datesHtml += '<div class="date-item"><span class="date-label sell">🔴 بيع ' + (si + 1) + '</span><span class="date-value">' + (sale.date || '—') + '</span></div>';
 });
-html += '</tbody></table><button class="add-dca-btn" onclick="addDCAForCoin(\'' + symbol + '\')">➕ إضافة تعزيز جديد</button>';
+
+html += '<tr id="dca_row_' + symbol + '_' + index + '" class="' + (status === 'تم البيع' ? 'sold-row' : (status === 'بيع جزئي' ? 'partial-sold-row' : '')) + '">';
+html += '<td>' + (index + 1) + '</td>';
+html += '<td><span class="down-percent ' + changeClass + '">' + (changePercent !== 0 && isFinite(changePercent) ? formatNumber(changePercent, 2) + '%' : '-%') + '</span></td>';
+html += '<td><input type="text" id="dca_price_' + symbol + '_' + index + '" placeholder="السعر" value="' + displayPrice + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs(\'' + symbol + '\', ' + index + '); calculateAndDisplay();" onfocus="removeCommasFromInput(this)" inputmode="decimal"><div class="percentage-input-group ' + (priceMode === 'percentage' ? 'active' : '') + '" id="dca_percentageGroup_' + symbol + '_' + index + '"><input type="text" id="dca_percentage_' + symbol + '_' + index + '" placeholder="النسبة %" value="' + formatNumber(changePercent, 2) + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); handleDCAPercentageInput(\'' + symbol + '\', ' + index + ');" onfocus="removeCommasFromInput(this)" inputmode="decimal"></div><div class="price-mode-toggle"><button class="price-mode-btn ' + (priceMode === 'price' ? 'active' : '') + '" id="dca_priceModeBtn_' + symbol + '_' + index + '" onclick="switchDCAPriceMode(\'' + symbol + '\', ' + index + ', \'price\')">سعر</button><button class="price-mode-btn ' + (priceMode === 'percentage' ? 'active' : '') + '" id="dca_percentageModeBtn_' + symbol + '_' + index + '" onclick="switchDCAPriceMode(\'' + symbol + '\', ' + index + ', \'percentage\')">نسبة</button></div></td>';
+html += '<td><input type="text" id="dca_amount_' + symbol + '_' + index + '" placeholder="$" value="' + displayAmount + '" oninput="validateNumberInput(this);" onblur="formatInputWithCommas(this); updateDCADataFromInputs(\'' + symbol + '\', ' + index + '); calculateAndDisplay();" onfocus="removeCommasFromInput(this)" inputmode="decimal"></td>';
+html += '<td class="date-column">' + datesHtml + '</td>';
+html += '<td><div class="output-field">' + formatNumber(repurchaseQty, 8) + '</div></td>';
+html += '<td><div class="output-field">' + formatNumber(totalSoldQty, 8) + '</div></td>';
+html += '<td><div class="output-field ' + (remainingQty > 0 ? 'remaining-info' : '') + '">' + formatNumber(remainingQty, 8) + '</div></td>';
+html += '<td><div class="output-field ' + tradePnlClass + '">' + formatWithCommas(totalTradePnlAmount, 2) + '</div></td>';
+html += '<td><div class="output-field ' + tradePnlClass + '">' + formatNumber(totalTradePnlPercent, 2) + '%</div></td>';
+html += '<td><div class="output-field cash-positive">' + formatWithCommas(cashFromSales, 2) + '</div></td>';
+html += '<td><span class="' + statusClass + '">' + status + '</span></td>';
+html += '<td>';
+html += '<button class="sell-btn" onclick="toggleDCASellForm(\'' + symbol + '\', ' + index + ')">بيع</button>';
+html += '<button class="sell-btn sell-full-btn" onclick="sellAllDCA(\'' + symbol + '\', ' + index + ')" title="بيع الكل">بيع الكل</button>';
+html += '<button class="cancel-btn" onclick="cancelDCATransaction(\'' + symbol + '\', ' + index + ')" title="إلغاء صفقة التعزيز">إلغاء</button>';
+html += '<div class="sell-form" id="dca_sellForm_' + symbol + '_' + index + '"><input type="text" id="dca_soldQty_' + symbol + '_' + index + '" placeholder="الكمية" value="0" oninput="validateNumberInput(this)" onblur="formatInputWithCommas(this)" onfocus="removeCommasFromInput(this)" inputmode="decimal"><input type="text" id="dca_soldPrice_' + symbol + '_' + index + '" placeholder="سعر البيع" oninput="validateNumberInput(this)" onblur="formatInputWithCommas(this)" onfocus="removeCommasFromInput(this)" inputmode="decimal"><button onclick="applyDCASale(\'' + symbol + '\', ' + index + ')">إضافة بيع</button><button onclick="cancelDCASale(\'' + symbol + '\', ' + index + ')">إلغاء</button></div>';
+html += '<div class="sales-history" id="dca_salesHistory_' + symbol + '_' + index + '">' + (sales.length === 0 ? '<div style="text-align:center; color:var(--text-muted);">لا توجد مبيعات</div>' : '') + sales.map((sale, si) => '<div class="sale-record"><div class="sale-record-info"><div>بيع ' + (si+1) + ': ' + formatNumber(sale.qty, 4) + ' بسعر ' + formatNumber(sale.price, 8) + '</div><div class="sale-record-details"><span>المبلغ: ' + formatWithCommas(sale.qty * sale.price, 2) + ' $</span><span>' + (sale.date || '') + '</span></div></div><div class="sale-record-actions"><button onclick="removeDCASale(\'' + symbol + '\', ' + index + ', ' + si + ')" title="حذف البيع">×</button></div></div>').join('') + '</div>';
+html += '<button class="save-dca-btn" onclick="saveDCATransaction(\'' + symbol + '\', ' + index + ')">💾</button>';
+html += '<button class="cancel-btn" onclick="removeDCAForCoin(\'' + symbol + '\', ' + index + ')" style="margin-top:4px; font-size:0.7em; padding:2px 8px;">🗑️ حذف التعزيز</button>';
+html += '</td></tr>';
+});
+html += '</tbody></table>';
+html += '<button class="add-dca-btn" onclick="addDCAForCoin(\'' + symbol + '\')">➕ إضافة تعزيز جديد</button>';
 return html;
 }
+
 function switchDCAPriceMode(symbol, index, mode) {
 const data = allCoinData[symbol];
 if (!data || index < 0 || index >= data.repurchases.length) return;
@@ -4356,6 +4562,201 @@ showInfo('لم يتم فتح TradingView تلقائياً.\nرمز العملة:
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   🆕 دوال وضع التاريخ (تلقائي / يدوي)
+   ═══════════════════════════════════════════════════════════════ */
+
+function getNowForDatetimeInput() {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 16);
+}
+
+/* ─── دوال تاريخ الكاش اليدوي ─── */
+function getCashRecordDate() {
+    if (cashDateMode === 'manual') {
+        const input = document.getElementById('cashManualDateInput');
+        if (input && input.value) {
+            const d = new Date(input.value);
+            if (!isNaN(d.getTime())) return d.toLocaleString('ar-EG');
+        }
+    }
+    return new Date().toLocaleString('ar-EG');
+}
+function setCashDateMode(mode) {
+    cashDateMode = mode;
+    localStorage.setItem('muharraqi_cashDateMode', mode);
+    const buttons = document.querySelectorAll('#cashSectionContent .date-mode-btn');
+    buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
+    const input = document.getElementById('cashManualDateInput');
+    const hint = document.getElementById('cashDateHint');
+    if (input) {
+        if (mode === 'manual') {
+            input.style.display = 'inline-block';
+            if (!input.value) input.value = getNowForDatetimeInput();
+        } else {
+            input.style.display = 'none';
+        }
+    }
+    if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
+}
+
+/* ─── دوال تاريخ الكاش من البيع ─── */
+function getSalesCashRecordDate() {
+    if (salesCashDateMode === 'manual') {
+        const input = document.getElementById('salesCashManualDateInput');
+        if (input && input.value) {
+            const d = new Date(input.value);
+            if (!isNaN(d.getTime())) return d.toLocaleString('ar-EG');
+        }
+    }
+    return new Date().toLocaleString('ar-EG');
+}
+function setSalesCashDateMode(mode) {
+    salesCashDateMode = mode;
+    localStorage.setItem('muharraqi_salesCashDateMode', mode);
+    const buttons = document.querySelectorAll('#salesCashHistorySectionContent .date-mode-btn');
+    buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
+    const input = document.getElementById('salesCashManualDateInput');
+    const hint = document.getElementById('salesCashDateHint');
+    if (input) {
+        if (mode === 'manual') {
+            input.style.display = 'inline-block';
+            if (!input.value) input.value = getNowForDatetimeInput();
+        } else {
+            input.style.display = 'none';
+        }
+    }
+    if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
+}
+
+/* ─── دوال تاريخ صفقة الدخول ─── */
+function getEntryRecordDate() {
+    if (entryDateMode === 'manual') {
+        const input = document.getElementById('entryManualDateInput');
+        if (input && input.value) {
+            const d = new Date(input.value);
+            if (!isNaN(d.getTime())) return d.toLocaleString('ar-EG');
+        }
+    }
+    return new Date().toLocaleString('ar-EG');
+}
+function getEntryRecordDateRaw() {
+    if (entryDateMode === 'manual') {
+        const input = document.getElementById('entryManualDateInput');
+        if (input && input.value) return input.value;
+    }
+    return getNowForDatetimeInput();
+}
+function setEntryDateMode(mode) {
+    entryDateMode = mode;
+    localStorage.setItem('muharraqi_entryDateMode', mode);
+    const buttons = document.querySelectorAll('.date-mode-btn[data-mode-group="entry"]');
+    buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
+    const input = document.getElementById('entryManualDateInput');
+    const hint = document.getElementById('entryDateHint');
+    if (input) {
+        if (mode === 'manual') {
+            input.style.display = 'inline-block';
+            if (!input.value) input.value = getNowForDatetimeInput();
+        } else {
+            input.style.display = 'none';
+        }
+    }
+    if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
+}
+
+/* ─── دوال تاريخ التعزيزات ─── */
+function getDCARecordDate() {
+    if (dcaDateMode === 'manual') {
+        const input = document.getElementById('dcaManualDateInput');
+        if (input && input.value) {
+            const d = new Date(input.value);
+            if (!isNaN(d.getTime())) return d.toLocaleString('ar-EG');
+        }
+    }
+    return new Date().toLocaleString('ar-EG');
+}
+function getDCARecordDateRaw() {
+    if (dcaDateMode === 'manual') {
+        const input = document.getElementById('dcaManualDateInput');
+        if (input && input.value) return input.value;
+    }
+    return getNowForDatetimeInput();
+}
+function setDCADateMode(mode) {
+    dcaDateMode = mode;
+    localStorage.setItem('muharraqi_dcaDateMode', mode);
+    const buttons = document.querySelectorAll('.date-mode-btn[data-mode-group="dca"]');
+    buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
+    const input = document.getElementById('dcaManualDateInput');
+    const hint = document.getElementById('dcaDateHint');
+    if (input) {
+        if (mode === 'manual') {
+            input.style.display = 'inline-block';
+            if (!input.value) input.value = getNowForDatetimeInput();
+        } else {
+            input.style.display = 'none';
+        }
+    }
+    if (hint) hint.style.display = mode === 'manual' ? 'block' : 'none';
+}
+
+/* 🆕 تحديث تاريخ شراء التعزيز من الجدول مباشرة */
+function updateDCAPurchaseDate(symbol, index, value) {
+    const data = allCoinData[symbol];
+    if (!data || !data.repurchases || !data.repurchases[index]) return;
+    if (value) {
+        const d = new Date(value);
+        if (!isNaN(d.getTime())) {
+            data.repurchases[index].purchaseDate = d.toLocaleString('ar-EG');
+            data.repurchases[index].purchaseDateRaw = value;
+        }
+    } else {
+        data.repurchases[index].purchaseDateRaw = '';
+    }
+    saveAllDataToLocalStorage();
+}
+
+/* 🆕 تحديث تاريخ شراء الدخول من الجدول مباشرة */
+function updateEntryPurchaseDate(symbol, value) {
+    const data = allCoinData[symbol];
+    if (!data) return;
+    if (value) {
+        const d = new Date(value);
+        if (!isNaN(d.getTime())) {
+            data.initialPurchaseDate = d.toLocaleString('ar-EG');
+            data.initialPurchaseDateRaw = value;
+        }
+    } else {
+        data.initialPurchaseDateRaw = '';
+    }
+    saveAllDataToLocalStorage();
+}
+
+/* 🆕 تفعيل عملة معينة (لأزرار الدخول في جدول التعزيزات) */
+function ensureActiveCoin(symbol) {
+    if (!symbol || !allCoinData[symbol]) return;
+    if (activeCoinSymbol === symbol) return;
+    coinSelector.value = symbol;
+    handleCoinSelectionChange();
+}
+
+/* 🆕 الانتقال لحاوية تفاصيل الدخول */
+function scrollToEntrySection() {
+    const entrySection = document.getElementById('section-entryDetails');
+    if (entrySection) {
+        entrySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function initDateModeToggles() {
+    setCashDateMode(cashDateMode);
+    setSalesCashDateMode(salesCashDateMode);
+    setEntryDateMode(entryDateMode);
+    setDCADateMode(dcaDateMode);
+}
+
+/* ═══════════════════════════════════════════════════════════════
    🖨️ طباعة التقرير — نسخة احترافية مُحسّنة (Pro Print)
    ═══════════════════════════════════════════════════════════════ */
 function printReport() {
@@ -4367,7 +4768,6 @@ const reportDate = new Date().toLocaleString('ar-EG');
 
 let reportHTML = '';
 
-/* ─── الهيدر ─── */
 reportHTML += `
 <div class="print-header">
     <h1>📊 تقرير الصفقات الشاملة</h1>
@@ -4376,7 +4776,6 @@ reportHTML += `
     <p class="print-brand">Muharraqi Pro Edition — نظام متابعة الصفقات الاحترافي</p>
 </div>`;
 
-/* ─── الملخص العام ─── */
 reportHTML += `
 <div class="print-section">
     <h2>📈 الملخص العام</h2>
@@ -4392,134 +4791,60 @@ reportHTML += `
     </div>
 </div>`;
 
-/* ─── سجل الحركات المالية الكامل مع التواريخ ─── */
 reportHTML += `<div class="print-section"><h2>💰 سجل الحركات المالية الكامل (مع التواريخ)</h2>`;
-
 let hasAnyCashMovement = false;
 
-/* إيداعات الكاش اليدوية */
 if (cashHistory.deposits.length > 0) {
     hasAnyCashMovement = true;
-    reportHTML += `
-    <h3>📥 إيداعات الكاش اليدوية (${cashHistory.deposits.length})</h3>
+    reportHTML += `<h3>📥 إيداعات الكاش اليدوية (${cashHistory.deposits.length})</h3>
     <table class="print-table">
-        <thead><tr>
-            <th style="width:5%">#</th>
-            <th style="width:15%">المبلغ</th>
-            <th style="width:35%">التاريخ والوقت</th>
-            <th style="width:45%">الملاحظة</th>
-        </tr></thead>
-        <tbody>`;
+        <thead><tr><th style="width:5%">#</th><th style="width:15%">المبلغ</th><th style="width:35%">التاريخ والوقت</th><th style="width:45%">الملاحظة</th></tr></thead><tbody>`;
     cashHistory.deposits.forEach((record, i) => {
-        reportHTML += `<tr>
-            <td>${i + 1}</td>
-            <td class="positive">+${formatWithCommas(record.amount, 2)} $</td>
-            <td>${record.date}</td>
-            <td>${record.note || '-'}</td>
-        </tr>`;
+        reportHTML += `<tr><td>${i + 1}</td><td class="positive">+${formatWithCommas(record.amount, 2)} $</td><td>${record.date}</td><td>${record.note || '-'}</td></tr>`;
     });
     reportHTML += `</tbody></table>`;
 }
-
-/* سحوبات الكاش اليدوية */
 if (cashHistory.withdrawals.length > 0) {
     hasAnyCashMovement = true;
-    reportHTML += `
-    <h3>📤 سحوبات الكاش اليدوية (${cashHistory.withdrawals.length})</h3>
+    reportHTML += `<h3>📤 سحوبات الكاش اليدوية (${cashHistory.withdrawals.length})</h3>
     <table class="print-table">
-        <thead><tr>
-            <th style="width:5%">#</th>
-            <th style="width:15%">المبلغ</th>
-            <th style="width:35%">التاريخ والوقت</th>
-            <th style="width:45%">الملاحظة</th>
-        </tr></thead>
-        <tbody>`;
+        <thead><tr><th style="width:5%">#</th><th style="width:15%">المبلغ</th><th style="width:35%">التاريخ والوقت</th><th style="width:45%">الملاحظة</th></tr></thead><tbody>`;
     cashHistory.withdrawals.forEach((record, i) => {
-        reportHTML += `<tr>
-            <td>${i + 1}</td>
-            <td class="negative">-${formatWithCommas(record.amount, 2)} $</td>
-            <td>${record.date}</td>
-            <td>${record.note || '-'}</td>
-        </tr>`;
+        reportHTML += `<tr><td>${i + 1}</td><td class="negative">-${formatWithCommas(record.amount, 2)} $</td><td>${record.date}</td><td>${record.note || '-'}</td></tr>`;
     });
     reportHTML += `</tbody></table>`;
 }
-
-/* إيداعات الكاش من البيع */
 if (salesCashHistory.deposits.length > 0) {
     hasAnyCashMovement = true;
-    reportHTML += `
-    <h3>💵 إيداعات الكاش من البيع (${salesCashHistory.deposits.length})</h3>
+    reportHTML += `<h3>💵 إيداعات الكاش من البيع (${salesCashHistory.deposits.length})</h3>
     <table class="print-table">
-        <thead><tr>
-            <th style="width:5%">#</th>
-            <th style="width:15%">المبلغ</th>
-            <th style="width:35%">التاريخ والوقت</th>
-            <th style="width:45%">الملاحظة</th>
-        </tr></thead>
-        <tbody>`;
+        <thead><tr><th style="width:5%">#</th><th style="width:15%">المبلغ</th><th style="width:35%">التاريخ والوقت</th><th style="width:45%">الملاحظة</th></tr></thead><tbody>`;
     salesCashHistory.deposits.forEach((record, i) => {
-        reportHTML += `<tr>
-            <td>${i + 1}</td>
-            <td class="positive">+${formatWithCommas(record.amount, 2)} $</td>
-            <td>${record.date}</td>
-            <td>${record.note || '-'}</td>
-        </tr>`;
+        reportHTML += `<tr><td>${i + 1}</td><td class="positive">+${formatWithCommas(record.amount, 2)} $</td><td>${record.date}</td><td>${record.note || '-'}</td></tr>`;
     });
     reportHTML += `</tbody></table>`;
 }
-
-/* سحوبات الكاش من البيع */
 if (salesCashHistory.withdrawals.length > 0) {
     hasAnyCashMovement = true;
-    reportHTML += `
-    <h3>💸 سحوبات الكاش من البيع (${salesCashHistory.withdrawals.length})</h3>
+    reportHTML += `<h3>💸 سحوبات الكاش من البيع (${salesCashHistory.withdrawals.length})</h3>
     <table class="print-table">
-        <thead><tr>
-            <th style="width:5%">#</th>
-            <th style="width:15%">المبلغ</th>
-            <th style="width:35%">التاريخ والوقت</th>
-            <th style="width:45%">الملاحظة</th>
-        </tr></thead>
-        <tbody>`;
+        <thead><tr><th style="width:5%">#</th><th style="width:15%">المبلغ</th><th style="width:35%">التاريخ والوقت</th><th style="width:45%">الملاحظة</th></tr></thead><tbody>`;
     salesCashHistory.withdrawals.forEach((record, i) => {
-        reportHTML += `<tr>
-            <td>${i + 1}</td>
-            <td class="negative">-${formatWithCommas(record.amount, 2)} $</td>
-            <td>${record.date}</td>
-            <td>${record.note || '-'}</td>
-        </tr>`;
+        reportHTML += `<tr><td>${i + 1}</td><td class="negative">-${formatWithCommas(record.amount, 2)} $</td><td>${record.date}</td><td>${record.note || '-'}</td></tr>`;
     });
     reportHTML += `</tbody></table>`;
 }
-
 if (!hasAnyCashMovement) {
     reportHTML += `<p class="print-note">ℹ️ لا توجد حركات مالية مسجلة حتى الآن.</p>`;
 }
-
 reportHTML += `</div>`;
 
-/* ─── جدول تفاصيل العملات ─── */
 reportHTML += `<div class="print-section"><h2>🪙 تفاصيل العملات</h2>`;
 if (summaryRows.length === 0) {
     reportHTML += '<p class="print-note">لا توجد عملات مضافة حالياً.</p>';
 } else {
-    reportHTML += `
-    <table class="print-table">
-        <thead><tr>
-            <th>العملة</th>
-            <th>الكمية</th>
-            <th>المستثمر $</th>
-            <th>متوسط الدخول</th>
-            <th>السعر الحالي</th>
-            <th>القيمة الحالية $</th>
-            <th>الربح/الخسارة $</th>
-            <th>الربح/الخسارة %</th>
-            <th>الكاش من البيع $</th>
-            <th>تاريخ الشراء</th>
-            <th>عدد التعزيزات</th>
-        </tr></thead>
-        <tbody>`;
+    reportHTML += `<table class="print-table">
+        <thead><tr><th>العملة</th><th>الكمية</th><th>المستثمر $</th><th>متوسط الدخول</th><th>السعر الحالي</th><th>القيمة الحالية $</th><th>الربح/الخسارة $</th><th>الربح/الخسارة %</th><th>الكاش من البيع $</th><th>تاريخ الشراء</th><th>عدد التعزيزات</th></tr></thead><tbody>`;
     summaryRows.forEach(item => {
         const data = allCoinData[item.symbol];
         const pnlAmountClass = item.pnlAmount > 0 ? 'positive' : (item.pnlAmount < 0 ? 'negative' : '');
@@ -4544,7 +4869,6 @@ if (summaryRows.length === 0) {
 }
 reportHTML += `</div>`;
 
-/* ─── سجل العمليات التفصيلي لكل عملة مع التواريخ ─── */
 if (summaryRows.length > 0) {
     reportHTML += `<div class="print-section"><h2>📋 سجل العمليات التفصيلي لكل عملة (مع التواريخ)</h2>`;
     summaryRows.forEach(item => {
@@ -4560,18 +4884,9 @@ if (summaryRows.length > 0) {
         if (!hasAnyTransaction) return;
 
         reportHTML += `<h3>🪙 ${displayName}</h3>`;
-        reportHTML += `
-        <table class="print-table">
-            <thead><tr>
-                <th style="width:18%">نوع العملية</th>
-                <th style="width:14%">السعر</th>
-                <th style="width:14%">المبلغ $</th>
-                <th style="width:18%">الكمية</th>
-                <th style="width:36%">التاريخ</th>
-            </tr></thead>
-            <tbody>`;
+        reportHTML += `<table class="print-table">
+            <thead><tr><th style="width:18%">نوع العملية</th><th style="width:14%">السعر</th><th style="width:14%">المبلغ $</th><th style="width:18%">الكمية</th><th style="width:36%">التاريخ</th></tr></thead><tbody>`;
 
-        /* صفقة الدخول */
         if (initialEntryPrice > 0 && initialAmountDollars > 0) {
             const initialCoinQty = initialAmountDollars / initialEntryPrice;
             reportHTML += `<tr>
@@ -4582,8 +4897,6 @@ if (summaryRows.length > 0) {
                 <td>${data.initialPurchaseDate || 'غير محدد'}</td>
             </tr>`;
         }
-
-        /* التعزيزات */
         (data.repurchases || []).forEach((rp, idx) => {
             const rpPrice = parseFormattedNumber(rp.price);
             const rpAmount = parseFormattedNumber(rp.amount);
@@ -4598,8 +4911,6 @@ if (summaryRows.length > 0) {
                 </tr>`;
             }
         });
-
-        /* مبيعات الدخول */
         (data.initialSales || []).forEach((sale, idx) => {
             const saleAmount = sale.qty * sale.price;
             reportHTML += `<tr>
@@ -4610,8 +4921,6 @@ if (summaryRows.length > 0) {
                 <td>${sale.date || 'غير محدد'}</td>
             </tr>`;
         });
-
-        /* مبيعات التعزيزات */
         (data.repurchases || []).forEach((rp, rpIdx) => {
             (rp.sales || []).forEach((sale, sIdx) => {
                 const saleAmount = sale.qty * sale.price;
@@ -4624,13 +4933,11 @@ if (summaryRows.length > 0) {
                 </tr>`;
             });
         });
-
         reportHTML += `</tbody></table>`;
     });
     reportHTML += `</div>`;
 }
 
-/* ─── الفوتر ─── */
 reportHTML += `
 <div class="print-footer">
     <p class="footer-thanks">نسألكم الدعاء بظهر الغيب 🤲</p>
@@ -5826,6 +6133,7 @@ loadSavedEstimatePrices();
 migrateOldData();
 loadProfileSettings();
 updateCoinSelector();
+initDateModeToggles();
 const importInput = document.getElementById('importTxtFile');
 if (importInput) importInput.addEventListener('change', handleImportTxtFile);
 setTimeout(() => {
@@ -5847,7 +6155,18 @@ autoRefreshCheckbox.addEventListener('change', handleAutoRefreshToggle);
 newCoinNameInput.addEventListener('keypress', (e) => {
 if (e.key === 'Enter') { e.preventDefault(); addOrSwitchCoin(); }
 });
+
+/* 🆕 معالج النقر على جدول الملخص - تم إصلاح مشكلة زر + */
 summaryTableBody.addEventListener('click', (event) => {
+/* إذا تم الضغط على زر التوسيع (+) — يُوسّع/يُطوي بدون الانتقال للأعلى */
+if (event.target.closest('.expand-btn')) return;
+/* تجاهل أي ضغطة داخل جدول التعزيزات أو داخل الحاويات التفاعلية */
+if (event.target.closest('.dca-table')) return;
+if (event.target.closest('.coin-details')) return;
+if (event.target.closest('input')) return;
+if (event.target.closest('button')) return;
+if (event.target.closest('select')) return;
+
 let targetCell = event.target;
 while (targetCell && targetCell.tagName !== 'TD' && targetCell !== summaryTableBody) {
 targetCell = targetCell.parentElement;
