@@ -721,6 +721,61 @@ background: linear-gradient(90deg, var(--primary-color), var(--secondary-color))
 body.financial-privacy .sensitive-value { filter: blur(8px); user-select: none; transition: filter 0.3s ease; }
 body.financial-privacy .sensitive-value:hover { filter: blur(0); }
 
+/* ═══════════════════════════════════════════════════════════
+   ✅ إضافات جديدة لوضع الخصوصية المالية — إخفاء دائم
+       بدون ظهور عند تمرير الماوس (يبقى مخفياً حتى يُلغى الزر)
+   ═══════════════════════════════════════════════════════════ */
+
+/* 1️⃣ سجل الكاش (الإيداعات + السحوبات) + سجل الكاش من البيع — إخفاء دائم */
+body.financial-privacy #cashDepositHistory .history-amount,
+body.financial-privacy #cashWithdrawalHistory .history-amount,
+body.financial-privacy #salesCashDepositHistory .history-amount,
+body.financial-privacy #salesCashWithdrawalHistory .history-amount {
+    filter: blur(8px);
+    user-select: none;
+    transition: filter 0.3s ease;
+}
+/* ❌ لا توجد قاعدة :hover — تبقى مخفية دائماً */
+
+/* 2️⃣ إجماليات ملخص الصفقات الكلي — بالـ ID لضمان الإخفاء الدائم
+       (JavaScript يستبدل الـ className فيُفقد sensitive-value) */
+body.financial-privacy #totalPnlAmountSummary,
+body.financial-privacy #totalCurrentValueSummary,
+body.financial-privacy #totalCashFromSalesSummary {
+    filter: blur(8px);
+    user-select: none;
+    transition: filter 0.3s ease;
+}
+/* ❌ لا توجد قاعدة :hover — تبقى مخفية دائماً */
+
+/* 3️⃣ أعمدة ملخص الصفقات — إخفاء دائم
+      الترتيب: 1=العملة | 2=الكمية | 3=المستثمر | 4=متوسط الدخول | 5=السعر الحالي |
+                6=القيمة الحالية | 7=الربح $ | 8=الربح % | 9=الكاش من البيع */
+body.financial-privacy .summary-table tbody tr td:nth-child(2),  /* الكمية */
+body.financial-privacy .summary-table tbody tr td:nth-child(3),  /* المستثمر */
+body.financial-privacy .summary-table tbody tr td:nth-child(6),  /* القيمة الحالية */
+body.financial-privacy .summary-table tbody tr td:nth-child(7),  /* الربح/الخسارة $ */
+body.financial-privacy .summary-table tbody tr td:nth-child(9) { /* الكاش من البيع */
+    filter: blur(8px);
+    user-select: none;
+    transition: filter 0.3s ease;
+}
+/* ❌ لا توجد قاعدة :hover — تبقى مخفية دائماً */
+
+/* 4️⃣ اتجاه المحفظة — إخفاء كامل احترافي */
+body.financial-privacy .trend-chart-card {
+    filter: blur(15px) saturate(0.2);
+    opacity: 0.35;
+    user-select: none;
+    pointer-events: none;
+    transition: all 0.4s ease;
+}
+
+/* 5️⃣ إخفاء قاعدة الـ:hover القديمة (احتياطياً) */
+body.financial-privacy .sensitive-value:hover {
+    filter: blur(8px) !important;  /* تبقى مخفية حتى عند التمرير */
+}
+
 .advanced-charts-section { background: var(--section-bg); padding: 25px; margin: 20px auto; max-width: 1920px; border-radius: 10px; box-shadow: 0 4px 12px var(--shadow-color); border: 1px solid var(--border-color); }
 .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-top: 20px; }
 .chart-card { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; transition: all 0.3s ease; }
@@ -743,11 +798,232 @@ body.financial-privacy .sensitive-value:hover { filter: blur(0); }
 .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.8em; color: var(--text-color); }
 .legend-color { width: 12px; height: 12px; border-radius: 3px; }
 
+/* ═══════════════════════════════════════════════════════════
+   ✅ شريط الأزرار السريعة + زر التنقل السريع 🧭 (جديد)
+   ═══════════════════════════════════════════════════════════ */
 .quick-actions-bar { position: fixed; bottom: 80px; left: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 997; }
 .quick-action-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--section-bg); border: 2px solid var(--border-color); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.3em; box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s ease; color: var(--text-color); position: relative; }
 .quick-action-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 6px 20px var(--shadow-color); }
-.quick-action-tooltip { position: absolute; right: 60px; background: var(--dark-header-bg); color: white; padding: 6px 12px; border-radius: 6px; font-size: 0.75em; white-space: nowrap; opacity: 0; pointer-events: none; transition: all 0.2s ease; }
-.quick-action-btn:hover .quick-action-tooltip { opacity: 1; right: 65px; }
+
+/* ✅ جديد: حاوية زر التنقل السريع */
+.quick-nav-bar {
+    position: relative;
+}
+.quick-nav-toggle {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #ffffff;
+    border-color: #4f46e5;
+}
+.quick-nav-toggle:hover {
+    background: linear-gradient(135deg, #4f46e5, #3730a3);
+    border-color: #3730a3;
+    transform: scale(1.1) rotate(0deg);
+}
+.quick-nav-toggle.active {
+    background: linear-gradient(135deg, #4f46e5, #3730a3);
+    border-color: #3730a3;
+    transform: scale(1.08) rotate(0deg);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3), 0 6px 20px rgba(99, 102, 241, 0.5);
+}
+.quick-nav-toggle.active .quick-action-tooltip {
+    opacity: 0 !important;
+}
+
+/* ✅ جديد: القائمة المنبثقة فوق الزر (خيار ب) */
+.quick-nav-menu {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    left: 0;
+    background: var(--section-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 14px;
+    padding: 8px;
+    min-width: 240px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 1000;
+    animation: qnmPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: bottom left;
+}
+.quick-nav-menu.active {
+    display: flex;
+}
+@keyframes qnmPop {
+    from { opacity: 0; transform: scale(0.85) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ✅ السهم الصغير أسفل القائمة يشير للزر */
+.quick-nav-menu::after {
+    content: '';
+    position: absolute;
+    bottom: -9px;
+    left: 20px;
+    width: 16px;
+    height: 16px;
+    background: var(--section-bg);
+    border-right: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
+    transform: rotate(45deg);
+    z-index: 1;
+}
+
+/* ✅ عناصر القائمة */
+.quick-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+    border-radius: 9px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9em;
+    font-weight: 600;
+    text-align: right;
+    transition: all 0.18s ease;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+.quick-nav-item:hover {
+    background: var(--hover-bg);
+    color: var(--primary-color);
+    transform: translateX(-4px);
+}
+.quick-nav-item:active {
+    transform: translateX(-4px) scale(0.98);
+}
+.quick-nav-item .qni-icon {
+    font-size: 1.15em;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-color);
+    border-radius: 8px;
+    flex-shrink: 0;
+    transition: all 0.18s ease;
+}
+.quick-nav-item:hover .qni-icon {
+    background: var(--primary-color);
+    color: #ffffff;
+    transform: scale(1.05);
+}
+.quick-nav-item .qni-text {
+    flex: 1;
+}
+
+/* ✅ عنصر "العودة للأعلى" — مفصول بخط فاصل */
+.quick-nav-item.quick-nav-top {
+    border-top: 1px solid var(--border-color);
+    margin-top: 4px;
+    padding-top: 13px;
+    color: var(--primary-color);
+}
+.quick-nav-item.quick-nav-top .qni-icon {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: #ffffff;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ✅ محسّن: Tooltips باحترافية (عنوان + وصف + سهم + انزلاق)
+   ═══════════════════════════════════════════════════════════ */
+.quick-action-tooltip {
+    position: absolute;
+    left: calc(100% + 14px);
+    top: 50%;
+    right: auto;
+    transform: translateY(-50%) translateX(-12px) scale(0.9);
+    background: var(--dark-header-bg);
+    color: #ffffff;
+    padding: 9px 14px;
+    border-radius: 10px;
+    font-size: 0.78em;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: right;
+    z-index: 1001;
+}
+.quick-action-tooltip::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 7px solid var(--dark-header-bg);
+}
+.quick-action-tooltip .qat-title {
+    font-weight: 700;
+    font-size: 0.98em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    line-height: 1.3;
+}
+.quick-action-tooltip .qat-desc {
+    font-size: 0.85em;
+    opacity: 0.82;
+    font-weight: 400;
+    line-height: 1.3;
+}
+.quick-action-btn:hover .quick-action-tooltip,
+.quick-action-btn:focus-visible .quick-action-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0) scale(1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ✅ دعم اللغة الإنجليزية (قلب الاتجاهات)
+   ═══════════════════════════════════════════════════════════ */
+body.lang-en .quick-nav-menu {
+    left: auto;
+    right: 0;
+    transform-origin: bottom right;
+}
+body.lang-en .quick-nav-menu::after {
+    left: auto;
+    right: 20px;
+}
+body.lang-en .quick-nav-item {
+    text-align: left;
+    flex-direction: row-reverse;
+}
+body.lang-en .quick-nav-item:hover {
+    transform: translateX(4px);
+}
+body.lang-en .quick-action-tooltip {
+    left: auto;
+    right: calc(100% + 14px);
+    transform: translateY(-50%) translateX(12px) scale(0.9);
+    text-align: left;
+}
+body.lang-en .quick-action-tooltip::before {
+    right: auto;
+    left: 100%;
+    border-right-color: transparent;
+    border-left: 7px solid var(--dark-header-bg);
+}
+body.lang-en .quick-action-btn:hover .quick-action-tooltip,
+body.lang-en .quick-action-btn:focus-visible .quick-action-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0) scale(1);
+}
 
 .pro-footer { background: linear-gradient(135deg, var(--dark-header-bg), #1a1a1a); color: white; padding: 40px 20px 20px; margin-top: 40px; border-top: 3px solid var(--primary-color); }
 .footer-content { max-width: 1920px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 30px; }
@@ -788,6 +1064,11 @@ body.financial-privacy .sensitive-value:hover { filter: blur(0); }
 .charts-grid { grid-template-columns: 1fr; }
 .quick-actions-bar { bottom: 70px; left: 10px; }
 .quick-action-btn { width: 45px; height: 45px; font-size: 1.1em; }
+/* ✅ جديد: تجاوب قائمة التنقل السريع على الجوال */
+.quick-nav-menu { min-width: 210px; padding: 6px; }
+.quick-nav-item { padding: 9px 10px; font-size: 0.85em; gap: 8px; }
+.quick-nav-item .qni-icon { width: 24px; height: 24px; font-size: 1em; }
+.quick-action-tooltip { display: none; }
 .donate-fab { width: 48px; height: 48px; font-size: 1.3em; bottom: 15px; right: 15px; }
 .financial-privacy-toggle { bottom: 15px; left: 15px; padding: 8px 14px; font-size: 0.8em; }
 .footer-content { grid-template-columns: 1fr; gap: 20px; }
@@ -1322,7 +1603,7 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 </div>
 <div class="chart-legend" id="donutLegend"></div>
 </div>
-<div class="chart-card">
+<div class="chart-card trend-chart-card">
 <div class="chart-card-header">
 <div>
 <div class="chart-card-title">📈 اتجاه المحفظة</div>
@@ -1627,9 +1908,68 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 </div>
 </footer>
 
+<!-- ═══════════════════════════════════════════════════════════
+     ✅ شريط الأزرار السريعة — مع زر التنقل الجديد 🧭
+     ✅ الأزرار الموجودة (🔔 / 💾) محفوظة بالكامل مع Tooltips محسّنة
+     ═══════════════════════════════════════════════════════════ -->
 <div class="quick-actions-bar">
-<button class="quick-action-btn" onclick="openPriceAlertsModal()" title="تنبيهات الأسعار">🔔<span class="quick-action-tooltip">تنبيهات الأسعار</span></button>
-<button class="quick-action-btn" onclick="downloadAllDataAsTxt()" title="حفظ البيانات">💾<span class="quick-action-tooltip">حفظ البيانات</span></button>
+
+<!-- ✅ جديد: زر التنقل السريع + القائمة المنبثقة فوقه (خيار ب) -->
+<div class="quick-nav-bar">
+    <button class="quick-action-btn quick-nav-toggle"
+            id="quickNavToggle"
+            onclick="toggleQuickNav(event)"
+            aria-label="التنقل السريع"
+            aria-haspopup="menu"
+            aria-expanded="false"
+            type="button">
+        🧭
+        <span class="quick-action-tooltip">
+            <span class="qat-title">🧭 التنقل السريع</span>
+            <span class="qat-desc">انتقل إلى أي قسم</span>
+        </span>
+    </button>
+    <div class="quick-nav-menu" id="quickNavMenu" role="menu" aria-label="قائمة التنقل السريع">
+        <button class="quick-nav-item" onclick="scrollToSection('section-cash'); closeQuickNav();" role="menuitem" type="button">
+            <span class="qni-icon">💰</span>
+            <span class="qni-text">كم الكاش لديك</span>
+        </button>
+        <button class="quick-nav-item" onclick="scrollToSection('section-coinActive'); closeQuickNav();" role="menuitem" type="button">
+            <span class="qni-icon">🪙</span>
+            <span class="qni-text">العملة النشطة</span>
+        </button>
+        <button class="quick-nav-item" onclick="scrollToSection('section-entryDetails'); closeQuickNav();" role="menuitem" type="button">
+            <span class="qni-icon">📝</span>
+            <span class="qni-text">تفاصيل الدخول</span>
+        </button>
+        <button class="quick-nav-item" onclick="scrollToSection('section-summary'); closeQuickNav();" role="menuitem" type="button">
+            <span class="qni-icon">📊</span>
+            <span class="qni-text">ملخص الصفقات الكلي</span>
+        </button>
+        <!-- ✅ العنصر الخامس (اختياري) — العودة للأعلى -->
+        <button class="quick-nav-item quick-nav-top" onclick="scrollToTop(); closeQuickNav();" role="menuitem" type="button">
+            <span class="qni-icon">⬆️</span>
+            <span class="qni-text">العودة للأعلى</span>
+        </button>
+    </div>
+</div>
+
+<!-- ✅ الأزرار الموجودة (بدون حذف) مع Tooltips محسّنة -->
+<button class="quick-action-btn" onclick="openPriceAlertsModal()" aria-label="تنبيهات الأسعار" type="button">
+    🔔
+    <span class="quick-action-tooltip">
+        <span class="qat-title">🔔 تنبيهات الأسعار</span>
+        <span class="qat-desc">راقب أهدافك ووقف الخسارة</span>
+    </span>
+</button>
+<button class="quick-action-btn" onclick="downloadAllDataAsTxt()" aria-label="حفظ البيانات" type="button">
+    💾
+    <span class="quick-action-tooltip">
+        <span class="qat-title">💾 حفظ البيانات</span>
+        <span class="qat-desc">احفظ كل شيء في ملف TXT</span>
+    </span>
+</button>
+
 </div>
 
 <button class="financial-privacy-toggle" id="privacyToggle" onclick="toggleFinancialPrivacy()">
@@ -1958,6 +2298,8 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <li>🔄 زر مسح داخل نافذة البيع</li>
 <li>🛡️ حماية التعزيز: لا يمكن البيع قبل الحفظ</li>
 <li>⚡ Cloudflare Worker خاص لجلب سريع وموثوق</li>
+<li>🧭 زر التنقل السريع الجديد + قائمة منبثقة احترافية</li>
+<li>🔒 وضع خصوصية مالية موسّع (سجلات + ملخص + اتجاه المحفظة)</li>
 </ul>
 </div>
 <button onclick="closeUpdatePopup()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">ممتاز!</button>
@@ -2006,7 +2348,7 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <input type="file" id="importTxtFile" accept=".txt" style="display: none;">
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — النسخة النهائية v4
+   JavaScript — النسخة النهائية v5
    ✅ استخدام Cloudflare Worker الخاص بك (بدون حدود استخدام!)
    ✅ Cache لمدة 25 ثانية
    ✅ تزامن 3 عملات + تأخير بسيط
@@ -2014,6 +2356,10 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
    ✅ حماية البيع للتعزيز (DCA) قبل الحفظ
    ✅ إصلاح مشكلة التجمّد (resetAllData)
    ✅ إصلاح اسم كلاس زر الحذف (delete-coin-option-btn)
+   ✅ إصلاح "اتجاه المحفظة" (حفظ النقطة أولاً + عتبة 30 ثانية)
+   ✅ إصلاح جذري: مؤقّت مستقل لتحديث الرسوم البيانية كل 30 ثانية
+   ✅ إصلاح جذري: عتبة 5 ثوانٍ لأول نقطتين (بداية سريعة)
+   ✅ زر التنقل السريع 🧭 + قائمة منبثقة فوقه
    ═══════════════════════════════════════════════════════════════ */
 
 // 🔑 Cloudflare Worker الخاص بك — يعمل بدون حدود استخدام!
@@ -4049,10 +4395,6 @@ function loadExpandedCoins() {
 
 /* ═══════════════════════════════════════════════════════════════
    🚀 جلب الأسعار — النسخة النهائية v4
-   ✅ Cloudflare Worker خاص بك — بدون حدود استخدام!
-   ✅ Cache 25 ثانية لتسريع التحديثات المتكررة
-   ✅ تزامن 3 عملات لتجنب الإرهاق
-   ✅ Binance بنطاقين (api + data-api) للتغلب على الحجب
    ═══════════════════════════════════════════════════════════════ */
 async function fetchSinglePrice(symbol) {
     const baseSymbol = getBaseSymbolFromKey(symbol);
@@ -4060,7 +4402,6 @@ async function fetchSinglePrice(symbol) {
         return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'Invalid symbol' : 'رمز غير صالح' };
     }
 
-    // ✅ 1. فحص الذاكرة المؤقتة أولاً
     if (priceCache.has(symbol)) {
         const cached = priceCache.get(symbol);
         if (Date.now() - cached.time < PRICE_CACHE_TTL && cached.data && cached.data.price) {
@@ -4069,7 +4410,6 @@ async function fetchSinglePrice(symbol) {
         }
     }
 
-    // ✅ 2. Binance بنطاقين (سريع ومباشر بدون وسيط)
     const binanceDomains = [
         'https://api.binance.com',
         'https://data-api.binance.vision'
@@ -4092,7 +4432,6 @@ async function fetchSinglePrice(symbol) {
         } catch (e) {}
     }
 
-    // ✅ 3. باقي المنصات عبر Cloudflare Worker الخاص بك
     const altExchanges = [
         { name: 'MEXC',    url: 'https://api.mexc.com/api/v3/ticker/price?symbol=' + baseSymbol, extract: (d) => d.price },
         { name: 'Gate.io', url: 'https://api.gateio.ws/api/v4/spot/tickers?currency_pair=' + baseSymbol.replace('USDT', '_USDT'), extract: (d) => Array.isArray(d) && d[0] ? d[0].last : null },
@@ -4101,7 +4440,6 @@ async function fetchSinglePrice(symbol) {
         { name: 'Bybit',   url: 'https://api.bybit.com/v5/market/tickers?category=spot&symbol=' + baseSymbol, extract: (d) => d.result && d.result.list && d.result.list[0] ? d.result.list[0].lastPrice : null }
     ];
 
-    // ✅ نرسل كل الطلبات بالتوازي عبر Cloudflare Worker
     const promises = altExchanges.map(exchange => {
         return (async () => {
             try {
@@ -4126,7 +4464,6 @@ async function fetchSinglePrice(symbol) {
     });
 
     try {
-        // أول منصة تنجح = الفائز
         const winner = await Promise.any(promises.map(p => p.then(r => {
             if (!r) throw new Error('no result');
             return r;
@@ -4158,7 +4495,6 @@ async function fetchAllPrices(isAutoRefresh = false) {
         apiStatusDiv.style.color = 'var(--primary-color)';
     }
 
-    // ✅ تزامن 3 عملات في نفس الوقت
     const CONCURRENCY = 3;
     let successCount = 0, failCount = 0;
     const fetchTimestamp = new Date();
@@ -5510,25 +5846,39 @@ function initAdvancedCharts() { loadPortfolioHistory(); updateAdvancedCharts(); 
 function loadPortfolioHistory() {
     try { const saved = localStorage.getItem('muharraqi_portfolio_history'); if (saved) portfolioHistory = JSON.parse(saved); } catch (e) { portfolioHistory = []; }
 }
+
+/* ✅ مُصلحة: عتبة ذكية (5 ثوانٍ لأول نقطتين، ثم 30 ثانية) */
 function savePortfolioHistory() {
     try {
         const now = Date.now();
         const lastEntry = portfolioHistory[portfolioHistory.length - 1];
         const { totals } = calculateSummaryData();
         const totalAssets = totals.currentValue + availableCash + Math.max(0, getNetSalesCash());
-        if (!lastEntry || (now - lastEntry.time) > 5 * 60 * 1000) {
+
+        // ✅ عتبة ديناميكية: 5 ثوانٍ لأول نقطتين (لبداية سريعة)، ثم 30 ثانية
+        const SNAPSHOT_INTERVAL = portfolioHistory.length < 2 ? 5000 : (30 * 1000);
+
+        if (!lastEntry || (now - lastEntry.time) > SNAPSHOT_INTERVAL) {
+            // ✅ تجاهل النقاط الصفرية المتتالية (لتوفير مساحة وتجنب المسارات المسطحة)
+            if (lastEntry && lastEntry.value === 0 && totalAssets === 0 && portfolioHistory.length > 2) {
+                return;
+            }
             portfolioHistory.push({ time: now, value: totalAssets });
             if (portfolioHistory.length > 1000) portfolioHistory = portfolioHistory.slice(-1000);
             localStorage.setItem('muharraqi_portfolio_history', JSON.stringify(portfolioHistory));
+            console.log('📈 Snapshot: ' + totalAssets.toFixed(2) + ' (Total: ' + portfolioHistory.length + ' points)');
         }
     } catch (e) {}
 }
+
+/* ✅ مُصلحة: الحفظ أولاً ثم الرسم */
 function updateAdvancedCharts() {
     if (typeof Chart === 'undefined') return;
+    savePortfolioHistory();
     updateDonutChart();
     updateTrendChart();
-    savePortfolioHistory();
 }
+
 function updateDonutChart() {
     const canvas = document.getElementById('donutChart');
     if (!canvas) return;
@@ -5552,9 +5902,34 @@ function updateDonutChart() {
         return `<div class="legend-item"><span class="legend-color" style="background:${colors[i]}"></span><span>${label} (${pct}%)</span></div>`;
     }).join('');
 }
+
+/* ✅ مُصلحة: رسائل توضيحية عند عدم كفاية البيانات */
 function updateTrendChart() {
     const canvas = document.getElementById('trendChart');
-    if (!canvas || portfolioHistory.length === 0) return;
+    if (!canvas) return;
+
+    if (!portfolioHistory || portfolioHistory.length < 2) {
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width = canvas.parentElement.clientWidth;
+        const h = canvas.height = canvas.parentElement.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#6c757d';
+        ctx.font = '16px Segoe UI, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('📈 يجمع البيانات...', w / 2, h / 2 - 20);
+        ctx.font = '13px Segoe UI, sans-serif';
+        ctx.fillStyle = '#adb5bd';
+        const remaining = 2 - (portfolioHistory?.length || 0);
+        ctx.fillText(
+            currentLang === 'en'
+                ? 'Chart will appear after ' + remaining + ' more point' + (remaining > 1 ? 's' : '') + ' (every few seconds)'
+                : 'سيظهر الرسم البياني بعد ' + remaining + ' نقطة إضافية (كل بضع ثوانٍ)',
+            w / 2, h / 2 + 15
+        );
+        return;
+    }
+
     let filteredData = portfolioHistory;
     const now = Date.now();
     if (trendRange === '4H') filteredData = portfolioHistory.filter(p => (now - p.time) <= 4 * 60 * 60 * 1000);
@@ -5562,7 +5937,34 @@ function updateTrendChart() {
     else if (trendRange === '1W') filteredData = portfolioHistory.filter(p => (now - p.time) <= 7 * 24 * 60 * 60 * 1000);
     else if (trendRange === '1M') filteredData = portfolioHistory.filter(p => (now - p.time) <= 30 * 24 * 60 * 60 * 1000);
     else if (trendRange === '3M') filteredData = portfolioHistory.filter(p => (now - p.time) <= 90 * 24 * 60 * 60 * 1000);
-    if (filteredData.length === 0) return;
+
+    if (filteredData.length < 2) {
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width = canvas.parentElement.clientWidth;
+        const h = canvas.height = canvas.parentElement.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#6c757d';
+        ctx.font = '14px Segoe UI, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(
+            currentLang === 'en'
+                ? 'Not enough data in this range'
+                : 'لا توجد بيانات كافية في هذا النطاق الزمني',
+            w / 2, h / 2 - 12
+        );
+        ctx.font = '12px Segoe UI, sans-serif';
+        ctx.fillStyle = '#adb5bd';
+        ctx.fillText(
+            currentLang === 'en'
+                ? 'Try widening the range (ALL)'
+                : 'جرّب توسيع النطاق (ALL)',
+            w / 2, h / 2 + 15
+        );
+        if (trendChart) { trendChart.destroy(); trendChart = null; }
+        return;
+    }
+
     const labels = filteredData.map(p => new Date(p.time).toLocaleDateString(currentLang === 'en' ? 'en-US' : 'ar-EG'));
     const data = filteredData.map(p => p.value);
     const current = data[data.length - 1], first = data[0];
@@ -5777,6 +6179,7 @@ function resetAllData() {
             localStorage.removeItem('muharraqi_pro_settings');
             localStorage.removeItem('muharraqi_price_alerts');
             localStorage.removeItem('muharraqi_notifications');
+            localStorage.removeItem('muharraqi_portfolio_history');
             location.reload();
         },
         null
@@ -5828,6 +6231,80 @@ function loadSectionStates() {
             }
         }
     });
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ✅ دوال التنقل السريع الجديدة (زر 🧭)
+   ═══════════════════════════════════════════════════════════════ */
+function toggleQuickNav(event) {
+    if (event) event.stopPropagation();
+    const menu = document.getElementById('quickNavMenu');
+    const toggle = document.getElementById('quickNavToggle');
+    if (!menu || !toggle) return;
+    const willOpen = !menu.classList.contains('active');
+    if (willOpen) {
+        menu.classList.add('active');
+        toggle.classList.add('active');
+        toggle.setAttribute('aria-expanded', 'true');
+    } else {
+        closeQuickNav();
+    }
+}
+
+function closeQuickNav() {
+    const menu = document.getElementById('quickNavMenu');
+    const toggle = document.getElementById('quickNavToggle');
+    if (!menu || !toggle) return;
+    menu.classList.remove('active');
+    toggle.classList.remove('active');
+    toggle.setAttribute('aria-expanded', 'false');
+}
+
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (!section) {
+        console.warn('⚠️ القسم غير موجود:', sectionId);
+        return;
+    }
+    const contentMap = {
+        'section-cash': 'cashSectionContent',
+        'section-coinActive': 'coinActiveSectionContent',
+        'section-entryDetails': 'entryDetailsSectionContent',
+        'section-summary': 'summarySectionContent',
+        'section-currentStatus': 'currentStatusSectionContent',
+        'section-marketInsights': 'marketInsightsSectionContent',
+        'section-advancedCharts': 'advancedChartsSectionContent',
+        'section-riskCalculator': 'riskCalculatorSectionContent'
+    };
+    const contentId = contentMap[sectionId];
+    if (contentId) {
+        const content = document.getElementById(contentId);
+        if (content && content.classList.contains('collapsed')) {
+            const btn = content.closest('.section-header')?.querySelector('.toggle-btn') ||
+                        content.closest('.card-hover')?.querySelector('.toggle-btn');
+            content.classList.remove('collapsed');
+            if (btn) btn.textContent = currentLang === 'en' ? 'Collapse' : 'طي';
+            const sectionStates = JSON.parse(localStorage.getItem('sectionToggleStates') || '{}');
+            const sectionKey = Object.keys(contentMap).find(k => contentMap[k] === contentId);
+            if (sectionKey) {
+                delete sectionStates[sectionKey.replace('section-', '')];
+                localStorage.setItem('sectionToggleStates', JSON.stringify(sectionStates));
+            }
+        }
+    }
+    setTimeout(() => {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        section.style.transition = 'box-shadow 0.3s ease';
+        section.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.45)';
+        setTimeout(() => {
+            section.style.boxShadow = '';
+            setTimeout(() => { section.style.transition = ''; }, 400);
+        }, 900);
+    }, 60);
+}
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -5913,6 +6390,30 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(updateCryptoTicker, 60000);
     setInterval(initMarketInsights, 5 * 60 * 1000);
 
+    /* ═══════════════════════════════════════════════════════════════
+       ✅ الحل الجذري: مؤقّت مستقل لتحديث الرسوم البيانية
+       ═══════════════════════════════════════════════════════════════ */
+    // المؤقّت #1: حفظ نقطة + إعادة رسم كل 30 ثانية (مستقل عن autoRefresh وعن أي تفاعل)
+    setInterval(() => {
+        if (typeof updateAdvancedCharts === 'function') {
+            try { updateAdvancedCharts(); } catch (e) { console.warn('Advanced charts timer:', e); }
+        }
+    }, 30 * 1000);
+
+    // المؤقّت #2: حفظ نقطة أولى بعد ثانيتين (لضمان بداية سريعة)
+    setTimeout(() => {
+        if (typeof updateAdvancedCharts === 'function') {
+            try { updateAdvancedCharts(); } catch (e) {}
+        }
+    }, 2000);
+
+    // المؤقّت #3: حفظ نقطة ثانية بعد 7 ثوانٍ (لتفعيل الرسم خلال ~7-10 ثوانٍ)
+    setTimeout(() => {
+        if (typeof updateAdvancedCharts === 'function') {
+            try { updateAdvancedCharts(); } catch (e) {}
+        }
+    }, 7000);
+
     document.addEventListener('click', function(e) {
         const notifCenter = document.getElementById('notificationCenter');
         const notifBell = document.querySelector('.notification-bell');
@@ -5921,14 +6422,41 @@ document.addEventListener('DOMContentLoaded', function() {
             notifCenter.classList.remove('active');
         }
     });
+
+    // ✅ إغلاق تلقائي لقائمة التنقل السريع عند الضغط خارجها
+    document.addEventListener('click', function(e) {
+        const navBar = document.querySelector('.quick-nav-bar');
+        const navMenu = document.getElementById('quickNavMenu');
+        if (!navBar || !navMenu) return;
+        if (!navMenu.classList.contains('active')) return;
+        if (!navBar.contains(e.target)) {
+            closeQuickNav();
+        }
+    });
+
+    // ✅ إغلاق قائمة التنقل عند التمرير (Scroll)
+    let __quickNavScrollLock = false;
+    window.addEventListener('scroll', function() {
+        if (__quickNavScrollLock) return;
+        const navMenu = document.getElementById('quickNavMenu');
+        if (navMenu && navMenu.classList.contains('active')) {
+            closeQuickNav();
+        }
+        __quickNavScrollLock = true;
+        setTimeout(() => { __quickNavScrollLock = false; }, 200);
+    }, { passive: true });
+
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             document.querySelectorAll('.popup-overlay.active, .profile-modal-overlay.active, .notification-center.active, .update-popup.active, .sell-partial-modal-overlay.active').forEach(el => {
                 el.classList.remove('active');
             });
             if (sellModalState.isOpen) sellModalState.isOpen = false;
+            // ✅ إغلاق قائمة التنقل السريع
+            closeQuickNav();
         }
     });
+
     setTimeout(() => {
         addNotification(
             currentLang === 'en' ? 'Welcome!' : 'مرحباً بك!',
