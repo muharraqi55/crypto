@@ -1957,7 +1957,7 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <li>🎯 نافذة بيع جزئي متقدمة مع أزرار سريعة</li>
 <li>🔄 زر مسح داخل نافذة البيع</li>
 <li>🛡️ حماية التعزيز: لا يمكن البيع قبل الحفظ</li>
-<li>⚡ جلب متوازي للأسعار من 6 منصات (أسرع 10 مرات)</li>
+<li>⚡ Cloudflare Worker خاص لجلب سريع وموثوق</li>
 </ul>
 </div>
 <button onclick="closeUpdatePopup()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">ممتاز!</button>
@@ -2006,13 +2006,22 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <input type="file" id="importTxtFile" accept=".txt" style="display: none;">
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — النسخة النهائية المُحسّنة
-   ✅ جلب متوازي للأسعار (كل المنصات في نفس الوقت)
-   ✅ استخدام allorigins.win (بدون كود — الأسرع)
-   ✅ إصلاح مشكلة التجمّد (resetAllData)
+   JavaScript — النسخة النهائية v4
+   ✅ استخدام Cloudflare Worker الخاص بك (بدون حدود استخدام!)
+   ✅ Cache لمدة 25 ثانية
+   ✅ تزامن 3 عملات + تأخير بسيط
+   ✅ Binance بنطاقين (api + data-api)
    ✅ حماية البيع للتعزيز (DCA) قبل الحفظ
-   ✅ إصلاح اسم كلاس زر الحذف
+   ✅ إصلاح مشكلة التجمّد (resetAllData)
+   ✅ إصلاح اسم كلاس زر الحذف (delete-coin-option-btn)
    ═══════════════════════════════════════════════════════════════ */
+
+// 🔑 Cloudflare Worker الخاص بك — يعمل بدون حدود استخدام!
+const MY_PROXY_URL = 'https://crypto-proxy.qwqwqwzx5.workers.dev';
+
+// ✅ ذاكرة مؤقتة للأسعار
+const priceCache = new Map();
+const PRICE_CACHE_TTL = 25000; // 25 ثانية
 
 function generateUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
@@ -2348,9 +2357,6 @@ function updateToggleButtonsText() {
     });
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   دوال التنسيق
-   ═══════════════════════════════════════════════════════════════ */
 function formatWithCommas(num, decimals = 2) {
     const number = Number(num);
     if (isNaN(number) || !isFinite(number)) return (0).toFixed(decimals);
@@ -2485,9 +2491,6 @@ let sellModalState = {
     availableQty: 0, investedForAvailable: 0, currentPrice: 0, lastEditedField: null
 };
 
-/* ═══════════════════════════════════════════════════════════════
-   دوال الكاش
-   ═══════════════════════════════════════════════════════════════ */
 function updateCashDisplay() {
     const totalSalesCash = salesCashHistory.deposits.reduce((sum, record) => sum + record.amount, 0) -
                             salesCashHistory.withdrawals.reduce((sum, record) => sum + record.amount, 0);
@@ -2948,9 +2951,6 @@ function isDCASaved(rp) {
     return Math.abs(repurchaseAmount - savedAmount) <= 0.001;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   نافذة البيع الجزئي
-   ═══════════════════════════════════════════════════════════════ */
 function openSellPartialModalForEntry(symbol) {
     if (!symbol || !allCoinData[symbol]) { showError(currentLang === 'en' ? "Coin not found" : "العملة غير موجودة"); return; }
     const data = allCoinData[symbol];
@@ -3268,9 +3268,6 @@ function cancelInitialSale() {}
 function applyDCASale(symbol, index) { showInfo(currentLang === 'en' ? 'Please use the Sell button' : 'يرجى استخدام زر البيع'); }
 function cancelDCASale(symbol, index) {}
 
-/* ═══════════════════════════════════════════════════════════════
-   بيع الكل
-   ═══════════════════════════════════════════════════════════════ */
 function sellAllInitial() {
     const initialCoinQty = parseFormattedNumber(document.getElementById('initialCoinQty').textContent);
     const currentSales = getInitialSalesHistory();
@@ -3575,9 +3572,6 @@ function updateDCADataFromInputs(symbol, index) {
 function calculateTotalSoldQty(sales) { return sales.reduce((total, sale) => total + sale.qty, 0); }
 function calculateCashFromSales(sales) { return sales.reduce((total, sale) => total + (sale.qty * sale.price), 0); }
 
-/* ═══════════════════════════════════════════════════════════════
-   جدول التعزيزات
-   ═══════════════════════════════════════════════════════════════ */
 function getDCARowsHTML(symbol, data) {
     const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
     const initialAmountDollars = parseFormattedNumber(data.initialAmountDollars);
@@ -4054,10 +4048,11 @@ function loadExpandedCoins() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   🚀 جلب الأسعار — النسخة المُحسّنة (متوازية + أسرع 10 مرات)
-   ✅ Binance أولاً (سريع بدون وسيط)
-   ✅ كل المنصات الأخرى تعمل بالتوازي — الأسرع يفوز
-   ✅ استخدام allorigins.win (مجاني بدون كود)
+   🚀 جلب الأسعار — النسخة النهائية v4
+   ✅ Cloudflare Worker خاص بك — بدون حدود استخدام!
+   ✅ Cache 25 ثانية لتسريع التحديثات المتكررة
+   ✅ تزامن 3 عملات لتجنب الإرهاق
+   ✅ Binance بنطاقين (api + data-api) للتغلب على الحجب
    ═══════════════════════════════════════════════════════════════ */
 async function fetchSinglePrice(symbol) {
     const baseSymbol = getBaseSymbolFromKey(symbol);
@@ -4065,57 +4060,52 @@ async function fetchSinglePrice(symbol) {
         return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'Invalid symbol' : 'رمز غير صالح' };
     }
 
-    // 1️⃣ جرّب Binance أولاً (سريع جداً ولا يحتاج وسيط)
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 4000);
-        const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=' + baseSymbol, { signal: controller.signal });
-        clearTimeout(timeoutId);
-        if (response.ok) {
-            const data = await response.json();
-            if (data && data.price && !isNaN(parseFloat(data.price))) {
-                console.log('✅ Binance: ' + data.price + ' لـ ' + symbol);
-                return { symbol: symbol, price: parseFloat(data.price), source: 'Binance', error: null };
-            }
+    // ✅ 1. فحص الذاكرة المؤقتة أولاً
+    if (priceCache.has(symbol)) {
+        const cached = priceCache.get(symbol);
+        if (Date.now() - cached.time < PRICE_CACHE_TTL && cached.data && cached.data.price) {
+            console.log('💾 Cache: ' + symbol + ' = ' + cached.data.price);
+            return cached.data;
         }
-    } catch (e) {
-        // تجاهل، سننتقل للخيارات البديلة
     }
 
-    // 2️⃣ إذا فشلت Binance، جرّب كل المنصات الأخرى بالتوازي
+    // ✅ 2. Binance بنطاقين (سريع ومباشر بدون وسيط)
+    const binanceDomains = [
+        'https://api.binance.com',
+        'https://data-api.binance.vision'
+    ];
+    for (const domain of binanceDomains) {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            const response = await fetch(domain + '/api/v3/ticker/price?symbol=' + baseSymbol, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            if (response.ok) {
+                const data = await response.json();
+                if (data && data.price && !isNaN(parseFloat(data.price))) {
+                    const result = { symbol: symbol, price: parseFloat(data.price), source: 'Binance', error: null };
+                    priceCache.set(symbol, { time: Date.now(), data: result });
+                    console.log('✅ Binance: ' + data.price + ' لـ ' + symbol);
+                    return result;
+                }
+            }
+        } catch (e) {}
+    }
+
+    // ✅ 3. باقي المنصات عبر Cloudflare Worker الخاص بك
     const altExchanges = [
-        {
-            name: 'MEXC',
-            url: 'https://api.mexc.com/api/v3/ticker/price?symbol=' + baseSymbol,
-            extract: (data) => data.price
-        },
-        {
-            name: 'Gate.io',
-            url: 'https://api.gateio.ws/api/v4/spot/tickers?currency_pair=' + baseSymbol.replace('USDT', '_USDT'),
-            extract: (data) => Array.isArray(data) && data[0] ? data[0].last : null
-        },
-        {
-            name: 'OKX',
-            url: 'https://www.okx.com/api/v5/market/ticker?instId=' + baseSymbol.replace('USDT', '-USDT'),
-            extract: (data) => data.data && data.data[0] ? data.data[0].last : null
-        },
-        {
-            name: 'KuCoin',
-            url: 'https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=' + baseSymbol.replace('USDT', '-USDT'),
-            extract: (data) => data.code === '200000' && data.data ? data.data.price : null
-        },
-        {
-            name: 'Bybit',
-            url: 'https://api.bybit.com/v5/market/tickers?category=spot&symbol=' + baseSymbol,
-            extract: (data) => data.result && data.result.list && data.result.list[0] ? data.result.list[0].lastPrice : null
-        }
+        { name: 'MEXC',    url: 'https://api.mexc.com/api/v3/ticker/price?symbol=' + baseSymbol, extract: (d) => d.price },
+        { name: 'Gate.io', url: 'https://api.gateio.ws/api/v4/spot/tickers?currency_pair=' + baseSymbol.replace('USDT', '_USDT'), extract: (d) => Array.isArray(d) && d[0] ? d[0].last : null },
+        { name: 'OKX',     url: 'https://www.okx.com/api/v5/market/ticker?instId=' + baseSymbol.replace('USDT', '-USDT'), extract: (d) => d.data && d.data[0] ? d.data[0].last : null },
+        { name: 'KuCoin',  url: 'https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=' + baseSymbol.replace('USDT', '-USDT'), extract: (d) => d.code === '200000' && d.data ? d.data.price : null },
+        { name: 'Bybit',   url: 'https://api.bybit.com/v5/market/tickers?category=spot&symbol=' + baseSymbol, extract: (d) => d.result && d.result.list && d.result.list[0] ? d.result.list[0].lastPrice : null }
     ];
 
-    // نُنشئ جميع الطلبات بالتوازي — أول منصة تنجح تُعيد النتيجة
+    // ✅ نرسل كل الطلبات بالتوازي عبر Cloudflare Worker
     const promises = altExchanges.map(exchange => {
         return (async () => {
             try {
-                const fetchUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(exchange.url);
+                const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(exchange.url);
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 10000);
 
@@ -4123,10 +4113,8 @@ async function fetchSinglePrice(symbol) {
                 clearTimeout(timeoutId);
 
                 if (!response.ok) return null;
-
                 const data = await response.json();
                 const extractedPrice = exchange.extract(data);
-
                 if (extractedPrice && !isNaN(parseFloat(extractedPrice))) {
                     return { name: exchange.name, price: parseFloat(extractedPrice) };
                 }
@@ -4138,21 +4126,19 @@ async function fetchSinglePrice(symbol) {
     });
 
     try {
+        // أول منصة تنجح = الفائز
         const winner = await Promise.any(promises.map(p => p.then(r => {
             if (!r) throw new Error('no result');
             return r;
         })));
 
+        const result = { symbol: symbol, price: winner.price, source: winner.name, error: null };
+        priceCache.set(symbol, { time: Date.now(), data: result });
         console.log('✅ ' + winner.name + ': ' + winner.price + ' لـ ' + symbol);
-        return { symbol: symbol, price: winner.price, source: winner.name, error: null };
+        return result;
     } catch (e) {
-        console.warn('❌ فشل جلب السعر لـ ' + symbol + ' من جميع المنصات');
-        return {
-            symbol: symbol,
-            price: null,
-            source: null,
-            error: currentLang === 'en' ? 'Failed on all exchanges' : 'فشل من جميع المنصات'
-        };
+        console.warn('❌ فشل جلب السعر لـ ' + symbol + ' من جميع المصادر');
+        return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'Failed on all sources' : 'فشل من جميع المصادر' };
     }
 }
 
@@ -4171,48 +4157,57 @@ async function fetchAllPrices(isAutoRefresh = false) {
         apiStatusDiv.textContent = (currentLang === 'en' ? 'Fetching prices for ' + trackedSymbols.length + ' coins...' : 'جاري جلب أسعار ' + trackedSymbols.length + ' عملة...');
         apiStatusDiv.style.color = 'var(--primary-color)';
     }
-    const pricePromises = trackedSymbols.map(symbol => fetchSinglePrice(symbol));
-    try {
-        const results = await Promise.allSettled(pricePromises);
-        let successCount = 0, failCount = 0;
-        const fetchTimestamp = new Date();
-        results.forEach(result => {
-            if (result.status === 'fulfilled') {
-                const { symbol, price, error } = result.value;
-                if (error === null && price !== null) { currentMarketPrices[symbol] = price; successCount++; }
-                else { if (currentMarketPrices[symbol] === undefined) currentMarketPrices[symbol] = null; failCount++; }
+
+    // ✅ تزامن 3 عملات في نفس الوقت
+    const CONCURRENCY = 3;
+    let successCount = 0, failCount = 0;
+    const fetchTimestamp = new Date();
+    const allResults = [];
+
+    for (let i = 0; i < trackedSymbols.length; i += CONCURRENCY) {
+        const batch = trackedSymbols.slice(i, i + CONCURRENCY);
+        const batchResults = await Promise.allSettled(batch.map(s => fetchSinglePrice(s)));
+        allResults.push(...batchResults);
+        if (i + CONCURRENCY < trackedSymbols.length) {
+            await new Promise(r => setTimeout(r, 200));
+        }
+    }
+
+    allResults.forEach(result => {
+        if (result.status === 'fulfilled') {
+            const { symbol, price, error } = result.value;
+            if (error === null && price !== null) {
+                currentMarketPrices[symbol] = price;
+                successCount++;
             } else {
+                if (currentMarketPrices[symbol] === undefined || currentMarketPrices[symbol] === null) currentMarketPrices[symbol] = null;
                 failCount++;
             }
-        });
-        if (activeCoinSymbol) {
-            const price = currentMarketPrices[activeCoinSymbol];
-            if (price !== null && price !== undefined && !isNaN(price)) {
-                marketPriceDisplay.textContent = fmtPrice(price);
-                marketPriceDisplay.classList.remove('error');
-            } else {
-                marketPriceDisplay.textContent = currentLang === 'en' ? "Fetch failed" : "فشل الجلب";
-                marketPriceDisplay.classList.add('error');
-            }
+        } else {
+            failCount++;
         }
-        calculateActiveCoinDetails();
-        updateSummaryTable();
-        updatePortfolioChart();
-        updateCryptoTicker();
-        updateAdvancedCharts();
-        checkPriceAlerts();
-        const statusMsg = successCount + (currentLang === 'en' ? ' succeeded, ' : ' ناجح, ') + failCount + (currentLang === 'en' ? ' failed' : ' فشل') + ' (' + fetchTimestamp.toLocaleTimeString(currentLang === 'en' ? 'en-US' : 'ar-EG') + ')';
-        apiStatusDiv.textContent = isAutoRefresh ? (currentLang === 'en' ? 'Auto: ' : 'تلقائي: ') + statusMsg : (currentLang === 'en' ? 'Done: ' : 'اكتمل: ') + statusMsg;
-        apiStatusDiv.style.color = failCount > 0 ? 'var(--negative-color)' : 'var(--positive-color)';
-        if (autoRefreshCheckbox.checked && !autoRefreshIntervalId) startAutoRefresh();
-    } catch (error) {
-        if (!isAutoRefresh) {
-            apiStatusDiv.textContent = currentLang === 'en' ? 'General error during price update.' : 'خطأ عام أثناء تحديث الأسعار.';
-            apiStatusDiv.style.color = 'var(--negative-color)';
+    });
+
+    if (activeCoinSymbol) {
+        const price = currentMarketPrices[activeCoinSymbol];
+        if (price !== null && price !== undefined && !isNaN(price)) {
+            marketPriceDisplay.textContent = fmtPrice(price);
+            marketPriceDisplay.classList.remove('error');
+        } else {
+            marketPriceDisplay.textContent = currentLang === 'en' ? "Fetch failed" : "فشل الجلب";
+            marketPriceDisplay.classList.add('error');
         }
-        stopAutoRefresh();
-        updateSummaryTable();
     }
+    calculateActiveCoinDetails();
+    updateSummaryTable();
+    updatePortfolioChart();
+    updateCryptoTicker();
+    updateAdvancedCharts();
+    checkPriceAlerts();
+    const statusMsg = successCount + (currentLang === 'en' ? ' succeeded, ' : ' ناجح, ') + failCount + (currentLang === 'en' ? ' failed' : ' فشل') + ' (' + fetchTimestamp.toLocaleTimeString(currentLang === 'en' ? 'en-US' : 'ar-EG') + ')';
+    apiStatusDiv.textContent = isAutoRefresh ? (currentLang === 'en' ? 'Auto: ' : 'تلقائي: ') + statusMsg : (currentLang === 'en' ? 'Done: ' : 'اكتمل: ') + statusMsg;
+    apiStatusDiv.style.color = failCount > 0 ? 'var(--negative-color)' : 'var(--positive-color)';
+    if (autoRefreshCheckbox.checked && !autoRefreshIntervalId) startAutoRefresh();
 }
 function startAutoRefresh() {
     if (autoRefreshIntervalId) clearInterval(autoRefreshIntervalId);
