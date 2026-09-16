@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -2348,7 +2349,7 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <input type="file" id="importTxtFile" accept=".txt" style="display: none;">
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — النسخة النهائية v5
+   JavaScript — النسخة النهائية v6
    ✅ استخدام Cloudflare Worker الخاص بك (بدون حدود استخدام!)
    ✅ Cache لمدة 25 ثانية
    ✅ تزامن 3 عملات + تأخير بسيط
@@ -2360,6 +2361,7 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
    ✅ إصلاح جذري: مؤقّت مستقل لتحديث الرسوم البيانية كل 30 ثانية
    ✅ إصلاح جذري: عتبة 5 ثوانٍ لأول نقطتين (بداية سريعة)
    ✅ زر التنقل السريع 🧭 + قائمة منبثقة فوقه
+   ✅ إصلاح: زر "بيع الكل" بنص ثابت (بدون عرض أسماء العملات)
    ═══════════════════════════════════════════════════════════════ */
 
 // 🔑 Cloudflare Worker الخاص بك — يعمل بدون حدود استخدام!
@@ -3214,40 +3216,14 @@ function updateCoinStatus() {
     coinStatusDiv.textContent = (currentLang === 'en' ? 'Coins: ' : 'العملات: ') + count;
     document.getElementById('deleteCoinBtn').disabled = !activeCoinSymbol;
 }
+
+/* ✅ مُصلحة: نص ثابت دائماً بدون عرض أسماء العملات */
 function updateSellAllGlobalBtnText() {
     const btn = document.getElementById('sellAllGlobalBtn');
     if (!btn) return;
-    const coinsWithQty = [];
-    Object.keys(allCoinData).forEach(symbol => {
-        const data = allCoinData[symbol];
-        const marketPrice = currentMarketPrices[symbol] || 0;
-        if (marketPrice <= 0) return;
-        const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
-        const initialAmountDollars = parseFormattedNumber(data.initialAmountDollars);
-        const initialCoinQty = initialEntryPrice > 0 ? initialAmountDollars / initialEntryPrice : 0;
-        const initialSales = data.initialSales || [];
-        const initialTotalSoldQty = calculateTotalInitialSoldQty(initialSales);
-        const initialRemainingQty = Math.max(0, initialCoinQty - initialTotalSoldQty);
-        let coinQty = initialRemainingQty;
-        (data.repurchases || []).forEach(rp => {
-            const savedAmount = rp.savedAmount || 0;
-            if (savedAmount <= 0.0001) return;
-            const repurchasePrice = parseFormattedNumber(rp.price);
-            const repurchaseAmount = parseFormattedNumber(rp.amount);
-            const repurchaseQty = repurchasePrice > 0 ? repurchaseAmount / repurchasePrice : 0;
-            const sales = rp.sales || [];
-            const totalSoldQty = calculateTotalSoldQty(sales);
-            const remainingQty = Math.max(0, repurchaseQty - totalSoldQty);
-            coinQty += remainingQty;
-        });
-        if (coinQty > 0.00000001) coinsWithQty.push(symbol);
-    });
-    if (coinsWithQty.length === 0) btn.textContent = currentLang === 'en' ? '💰 Sell All' : '💰 بيع الكل';
-    else {
-        const displayNames = coinsWithQty.map(s => getDisplayNameFromKey(s));
-        btn.textContent = (currentLang === 'en' ? '💰 Sell All (' : '💰 بيع الكل (') + displayNames.join(currentLang === 'en' ? ', ' : '، ') + ')';
-    }
+    btn.textContent = currentLang === 'en' ? '💰 Sell All' : '💰 بيع الكل';
 }
+
 function updateAvailableQtyForSale() {
     const availableQtyElement = document.getElementById('availableQtyForSale');
     if (!availableQtyElement) return;
@@ -6393,21 +6369,18 @@ document.addEventListener('DOMContentLoaded', function() {
     /* ═══════════════════════════════════════════════════════════════
        ✅ الحل الجذري: مؤقّت مستقل لتحديث الرسوم البيانية
        ═══════════════════════════════════════════════════════════════ */
-    // المؤقّت #1: حفظ نقطة + إعادة رسم كل 30 ثانية (مستقل عن autoRefresh وعن أي تفاعل)
     setInterval(() => {
         if (typeof updateAdvancedCharts === 'function') {
             try { updateAdvancedCharts(); } catch (e) { console.warn('Advanced charts timer:', e); }
         }
     }, 30 * 1000);
 
-    // المؤقّت #2: حفظ نقطة أولى بعد ثانيتين (لضمان بداية سريعة)
     setTimeout(() => {
         if (typeof updateAdvancedCharts === 'function') {
             try { updateAdvancedCharts(); } catch (e) {}
         }
     }, 2000);
 
-    // المؤقّت #3: حفظ نقطة ثانية بعد 7 ثوانٍ (لتفعيل الرسم خلال ~7-10 ثوانٍ)
     setTimeout(() => {
         if (typeof updateAdvancedCharts === 'function') {
             try { updateAdvancedCharts(); } catch (e) {}
@@ -6423,7 +6396,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ✅ إغلاق تلقائي لقائمة التنقل السريع عند الضغط خارجها
     document.addEventListener('click', function(e) {
         const navBar = document.querySelector('.quick-nav-bar');
         const navMenu = document.getElementById('quickNavMenu');
@@ -6434,7 +6406,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ✅ إغلاق قائمة التنقل عند التمرير (Scroll)
     let __quickNavScrollLock = false;
     window.addEventListener('scroll', function() {
         if (__quickNavScrollLock) return;
@@ -6452,7 +6423,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 el.classList.remove('active');
             });
             if (sellModalState.isOpen) sellModalState.isOpen = false;
-            // ✅ إغلاق قائمة التنقل السريع
             closeQuickNav();
         }
     });
