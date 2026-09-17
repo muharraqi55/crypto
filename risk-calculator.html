@@ -311,6 +311,9 @@ html[data-theme="dark"] .t-sell-btn.sold-active{color:#04140d}
 .sl-quote::after{content:" ❞";font-size:1rem}
 .sl-mode-toggle{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
 .sl-mode-toggle.quad{grid-template-columns:repeat(4, 1fr)}
+/* ✅ NEW: quint class for 5 DCA options (including "No DCA") */
+.sl-mode-toggle.quint{grid-template-columns:repeat(5, 1fr);gap:4px}
+.sl-mode-toggle.quint .sl-mode-btn{font-size:0.625rem;padding:9px 3px;letter-spacing:0}
 .sl-mode-btn{font-family:var(--mono);font-size:0.6875rem;font-weight:800;padding:9px 10px;border-radius:9px;
   border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;transition:.2s;
   display:flex;align-items:center;justify-content:center;gap:5px;letter-spacing:.3px;}
@@ -429,6 +432,101 @@ html[data-theme="dark"] .toast{color:#04140d}
 .footer-credit .tagline{font-size:0.625rem;color:var(--muted);opacity:.75;letter-spacing:1.5px;
   text-transform:uppercase;margin-top:4px;position:relative;z-index:2;}
 .print-header{display:none;}
+
+/* ========== Floating Clear Data Button (FAB) ========== */
+.clear-fab{
+  position:fixed;bottom:26px;inset-inline-end:26px;
+  width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,var(--red),color-mix(in srgb,var(--red) 65%, black));
+  border:2px solid color-mix(in srgb,var(--red) 70%, white);
+  color:#fff;font-size:1.5rem;cursor:pointer;
+  display:grid;place-items:center;
+  box-shadow:0 10px 28px -6px color-mix(in srgb,var(--red) 80%, transparent);
+  transition:transform .25s, box-shadow .25s;
+  z-index:80;
+  animation:fab-ring 2.6s ease-in-out infinite;
+}
+.clear-fab:hover{
+  transform:scale(1.12) rotate(-10deg);
+  box-shadow:0 14px 36px -6px color-mix(in srgb,var(--red) 95%, transparent);
+}
+.clear-fab:active{transform:scale(.95)}
+@keyframes fab-ring{
+  0%,100%{box-shadow:0 10px 28px -6px color-mix(in srgb,var(--red) 80%, transparent),
+                      0 0 0 0 color-mix(in srgb,var(--red) 45%, transparent);}
+  50%    {box-shadow:0 10px 28px -6px color-mix(in srgb,var(--red) 80%, transparent),
+                      0 0 0 14px transparent;}
+}
+
+/* ========== Modal Overlay ========== */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.68);
+  -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+  display:flex;align-items:center;justify-content:center;
+  z-index:120;padding:20px;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s ease;
+}
+.modal-overlay.show{opacity:1;pointer-events:auto}
+
+.modal-box{
+  background:linear-gradient(180deg,var(--panel-grad-1),var(--panel-grad-2));
+  border:2px solid var(--red);border-radius:18px;
+  padding:28px 26px;max-width:440px;width:100%;
+  font-family:var(--mono);text-align:center;
+  box-shadow:0 28px 70px -22px color-mix(in srgb,var(--red) 85%, transparent);
+  transform:scale(.9);transition:transform .28s cubic-bezier(.34,1.56,.64,1);
+  position:relative;overflow:hidden;
+}
+.modal-overlay.show .modal-box{transform:scale(1)}
+.modal-box::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+  animation:sl-pulse 2s ease-in-out infinite;
+}
+.modal-icon{
+  font-size:3.25rem;line-height:1;margin-bottom:14px;
+  filter:drop-shadow(0 0 18px color-mix(in srgb,var(--red) 75%, transparent));
+  animation:heartbeat 1.6s ease-in-out infinite;
+}
+.modal-title{
+  font-size:1rem;font-weight:800;color:var(--red);
+  letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;
+}
+.modal-desc{
+  font-size:0.8125rem;color:var(--text);line-height:1.85;font-weight:600;
+  margin-bottom:22px;padding:14px 16px;border-radius:11px;
+  background:var(--red-dim);
+  border:1px dashed color-mix(in srgb,var(--red) 45%, transparent);
+  text-align:start;
+}
+.modal-desc strong{
+  color:var(--red);font-weight:800;display:block;
+  margin-bottom:8px;font-size:0.75rem;letter-spacing:.5px;
+}
+.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal-btn{
+  font-family:var(--mono);font-size:0.75rem;font-weight:800;
+  padding:13px 14px;border-radius:11px;cursor:pointer;
+  letter-spacing:.5px;transition:.2s;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.modal-btn.cancel{background:var(--card);color:var(--text)}
+.modal-btn.cancel:hover{
+  background:color-mix(in srgb,var(--text) 8%, var(--card));
+  border-color:var(--text);transform:translateY(-1px);
+}
+.modal-btn.confirm{
+  background:linear-gradient(135deg,var(--red),color-mix(in srgb,var(--red) 70%, black));
+  color:#fff;border-color:var(--red);
+  box-shadow:0 6px 18px -6px color-mix(in srgb,var(--red) 80%, transparent);
+}
+.modal-btn.confirm:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 26px -6px color-mix(in srgb,var(--red) 95%, transparent);
+}
+
 @media print{
   @page{size:A4;margin:12mm 10mm 14mm 10mm;}
   *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;
@@ -439,7 +537,8 @@ html[data-theme="dark"] .toast{color:#04140d}
   .wrap{max-width:100% !important;margin:0 !important;padding:0 !important;}
   .controls,.action-btns,.toast,.icon-btn,.ctrl-group,.ctrl-sep,.ctrl-label,.mode-toggle-sm,.btn,.t-sell-btn,
   .sale-banner .sb-reset,.pc-actions,.panel,.targets-header .mode-toggle-sm,.sl-mode-toggle,.dca-cnt-btn,
-  .input-mode-toggle,.imt-btn,.footer-credit .made-with .heart{display:none !important;}
+  .input-mode-toggle,.imt-btn,.footer-credit .made-with .heart,
+  .clear-fab,.modal-overlay{display:none !important;}
   .panel{display:none !important;}
   .main-grid{display:block !important;grid-template-columns:1fr !important;gap:0 !important;}
   .print-header{display:block !important;text-align:center;padding-bottom:12px;margin-bottom:16px;
@@ -624,6 +723,12 @@ html[data-theme="dark"] .toast{color:#04140d}
   .sl-quote{font-size:0.6875rem;padding:12px 12px}
   .input-mode-toggle{width:100%}
   .imt-btn{flex:1;justify-content:center}
+  .clear-fab{width:52px;height:52px;font-size:1.25rem;bottom:18px;inset-inline-end:18px}
+  .modal-box{padding:22px 18px}
+  .modal-icon{font-size:2.5rem}
+  .modal-title{font-size:0.875rem}
+  .modal-desc{font-size:0.75rem}
+  .modal-actions{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -745,7 +850,8 @@ html[data-theme="dark"] .toast{color:#04140d}
 
         <div class="group" style="border-color:color-mix(in srgb,var(--red) 40%, transparent)">
           <div class="group-title" style="color:var(--red)">🔢 <span data-i18n="dcaCountTitle">عدد مستويات DCA</span></div>
-          <div class="sl-mode-toggle quad">
+          <div class="sl-mode-toggle quint">
+            <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt0" onclick="setDCACount(0)" data-i18n="noDca">🚫 بدون تعزيز</button>
             <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt1" onclick="setDCACount(1)">1 DCA</button>
             <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt2" onclick="setDCACount(2)">2 DCA</button>
             <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt3" onclick="setDCACount(3)">3 DCA</button>
@@ -803,7 +909,8 @@ html[data-theme="dark"] .toast{color:#04140d}
 
         <div class="group" style="border-color:color-mix(in srgb,var(--red) 40%, transparent)">
           <div class="group-title" style="color:var(--red)">🔢 <span data-i18n="dcaCountTitle">عدد مستويات DCA</span></div>
-          <div class="sl-mode-toggle quad">
+          <div class="sl-mode-toggle quint">
+            <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt0M" onclick="setDCACount(0)" data-i18n="noDca">🚫 بدون تعزيز</button>
             <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt1M" onclick="setDCACount(1)">1 DCA</button>
             <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt2M" onclick="setDCACount(2)">2 DCA</button>
             <button class="sl-mode-btn dca-cnt-btn" id="dcaCnt3M" onclick="setDCACount(3)">3 DCA</button>
@@ -859,7 +966,7 @@ html[data-theme="dark"] .toast{color:#04140d}
             <button class="imt-btn" data-imt-mode="manual" onclick="setInputMode('alloc','manual')" data-i18n="imtAmount">💰 مبلغ يدوي</button>
           </div>
           <div class="alloc-row"><span class="lbl" data-i18n="allocEntryRow">الدخول</span><input type="number" min="0" step="any" inputmode="decimal" id="inA0" value="30"></div>
-          <div class="alloc-row"><span class="lbl">DCA 1</span><input type="number" min="0" step="any" inputmode="decimal" id="inA1" value="15"></div>
+          <div class="alloc-row" id="alloc1Row"><span class="lbl">DCA 1</span><input type="number" min="0" step="any" inputmode="decimal" id="inA1" value="15"></div>
           <div class="alloc-row" id="alloc2Row"><span class="lbl">DCA 2</span><input type="number" min="0" step="any" inputmode="decimal" id="inA2" value="15"></div>
           <div class="alloc-row" id="alloc3Row"><span class="lbl">DCA 3</span><input type="number" min="0" step="any" inputmode="decimal" id="inA3" value="20"></div>
           <div class="alloc-row" id="alloc4Row" style="margin-bottom:0"><span class="lbl">DCA 4</span><input type="number" min="0" step="any" inputmode="decimal" id="inA4" value="20"></div>
@@ -929,6 +1036,31 @@ html[data-theme="dark"] .toast{color:#04140d}
 </div>
 
 <div class="toast" id="toast">✓</div>
+
+<!-- ========== Floating Clear Data Button ========== -->
+<button class="clear-fab" id="clearFab" onclick="openClearModal()"
+        title="مسح جميع البيانات / Clear All Data">
+  <span>🗑️</span>
+</button>
+
+<!-- ========== Clear Confirmation Modal ========== -->
+<div class="modal-overlay" id="clearModal"
+     onclick="if(event.target===this)closeClearModal()">
+  <div class="modal-box">
+    <div class="modal-icon">⚠️</div>
+    <div class="modal-title" data-i18n="clearModalTitle">مسح جميع البيانات</div>
+    <div class="modal-desc">
+      <strong data-i18n="clearModalWarning">⚠️ تحذير: لا يمكن التراجع عن هذه العملية</strong>
+      <span data-i18n="clearModalDesc">سيتم مسح جميع البيانات المحفوظة (الخطة + الإعدادات + اللغة + المظهر) واسترجاع الإعدادات الافتراضية. هل أنت متأكد؟</span>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" onclick="closeClearModal()"
+              data-i18n="clearCancel">↩️ إلغاء</button>
+      <button class="modal-btn confirm" onclick="confirmClearData()"
+              data-i18n="clearConfirm">🗑️ نعم، امسح الكل</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const I18N = {
@@ -1019,9 +1151,12 @@ const I18N = {
     slInfoManual:(price)=>`✏️ يدوي: السعر المُحدَّد ${price}`,
     slModeAutoMsg:'⚡ وقف الخسارة تلقائي', slModeManualMsg:'✏️ وقف الخسارة يدوي',
     dcaCountTitle:'عدد مستويات DCA',
-    dcaCountMsg:(n)=> n===1 ? '🔢 تم تفعيل مستوى DCA واحد' : `🔢 تم تفعيل ${n} مستويات DCA`,
-    dcaCountInfo:(n)=> n===1 ? '✓ مستوى DCA واحد مُفعَّل' : `✓ ${n} مستويات مُفعَّلة`,
-    slAfterDca:(n)=>`بعد DCA ${n}`, slBelowDca:(n)=>`تحت DCA${n}`,
+    dcaCountMsg:(n)=> n===0 ? '🚫 تم إلغاء مستويات DCA — دخول كامل 100%' : (n===1 ? '🔢 تم تفعيل مستوى DCA واحد' : `🔢 تم تفعيل ${n} مستويات DCA`),
+    dcaCountInfo:(n)=> n===0 ? '🚫 بدون تعزيز — 100% دخول' : (n===1 ? '✓ مستوى DCA واحد مُفعَّل' : `✓ ${n} مستويات مُفعَّلة`),
+    noDca:'🚫 بدون تعزيز',
+    noDcaShort:'بدون تعزيز',
+    slAfterDca:(n)=> n===0 ? 'بعد الدخول' : `بعد DCA ${n}`,
+    slBelowDca:(n)=> n===0 ? 'تحت الدخول' : `تحت DCA${n}`,
     targetsEntryLabel:'رأس المال المُستثمَر في الدخول:',
     realizedProfitHeld:'💎 الربح المحقق (محفوظ)', entryAmountLabel:'الدخول:',
     printBtn:'طباعة التقرير', printTitle:'مخطط التداول',
@@ -1029,7 +1164,13 @@ const I18N = {
     imtPercent:'🔢 نسبة مئوية',
     imtPrice:'💵 سعر يدوي',
     imtAmount:'💰 مبلغ يدوي',
-    imtChangedMsg:(section, mode)=>`✓ تم التبديل إلى ${mode}`
+    imtChangedMsg:(section, mode)=>`✓ تم التبديل إلى ${mode}`,
+    clearModalTitle:'مسح جميع البيانات',
+    clearModalWarning:'⚠️ تحذير: لا يمكن التراجع عن هذه العملية',
+    clearModalDesc:'سيتم مسح جميع البيانات المحفوظة (الخطة + الإعدادات + اللغة + المظهر) واسترجاع الإعدادات الافتراضية. هل أنت متأكد؟',
+    clearCancel:'↩️ إلغاء',
+    clearConfirm:'🗑️ نعم، امسح الكل',
+    clearSuccess:'🗑️ تم مسح جميع البيانات بنجاح'
   },
   en: {
     modeAuto:'⚡ Auto', modeManual:'✏️ Manual',
@@ -1117,9 +1258,12 @@ const I18N = {
     slInfoManual:(price)=>`✏️ Manual: custom price ${price}`,
     slModeAutoMsg:'⚡ Stop Loss: Auto', slModeManualMsg:'✏️ Stop Loss: Manual',
     dcaCountTitle:'Number of DCA Levels',
-    dcaCountMsg:(n)=> n===1 ? '🔢 1 DCA level activated' : `🔢 ${n} DCA levels activated`,
-    dcaCountInfo:(n)=> n===1 ? '✓ 1 level active' : `✓ ${n} levels active`,
-    slAfterDca:(n)=>`After DCA ${n}`, slBelowDca:(n)=>`below DCA${n}`,
+    dcaCountMsg:(n)=> n===0 ? '🚫 DCA levels disabled — full 100% entry' : (n===1 ? '🔢 1 DCA level activated' : `🔢 ${n} DCA levels activated`),
+    dcaCountInfo:(n)=> n===0 ? '🚫 No DCA — 100% entry' : (n===1 ? '✓ 1 level active' : `✓ ${n} levels active`),
+    noDca:'🚫 No DCA',
+    noDcaShort:'No DCA',
+    slAfterDca:(n)=> n===0 ? 'After Entry' : `After DCA ${n}`,
+    slBelowDca:(n)=> n===0 ? 'below Entry' : `below DCA${n}`,
     targetsEntryLabel:'Entry amount invested:',
     realizedProfitHeld:'💎 Realized Profit (Held Aside)', entryAmountLabel:'Entry:',
     printBtn:'Print Report', printTitle:'TRADING PLAN',
@@ -1127,7 +1271,13 @@ const I18N = {
     imtPercent:'🔢 Percentage',
     imtPrice:'💵 Manual Price',
     imtAmount:'💰 Manual Amount',
-    imtChangedMsg:(section, mode)=>`✓ Switched to ${mode}`
+    imtChangedMsg:(section, mode)=>`✓ Switched to ${mode}`,
+    clearModalTitle:'Clear All Data',
+    clearModalWarning:'⚠️ Warning: This action cannot be undone',
+    clearModalDesc:'All saved data (plan + preferences + language + theme) will be erased and defaults restored. Are you sure?',
+    clearCancel:'↩️ Cancel',
+    clearConfirm:'🗑️ Yes, Clear All',
+    clearSuccess:'🗑️ All data cleared successfully'
   }
 };
 
@@ -1135,6 +1285,7 @@ const AUTO = {
   targetPcts:[5,10,15,20],
   dcaPcts:[-7.9963235294, -17.9963235294, -30.0, -45.0],
   allocByCount:{
+    0: [100, 0, 0, 0, 0],
     1: [30, 70, 0, 0, 0],
     2: [30, 35, 35, 0, 0],
     3: [30, 25, 25, 20, 0],
@@ -1194,7 +1345,6 @@ const fmtPct = v => {
 };
 const pctOf = (a,b) => b===0 ? 0 : ((a-b)/b)*100;
 
-/* ✅ NEW: Numeric normalization for Arabic/Farsi numerals + parsing + input formatting */
 function normalizeNumerals(str){
   if (typeof str !== 'string') str = String(str == null ? '' : str);
   return str
@@ -1265,7 +1415,6 @@ function applyAutoMode(){
 }
 function setInputMode(section, mode){
   state[section + 'InputMode'] = mode;
-  // Recompute derived values to keep consistency
   if (section === 'targets') {
     if (mode === 'percent') state.targets = state.targetPcts.map(p => state.entry * (1 + p/100));
   }
@@ -1290,21 +1439,23 @@ function updateInputModeButtons(){
 function setDCACount(n){
   state.dcaCount = n;
   state.alloc = [...AUTO.allocByCount[n]];
-  [1,2,3,4].forEach(k=>{
+  [0,1,2,3,4].forEach(k=>{
     const a = $('dcaCnt'+k);
     const b = $('dcaCnt'+k+'M');
     if(a) a.classList.toggle('active', k === n);
     if(b) b.classList.toggle('active', k === n);
   });
+  $('dca1Field').style.display = n >= 1 ? '' : 'none';
   $('dca2Field').style.display = n >= 2 ? '' : 'none';
   $('dca3Field').style.display = n >= 3 ? '' : 'none';
   $('dca4Field').style.display = n >= 4 ? '' : 'none';
+  $('alloc1Row').style.display = n >= 1 ? '' : 'none';
   $('alloc2Row').style.display = n >= 2 ? '' : 'none';
   $('alloc3Row').style.display = n >= 3 ? '' : 'none';
   $('alloc4Row').style.display = n >= 4 ? '' : 'none';
   const infoEl = $('dcaCountInfo');
   if(infoEl) infoEl.textContent = t('dcaCountInfo')(n);
-  const dcaLabels = ['−8%','−18%','−30%','−45%'].slice(0, n).join(' · ');
+  const dcaLabels = n === 0 ? t('noDcaShort') : ['−8%','−18%','−30%','−45%'].slice(0, n).join(' · ');
   const allocNums = state.alloc.slice(0, n+1).join(' / ');
   if($('autoDcaInfo')) $('autoDcaInfo').textContent = dcaLabels;
   if($('autoAllocInfo')) $('autoAllocInfo').textContent = allocNums;
@@ -1337,7 +1488,7 @@ function setSLMode(mode){
   $('slPriceField').style.display = mode === 'manual' ? '' : 'none';
   $('slPriceFieldM').style.display = mode === 'manual' ? '' : 'none';
   if (mode === 'manual' && !state.slPrice) {
-    const lastDcaPrice = state.dca[state.dcaCount - 1];
+    const lastDcaPrice = getLastActiveDca();
     state.slPrice = lastDcaPrice * (1 - state.slPct/100);
     $('inSlPrice').value = state.slPrice;
     $('inSlPriceM').value = state.slPrice;
@@ -1409,7 +1560,10 @@ function getDCABase(){
   const remainingEntryQty = state.entry > 0 ? remainingEntryAmount / state.entry : 0;
   return { realizedProfit, soldPct, info, remainingEntryAmount, remainingEntryQty, fullEntryAmount };
 }
-function getLastActiveDca(){ return state.dca[state.dcaCount - 1]; }
+function getLastActiveDca(){
+  if (state.dcaCount <= 0) return state.entry;
+  return state.dca[state.dcaCount - 1];
+}
 function getStopLossInfo(finalQty, finalCost){
   const lastDcaPrice = getLastActiveDca();
   let slPrice;
@@ -1550,7 +1704,7 @@ function renderSLInfoBox(){
   let slPrice;
   if (state.slMode === 'auto') slPrice = lastDcaPrice * (1 - state.slPct/100);
   else slPrice = state.slPrice || lastDcaPrice * 0.9;
-  const dcaLabel = 'DCA' + state.dcaCount;
+  const dcaLabel = state.dcaCount === 0 ? t('entryLabel') : ('DCA' + state.dcaCount);
   const text = state.slMode === 'auto' ? t('slInfoAuto')(state.slPct, fmtP(slPrice), dcaLabel) : t('slInfoManual')(fmtP(slPrice));
   ['slInfoText','slInfoTextM'].forEach(id=>{ const el = $(id); if(el) el.textContent = text; });
 }
@@ -1734,7 +1888,6 @@ function render(){
   }
 }
 
-/* ✅ FIXED: syncInputs — never overwrite the actively-focused field */
 function syncInputs(){
   const activeEl = document.activeElement;
   function setVal(id, value){
@@ -1753,7 +1906,6 @@ function syncInputs(){
   const entryAmt = state.capital * state.alloc[0] / 100;
   const cap = state.capital || 0;
   
-  // Targets (manual panel)
   const tMode = state.targetInputMode || 'percent';
   for (let i = 0; i < 4; i++) {
     const id = 'inT' + (i+1);
@@ -1764,7 +1916,6 @@ function syncInputs(){
     }
   }
   
-  // DCA (manual panel)
   const dMode = state.dcaInputMode || 'percent';
   for (let i = 0; i < 4; i++) {
     const id = 'inD' + (i+1);
@@ -1775,7 +1926,6 @@ function syncInputs(){
     }
   }
   
-  // Alloc (manual panel)
   const aMode = state.allocInputMode || 'percent';
   for (let i = 0; i < 5; i++) {
     const id = 'inA' + i;
@@ -1786,7 +1936,6 @@ function syncInputs(){
     }
   }
   
-  // Scaling (manual panel)
   const sMode = state.scalingInputMode || 'percent';
   for (let i = 0; i < 4; i++) {
     const id = 'inS' + (i+1) + 'M';
@@ -1797,21 +1946,22 @@ function syncInputs(){
     }
   }
   
-  // Scaling (auto panel) — always %
   setVal('inS1', state.targetSellPcts[0]); setVal('inS2', state.targetSellPcts[1]);
   setVal('inS3', state.targetSellPcts[2]); setVal('inS4', state.targetSellPcts[3]);
   
   setVal('inSlPct', state.slPct); setVal('inSlPctM', state.slPct);
   if (state.slPrice) { setVal('inSlPrice', state.slPrice); setVal('inSlPriceM', state.slPrice); }
   
-  const dcaLabels = ['−8%','−18%','−30%','−45%'].slice(0, state.dcaCount).join(' · ');
+  const dcaLabels = state.dcaCount === 0 ? t('noDcaShort') : ['−8%','−18%','−30%','−45%'].slice(0, state.dcaCount).join(' · ');
   const allocNums = state.alloc.slice(0, state.dcaCount+1).join(' / ');
   if($('autoDcaInfo')) $('autoDcaInfo').textContent = dcaLabels;
   if($('autoAllocInfo')) $('autoAllocInfo').textContent = allocNums;
   
+  $('dca1Field').style.display = state.dcaCount >= 1 ? '' : 'none';
   $('dca2Field').style.display = state.dcaCount >= 2 ? '' : 'none';
   $('dca3Field').style.display = state.dcaCount >= 3 ? '' : 'none';
   $('dca4Field').style.display = state.dcaCount >= 4 ? '' : 'none';
+  $('alloc1Row').style.display = state.dcaCount >= 1 ? '' : 'none';
   $('alloc2Row').style.display = state.dcaCount >= 2 ? '' : 'none';
   $('alloc3Row').style.display = state.dcaCount >= 3 ? '' : 'none';
   $('alloc4Row').style.display = state.dcaCount >= 4 ? '' : 'none';
@@ -1823,7 +1973,6 @@ function syncInputs(){
 function syncManualFromState(){ syncInputs(); }
 
 /* ==================== INPUT HANDLERS ==================== */
-/* Targets (manual panel) — ✅ uses parseNum */
 function handleTargetInput(i, value){
   const v = parseNum(value);
   if (state.targetInputMode === 'percent') {
@@ -1840,7 +1989,6 @@ $('inT2').addEventListener('input', e => handleTargetInput(1, e.target.value));
 $('inT3').addEventListener('input', e => handleTargetInput(2, e.target.value));
 $('inT4').addEventListener('input', e => handleTargetInput(3, e.target.value));
 
-/* DCA (manual panel) — ✅ uses parseNum */
 function handleDCAInput(i, value){
   const v = parseNum(value);
   if (state.dcaInputMode === 'percent') {
@@ -1857,7 +2005,6 @@ $('inD2').addEventListener('input', e => handleDCAInput(1, e.target.value));
 $('inD3').addEventListener('input', e => handleDCAInput(2, e.target.value));
 $('inD4').addEventListener('input', e => handleDCAInput(3, e.target.value));
 
-/* Alloc (manual panel) — ✅ uses parseNum */
 function handleAllocInput(i, value){
   const v = parseNum(value);
   if (state.allocInputMode === 'percent') {
@@ -1872,7 +2019,6 @@ for (let i = 0; i < 5; i++) {
   $(id).addEventListener('input', e => handleAllocInput(i, e.target.value));
 }
 
-/* Scaling (manual panel) — ✅ uses parseNum */
 function handleScalingInput(i, value){
   const v = parseNum(value);
   const entryAmt = state.capital * state.alloc[0] / 100;
@@ -1888,7 +2034,6 @@ $('inS2M').addEventListener('input', e => handleScalingInput(1, e.target.value))
 $('inS3M').addEventListener('input', e => handleScalingInput(2, e.target.value));
 $('inS4M').addEventListener('input', e => handleScalingInput(3, e.target.value));
 
-/* Scaling (auto panel) — always % */
 ['inS1','inS2','inS3','inS4'].forEach((id,i)=>{
   $(id).addEventListener('input', e => {
     state.targetSellPcts[i] = parseNum(e.target.value);
@@ -1898,7 +2043,6 @@ $('inS4M').addEventListener('input', e => handleScalingInput(3, e.target.value))
   });
 });
 
-/* Basic fields — auto panel — ✅ parseNum */
 $('inPair').addEventListener('input', e => { state.pair = e.target.value; render(); });
 $('inTag').addEventListener('input',  e => { state.tag  = e.target.value; render(); });
 $('inEntry').addEventListener('input', e => {
@@ -1907,12 +2051,10 @@ $('inEntry').addEventListener('input', e => {
 });
 $('inCapital').addEventListener('input', e => { state.capital = parseNum(e.target.value); syncInputs(); render(); });
 
-/* Basic fields — manual panel — ✅ parseNum */
 $('inPairM').addEventListener('input', e => { state.pair = e.target.value; render(); });
 $('inTagM').addEventListener('input',  e => { state.tag  = e.target.value; render(); });
 $('inEntryM').addEventListener('input', e => {
   state.entry = parseNum(e.target.value);
-  // Recompute prices from percentages (or percentages from prices)
   if (state.targetInputMode === 'percent') {
     state.targets = state.targetPcts.map(p => state.entry * (1 + p/100));
   } else {
@@ -1931,7 +2073,6 @@ $('inCapitalM').addEventListener('input', e => {
   render();
 });
 
-/* SL inputs — ✅ parseNum */
 ['inSlPct','inSlPctM'].forEach(id=>{
   $(id).addEventListener('input', e => {
     state.slPct = parseNum(e.target.value);
@@ -2063,6 +2204,46 @@ function printReport(){
   setTimeout(() => { window.print(); }, 120);
 }
 
+/* ==================== CLEAR DATA (FAB + MODAL) ==================== */
+function openClearModal(){
+  const modal = $('clearModal');
+  if(!modal) return;
+  modal.classList.add('show');
+}
+function closeClearModal(){
+  const modal = $('clearModal');
+  if(!modal) return;
+  modal.classList.remove('show');
+}
+function confirmClearData(){
+  try{
+    localStorage.removeItem('xrpeth_plan_v28');
+    localStorage.removeItem('xrpeth_prefs_v28');
+  }catch(e){}
+
+  state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  prefs = { lang:'ar', theme:'dark', fontsize:'md' };
+
+  closeClearModal();
+
+  applyPrefs();
+  setMode(state.mode);
+  setTargetsMode(state.targetsMode);
+  setSLMode(state.slMode);
+  setDCACount(state.dcaCount);
+  syncInputs();
+  render();
+
+  showToast(t('clearSuccess'));
+}
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){
+    const modal = $('clearModal');
+    if(modal && modal.classList.contains('show')) closeClearModal();
+  }
+});
+
 document.getElementById('year').textContent = new Date().getFullYear();
 loadPrefs();
 loadPlan();
@@ -2070,7 +2251,7 @@ applyPrefs();
 setMode(state.mode || 'auto');
 setTargetsMode(state.targetsMode || 'full');
 setSLMode(state.slMode || 'auto');
-setDCACount(state.dcaCount || 4);
+setDCACount(state.dcaCount != null ? state.dcaCount : 4);
 syncInputs();
 render();
 </script>
