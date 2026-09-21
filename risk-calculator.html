@@ -693,6 +693,19 @@ html[data-theme="dark"] .toast{color:#04140d}
   .targets-total .tt-value{color:#0f9b68 !important;font-size:12pt !important;}
   a[href]:after{content:"" !important;}
 }
+
+/* ========== Print Performance Optimization ========== */
+html.preparing-print *,
+html.preparing-print *::before,
+html.preparing-print *::after{
+  animation:none !important;
+  transition:none !important;
+  filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  will-change:auto !important;
+}
+
 @media (max-width:760px){
   .targets-grid{grid-template-columns:repeat(2,1fr)}
   .header{padding:14px 18px}
@@ -2189,6 +2202,31 @@ function showToast(msg){
   toast.classList.add('show');
   setTimeout(()=>toast.classList.remove('show'), 1600);
 }
+
+/* ==================== PRINT (Optimized) ==================== */
+let __printCleanupTimer = null;
+
+function prepareForPrint(){
+  document.documentElement.classList.add('preparing-print');
+}
+
+function cleanupAfterPrint(){
+  document.documentElement.classList.remove('preparing-print');
+  if(__printCleanupTimer){
+    clearTimeout(__printCleanupTimer);
+    __printCleanupTimer = null;
+  }
+}
+
+window.addEventListener('afterprint', cleanupAfterPrint);
+if(window.matchMedia){
+  try{
+    const mq = window.matchMedia('print');
+    if(mq.addEventListener) mq.addEventListener('change', e => { if(!e.matches) cleanupAfterPrint(); });
+    else if(mq.addListener) mq.addListener(e => { if(!e.matches) cleanupAfterPrint(); });
+  }catch(e){}
+}
+
 function printReport(){
   const now = new Date();
   const locale = prefs.lang === 'ar' ? 'ar-EG' : 'en-US';
@@ -2201,7 +2239,18 @@ function printReport(){
     <div class="ph-brand"><span class="ph-brand-star">⭐️</span> ${title}</div>
     <div class="ph-sub">${sub}</div>
     <div class="ph-meta">${metaLabel} <b>${dateStr}</b></div>`;
-  setTimeout(() => { window.print(); }, 120);
+
+  // 1) أوقف كل التأثيرات الثقيلة قبل أخذ اللقطة
+  prepareForPrint();
+  // 2) أجبر المتصفح على تطبيق الكلاس فوراً (reflow)
+  void document.documentElement.offsetHeight;
+
+  // 3) استدعاء الطباعة بشكل متزامن (بدون setTimeout) للحفاظ على تفعيل المستخدم
+  window.print();
+
+  // 4) تنظيف احتياطي لو لم يُطلق المتصفح afterprint
+  if(__printCleanupTimer) clearTimeout(__printCleanupTimer);
+  __printCleanupTimer = setTimeout(cleanupAfterPrint, 1500);
 }
 
 /* ==================== CLEAR DATA (FAB + MODAL) ==================== */
