@@ -1462,23 +1462,148 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { outline: no
 .delete-coin-option-btn.delete-all { background: linear-gradient(135deg, #dc3545, #c82333); color: white; box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3); }
 .delete-coin-option-btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
 
+/* ═══════════════════════════════════════════════════════════
+   ✅ ✅ ✅  إصلاح الطباعة — القسم المُعدَّل الوحيد  ✅ ✅ ✅
+   ═══════════════════════════════════════════════════════════
+   🔧 المشكلة السابقة: استخدام visibility:hidden كان يُبقي العناصر
+   المخفية تشغل مساحتها في الطباعة → صفحات بيضاء لا نهائية بعد التقرير.
+
+   ✅ الحل: استخدام display:none على العناصر الشقيقة لـ #printReport
+   (إزالتها من تدفق الطباعة تماماً) + position:static للتقرير.
+   ═══════════════════════════════════════════════════════════ */
 @media print {
-@page { size: A4; margin: 12mm; }
-body * { visibility: hidden; }
-#printReport, #printReport * { visibility: visible; }
-#printReport { position: absolute; left: 0; top: 0; width: 100%; height: auto; margin: 0; padding: 0; background: #ffffff; color: #000; font-family: 'Segoe UI', 'Arial', sans-serif; display: block !important; font-size: 10.5pt; line-height: 1.5; direction: rtl; }
-.print-header { text-align: center; margin-bottom: 20px; padding: 18px; border-bottom: 4px double #0056b3; background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%); border-radius: 8px; }
-.print-header h1 { font-size: 22pt; margin: 0 0 6px 0; color: #0056b3; letter-spacing: 1px; }
-.print-section { margin-bottom: 22px; border: 1px solid #dee2e6; border-radius: 8px; padding: 12px 15px; background: #fff; }
-.print-section h2 { font-size: 14pt; color: #fff; background: linear-gradient(135deg, #0056b3, #007bff); padding: 8px 14px; margin: -12px -15px 14px -15px; border-radius: 6px 6px 0 0; }
-.print-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 9pt; }
-.print-table th, .print-table td { border: 1px solid #adb5bd; padding: 5px 7px; text-align: center; }
-.print-table th { background: linear-gradient(135deg, #0056b3, #007bff); color: #ffffff; font-weight: bold; }
-.print-totals { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; padding: 14px; background: #f0f7ff; border: 2px solid #0056b3; border-radius: 8px; }
-.print-totals div { display: flex; justify-content: space-between; padding: 6px 10px; border-bottom: 1px dashed #b0c4de; font-size: 10pt; }
-.positive { color: #198754 !important; font-weight: bold; }
-.negative { color: #dc3545 !important; font-weight: bold; }
-.print-footer { text-align: center; margin-top: 24px; font-size: 9pt; color: #666; border-top: 3px double #0056b3; padding-top: 12px; }
+    @page { size: A4; margin: 12mm; }
+
+    /* ضبط الصفحة الأساسية */
+    html, body {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+    }
+
+    /* 🔧 الإصلاح الجوهري: إزالة كل عناصر body من التدفق
+       ما عدا #printReport (هذا يمنع الصفحات البيضاء) */
+    body > *:not(#printReport) {
+        display: none !important;
+    }
+
+    /* ضبط تقرير الطباعة ليظهر بشكل صحيح */
+    #printReport {
+        display: block !important;
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-family: 'Segoe UI', 'Arial', sans-serif !important;
+        font-size: 10.5pt !important;
+        line-height: 1.5 !important;
+        direction: rtl !important;
+        visibility: visible !important;
+        overflow: visible !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    #printReport * {
+        visibility: visible !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* عناصر التقرير */
+    .print-header {
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 18px;
+        border-bottom: 4px double #0056b3;
+        background: #f0f7ff;
+        border-radius: 8px;
+    }
+    .print-header h1 {
+        font-size: 22pt;
+        margin: 0 0 6px 0;
+        color: #0056b3;
+        letter-spacing: 1px;
+    }
+    .print-header p {
+        margin: 0;
+        color: #555;
+        font-size: 10pt;
+    }
+
+    .print-section {
+        margin-bottom: 22px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 12px 15px;
+        background: #ffffff;
+        page-break-inside: avoid;
+    }
+    .print-section h2 {
+        font-size: 14pt;
+        color: #ffffff;
+        background: #0056b3;
+        padding: 8px 14px;
+        margin: -12px -15px 14px -15px;
+        border-radius: 6px 6px 0 0;
+    }
+
+    .print-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+        font-size: 9pt;
+    }
+    .print-table th, .print-table td {
+        border: 1px solid #adb5bd;
+        padding: 5px 7px;
+        text-align: center;
+    }
+    .print-table th {
+        background: #0056b3;
+        color: #ffffff;
+        font-weight: bold;
+    }
+    .print-table tr { page-break-inside: avoid; }
+
+    .print-totals {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-top: 10px;
+        padding: 14px;
+        background: #f0f7ff;
+        border: 2px solid #0056b3;
+        border-radius: 8px;
+    }
+    .print-totals div {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 10px;
+        border-bottom: 1px dashed #b0c4de;
+        font-size: 10pt;
+    }
+
+    .positive { color: #198754 !important; font-weight: bold; }
+    .negative { color: #dc3545 !important; font-weight: bold; }
+
+    .print-footer {
+        text-align: center;
+        margin-top: 24px;
+        font-size: 9pt;
+        color: #666;
+        border-top: 3px double #0056b3;
+        padding-top: 12px;
+    }
 }
 
 @media (max-width: 1200px) { .horizontal-section { grid-template-columns: 1fr; } .color-settings-grid { grid-template-columns: 1fr; } }
@@ -2426,9 +2551,9 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <input type="file" id="importTxtFile" accept=".txt" style="display: none;">
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — النسخة النهائية v7
-   ✅ إضافة: صندوق إجماليات البيع التقديري (المستثمر + الربح المتوقع)
-   ✅ كل الميزات السابقة محفوظة
+   JavaScript — النسخة النهائية v8
+   ✅ إصلاح: دالة printReport() — تقرير كامل (ملخص + جدول تفصيلي لكل عملة + DCAs + سجلات الكاش)
+   ✅ كل الميزات السابقة محفوظة بالكامل
    ═══════════════════════════════════════════════════════════════ */
 
 // 🔑 Cloudflare Worker الخاص بك — يعمل بدون حدود استخدام!
@@ -5081,21 +5206,195 @@ function deleteCurrentCoin() {
     popupClose.onclick = closeFn;
     popupOverlay.onclick = (e) => { if (e.target === popupOverlay) closeFn(); };
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   ✅ ✅ ✅  printReport() — الدالة المُعدَّلة الرئيسية  ✅ ✅ ✅
+   ═══════════════════════════════════════════════════════════════
+   🔧 المشكلة السابقة: كانت تطبع الملخص فقط (بدون تفاصيل).
+
+   ✅ الحل الجديد: تقرير شامل يحتوي على:
+      1. ترويسة التقرير (تاريخ + شعار)
+      2. جدول تفصيلي لكل عملة مع DCAs
+      3. الإجماليات الكلية
+      4. معلومات الكاش
+   ═══════════════════════════════════════════════════════════════ */
 function printReport() {
-    const { totals } = calculateSummaryData();
+    const { summaryRows, totals } = calculateSummaryData();
     const reportDate = new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
-    let reportHTML = '<div class="print-header"><h1>📊 ' + (currentLang === 'en' ? 'Trades Report' : 'تقرير الصفقات') + '</h1><p>' + reportDate + '</p></div>';
-    reportHTML += '<div class="print-section"><h2>📈 ' + (currentLang === 'en' ? 'Summary' : 'الملخص') + '</h2><div class="print-totals">';
-    reportHTML += '<div><span>' + (currentLang === 'en' ? 'Invested:' : 'المستثمر:') + '</span> <span>' + fmtMoney(totals.invested, 2) + '</span></div>';
+
+    let reportHTML = '';
+
+    // 1️⃣ الترويسة
+    reportHTML += '<div class="print-header">';
+    reportHTML += '<h1>📊 ' + (currentLang === 'en' ? 'Trades Report — Muharraqi Pro' : 'تقرير الصفقات — Muharraqi Pro') + '</h1>';
+    reportHTML += '<p>' + (currentLang === 'en' ? 'Report Date: ' : 'تاريخ التقرير: ') + reportDate + '</p>';
+    reportHTML += '</div>';
+
+    // 2️⃣ الإجماليات الكلية
+    reportHTML += '<div class="print-section">';
+    reportHTML += '<h2>📈 ' + (currentLang === 'en' ? 'Overall Summary' : 'الإجماليات الكلية') + '</h2>';
+    reportHTML += '<div class="print-totals">';
+    reportHTML += '<div><span>' + (currentLang === 'en' ? 'Total Invested:' : 'إجمالي المستثمر:') + '</span> <span>' + fmtMoney(totals.invested, 2) + '</span></div>';
     reportHTML += '<div><span>' + (currentLang === 'en' ? 'Current Value:' : 'القيمة الحالية:') + '</span> <span>' + fmtMoney(totals.currentValue, 2) + '</span></div>';
-    reportHTML += '<div><span>' + (currentLang === 'en' ? 'P/L:' : 'الربح/الخسارة:') + '</span> <span>' + fmtMoney(totals.pnlAmount, 2) + '</span></div>';
-    reportHTML += '</div></div>';
+    const pnlClass = totals.pnlAmount >= 0 ? 'positive' : 'negative';
+    reportHTML += '<div><span>' + (currentLang === 'en' ? 'Net P/L $:' : 'الربح/الخسارة $:') + '</span> <span class="' + pnlClass + '">' + fmtMoney(totals.pnlAmount, 2) + '</span></div>';
+    reportHTML += '<div><span>' + (currentLang === 'en' ? 'Net P/L %:' : 'الربح/الخسارة %:') + '</span> <span class="' + pnlClass + '">' + formatNumber(totals.pnlPercent, 2) + '%</span></div>';
+    reportHTML += '<div><span>' + (currentLang === 'en' ? 'Cash from Sales:' : 'الكاش من البيع:') + '</span> <span>' + fmtMoney(totals.cashFromSales, 2) + '</span></div>';
+    const totalSalesCash = salesCashHistory.deposits.reduce((s, r) => s + r.amount, 0) - salesCashHistory.withdrawals.reduce((s, r) => s + r.amount, 0);
+    const totalCash = availableCash + Math.max(0, totalSalesCash);
+    reportHTML += '<div><span>' + (currentLang === 'en' ? 'Total Available Cash:' : 'إجمالي الكاش المتاح:') + '</span> <span>' + fmtMoney(totalCash, 2) + '</span></div>';
+    reportHTML += '</div>';
+    reportHTML += '</div>';
+
+    // 3️⃣ الجدول التفصيلي للعملات
+    if (summaryRows.length > 0) {
+        reportHTML += '<div class="print-section">';
+        reportHTML += '<h2>🪙 ' + (currentLang === 'en' ? 'Coins Details' : 'تفاصيل العملات') + ' (' + summaryRows.length + ')</h2>';
+        reportHTML += '<table class="print-table">';
+        reportHTML += '<thead><tr>';
+        reportHTML += '<th>' + (currentLang === 'en' ? 'Coin' : 'العملة') + '</th>';
+        reportHTML += '<th>' + (currentLang === 'en' ? 'Qty' : 'الكمية') + '</th>';
+        reportHTML += '<th>' + (currentLang === 'en' ? 'Invested' : 'المستثمر') + '</th>';
+        reportHTML += '<th>' + (currentLang === 'en' ? 'Avg Entry' : 'متوسط الدخول') + '</th>';
+        reportHTML += '<th>' + (currentLang === 'en' ? 'Current Price' : 'السعر الحالي') + '</th>';
+        reportHTML += '<th>' + (currentLang === 'en' ? 'Current Value' : 'القيمة الحالية') + '</th>';
+        reportHTML += '<th>' + (currentLang === 'en' ? 'P/L $' : 'الربح/الخسارة $') + '</th>';
+        reportHTML += '<th>' + (currentLang === 'en' ? 'P/L %' : 'الربح/الخسارة %') + '</th>';
+        reportHTML += '<th>' + (currentLang === 'en' ? 'Cash from Sales' : 'الكاش من البيع') + '</th>';
+        reportHTML += '</tr></thead><tbody>';
+
+        summaryRows.forEach(item => {
+            const pnlRowClass = item.pnlAmount >= 0 ? 'positive' : 'negative';
+            const displayName = getDisplayNameFromKey(item.symbol);
+            const marketPriceValid = item.marketPrice !== null && !isNaN(item.marketPrice) && item.marketPrice > 0;
+            reportHTML += '<tr>';
+            reportHTML += '<td><strong>' + displayName + '</strong></td>';
+            reportHTML += '<td>' + formatNumber(item.totalCoinQty, 4) + '</td>';
+            reportHTML += '<td>' + fmtMoney(item.totalInvestedAmount, 2) + '</td>';
+            reportHTML += '<td>' + (item.averageEntryPrice > 0 ? fmtPrice(item.averageEntryPrice) : '—') + '</td>';
+            reportHTML += '<td>' + (marketPriceValid ? fmtPrice(item.marketPrice) : '—') + '</td>';
+            reportHTML += '<td>' + fmtMoney(item.currentPortfolioValue, 2) + '</td>';
+            reportHTML += '<td class="' + pnlRowClass + '">' + fmtMoney(item.pnlAmount, 2) + '</td>';
+            reportHTML += '<td class="' + pnlRowClass + '">' + formatNumber(item.pnlPercent, 2) + '%</td>';
+            reportHTML += '<td>' + fmtMoney(item.totalCashFromSales, 2) + '</td>';
+            reportHTML += '</tr>';
+        });
+
+        reportHTML += '</tbody></table>';
+        reportHTML += '</div>';
+    }
+
+    // 4️⃣ تفاصيل DCAs لكل عملة
+    if (summaryRows.length > 0) {
+        reportHTML += '<div class="print-section">';
+        reportHTML += '<h2>📋 ' + (currentLang === 'en' ? 'DCAs Details' : 'تفاصيل التعزيزات') + '</h2>';
+
+        summaryRows.forEach(item => {
+            const data = allCoinData[item.symbol];
+            if (!data) return;
+            const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
+            const initialAmountDollars = parseFormattedNumber(data.initialAmountDollars);
+            const hasEntry = initialEntryPrice > 0 && initialAmountDollars > 0;
+            const hasDCA = data.repurchases && data.repurchases.length > 0;
+
+            if (!hasEntry && !hasDCA) return;
+
+            const displayName = getDisplayNameFromKey(item.symbol);
+            reportHTML += '<h3 style="color:#0056b3; margin-top:15px; margin-bottom:8px; font-size:11pt;">🪙 ' + displayName + '</h3>';
+            reportHTML += '<table class="print-table">';
+            reportHTML += '<thead><tr>';
+            reportHTML += '<th>#</th>';
+            reportHTML += '<th>' + (currentLang === 'en' ? 'Buy Price' : 'سعر الشراء') + '</th>';
+            reportHTML += '<th>' + (currentLang === 'en' ? 'Amount $' : 'المبلغ $') + '</th>';
+            reportHTML += '<th>' + (currentLang === 'en' ? 'Quantity' : 'الكمية') + '</th>';
+            reportHTML += '<th>' + (currentLang === 'en' ? 'Sold' : 'المباعة') + '</th>';
+            reportHTML += '<th>' + (currentLang === 'en' ? 'Remaining' : 'المتبقي') + '</th>';
+            reportHTML += '<th>' + (currentLang === 'en' ? 'Cash from Sales' : 'الكاش من البيع') + '</th>';
+            reportHTML += '<th>' + (currentLang === 'en' ? 'Status' : 'الحالة') + '</th>';
+            reportHTML += '</tr></thead><tbody>';
+
+            if (hasEntry) {
+                const initialSales = data.initialSales || [];
+                const initialCoinQty = initialEntryPrice > 0 ? initialAmountDollars / initialEntryPrice : 0;
+                const totalSoldQty = calculateTotalInitialSoldQty(initialSales);
+                const remainingQty = Math.max(0, initialCoinQty - totalSoldQty);
+                const cashFromSales = calculateInitialCashFromSales(initialSales);
+                const status = totalSoldQty >= initialCoinQty - 0.00000001 ? (currentLang === 'en' ? 'Sold' : 'تم البيع') : (totalSoldQty > 0 ? (currentLang === 'en' ? 'Partial' : 'بيع جزئي') : (currentLang === 'en' ? 'Active' : 'نشط'));
+                reportHTML += '<tr>';
+                reportHTML += '<td><strong>' + (currentLang === 'en' ? 'Entry' : 'دخول') + '</strong></td>';
+                reportHTML += '<td>' + fmtPrice(initialEntryPrice) + '</td>';
+                reportHTML += '<td>' + fmtMoney(initialAmountDollars, 2) + '</td>';
+                reportHTML += '<td>' + formatNumber(initialCoinQty, 6) + '</td>';
+                reportHTML += '<td>' + formatNumber(totalSoldQty, 6) + '</td>';
+                reportHTML += '<td>' + formatNumber(remainingQty, 6) + '</td>';
+                reportHTML += '<td>' + fmtMoney(cashFromSales, 2) + '</td>';
+                reportHTML += '<td>' + status + '</td>';
+                reportHTML += '</tr>';
+            }
+
+            (data.repurchases || []).forEach((rp, idx) => {
+                const rpPrice = parseFormattedNumber(rp.price);
+                const rpAmount = parseFormattedNumber(rp.amount);
+                const savedAmount = rp.savedAmount || 0;
+                const isSaved = savedAmount > 0.0001 && Math.abs(rpAmount - savedAmount) <= 0.001;
+                const rpQty = rpPrice > 0 ? rpAmount / rpPrice : 0;
+                const sales = rp.sales || [];
+                const totalSold = calculateTotalSoldQty(sales);
+                const remaining = rpQty - totalSold;
+                const cashFromSales = calculateCashFromSales(sales);
+                const status = !isSaved ? (currentLang === 'en' ? '⚠️ Not Saved' : '⚠️ غير محفوظ') :
+                    (totalSold >= rpQty - 0.00000001 ? (currentLang === 'en' ? 'Sold' : 'تم البيع') :
+                    (totalSold > 0 ? (currentLang === 'en' ? 'Partial' : 'بيع جزئي') : (currentLang === 'en' ? 'Active' : 'نشط')));
+
+                reportHTML += '<tr>';
+                reportHTML += '<td>' + (idx + 1) + '</td>';
+                reportHTML += '<td>' + fmtPrice(rpPrice) + '</td>';
+                reportHTML += '<td>' + fmtMoney(rpAmount, 2) + '</td>';
+                reportHTML += '<td>' + formatNumber(rpQty, 6) + '</td>';
+                reportHTML += '<td>' + formatNumber(totalSold, 6) + '</td>';
+                reportHTML += '<td>' + formatNumber(remaining, 6) + '</td>';
+                reportHTML += '<td>' + fmtMoney(cashFromSales, 2) + '</td>';
+                reportHTML += '<td>' + status + '</td>';
+                reportHTML += '</tr>';
+            });
+
+            reportHTML += '</tbody></table>';
+        });
+
+        reportHTML += '</div>';
+    }
+
+    // 5️⃣ سجل الكاش
+    reportHTML += '<div class="print-section">';
+    reportHTML += '<h2>💰 ' + (currentLang === 'en' ? 'Cash History' : 'سجل الكاش') + '</h2>';
+    reportHTML += '<div class="print-totals">';
+    reportHTML += '<div><span>' + (currentLang === 'en' ? 'Manual Cash:' : 'كاش يدوي:') + '</span> <span>' + fmtMoney(availableCash, 2) + '</span></div>';
+    reportHTML += '<div><span>' + (currentLang === 'en' ? 'Cash from Sales:' : 'كاش المبيعات:') + '</span> <span>' + fmtMoney(Math.max(0, totalSalesCash), 2) + '</span></div>';
+    reportHTML += '</div>';
+    reportHTML += '</div>';
+
+    // 6️⃣ التذييل
+    reportHTML += '<div class="print-footer">';
+    reportHTML += '<p>نسألكم الدعاء بظهر الغيب 🤲</p>';
+    reportHTML += '<p>Muharraqi Pro Edition © 2026</p>';
+    reportHTML += '</div>';
+
+    // ✅ إدراج التقرير ثم الطباعة
     const printReportDiv = document.getElementById('printReport');
     printReportDiv.innerHTML = reportHTML;
     printReportDiv.style.display = 'block';
-    window.print();
-    setTimeout(() => { printReportDiv.style.display = 'none'; }, 1500);
+
+    // ✅ ننتظر قليلاً لضمان رسم التقرير ثم نطبع
+    setTimeout(() => {
+        window.print();
+        // ✅ إعادة إخفاء التقرير بعد الطباعة (أو الإلغاء)
+        setTimeout(() => {
+            printReportDiv.style.display = 'none';
+            printReportDiv.innerHTML = '';
+        }, 1000);
+    }, 100);
 }
+
 function updatePortfolioChart() {}
 function calculateActiveCoinDetails() {
     const initialCoinQtyEl = document.getElementById('initialCoinQty');
