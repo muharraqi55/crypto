@@ -88,6 +88,16 @@ body{
 .icon-btn.print-btn{background:linear-gradient(135deg, color-mix(in srgb,var(--gold) 15%, transparent), transparent);
   border-color:color-mix(in srgb,var(--gold) 40%, transparent);color:var(--gold);}
 .icon-btn.print-btn:hover{border-color:var(--gold);color:var(--gold)}
+/* ✅ NEW: Excel export button (tb-btn alias) */
+.icon-btn.tb-btn{ /* shared toolbar style */ }
+.icon-btn.tb-btn.xlsx-export{
+  background:linear-gradient(135deg, color-mix(in srgb,var(--green) 15%, transparent), transparent);
+  border-color:color-mix(in srgb,var(--green) 45%, transparent);color:var(--green);
+}
+.icon-btn.tb-btn.xlsx-export:hover{
+  border-color:var(--green);color:var(--green);
+  background:linear-gradient(135deg, var(--green-dim), color-mix(in srgb,var(--green) 6%, transparent));
+}
 .ctrl-label{font-family:var(--mono);font-size:0.6875rem;letter-spacing:1px;color:var(--muted);font-weight:700;padding-inline-start:4px}
 .ctrl-sep{width:1px;height:24px;background:var(--border);margin-inline:4px}
 .font-btn{font-family:var(--mono);font-weight:800;padding:8px 11px;border-radius:8px;cursor:pointer;
@@ -778,6 +788,10 @@ html.preparing-print *::after{
     <div class="ctrl-sep"></div>
     <button class="icon-btn" id="btnLang" onclick="toggleLang()">🌐 <span id="langLabel">EN</span></button>
     <div class="ctrl-sep"></div>
+    <!-- ✅ NEW: Excel Export Button -->
+    <button class="icon-btn tb-btn xlsx-export" id="btnExcel" onclick="exportToExcel()" title="Export Excel">
+      📊 <span>Excel</span>
+    </button>
     <button class="icon-btn print-btn" id="btnPrint" onclick="printReport()" title="Print Report">
       🖨️ <span data-i18n="printBtn">طباعة التقرير</span>
     </button>
@@ -1075,6 +1089,9 @@ html.preparing-print *::after{
   </div>
 </div>
 
+<!-- ✅ NEW: xlsx-js-style library for Excel export -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+
 <script>
 const I18N = {
   ar: {
@@ -1183,7 +1200,11 @@ const I18N = {
     clearModalDesc:'سيتم مسح جميع البيانات المحفوظة (الخطة + الإعدادات + اللغة + المظهر) واسترجاع الإعدادات الافتراضية. هل أنت متأكد؟',
     clearCancel:'↩️ إلغاء',
     clearConfirm:'🗑️ نعم، امسح الكل',
-    clearSuccess:'🗑️ تم مسح جميع البيانات بنجاح'
+    clearSuccess:'🗑️ تم مسح جميع البيانات بنجاح',
+    excelBtn:'📊 Excel',
+    excelExported:'تم تصدير Excel بنجاح',
+    excelFailed:'⚠️ تعذّر تصدير Excel',
+    excelNoLib:'⚠️ مكتبة Excel غير محمّلة'
   },
   en: {
     modeAuto:'⚡ Auto', modeManual:'✏️ Manual',
@@ -1290,7 +1311,11 @@ const I18N = {
     clearModalDesc:'All saved data (plan + preferences + language + theme) will be erased and defaults restored. Are you sure?',
     clearCancel:'↩️ Cancel',
     clearConfirm:'🗑️ Yes, Clear All',
-    clearSuccess:'🗑️ All data cleared successfully'
+    clearSuccess:'🗑️ All data cleared successfully',
+    excelBtn:'📊 Excel',
+    excelExported:'Excel exported successfully',
+    excelFailed:'⚠️ Could not export Excel',
+    excelNoLib:'⚠️ Excel library not loaded'
   }
 };
 
@@ -2240,17 +2265,403 @@ function printReport(){
     <div class="ph-sub">${sub}</div>
     <div class="ph-meta">${metaLabel} <b>${dateStr}</b></div>`;
 
-  // 1) أوقف كل التأثيرات الثقيلة قبل أخذ اللقطة
   prepareForPrint();
-  // 2) أجبر المتصفح على تطبيق الكلاس فوراً (reflow)
   void document.documentElement.offsetHeight;
-
-  // 3) استدعاء الطباعة بشكل متزامن (بدون setTimeout) للحفاظ على تفعيل المستخدم
   window.print();
 
-  // 4) تنظيف احتياطي لو لم يُطلق المتصفح afterprint
   if(__printCleanupTimer) clearTimeout(__printCleanupTimer);
   __printCleanupTimer = setTimeout(cleanupAfterPrint, 1500);
+}
+
+/* ==================== ✅ EXCEL EXPORT (NEW) ==================== */
+/**
+ * exportToExcel()
+ * Exports the trading plan as a styled .xlsx workbook that mirrors the
+ * visual layout (colors, RTL, headers, tables) of the printed PDF.
+ * Requires: xlsx-js-style@1.2.0
+ */
+function exportToExcel(){
+  if (typeof XLSX === 'undefined'){
+    showToast(t('excelNoLib'));
+    return;
+  }
+
+  try {
+    const L = prefs.lang;
+    const tr = (ar, en) => (L === 'ar' ? ar : en);
+
+    // ---------- Style helpers ----------
+    const F = 'Calibri';
+    const bThin = (color='94A3B8') => ({
+      top:{style:'thin',color:{rgb:color}}, bottom:{style:'thin',color:{rgb:color}},
+      left:{style:'thin',color:{rgb:color}}, right:{style:'thin',color:{rgb:color}}
+    });
+    const bMed = (color='0F172A') => ({
+      top:{style:'medium',color:{rgb:color}}, bottom:{style:'medium',color:{rgb:color}},
+      left:{style:'medium',color:{rgb:color}}, right:{style:'medium',color:{rgb:color}}
+    });
+
+    const sTitle = {
+      font:{name:F, sz:16, bold:true, color:{rgb:'FFFFFF'}},
+      fill:{fgColor:{rgb:'0F172A'}},
+      alignment:{horizontal:'center', vertical:'center', readingOrder:2}
+    };
+    const sSub = {
+      font:{name:F, sz:12, bold:true, color:{rgb:'FFFFFF'}},
+      fill:{fgColor:{rgb:'1E3A5F'}},
+      alignment:{horizontal:'center', vertical:'center', readingOrder:2}
+    };
+    const sSection = (bg, fg='FFFFFF') => ({
+      font:{name:F, sz:11, bold:true, color:{rgb:fg}},
+      fill:{fgColor:{rgb:bg}},
+      alignment:{horizontal:'center', vertical:'center', readingOrder:2},
+      border: bMed()
+    });
+    const sColHead = (bg, fg='FFFFFF') => ({
+      font:{name:F, sz:10, bold:true, color:{rgb:fg}},
+      fill:{fgColor:{rgb:bg}},
+      alignment:{horizontal:'center', vertical:'center', readingOrder:2, wrapText:true},
+      border: bMed()
+    });
+
+    const sBase = {
+      font:{name:F, sz:10, color:{rgb:'1A2330'}},
+      alignment:{horizontal:'center', vertical:'center', readingOrder:2, wrapText:true},
+      border: bThin()
+    };
+    const sNum     = Object.assign({}, sBase, {numFmt:'0.00'});
+    const sPrice   = Object.assign({}, sBase, {numFmt:'0.0000000'});
+    const sBold    = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'0A0F15'}}});
+    const sGreen   = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'0F9B68'}}});
+    const sRed     = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'D62A35'}}});
+    const sGold    = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'C8930A'}}});
+    const sBlue    = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'2B7FD4'}}});
+    const sOrange  = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'E07B1F'}}});
+
+    // ---------- Compute totals (mirrors render logic) ----------
+    const entryAmt = state.capital * state.alloc[0] / 100;
+
+    // full-plan quantities (independent of partial sale)
+    let fullQty = entryAmt / state.entry;
+    let fullCost = entryAmt;
+    for (let i = 0; i < state.dcaCount; i++){
+      const amt = state.capital * state.alloc[i+1] / 100;
+      fullQty += amt / state.dca[i];
+      fullCost += amt;
+    }
+    const fullAvg   = fullCost / fullQty;
+    const fullTP    = fullAvg * 1.05;
+    const fullProfit= (fullQty * fullTP) - fullCost;
+
+    const lastDcaPrice = getLastActiveDca() || state.entry;
+    let slP;
+    if (state.slMode === 'auto') slP = lastDcaPrice * (1 - state.slPct/100);
+    else slP = (state.slPrice && state.slPrice > 0) ? state.slPrice : lastDcaPrice * (1 - state.slPct/100);
+    const valueAtSL = fullQty * slP;
+    const lossAmt   = valueAtSL - fullCost;
+    const lossPct   = fullCost > 0 ? (lossAmt / fullCost) * 100 : 0;
+    const distanceBelowLastDca = pctOf(slP, lastDcaPrice);
+
+    // ---------- Sheet 1 : Plan ----------
+    const ws = {};
+    const merges = [];
+    const rowHeights = [];
+    const put = (r, c, v, s, tp) => {
+      const ref = XLSX.utils.encode_cell({ r: r-1, c: c-1 });
+      ws[ref] = { v: v, t: tp || (typeof v === 'number' ? 'n' : 's'), s: s };
+    };
+    const mrg = (r1, c1, r2, c2) => merges.push({ s:{r:r1-1, c:c1-1}, e:{r:r2-1, c:c2-1} });
+    const setH = (r, h) => { rowHeights[r-1] = { hpt: h }; };
+
+    let r = 1;
+    // Title
+    put(r, 1, '⭐️ Trading Planner — MUHARRAQI', sTitle);
+    mrg(r, 1, r, 10); setH(r, 30); r++;
+    // Sub-title
+    put(r, 1, `${state.pair}  •  ${state.tag}`, sSub);
+    mrg(r, 1, r, 10); setH(r, 22); r++;
+    setH(r, 6); r++;
+
+    // ===== Basic Info =====
+    put(r, 1, tr('📌 المعلومات الأساسية','📌 Basic Information'), sSection('16C784'));
+    mrg(r, 1, r, 10); setH(r, 22); r++;
+    const basicHeaders = [tr('الزوج','Pair'), tr('الوسم','Tag'), tr('سعر الدخول','Entry'),
+                          tr('رأس المال','Capital'), tr('عدد DCA','DCA Count')];
+    const basicValues  = [ state.pair, state.tag, state.entry, state.capital, state.dcaCount ];
+    const basicStyles  = [ sBold, sBold, sPrice, sNum, sBold ];
+    const basicTypes   = [ 's','s','n','n','n' ];
+    for (let i = 0; i < 5; i++){
+      const c = 1 + i*2;
+      put(r, c, basicHeaders[i], sColHead('1E3A5F'));
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sColHead('1E3A5F'));
+    }
+    setH(r, 22); r++;
+    for (let i = 0; i < 5; i++){
+      const c = 1 + i*2;
+      put(r, c, basicValues[i], basicStyles[i], basicTypes[i]);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', basicStyles[i], basicTypes[i]);
+    }
+    setH(r, 24); r++;
+    setH(r, 6); r++;
+
+    // ===== Capital Allocation =====
+    put(r, 1, tr('💰 توزيع رأس المال','💰 Capital Allocation'), sSection('0EA5E9'));
+    mrg(r, 1, r, 10); setH(r, 22); r++;
+    const allocLabels = [tr('الدخول','Entry'), 'DCA 1', 'DCA 2', 'DCA 3', 'DCA 4'];
+    for (let i = 0; i < 5; i++){
+      const c = 1 + i*2;
+      put(r, c, allocLabels[i], sColHead('0EA5E9'));
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sColHead('0EA5E9'));
+    }
+    setH(r, 22); r++;
+    // Percentage row
+    for (let i = 0; i < 5; i++){
+      const c = 1 + i*2;
+      put(r, c, state.alloc[i], sNum);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sNum);
+    }
+    setH(r, 22); r++;
+    // Amount row
+    for (let i = 0; i < 5; i++){
+      const c = 1 + i*2;
+      const amt = state.capital * state.alloc[i] / 100;
+      put(r, c, amt, sGold);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sGold);
+    }
+    setH(r, 22); r++;
+    setH(r, 6); r++;
+
+    // ===== Targets =====
+    put(r, 1, tr('🥇 الأهداف','🥇 Targets'), sSection('C8930A'));
+    mrg(r, 1, r, 10); setH(r, 22); r++;
+    const tColors = ['FFD23F','C9D1D9','CD7F32','16C784'];
+    const tFg     = ['0A0F15','0A0F15','FFFFFF','FFFFFF'];
+    const tMeds   = ['🥇','🥈','🥉','🏁'];
+    // Header row
+    for (let i = 0; i < 4; i++){
+      const c = 1 + i*2;
+      put(r, c, `${tMeds[i]} ${tr('هدف','Target')} ${i+1}`, sColHead(tColors[i], tFg[i]));
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sColHead(tColors[i], tFg[i]));
+    }
+    put(r, 9, tr('الوضع','Mode'), sColHead('1E3A5F'));
+    mrg(r, 9, r, 10);
+    put(r, 10, '', sColHead('1E3A5F'));
+    setH(r, 22); r++;
+    // Price row
+    for (let i = 0; i < 4; i++){
+      const c = 1 + i*2;
+      put(r, c, state.targets[i], sPrice);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sPrice);
+    }
+    put(r, 9, state.targetsMode === 'scale' ? tr('تدريجي','Scale') : tr('كامل','Full'), sBold);
+    mrg(r, 9, r, 10);
+    put(r, 10, '', sBold);
+    setH(r, 22); r++;
+    // Percentage row
+    for (let i = 0; i < 4; i++){
+      const c = 1 + i*2;
+      put(r, c, state.targetPcts[i], sGold);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sGold);
+    }
+    put(r, 9, tr('النسبة %','Pct %'), sColHead('1E3A5F'));
+    mrg(r, 9, r, 10);
+    put(r, 10, '', sColHead('1E3A5F'));
+    setH(r, 22); r++;
+    // Profit row (expected)
+    for (let i = 0; i < 4; i++){
+      const c = 1 + i*2;
+      const profit = entryAmt * (state.targetPcts[i]/100);
+      put(r, c, profit, sGreen);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sGreen);
+    }
+    put(r, 9, tr('الربح $','Profit $'), sColHead('1E3A5F'));
+    mrg(r, 9, r, 10);
+    put(r, 10, '', sColHead('1E3A5F'));
+    setH(r, 22); r++;
+    // Status row
+    for (let i = 0; i < 4; i++){
+      const c = 1 + i*2;
+      const isSold = state.soldTargets.includes(i);
+      const cellStyle = isSold ? sGreen : sBase;
+      put(r, c, isSold ? tr('✅ مباع','✅ Sold') : '—', cellStyle);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', cellStyle);
+    }
+    put(r, 9, tr('الحالة','Status'), sColHead('1E3A5F'));
+    mrg(r, 9, r, 10);
+    put(r, 10, '', sColHead('1E3A5F'));
+    setH(r, 22); r++;
+    setH(r, 6); r++;
+
+    // ===== DCA Levels =====
+    put(r, 1, tr('🔻 مستويات DCA','🔻 DCA Levels'), sSection('EA3943'));
+    mrg(r, 1, r, 10); setH(r, 22); r++;
+    const dcaHeaders = [
+      tr('المستوى','Level'), tr('السعر','Price'), tr('الانخفاض %','Drop %'),
+      tr('التخصيص %','Alloc %'), tr('المبلغ $','Amount $')
+    ];
+    for (let i = 0; i < 5; i++){
+      const c = 1 + i*2;
+      put(r, c, dcaHeaders[i], sColHead('EA3943'));
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sColHead('EA3943'));
+    }
+    setH(r, 22); r++;
+    if (state.dcaCount === 0){
+      put(r, 1, tr('بدون تعزيز — دخول 100%','No DCA — 100% entry'), sBold);
+      mrg(r, 1, r, 10);
+      setH(r, 22); r++;
+    } else {
+      for (let i = 0; i < state.dcaCount; i++){
+        const c1 = 1;
+        const amt = state.capital * state.alloc[i+1] / 100;
+        put(r, c1, `DCA ${i+1}`, sBold);
+        mrg(r, c1, r, c1+1); put(r, c1+1, '', sBold);
+        put(r, c1+2, state.dca[i], sPrice);
+        mrg(r, c1+2, r, c1+3); put(r, c1+3, '', sPrice);
+        put(r, c1+4, state.dcaPcts[i], sRed);
+        mrg(r, c1+4, r, c1+5); put(r, c1+5, '', sRed);
+        put(r, c1+6, state.alloc[i+1], sOrange);
+        mrg(r, c1+6, r, c1+7); put(r, c1+7, '', sOrange);
+        put(r, c1+8, amt, sGold);
+        mrg(r, c1+8, r, c1+9); put(r, c1+9, '', sGold);
+        setH(r, 22); r++;
+      }
+    }
+    setH(r, 6); r++;
+
+    // ===== Stop Loss =====
+    put(r, 1, tr('🛑 وقف الخسارة','🛑 Stop Loss'), sSection('B6252F'));
+    mrg(r, 1, r, 10); setH(r, 22); r++;
+    const slHeaders = [
+      tr('السعر','Price'), tr('الخسارة $','Loss $'), tr('الخسارة %','Loss %'),
+      tr('المتبقي $','Remaining $'), tr('المسافة %','Distance %')
+    ];
+    const slValues = [ slP, lossAmt, lossPct, valueAtSL, distanceBelowLastDca ];
+    const slStyles = [ sRed, sRed, sRed, sGreen, sRed ];
+    for (let i = 0; i < 5; i++){
+      const c = 1 + i*2;
+      put(r, c, slHeaders[i], sColHead('B6252F'));
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sColHead('B6252F'));
+    }
+    setH(r, 22); r++;
+    for (let i = 0; i < 5; i++){
+      const c = 1 + i*2;
+      put(r, c, slValues[i], slStyles[i]);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', slStyles[i]);
+    }
+    setH(r, 24); r++;
+
+    ws['!ref'] = XLSX.utils.encode_range({ s:{r:0,c:0}, e:{r:r-1, c:9} });
+    ws['!merges'] = merges;
+    ws['!views'] = [{ RTL: true }];
+    ws['!cols'] = [
+      {wch:14},{wch:14},{wch:14},{wch:14},{wch:14},
+      {wch:14},{wch:14},{wch:14},{wch:14},{wch:14}
+    ];
+    ws['!rows'] = rowHeights;
+
+    // ---------- Sheet 2 : Summary ----------
+    const ws2 = {};
+    const m2 = [];
+    const rowHeights2 = [];
+    const put2 = (r, c, v, s, tp) => {
+      const ref = XLSX.utils.encode_cell({ r: r-1, c: c-1 });
+      ws2[ref] = { v: v, t: tp || (typeof v === 'number' ? 'n' : 's'), s: s };
+    };
+    const mrg2 = (r1, c1, r2, c2) => m2.push({ s:{r:r1-1, c:c1-1}, e:{r:r2-1, c:c2-1} });
+    const setH2 = (r, h) => { rowHeights2[r-1] = { hpt: h }; };
+
+    let r2 = 1;
+    put2(r2, 1, '⭐️ ' + tr('ملخص الخطة','Plan Summary') + ' — MUHARRAQI', sTitle);
+    mrg2(r2, 1, r2, 6); setH2(r2, 30); r2++;
+    put2(r2, 1, `${state.pair}  •  ${state.tag}`, sSub);
+    mrg2(r2, 1, r2, 6); setH2(r2, 22); r2++;
+    setH2(r2, 6); r2++;
+
+    // Stats cards row
+    const cardHeaders = [
+      tr('إجمالي الكمية','Total Qty'),
+      tr('متوسط السعر','Avg Price'),
+      tr('الهدف النهائي','Final Target'),
+      tr('إجمالي الاستثمار','Total Invest'),
+      tr('الربح المتوقع','Expected Profit'),
+      tr('وقف الخسارة','Stop Loss')
+    ];
+    const cardValues = [ fullQty, fullAvg, fullTP, fullCost, fullProfit, slP ];
+    const cardStyles = [ sBlue, sOrange, sGreen, sGold, sGreen, sRed ];
+    const cardColors = ['0EA5E9','8B5CF6','16C784','FFD23F','0F9B68','EA3943'];
+    const cardFg     = ['FFFFFF','FFFFFF','FFFFFF','0A0F15','FFFFFF','FFFFFF'];
+    cardHeaders.forEach((h, i) => {
+      put2(r2, i+1, h, sColHead(cardColors[i], cardFg[i]));
+      setH2(r2, 26);
+    });
+    r2++;
+    cardValues.forEach((v, i) => {
+      put2(r2, i+1, v, cardStyles[i]);
+      setH2(r2, 28);
+    });
+    r2++;
+    setH2(r2, 6); r2++;
+
+    // Details table
+    put2(r2, 1, tr('📋 تفاصيل الخطة','📋 Plan Details'), sSection('16C784'));
+    mrg2(r2, 1, r2, 6); setH2(r2, 22); r2++;
+    const details = [
+      [tr('الزوج','Pair'), state.pair],
+      [tr('الوسم','Tag'), state.tag],
+      [tr('سعر الدخول','Entry Price'), state.entry],
+      [tr('رأس المال','Capital'), state.capital],
+      [tr('عدد DCA','DCA Count'), state.dcaCount],
+      [tr('الوضع','Mode'), state.mode === 'auto' ? tr('تلقائي','Auto') : tr('يدوي','Manual')],
+      [tr('وضع الأهداف','Targets Mode'), state.targetsMode === 'scale' ? tr('بيع تدريجي','Scale Out') : tr('بيع كامل','Full Sell')],
+      [tr('وقف الخسارة','Stop Loss'), state.slMode === 'auto' ? tr('تلقائي','Auto') : tr('يدوي','Manual')]
+    ];
+    details.forEach(([k, v]) => {
+      put2(r2, 1, k, sColHead('1E3A5F'));
+      mrg2(r2, 1, r2, 3);
+      put2(r2, 2, '', sColHead('1E3A5F'));
+      put2(r2, 3, '', sColHead('1E3A5F'));
+      const isNum = typeof v === 'number';
+      put2(r2, 4, isNum ? v : String(v), isNum ? sNum : sBold, isNum ? 'n' : 's');
+      mrg2(r2, 4, r2, 6);
+      put2(r2, 5, '', isNum ? sNum : sBold, isNum ? 'n' : 's');
+      put2(r2, 6, '', isNum ? sNum : sBold, isNum ? 'n' : 's');
+      setH2(r2, 22); r2++;
+    });
+
+    ws2['!ref'] = XLSX.utils.encode_range({ s:{r:0,c:0}, e:{r:r2-1, c:5} });
+    ws2['!merges'] = m2;
+    ws2['!views'] = [{ RTL: true }];
+    ws2['!cols'] = [{wch:22},{wch:22},{wch:22},{wch:22},{wch:22},{wch:22}];
+    ws2['!rows'] = rowHeights2;
+
+    // ---------- Build workbook ----------
+    const wb = XLSX.utils.book_new();
+    wb.Workbook = { Views: [{ RTL: true }] };
+    XLSX.utils.book_append_sheet(wb, ws,  tr('الخطة','Plan'));
+    XLSX.utils.book_append_sheet(wb, ws2, tr('ملخص','Summary'));
+
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+    XLSX.writeFile(wb, `trading-plan-${dateStr}.xlsx`);
+
+    showToast(t('excelExported'));
+  } catch (err) {
+    console.error('[Excel Export] Error:', err);
+    showToast(t('excelFailed'));
+  }
 }
 
 /* ==================== CLEAR DATA (FAB + MODAL) ==================== */
