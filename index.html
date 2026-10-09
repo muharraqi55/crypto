@@ -6,8 +6,6 @@
 <title>متابعة الصفقات الشاملة - Muharraqi | Pro Edition</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-<!-- ✅ جديد: مكتبة xlsx-js-style لتصدير Excel بألوان وحدود ودمج -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 
 <style>
@@ -763,7 +761,7 @@ background: linear-gradient(90deg, var(--primary-color), var(--secondary-color))
 body.financial-privacy .sensitive-value { filter: blur(8px); user-select: none; transition: filter 0.3s ease; }
 body.financial-privacy .sensitive-value:hover { filter: blur(0); }
 
-/* 1️⃣ سجل الكاش (الإيداعات + السحوبات) + سجل الكاش من البيع — إخفاء دائم */
+/* 1️⃣ سجل الكاش */
 body.financial-privacy #cashDepositHistory .history-amount,
 body.financial-privacy #cashWithdrawalHistory .history-amount,
 body.financial-privacy #salesCashDepositHistory .history-amount,
@@ -782,7 +780,7 @@ body.financial-privacy #totalCashFromSalesSummary {
     transition: filter 0.3s ease;
 }
 
-/* 3️⃣ أعمدة ملخص الصفقات — إخفاء دائم */
+/* 3️⃣ أعمدة ملخص الصفقات */
 body.financial-privacy .summary-table tbody tr td:nth-child(2),
 body.financial-privacy .summary-table tbody tr td:nth-child(3),
 body.financial-privacy .summary-table tbody tr td:nth-child(6),
@@ -793,7 +791,7 @@ body.financial-privacy .summary-table tbody tr td:nth-child(9) {
     transition: filter 0.3s ease;
 }
 
-/* 4️⃣ اتجاه المحفظة — إخفاء كامل احترافي */
+/* 4️⃣ اتجاه المحفظة */
 body.financial-privacy .trend-chart-card {
     filter: blur(15px) saturate(0.2);
     opacity: 0.35;
@@ -1435,7 +1433,6 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { outline: no
 .estimate-save-btn { background-color: var(--positive-color); }
 .estimate-clear-btn { background-color: var(--negative-color); }
 
-/* صندوق إجماليات البيع التقديري */
 .estimate-totals-box {
     background: linear-gradient(135deg, var(--estimate-bg), var(--bg-color));
     border: 2px solid var(--estimate-border);
@@ -1541,9 +1538,6 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { outline: no
 .delete-coin-option-btn.delete-all { background: linear-gradient(135deg, #dc3545, #c82333); color: white; box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3); }
 .delete-coin-option-btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
 
-/* ═══════════════════════════════════════════════════════════
-   📱 وسائط إضافية
-   ═══════════════════════════════════════════════════════════ */
 @media (max-width: 1200px) { .horizontal-section { grid-template-columns: 1fr; } .color-settings-grid { grid-template-columns: 1fr; } }
 @media (max-width: 992px) { .summary-table { font-size: 0.85em; } }
 @media (max-width: 768px) {
@@ -1633,8 +1627,7 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🖨️✅ تقرير الطباعة/PDF — مطابق تماماً لملف Excel
-   ✅ وضع أفقي | ✅ جدول واحد لكل العملات | ✅ تكرار الرؤوس | ✅ منع قطع الصفوف
+   🖨️ تقرير الطباعة/PDF — مطابق تماماً لملف Excel
    ═══════════════════════════════════════════════════════════ */
 @media print {
     @page {
@@ -1653,7 +1646,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         print-color-adjust: exact !important;
     }
 
-    /* إخفاء كل شيء ما عدا التقرير */
     body > *:not(#printReport) { display: none !important; }
 
     #printReport {
@@ -1678,7 +1670,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         print-color-adjust: exact !important;
     }
 
-    /* ─── الترويسة (عنوان) ─── */
     .pdf-title-bar {
         background: #0F172A !important;
         color: #ffffff !important;
@@ -1701,7 +1692,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         margin: 0 0 8px 0 !important;
     }
 
-    /* ─── شريط عنوان القسم ─── */
     .pdf-section-bar {
         background: #1E3A5F !important;
         color: #ffffff !important;
@@ -1715,7 +1705,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         page-break-inside: avoid !important;
     }
 
-    /* ─── بطاقات الإحصائيات (5 بطاقات) ─── */
     .pdf-stats-grid {
         display: grid !important;
         grid-template-columns: repeat(5, 1fr) !important;
@@ -1750,7 +1739,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         display: block !important;
     }
 
-    /* ─── الجدول الرئيسي (10 أعمدة) ─── */
     .pdf-table {
         width: 100% !important;
         border-collapse: collapse !important;
@@ -1790,7 +1778,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         font-size: 8pt !important;
         padding: 4px 3px !important;
     }
-    /* صفوف الإدخال — أزرق فاتح */
     .pdf-table tr.pdf-row-entry td {
         background: #E0F2FE !important;
         color: #0F172A !important;
@@ -1799,7 +1786,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         font-weight: 700 !important;
         text-align: right !important;
     }
-    /* صفوف التعزيزات — أخضر فاتح */
     .pdf-table tr.pdf-row-dca td {
         background: #CCFBF1 !important;
         color: #0F172A !important;
@@ -1808,7 +1794,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         font-weight: 700 !important;
         text-align: right !important;
     }
-    /* صف الإجمالي */
     .pdf-table tr.pdf-row-total td {
         background: #0F172A !important;
         color: #34D399 !important;
@@ -1822,11 +1807,9 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         text-align: right !important;
         font-size: 9pt !important;
     }
-    /* ألوان الربح/الخسارة داخل الصفوف */
     .pdf-pnl-positive { color: #15803D !important; font-weight: 700 !important; }
     .pdf-pnl-negative { color: #B91C1C !important; font-weight: 700 !important; }
 
-    /* ─── جدول الكاش ─── */
     .pdf-cash-table {
         width: 55% !important;
         border-collapse: collapse !important;
@@ -1862,7 +1845,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         color: #ffffff !important;
     }
 
-    /* ─── شعار العلامة التجارية ─── */
     .pdf-brand-footer {
         background: #0F172A !important;
         color: #ffffff !important;
@@ -1875,7 +1857,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         page-break-inside: avoid !important;
     }
 
-    /* ─── فاصل صفحة (للانتقال إلى الملخص) ─── */
     .pdf-page-break {
         page-break-before: always !important;
         break-before: page !important;
@@ -1886,7 +1867,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         display: block !important;
     }
 
-    /* ─── جدول الملخص (صفحة 2) — 5 أعمدة ─── */
     .pdf-summary-table {
         width: 100% !important;
         border-collapse: collapse !important;
@@ -1928,18 +1908,32 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         text-align: right !important;
     }
 
-    /* ─── تحسينات النصوص والأرقام ─── */
     .pdf-ltr {
         direction: ltr !important;
         unicode-bidi: embed !important;
         font-family: 'Roboto Mono', 'Consolas', monospace !important;
     }
 
-    /* ─── منع قطع أي عنصر ─── */
     .pdf-avoid-break {
         page-break-inside: avoid !important;
         break-inside: avoid !important;
     }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ✅ ألوان زر الحفظ الموحّد (TXT + JSON)
+   ═══════════════════════════════════════════════════════════ */
+.settings-top-bar .settings-actions .txt-btn {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.settings-top-bar .settings-actions .txt-btn:hover {
+    background: linear-gradient(135deg, #0284c7, #075985);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);
+}
+.dark-mode .settings-top-bar .settings-actions .txt-btn {
+    border-color: rgba(255, 255, 255, 0.22);
 }
 </style>
 </head>
@@ -1981,22 +1975,27 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <div class="profile-btn-avatar">م</div>
 <span>الملف الشخصي</span>
 </button>
+
 <button class="notification-bell" onclick="toggleNotificationCenter()" title="التنبيهات">
 🔔
 <span class="notification-badge" id="notifBadge" style="display:none;">0</span>
 </button>
+
 <button class="settings-btn" onclick="openColorSettings()" title="إعدادات الألوان والثيم">⚙️ الإعدادات</button>
 <button class="theme-btn" id="topThemeBtn" onclick="toggleThemeFromTop()" title="تبديل الوضع">🌙</button>
 <button class="print-btn" onclick="printReport()" title="طباعة التقرير">🖨️ طباعة</button>
-
-<!-- ✅ جديد: زر تصدير Excel -->
 <button class="tb-btn xlsx-export" onclick="exportToExcel()" title="تصدير البيانات إلى Excel">📊 Excel</button>
 
-<button class="import-btn" onclick="document.getElementById('importTxtFile').click()" title="استيراد TXT">📂 استيراد</button>
-<button class="txt-btn" onclick="downloadAllDataAsTxt()" title="حفظ كـ TXT">💾 حفظ TXT</button>
+<!-- ✅ استيراد موحّد: يقبل .txt و .json تلقائياً -->
+<button class="import-btn" onclick="document.getElementById('importFile').click()" title="استيراد TXT أو JSON">📂 استيراد</button>
+
+<!-- ✅ زر حفظ موحّد: يحفظ الملفين معاً (TXT + JSON) -->
+<button class="txt-btn" onclick="saveAllDataBothFormats()" title="حفظ البيانات بصيغتي TXT و JSON">💾 حفظ (TXT + JSON)</button>
+
 <button class="reset-btn" onclick="resetAllData()" title="ضبط افتراضي - مسح كل البيانات">🔄 ضبط افتراضي</button>
 </div>
 </div>
+
 <div class="page-header">
 <strong>تم التصميم بواسطة: المهندس [Muharraqi]</strong> <br>
 نسألكم الدعاء بظهر الغيب
@@ -2065,12 +2064,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 
 <div class="crypto-ticker-wrap">
 <div class="ticker-scroll" id="cryptoTicker" data-dashboard-loading-scope="boot ticker">
-<div class="ticker-skeleton"><div class="skeleton-icon"></div><div class="skeleton-text" style="width: 40px;"></div><div class="skeleton-text" style="width: 60px;"></div></div>
-<div class="ticker-skeleton"><div class="skeleton-icon"></div><div class="skeleton-text" style="width: 40px;"></div><div class="skeleton-text" style="width: 60px;"></div></div>
-<div class="ticker-skeleton"><div class="skeleton-icon"></div><div class="skeleton-text" style="width: 40px;"></div><div class="skeleton-text" style="width: 60px;"></div></div>
-<div class="ticker-skeleton"><div class="skeleton-icon"></div><div class="skeleton-text" style="width: 40px;"></div><div class="skeleton-text" style="width: 60px;"></div></div>
-<div class="ticker-skeleton"><div class="skeleton-icon"></div><div class="skeleton-text" style="width: 40px;"></div><div class="skeleton-text" style="width: 60px;"></div></div>
-<div class="ticker-skeleton"><div class="skeleton-icon"></div><div class="skeleton-text" style="width: 40px;"></div><div class="skeleton-text" style="width: 60px;"></div></div>
 <div class="ticker-skeleton"><div class="skeleton-icon"></div><div class="skeleton-text" style="width: 40px;"></div><div class="skeleton-text" style="width: 60px;"></div></div>
 <div class="ticker-skeleton"><div class="skeleton-icon"></div><div class="skeleton-text" style="width: 40px;"></div><div class="skeleton-text" style="width: 60px;"></div></div>
 <div class="ticker-skeleton"><div class="skeleton-icon"></div><div class="skeleton-text" style="width: 40px;"></div><div class="skeleton-text" style="width: 60px;"></div></div>
@@ -2227,7 +2220,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <button class="new-entry-btn btn-pulse" id="newEntryBtn" onclick="openNewEntryTransactionDialog()" style="width: 100%;">🆕 فتح صفقة دخول جديدة</button>
 </div>
 
-<!-- عناصر مخفية -->
 <div class="form-group entry-info-hidden" style="grid-column: span 2;"><label>كمية العملة المحصلة:</label><div id="initialCoinQty" class="output-field sensitive-value">0.00</div></div>
 <div class="form-group entry-info-hidden" style="grid-column: span 2;"><label>الكمية المباعة:</label><div id="initialSoldQtyDisplay" class="output-field sensitive-value">0.00</div></div>
 <div class="form-group entry-info-hidden" style="grid-column: span 2;"><label>الكمية المتبقية:</label><div id="initialRemainingQty" class="output-field sensitive-value">0.00</div></div>
@@ -2251,6 +2243,7 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 </div>
 </div>
 </section>
+
 <section class="section section-current-targets card-hover section-custom" id="section-currentStatus">
 <div class="section-header">
 <h2>الوضع الحالي والأهداف (<span id="currentCoinDisplay3">---</span>)</h2>
@@ -2308,6 +2301,7 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <div><label>إجمالي الربح / الخسارة %</label><span id="totalPnlPercentSummary" class="sensitive-value">0.00 %</span></div>
 <div><label>إجمالي الكاش من البيع</label><span id="totalCashFromSalesSummary" class="sensitive-value">0.00 $</span></div>
 </div>
+
 <div class="cash-history">
 <div class="section-header" style="cursor: default;">
 <h3>سجل الكاش من البيع</h3>
@@ -2408,21 +2402,9 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 </div>
 </footer>
 
-<!-- ═══════════════════════════════════════════════════════════
-     ✅ شريط الأزرار السريعة — مع زر التنقل الجديد 🧭
-     ✅ الأزرار الموجودة (🔔 / 💾) محفوظة بالكامل مع Tooltips محسّنة
-     ═══════════════════════════════════════════════════════════ -->
 <div class="quick-actions-bar">
-
-<!-- ✅ جديد: زر التنقل السريع + القائمة المنبثقة فوقه (خيار ب) -->
 <div class="quick-nav-bar">
-    <button class="quick-action-btn quick-nav-toggle"
-            id="quickNavToggle"
-            onclick="toggleQuickNav(event)"
-            aria-label="التنقل السريع"
-            aria-haspopup="menu"
-            aria-expanded="false"
-            type="button">
+    <button class="quick-action-btn quick-nav-toggle" id="quickNavToggle" onclick="toggleQuickNav(event)" aria-label="التنقل السريع" aria-haspopup="menu" aria-expanded="false" type="button">
         🧭
         <span class="quick-action-tooltip">
             <span class="qat-title">🧭 التنقل السريع</span>
@@ -2446,7 +2428,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
             <span class="qni-icon">📊</span>
             <span class="qni-text">ملخص الصفقات الكلي</span>
         </button>
-        <!-- ✅ العنصر الخامس (اختياري) — العودة للأعلى -->
         <button class="quick-nav-item quick-nav-top" onclick="scrollToTop(); closeQuickNav();" role="menuitem" type="button">
             <span class="qni-icon">⬆️</span>
             <span class="qni-text">العودة للأعلى</span>
@@ -2454,7 +2435,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
     </div>
 </div>
 
-<!-- ✅ الأزرار الموجودة (بدون حذف) مع Tooltips محسّنة -->
 <button class="quick-action-btn" onclick="openPriceAlertsModal()" aria-label="تنبيهات الأسعار" type="button">
     🔔
     <span class="quick-action-tooltip">
@@ -2462,11 +2442,11 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
         <span class="qat-desc">راقب أهدافك ووقف الخسارة</span>
     </span>
 </button>
-<button class="quick-action-btn" onclick="downloadAllDataAsTxt()" aria-label="حفظ البيانات" type="button">
+<button class="quick-action-btn" onclick="saveAllDataBothFormats()" aria-label="حفظ البيانات" type="button">
     💾
     <span class="quick-action-tooltip">
         <span class="qat-title">💾 حفظ البيانات</span>
-        <span class="qat-desc">احفظ كل شيء في ملف TXT</span>
+        <span class="qat-desc">احفظ كل شيء في ملفي TXT + JSON</span>
     </span>
 </button>
 
@@ -2801,6 +2781,7 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 <li>🧭 زر التنقل السريع الجديد + قائمة منبثقة احترافية</li>
 <li>🔒 وضع خصوصية مالية موسّع (سجلات + ملخص + اتجاه المحفظة)</li>
 <li>📊 زر تصدير Excel مع ألوان وحدود ودمج احترافي</li>
+<li>💾 زر حفظ موحّد: يحفظ TXT و JSON معاً بضغطة واحدة</li>
 </ul>
 </div>
 <button onclick="closeUpdatePopup()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">ممتاز!</button>
@@ -2846,21 +2827,23 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 </div>
 
 <div id="printReport" style="display: none;"></div>
-<input type="file" id="importTxtFile" accept=".txt" style="display: none;">
+
+<!-- ✅ استيراد موحّد: يقبل .txt و .json معاً -->
+<input type="file" id="importFile" accept=".txt,.json,application/json,text/plain" style="display: none;">
+
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — النسخة النهائية v8
-   ✅ إصلاح: دالة printReport() — تقرير كامل (ملخص + جدول تفصيلي لكل عملة + DCAs + سجلات الكاش)
-   ✅ كل الميزات السابقة محفوظة بالكامل
-   ✅ جديد: زر تصدير Excel باستخدام xlsx-js-style@1.2.0
+   JavaScript — النسخة النهائية v9
+   ✅ حفظ موحّد: زر واحد يحفظ TXT + JSON معاً
+   ✅ استيراد موحّد: يكتشف .txt / .json تلقائياً
    ═══════════════════════════════════════════════════════════════ */
 
-// 🔑 Cloudflare Worker الخاص بك — يعمل بدون حدود استخدام!
+// 🔑 Cloudflare Worker الخاص بك
 const MY_PROXY_URL = 'https://crypto-proxy.qwqwqwzx5.workers.dev';
 
 // ✅ ذاكرة مؤقتة للأسعار
 const priceCache = new Map();
-const PRICE_CACHE_TTL = 25000; // 25 ثانية
+const PRICE_CACHE_TTL = 25000;
 
 function generateUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
@@ -2955,7 +2938,7 @@ function fmtPrice(v, dec) { return formatPrice(v, dec); }
 
 const AR_EN_DICT = {
     'متابعة الصفقات': 'Trade Tracker', 'الملف الشخصي': 'Profile', '⚙️ الإعدادات': '⚙️ Settings',
-    '🖨️ طباعة': '🖨️ Print', '📂 استيراد': '📂 Import', '💾 حفظ TXT': '💾 Save TXT', '🔄 ضبط افتراضي': '🔄 Reset Default',
+    '🖨️ طباعة': '🖨️ Print', '📂 استيراد': '📂 Import', '💾 حفظ (TXT + JSON)': '💾 Save (TXT + JSON)', '🔄 ضبط افتراضي': '🔄 Reset Default',
     'تم التصميم بواسطة: المهندس [Muharraqi]': 'Designed by: Eng. [Muharraqi]', 'نسألكم الدعاء بظهر الغيب': 'Please remember us in your prayers',
     'متابعة الصفقات الشاملة': 'Comprehensive Trade Tracking', '📊 مؤشرات السوق': '📊 Market Insights',
     '📈 تحليلات المحفظة المتقدمة': '📈 Advanced Portfolio Analytics', 'كم الكاش لديك': 'Your Cash',
@@ -4240,7 +4223,7 @@ function saveEntryTransaction() {
         if (Math.abs(difference) > 0.001) {
             if (difference > 0) {
                 if (!checkCashForTransaction(difference)) { showError((currentLang === 'en' ? 'Insufficient cash for difference (' : 'ليس لديك كاش كافٍ لخصم الفرق (') + fmtUSD(difference, 2) + ')'); return; }
-                if (!deductCash(difference, (currentLang === 'en' ? 'Adjustment difference ' : 'خصم فرق تعديل ') + getDisplayNameFromKey(activeCoinSymbol))) { showError(currentLang === 'en' ? "Failed to deduct cash" : "فشل في خم الكاش"); return; }
+                if (!deductCash(difference, (currentLang === 'en' ? 'Adjustment difference ' : 'خصم فرق تعديل ') + getDisplayNameFromKey(activeCoinSymbol))) { showError(currentLang === 'en' ? "Failed to deduct cash" : "فشل في خصم الكاش"); return; }
             } else {
                 const refundAmount = Math.abs(difference);
                 availableCash += refundAmount;
@@ -4872,15 +4855,11 @@ async function fetchSinglePrice(symbol) {
     if (priceCache.has(symbol)) {
         const cached = priceCache.get(symbol);
         if (Date.now() - cached.time < PRICE_CACHE_TTL && cached.data && cached.data.price) {
-            console.log('💾 Cache: ' + symbol + ' = ' + cached.data.price);
             return cached.data;
         }
     }
 
-    const binanceDomains = [
-        'https://api.binance.com',
-        'https://data-api.binance.vision'
-    ];
+    const binanceDomains = ['https://api.binance.com', 'https://data-api.binance.vision'];
     for (const domain of binanceDomains) {
         try {
             const controller = new AbortController();
@@ -4892,7 +4871,6 @@ async function fetchSinglePrice(symbol) {
                 if (data && data.price && !isNaN(parseFloat(data.price))) {
                     const result = { symbol: symbol, price: parseFloat(data.price), source: 'Binance', error: null };
                     priceCache.set(symbol, { time: Date.now(), data: result });
-                    console.log('✅ Binance: ' + data.price + ' لـ ' + symbol);
                     return result;
                 }
             }
@@ -4913,10 +4891,8 @@ async function fetchSinglePrice(symbol) {
                 const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(exchange.url);
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 10000);
-
                 const response = await fetch(fetchUrl, { signal: controller.signal });
                 clearTimeout(timeoutId);
-
                 if (!response.ok) return null;
                 const data = await response.json();
                 const extractedPrice = exchange.extract(data);
@@ -4924,24 +4900,16 @@ async function fetchSinglePrice(symbol) {
                     return { name: exchange.name, price: parseFloat(extractedPrice) };
                 }
                 return null;
-            } catch (e) {
-                return null;
-            }
+            } catch (e) { return null; }
         })();
     });
 
     try {
-        const winner = await Promise.any(promises.map(p => p.then(r => {
-            if (!r) throw new Error('no result');
-            return r;
-        })));
-
+        const winner = await Promise.any(promises.map(p => p.then(r => { if (!r) throw new Error('no result'); return r; })));
         const result = { symbol: symbol, price: winner.price, source: winner.name, error: null };
         priceCache.set(symbol, { time: Date.now(), data: result });
-        console.log('✅ ' + winner.name + ': ' + winner.price + ' لـ ' + symbol);
         return result;
     } catch (e) {
-        console.warn('❌ فشل جلب السعر لـ ' + symbol + ' من جميع المصادر');
         return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'Failed on all sources' : 'فشل من جميع المصادر' };
     }
 }
@@ -4971,24 +4939,18 @@ async function fetchAllPrices(isAutoRefresh = false) {
         const batch = trackedSymbols.slice(i, i + CONCURRENCY);
         const batchResults = await Promise.allSettled(batch.map(s => fetchSinglePrice(s)));
         allResults.push(...batchResults);
-        if (i + CONCURRENCY < trackedSymbols.length) {
-            await new Promise(r => setTimeout(r, 200));
-        }
+        if (i + CONCURRENCY < trackedSymbols.length) await new Promise(r => setTimeout(r, 200));
     }
 
     allResults.forEach(result => {
         if (result.status === 'fulfilled') {
             const { symbol, price, error } = result.value;
-            if (error === null && price !== null) {
-                currentMarketPrices[symbol] = price;
-                successCount++;
-            } else {
+            if (error === null && price !== null) { currentMarketPrices[symbol] = price; successCount++; }
+            else {
                 if (currentMarketPrices[symbol] === undefined || currentMarketPrices[symbol] === null) currentMarketPrices[symbol] = null;
                 failCount++;
             }
-        } else {
-            failCount++;
-        }
+        } else failCount++;
     });
 
     if (activeCoinSymbol) {
@@ -5063,9 +5025,16 @@ function sanitizeTxtField(value) {
     if (value === null || value === undefined) return '';
     return String(value).replace(/\|/g, '¦').replace(/\n/g, ' ').replace(/\r/g, '').trim();
 }
-function downloadAllDataAsTxt() {
+
+/* ═══════════════════════════════════════════════════════════════
+   💾 حفظ البيانات كملف TXT (دالة أصلية)
+   ═══════════════════════════════════════════════════════════════ */
+function downloadAllDataAsTxt(silent = false) {
     const hasCoins = allCoinData && Object.keys(allCoinData).length > 0;
-    if (!hasCoins && availableCash <= 0 && cashHistory.deposits.length === 0) { showError(currentLang === 'en' ? "No data to save." : "لا توجد بيانات لحفظها."); return; }
+    if (!hasCoins && availableCash <= 0 && cashHistory.deposits.length === 0) {
+        if (!silent) showError(currentLang === 'en' ? "No data to save." : "لا توجد بيانات لحفظها.");
+        return false;
+    }
     let content = "";
     content += "═══════════════════════════════════════════════════════════\n";
     content += "   بيانات متابعة الصفقات الشاملة — Muharraqi Pro Edition\n";
@@ -5158,126 +5127,415 @@ function downloadAllDataAsTxt() {
     const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
     link.download = 'بيانات_الصفقات_' + timestamp + '.txt';
     link.href = URL.createObjectURL(blob);
+    document.body.appendChild(link);
     link.click();
-    showSuccess(currentLang === 'en' ? "✅ All data saved to TXT file" : "✅ تم حفظ جميع البيانات في ملف TXT");
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+    return true;
 }
 
-function handleImportTxtFile(event) {
+/* ═══════════════════════════════════════════════════════════════
+   💾 حفظ البيانات كملف JSON (دالة داخلية)
+   ═══════════════════════════════════════════════════════════════ */
+function downloadAllDataAsJSON(silent = false) {
+    try {
+        const hasCoins = allCoinData && Object.keys(allCoinData).length > 0;
+        const hasCash = availableCash > 0 ||
+                        (cashHistory && (cashHistory.deposits.length > 0 || cashHistory.withdrawals.length > 0)) ||
+                        (salesCashHistory && (salesCashHistory.deposits.length > 0 || salesCashHistory.withdrawals.length > 0));
+        const hasAlerts = priceAlerts && priceAlerts.length > 0;
+        const hasNotifications = notifications && notifications.length > 0;
+
+        if (!hasCoins && !hasCash && !hasAlerts && !hasNotifications) {
+            if (!silent) showError(currentLang === 'en' ? "No data to save." : "لا توجد بيانات لحفظها.");
+            return false;
+        }
+
+        const jsonData = {
+            _meta: {
+                app: 'Muharraqi Pro Edition',
+                version: '2.0.0',
+                exportDate: new Date().toISOString(),
+                exportDateLocal: new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG'),
+                schemaVersion: 1,
+                format: 'json',
+                description: 'Muharraqi Trades Tracker — Full Backup (JSON)'
+            },
+            settings: {
+                language: currentLang,
+                currency: currentCurrency,
+                theme: localStorage.getItem(LS_KEY_THEME) || 'light',
+                privacyMode: localStorage.getItem('muharraqi_privacy_mode') || '0'
+            },
+            dateModes: { cash: cashDateMode, salesCash: salesCashDateMode, entry: entryDateMode, dca: dcaDateMode },
+            cash: { availableCash, cashHistory, salesCashHistory },
+            coins: {
+                activeCoinSymbol: activeCoinSymbol,
+                allCoinData: allCoinData,
+                currentMarketPrices: currentMarketPrices,
+                expandedCoins: Array.from(expandedCoins),
+                savedEstimatePrices: savedEstimatePrices
+            },
+            alerts: priceAlerts,
+            notifications: notifications,
+            exchangeSettings: exchangeSettings,
+            profile: (function() {
+                try { const s = localStorage.getItem(LS_KEY_PROFILE_SETTINGS); return s ? JSON.parse(s) : null; } catch (e) { return null; }
+            })(),
+            sectionStates: (function() {
+                try { const s = localStorage.getItem('sectionToggleStates'); return s ? JSON.parse(s) : {}; } catch (e) { return {}; }
+            })(),
+            sectionColors: (function() {
+                try { const s = localStorage.getItem('sectionColors'); return s ? JSON.parse(s) : {}; } catch (e) { return {}; }
+            })()
+        };
+
+        const jsonString = JSON.stringify(jsonData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8' });
+        const link = document.createElement('a');
+        const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+        link.download = 'بيانات_الصفقات_' + timestamp + '.json';
+        link.href = URL.createObjectURL(blob);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+        return true;
+    } catch (err) {
+        console.error('❌ خطأ في تصدير JSON:', err);
+        if (!silent) showError(currentLang === 'en' ? 'JSON export failed: ' + err.message : 'فشل تصدير JSON: ' + err.message);
+        return false;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ✅✅✅ الدالة الموحّدة لحفظ كل البيانات (TXT + JSON)
+   ═══════════════════════════════════════════════════════════════ */
+function saveAllDataBothFormats() {
+    try {
+        const hasCoins = allCoinData && Object.keys(allCoinData).length > 0;
+        const hasCash = availableCash > 0 ||
+                        (cashHistory && (cashHistory.deposits.length > 0 || cashHistory.withdrawals.length > 0)) ||
+                        (salesCashHistory && (salesCashHistory.deposits.length > 0 || salesCashHistory.withdrawals.length > 0));
+        if (!hasCoins && !hasCash) {
+            showError(currentLang === 'en' ? "No data to save." : "لا توجد بيانات لحفظها.");
+            return;
+        }
+
+        // حفظ TXT
+        const txtOk = downloadAllDataAsTxt(true);
+
+        // حفظ JSON بعد تأخير بسيط لتجنب حظر المتصفح للتنزيلات المتزامنة
+        setTimeout(() => {
+            const jsonOk = downloadAllDataAsJSON(true);
+            if (txtOk && jsonOk) {
+                if (typeof showToast === 'function') {
+                    showToast(currentLang === 'en' ? '✅ Saved TXT + JSON successfully' : '✅ تم حفظ TXT + JSON بنجاح', 'success');
+                }
+                showSuccess(currentLang === 'en'
+                    ? '✅ Both files saved successfully:\n• 📄 TXT file\n• 📋 JSON file'
+                    : '✅ تم حفظ الملفين بنجاح:\n• 📄 ملف TXT\n• 📋 ملف JSON');
+            } else if (txtOk || jsonOk) {
+                showSuccess(currentLang === 'en'
+                    ? '⚠️ Only one file was saved. Check your browser\'s download settings.'
+                    : '⚠️ تم حفظ ملف واحد فقط. تحقق من إعدادات التنزيل في المتصفح.');
+            }
+        }, 400);
+
+    } catch (err) {
+        console.error('❌ خطأ في الحفظ الموحّد:', err);
+        showError(currentLang === 'en' ? 'Save failed: ' + err.message : 'فشل الحفظ: ' + err.message);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ✅✅✅ استيراد موحّد: يستقبل TXT و JSON ويكتشف النوع تلقائياً
+   ═══════════════════════════════════════════════════════════════ */
+function handleImportFile(event) {
     const file = event.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const content = e.target.result;
-        const lines = content.split('\n');
-        let currentSection = '', currentCoinSymbol = null, coinData = null;
-        const importedCoins = {}, importedPrices = {}, importedEstimates = {};
-        const importedCashHistory = { deposits: [], withdrawals: [] };
-        const importedSalesCashHistory = { deposits: [], withdrawals: [] };
-        const importedAlerts = [], importedNotifications = [];
-        let importedProfile = null, importedExchangeSettings = null;
-        let importedPrivacyMode = null, importedTheme = null, importedAvailableCash = null;
-        let importedLang = null, importedCurrency = null;
-        lines.forEach(rawLine => {
-            const line = rawLine.replace(/\r$/, '').trim();
-            if (!line) return;
-            if (line.startsWith('════') || line.startsWith('   بيانات') || line.startsWith('تم إنشاء') || line.startsWith('تاريخ الإنشاء') || line.startsWith('الإصدار') || line.startsWith('نهاية الملف')) return;
-            if (line.startsWith('===')) { currentSection = line.replace(/=/g, '').trim(); return; }
-            if (line.startsWith('---')) {
-                const coinMatch = line.match(/---\s+([A-Z0-9_]+)\s+---/);
-                if (coinMatch) {
-                    if (currentCoinSymbol && coinData) importedCoins[currentCoinSymbol] = coinData;
-                    currentCoinSymbol = coinMatch[1];
-                    coinData = getDefaultCoinDataStructure();
-                }
-                return;
-            }
-            if (currentSection.includes('ملخص الكاش')) {
-                if (line.startsWith('availableCash=')) { const v = parseFloat(line.split('=')[1]); if (!isNaN(v)) importedAvailableCash = v; }
-                return;
-            }
-            if (currentSection.includes('سجل إيداعات الكاش اليدوية')) {
-                if (line.startsWith('DEPOSIT|')) { const p = line.split('|'); if (p.length >= 5) importedCashHistory.deposits.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'deposit', note: p[4] || '' }); }
-                return;
-            }
-            if (currentSection.includes('سجل سحوبات الكاش اليدوية')) {
-                if (line.startsWith('WITHDRAWAL|')) { const p = line.split('|'); if (p.length >= 5) importedCashHistory.withdrawals.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'withdrawal', note: p[4] || '' }); }
-                return;
-            }
-            if (currentSection.includes('سجل إيداعات الكاش من البيع')) {
-                if (line.startsWith('SALES_DEPOSIT|')) { const p = line.split('|'); if (p.length >= 6) importedSalesCashHistory.deposits.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'deposit', note: p[4] || '', saleId: p[5] || null }); }
-                return;
-            }
-            if (currentSection.includes('سجل سحوبات الكاش من البيع')) {
-                if (line.startsWith('SALES_WITHDRAWAL|')) { const p = line.split('|'); if (p.length >= 5) importedSalesCashHistory.withdrawals.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'withdrawal', note: p[4] || '' }); }
-                return;
-            }
-            if (currentSection.includes('بيانات العملات') && currentCoinSymbol && coinData) {
-                if (line === '(لا توجد مبيعات)' || line === '(لا توجد تعزيزات)') return;
-                if (line.startsWith('initialEntryPrice=')) coinData.initialEntryPrice = line.split('=')[1];
-                else if (line.startsWith('initialAmountDollars=')) coinData.initialAmountDollars = line.split('=')[1];
-                else if (line.startsWith('initialSavedAmount=')) coinData.initialSavedAmount = parseFloat(line.split('=')[1]) || 0;
-                else if (line.startsWith('initialPurchaseDate=')) coinData.initialPurchaseDate = line.split('=')[1];
-                else if (line.startsWith('initialPurchaseDateRaw=')) coinData.initialPurchaseDateRaw = line.split('=')[1];
-                else if (line.startsWith('initialTotalSoldQty=')) coinData.initialTotalSoldQty = line.split('=')[1];
-                else if (line.startsWith('isEntrySaved=')) coinData.isEntrySaved = line.split('=')[1] === 'true';
-                else if (line.startsWith('SALE|')) {
-                    const p = line.split('|');
-                    if (p.length >= 7) { if (!coinData.initialSales) coinData.initialSales = []; coinData.initialSales.push({ id: p[1] || generateUniqueId(), qty: parseFloat(p[2]) || 0, price: parseFloat(p[3]) || 0, investedAmount: parseFloat(p[4]) || 0, date: p[5] || '', cashRecordId: p[6] ? (parseInt(p[6]) || null) : null }); }
-                }
-                else if (line.startsWith('DCA|')) {
-                    const p = line.split('|');
-                    if (p.length >= 9) { if (!coinData.repurchases) coinData.repurchases = []; coinData.repurchases.push({ price: p[2] || '', amount: p[3] || '', totalSoldQty: p[4] || '0', priceMode: p[5] || 'price', purchaseDate: p[6] || '', purchaseDateRaw: p[7] || '', savedAmount: parseFloat(p[8]) || 0, sales: [] }); }
-                }
-                else if (line.startsWith('DCA_SALE|')) {
-                    const p = line.split('|');
-                    if (p.length >= 8) { const dcaIdx = parseInt(p[1]); if (!isNaN(dcaIdx) && coinData.repurchases && coinData.repurchases[dcaIdx]) coinData.repurchases[dcaIdx].sales.push({ id: p[2] || generateUniqueId(), qty: parseFloat(p[3]) || 0, price: parseFloat(p[4]) || 0, investedAmount: parseFloat(p[5]) || 0, date: p[6] || '', cashRecordId: p[7] ? (parseInt(p[7]) || null) : null }); }
-                }
-                return;
-            }
-            if (currentSection.includes('الأسعار الحالية')) { const eqIdx = line.indexOf('='); if (eqIdx > 0) { const sym = line.substring(0, eqIdx).trim(); const price = parseFloat(line.substring(eqIdx + 1).trim()); if (sym && !isNaN(price)) importedPrices[sym] = price; } return; }
-            if (currentSection.includes('الأسعار التقديرية المحفوظة')) { const eqIdx = line.indexOf('='); if (eqIdx > 0) { const sym = line.substring(0, eqIdx).trim(); const price = parseFloat(line.substring(eqIdx + 1).trim()); if (sym && !isNaN(price)) importedEstimates[sym] = price; } return; }
-            if (currentSection.includes('إعدادات المنصة')) { if (!importedExchangeSettings) importedExchangeSettings = {}; if (line.startsWith('platform=')) importedExchangeSettings.platform = line.split('=')[1].trim(); else if (line.startsWith('country=')) importedExchangeSettings.country = line.split('=')[1].trim(); else if (line.startsWith('feeProfile=')) importedExchangeSettings.feeProfile = line.split('=')[1].trim(); return; }
-            if (currentSection.includes('تنبيهات الأسعار')) { if (line.startsWith('ALERT|')) { const p = line.split('|'); if (p.length >= 7) importedAlerts.push({ id: parseInt(p[1]) || Date.now(), symbol: p[2], type: p[3], price: parseFloat(p[4]) || 0, triggered: p[5] === 'true', createdAt: p[6] }); } return; }
-            if (currentSection.includes('الملف الشخصي')) { if (!importedProfile) importedProfile = {}; if (line.startsWith('username=')) importedProfile.username = line.split('=')[1].trim(); else if (line.startsWith('walletName=')) importedProfile.walletName = line.split('=')[1].trim(); return; }
-            if (currentSection.includes('الإشعارات')) { if (line.startsWith('NOTIF|')) { const p = line.split('|'); if (p.length >= 7) importedNotifications.push({ id: parseInt(p[1]) || Date.now(), title: p[2], message: p[3], type: p[4], time: p[5], read: p[6] === 'true' }); } return; }
-            if (currentSection.includes('الإعدادات العامة')) { if (line.startsWith('privacyMode=')) importedPrivacyMode = line.split('=')[1].trim(); else if (line.startsWith('theme=')) importedTheme = line.split('=')[1].trim(); else if (line.startsWith('lang=')) importedLang = line.split('=')[1].trim(); else if (line.startsWith('currency=')) importedCurrency = line.split('=')[1].trim(); return; }
-        });
-        if (currentCoinSymbol && coinData) importedCoins[currentCoinSymbol] = coinData;
-        if (Object.keys(importedCoins).length > 0) allCoinData = importedCoins;
-        if (Object.keys(importedPrices).length > 0) Object.keys(importedPrices).forEach(sym => { currentMarketPrices[sym] = importedPrices[sym]; });
-        if (Object.keys(importedEstimates).length > 0) { savedEstimatePrices = importedEstimates; saveEstimatePrices(); }
-        if (importedCashHistory.deposits.length > 0 || importedCashHistory.withdrawals.length > 0) { cashHistory = importedCashHistory; saveCashHistory(); }
-        if (importedSalesCashHistory.deposits.length > 0 || importedSalesCashHistory.withdrawals.length > 0) { salesCashHistory = importedSalesCashHistory; saveSalesCashHistory(); }
-        if (importedAlerts.length > 0) { priceAlerts = importedAlerts; savePriceAlerts(); }
-        if (importedNotifications.length > 0) { notifications = importedNotifications; saveNotifications(); }
-        if (importedProfile) { try { localStorage.setItem(LS_KEY_PROFILE_SETTINGS, JSON.stringify(importedProfile)); } catch (e) {} }
-        if (importedExchangeSettings) { exchangeSettings = Object.assign({ platform: 'binance', country: 'sa', feeProfile: 'standard' }, importedExchangeSettings); try { localStorage.setItem('muharraqi_pro_settings', JSON.stringify(exchangeSettings)); } catch (e) {} }
-        if (importedAvailableCash !== null) availableCash = importedAvailableCash;
-        if (importedTheme) { localStorage.setItem(LS_KEY_THEME, importedTheme); applyTheme(importedTheme); }
-        if (importedLang) { currentLang = importedLang; localStorage.setItem(LS_KEY_LANG, importedLang); }
-        if (importedCurrency) { currentCurrency = importedCurrency; localStorage.setItem(LS_KEY_CURRENCY, importedCurrency); }
-        if (importedPrivacyMode === '1') { try { localStorage.setItem('muharraqi_privacy_mode', '1'); if (!document.body.classList.contains('financial-privacy')) toggleFinancialPrivacy(); } catch (e) {} }
-        else if (importedPrivacyMode === '0') { try { localStorage.setItem('muharraqi_privacy_mode', '0'); if (document.body.classList.contains('financial-privacy')) toggleFinancialPrivacy(); } catch (e) {} }
-        saveAllDataToLocalStorage();
-        localStorage.setItem(LS_KEY_CASH, availableCash.toString());
-        applyLanguage();
-        updateCashDisplay();
-        updateCashHistoryDisplay();
-        updateSalesCashHistoryDisplay();
-        updateCoinSelector();
-        updateSummaryTable();
-        updatePortfolioChart();
-        renderAlertsList();
-        renderNotifications();
-        loadProfileSettings();
-        loadExchangeSettings();
-        initDateModeToggles();
-        updateProfileStats();
-        showSuccess(currentLang === 'en' ? "✅ All data imported successfully!" : "✅ تم استيراد جميع البيانات بنجاح!");
+
+    // حد أقصى 20 MB
+    if (file.size > 20 * 1024 * 1024) {
+        showError(currentLang === 'en' ? 'File too large (max 20 MB)' : 'الملف كبير جداً (الحد الأقصى 20 ميجابايت)');
         event.target.value = '';
-    };
-    reader.readAsText(file);
+        return;
+    }
+
+    const fileName = (file.name || '').toLowerCase();
+    const isJson = fileName.endsWith('.json') || file.type === 'application/json';
+
+    const confirmMsg = currentLang === 'en'
+        ? '⚠️ Import will REPLACE all current data:\n\n• All coins and trades\n• All DCAs and sales\n• Cash records and history\n• Price alerts and notifications\n• Settings and preferences\n\nType detected: ' + (isJson ? 'JSON' : 'TXT') + '\n\nContinue?'
+        : '⚠️ الاستيراد سيستبدل جميع البيانات الحالية:\n\n• جميع العملات والصفقات\n• جميع التعزيزات والمبيعات\n• سجلات الكاش والسجلات\n• تنبيهات الأسعار والإشعارات\n• الإعدادات والتفضيلات\n\nنوع الملف المكتشف: ' + (isJson ? 'JSON' : 'TXT') + '\n\nهل تريد المتابعة؟';
+
+    showConfirm(confirmMsg, () => {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const content = e.target.result;
+            try {
+                if (isJson) {
+                    importFromJSONContent(content);
+                } else {
+                    importFromTXTContent(content);
+                }
+                // نجاح
+                const coinsCount = Object.keys(allCoinData).length;
+                const fmtLabel = isJson ? 'JSON' : 'TXT';
+                if (typeof showToast === 'function') {
+                    showToast((currentLang === 'en' ? '✅ Imported ' + fmtLabel + ' (' : '✅ تم استيراد ') + fmtLabel + (currentLang === 'en' ? ' ' : ' (') + coinsCount + (currentLang === 'en' ? ' coins)' : ' عملة)'), 'success');
+                }
+                showSuccess(currentLang === 'en'
+                    ? '✅ Data imported successfully from ' + fmtLabel + '!\n\n📊 Coins: ' + coinsCount + '\n💰 Cash: ' + fmtUSD(availableCash, 2)
+                    : '✅ تم استيراد البيانات بنجاح من ' + fmtLabel + '!\n\n📊 العملات: ' + coinsCount + '\n💰 الكاش: ' + fmtUSD(availableCash, 2));
+            } catch (err) {
+                console.error('❌ خطأ في الاستيراد:', err);
+                if (typeof showToast === 'function') {
+                    showToast((currentLang === 'en' ? 'Failed: ' : 'فشل الاستيراد: ') + (err.message || 'Invalid file'), 'error');
+                }
+                showError(currentLang === 'en'
+                    ? '❌ Failed to import file:\n' + (err.message || 'Invalid file structure')
+                    : '❌ فشل استيراد الملف:\n' + (err.message || 'بنية الملف غير صحيحة'));
+            } finally {
+                event.target.value = '';
+            }
+        };
+
+        reader.onerror = function() {
+            showError(currentLang === 'en' ? '❌ Failed to read file' : '❌ فشل في قراءة الملف');
+            event.target.value = '';
+        };
+
+        reader.readAsText(file, 'utf-8');
+    }, () => { event.target.value = ''; });
 }
+
+/* ─── استيراد من محتوى JSON ─── */
+function importFromJSONContent(content) {
+    const data = JSON.parse(content);
+    if (!data || typeof data !== 'object') throw new Error('Invalid JSON structure');
+
+    // 1. العملات
+    if (data.coins && data.coins.allCoinData) {
+        allCoinData = data.coins.allCoinData;
+        Object.keys(allCoinData).forEach(symbol => {
+            if (!allCoinData[symbol]) allCoinData[symbol] = getDefaultCoinDataStructure();
+            if (!allCoinData[symbol].repurchases) allCoinData[symbol].repurchases = [];
+            if (!allCoinData[symbol].initialSales) allCoinData[symbol].initialSales = [];
+            if (!allCoinData[symbol].initialTotalSoldQty) allCoinData[symbol].initialTotalSoldQty = '0';
+            if (!allCoinData[symbol].initialPurchaseDate) allCoinData[symbol].initialPurchaseDate = '';
+            if (!allCoinData[symbol].initialPurchaseDateRaw) allCoinData[symbol].initialPurchaseDateRaw = '';
+            if (allCoinData[symbol].isEntrySaved === undefined) allCoinData[symbol].isEntrySaved = false;
+            if (allCoinData[symbol].initialSavedAmount === undefined) allCoinData[symbol].initialSavedAmount = 0;
+            (allCoinData[symbol].repurchases || []).forEach(rp => {
+                if (rp.savedAmount === undefined) rp.savedAmount = 0;
+                if (!rp.sales) rp.sales = [];
+                if (!rp.totalSoldQty) rp.totalSoldQty = '0';
+                if (!rp.purchaseDate) rp.purchaseDate = '';
+                if (!rp.purchaseDateRaw) rp.purchaseDateRaw = '';
+            });
+        });
+        activeCoinSymbol = data.coins.activeCoinSymbol || null;
+        currentMarketPrices = data.coins.currentMarketPrices || {};
+        if (Array.isArray(data.coins.expandedCoins)) expandedCoins = new Set(data.coins.expandedCoins);
+        if (data.coins.savedEstimatePrices) { savedEstimatePrices = data.coins.savedEstimatePrices; saveEstimatePrices(); }
+    }
+
+    // 2. الكاش
+    if (data.cash) {
+        if (typeof data.cash.availableCash === 'number') availableCash = data.cash.availableCash;
+        if (data.cash.cashHistory) {
+            cashHistory = data.cash.cashHistory;
+            if (!cashHistory.deposits) cashHistory.deposits = [];
+            if (!cashHistory.withdrawals) cashHistory.withdrawals = [];
+            saveCashHistory();
+        }
+        if (data.cash.salesCashHistory) {
+            salesCashHistory = data.cash.salesCashHistory;
+            if (!salesCashHistory.deposits) salesCashHistory.deposits = [];
+            if (!salesCashHistory.withdrawals) salesCashHistory.withdrawals = [];
+            saveSalesCashHistory();
+        }
+    }
+
+    // 3. تنبيهات الأسعار
+    if (Array.isArray(data.alerts)) { priceAlerts = data.alerts; savePriceAlerts(); }
+
+    // 4. الإشعارات
+    if (Array.isArray(data.notifications)) { notifications = data.notifications; saveNotifications(); }
+
+    // 5. إعدادات المنصة
+    if (data.exchangeSettings) {
+        exchangeSettings = Object.assign({ platform: 'binance', country: 'sa', feeProfile: 'standard' }, data.exchangeSettings);
+        try { localStorage.setItem('muharraqi_pro_settings', JSON.stringify(exchangeSettings)); } catch (e) {}
+    }
+
+    // 6. الملف الشخصي
+    if (data.profile) {
+        try { localStorage.setItem(LS_KEY_PROFILE_SETTINGS, JSON.stringify(data.profile)); } catch (e) {}
+    }
+
+    // 7. الإعدادات العامة
+    if (data.settings) {
+        if (data.settings.language) { currentLang = data.settings.language; localStorage.setItem(LS_KEY_LANG, currentLang); }
+        if (data.settings.currency) { currentCurrency = data.settings.currency; localStorage.setItem(LS_KEY_CURRENCY, currentCurrency); }
+        if (data.settings.theme) { localStorage.setItem(LS_KEY_THEME, data.settings.theme); applyTheme(data.settings.theme); }
+        if (data.settings.privacyMode !== undefined) {
+            try {
+                const wasActive = document.body.classList.contains('financial-privacy');
+                const shouldBeActive = data.settings.privacyMode === '1';
+                localStorage.setItem('muharraqi_privacy_mode', data.settings.privacyMode);
+                if (shouldBeActive && !wasActive) toggleFinancialPrivacy();
+                else if (!shouldBeActive && wasActive) toggleFinancialPrivacy();
+            } catch (e) {}
+        }
+    }
+
+    // 8. أوضاع التاريخ
+    if (data.dateModes) {
+        if (data.dateModes.cash) cashDateMode = data.dateModes.cash;
+        if (data.dateModes.salesCash) salesCashDateMode = data.dateModes.salesCash;
+        if (data.dateModes.entry) entryDateMode = data.dateModes.entry;
+        if (data.dateModes.dca) dcaDateMode = data.dateModes.dca;
+    }
+
+    // 9. حالات الأقسام
+    if (data.sectionStates && typeof data.sectionStates === 'object') {
+        try { localStorage.setItem('sectionToggleStates', JSON.stringify(data.sectionStates)); } catch (e) {}
+    }
+
+    // 10. ألوان الأقسام
+    if (data.sectionColors && typeof data.sectionColors === 'object') {
+        try { localStorage.setItem('sectionColors', JSON.stringify(data.sectionColors)); applyColorSettings(); } catch (e) {}
+    }
+
+    // 11. حفظ + تحديث الواجهة
+    finalizeImport();
+}
+
+/* ─── استيراد من محتوى TXT ─── */
+function importFromTXTContent(content) {
+    const lines = content.split('\n');
+    let currentSection = '', currentCoinSymbol = null, coinData = null;
+    const importedCoins = {}, importedPrices = {}, importedEstimates = {};
+    const importedCashHistory = { deposits: [], withdrawals: [] };
+    const importedSalesCashHistory = { deposits: [], withdrawals: [] };
+    const importedAlerts = [], importedNotifications = [];
+    let importedProfile = null, importedExchangeSettings = null;
+    let importedPrivacyMode = null, importedTheme = null, importedAvailableCash = null;
+    let importedLang = null, importedCurrency = null;
+
+    lines.forEach(rawLine => {
+        const line = rawLine.replace(/\r$/, '').trim();
+        if (!line) return;
+        if (line.startsWith('════') || line.startsWith('   بيانات') || line.startsWith('تم إنشاء') || line.startsWith('تاريخ الإنشاء') || line.startsWith('الإصدار') || line.startsWith('نهاية الملف')) return;
+        if (line.startsWith('===')) { currentSection = line.replace(/=/g, '').trim(); return; }
+        if (line.startsWith('---')) {
+            const coinMatch = line.match(/---\s+([A-Z0-9_]+)\s+---/);
+            if (coinMatch) {
+                if (currentCoinSymbol && coinData) importedCoins[currentCoinSymbol] = coinData;
+                currentCoinSymbol = coinMatch[1];
+                coinData = getDefaultCoinDataStructure();
+            }
+            return;
+        }
+        if (currentSection.includes('ملخص الكاش')) {
+            if (line.startsWith('availableCash=')) { const v = parseFloat(line.split('=')[1]); if (!isNaN(v)) importedAvailableCash = v; }
+            return;
+        }
+        if (currentSection.includes('سجل إيداعات الكاش اليدوية')) {
+            if (line.startsWith('DEPOSIT|')) { const p = line.split('|'); if (p.length >= 5) importedCashHistory.deposits.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'deposit', note: p[4] || '' }); }
+            return;
+        }
+        if (currentSection.includes('سجل سحوبات الكاش اليدوية')) {
+            if (line.startsWith('WITHDRAWAL|')) { const p = line.split('|'); if (p.length >= 5) importedCashHistory.withdrawals.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'withdrawal', note: p[4] || '' }); }
+            return;
+        }
+        if (currentSection.includes('سجل إيداعات الكاش من البيع')) {
+            if (line.startsWith('SALES_DEPOSIT|')) { const p = line.split('|'); if (p.length >= 6) importedSalesCashHistory.deposits.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'deposit', note: p[4] || '', saleId: p[5] || null }); }
+            return;
+        }
+        if (currentSection.includes('سجل سحوبات الكاش من البيع')) {
+            if (line.startsWith('SALES_WITHDRAWAL|')) { const p = line.split('|'); if (p.length >= 5) importedSalesCashHistory.withdrawals.push({ id: parseInt(p[1]) || Date.now(), amount: parseFloat(p[2]) || 0, date: p[3] || '', type: 'withdrawal', note: p[4] || '' }); }
+            return;
+        }
+        if (currentSection.includes('بيانات العملات') && currentCoinSymbol && coinData) {
+            if (line === '(لا توجد مبيعات)' || line === '(لا توجد تعزيزات)') return;
+            if (line.startsWith('initialEntryPrice=')) coinData.initialEntryPrice = line.split('=')[1];
+            else if (line.startsWith('initialAmountDollars=')) coinData.initialAmountDollars = line.split('=')[1];
+            else if (line.startsWith('initialSavedAmount=')) coinData.initialSavedAmount = parseFloat(line.split('=')[1]) || 0;
+            else if (line.startsWith('initialPurchaseDate=')) coinData.initialPurchaseDate = line.split('=')[1];
+            else if (line.startsWith('initialPurchaseDateRaw=')) coinData.initialPurchaseDateRaw = line.split('=')[1];
+            else if (line.startsWith('initialTotalSoldQty=')) coinData.initialTotalSoldQty = line.split('=')[1];
+            else if (line.startsWith('isEntrySaved=')) coinData.isEntrySaved = line.split('=')[1] === 'true';
+            else if (line.startsWith('SALE|')) {
+                const p = line.split('|');
+                if (p.length >= 7) { if (!coinData.initialSales) coinData.initialSales = []; coinData.initialSales.push({ id: p[1] || generateUniqueId(), qty: parseFloat(p[2]) || 0, price: parseFloat(p[3]) || 0, investedAmount: parseFloat(p[4]) || 0, date: p[5] || '', cashRecordId: p[6] ? (parseInt(p[6]) || null) : null }); }
+            }
+            else if (line.startsWith('DCA|')) {
+                const p = line.split('|');
+                if (p.length >= 9) { if (!coinData.repurchases) coinData.repurchases = []; coinData.repurchases.push({ price: p[2] || '', amount: p[3] || '', totalSoldQty: p[4] || '0', priceMode: p[5] || 'price', purchaseDate: p[6] || '', purchaseDateRaw: p[7] || '', savedAmount: parseFloat(p[8]) || 0, sales: [] }); }
+            }
+            else if (line.startsWith('DCA_SALE|')) {
+                const p = line.split('|');
+                if (p.length >= 8) { const dcaIdx = parseInt(p[1]); if (!isNaN(dcaIdx) && coinData.repurchases && coinData.repurchases[dcaIdx]) coinData.repurchases[dcaIdx].sales.push({ id: p[2] || generateUniqueId(), qty: parseFloat(p[3]) || 0, price: parseFloat(p[4]) || 0, investedAmount: parseFloat(p[5]) || 0, date: p[6] || '', cashRecordId: p[7] ? (parseInt(p[7]) || null) : null }); }
+            }
+            return;
+        }
+        if (currentSection.includes('الأسعار الحالية')) { const eqIdx = line.indexOf('='); if (eqIdx > 0) { const sym = line.substring(0, eqIdx).trim(); const price = parseFloat(line.substring(eqIdx + 1).trim()); if (sym && !isNaN(price)) importedPrices[sym] = price; } return; }
+        if (currentSection.includes('الأسعار التقديرية المحفوظة')) { const eqIdx = line.indexOf('='); if (eqIdx > 0) { const sym = line.substring(0, eqIdx).trim(); const price = parseFloat(line.substring(eqIdx + 1).trim()); if (sym && !isNaN(price)) importedEstimates[sym] = price; } return; }
+        if (currentSection.includes('إعدادات المنصة')) { if (!importedExchangeSettings) importedExchangeSettings = {}; if (line.startsWith('platform=')) importedExchangeSettings.platform = line.split('=')[1].trim(); else if (line.startsWith('country=')) importedExchangeSettings.country = line.split('=')[1].trim(); else if (line.startsWith('feeProfile=')) importedExchangeSettings.feeProfile = line.split('=')[1].trim(); return; }
+        if (currentSection.includes('تنبيهات الأسعار')) { if (line.startsWith('ALERT|')) { const p = line.split('|'); if (p.length >= 7) importedAlerts.push({ id: parseInt(p[1]) || Date.now(), symbol: p[2], type: p[3], price: parseFloat(p[4]) || 0, triggered: p[5] === 'true', createdAt: p[6] }); } return; }
+        if (currentSection.includes('الملف الشخصي')) { if (!importedProfile) importedProfile = {}; if (line.startsWith('username=')) importedProfile.username = line.split('=')[1].trim(); else if (line.startsWith('walletName=')) importedProfile.walletName = line.split('=')[1].trim(); return; }
+        if (currentSection.includes('الإشعارات')) { if (line.startsWith('NOTIF|')) { const p = line.split('|'); if (p.length >= 7) importedNotifications.push({ id: parseInt(p[1]) || Date.now(), title: p[2], message: p[3], type: p[4], time: p[5], read: p[6] === 'true' }); } return; }
+        if (currentSection.includes('الإعدادات العامة')) { if (line.startsWith('privacyMode=')) importedPrivacyMode = line.split('=')[1].trim(); else if (line.startsWith('theme=')) importedTheme = line.split('=')[1].trim(); else if (line.startsWith('lang=')) importedLang = line.split('=')[1].trim(); else if (line.startsWith('currency=')) importedCurrency = line.split('=')[1].trim(); return; }
+    });
+
+    if (currentCoinSymbol && coinData) importedCoins[currentCoinSymbol] = coinData;
+    if (Object.keys(importedCoins).length > 0) allCoinData = importedCoins;
+    if (Object.keys(importedPrices).length > 0) Object.keys(importedPrices).forEach(sym => { currentMarketPrices[sym] = importedPrices[sym]; });
+    if (Object.keys(importedEstimates).length > 0) { savedEstimatePrices = importedEstimates; saveEstimatePrices(); }
+    if (importedCashHistory.deposits.length > 0 || importedCashHistory.withdrawals.length > 0) { cashHistory = importedCashHistory; saveCashHistory(); }
+    if (importedSalesCashHistory.deposits.length > 0 || importedSalesCashHistory.withdrawals.length > 0) { salesCashHistory = importedSalesCashHistory; saveSalesCashHistory(); }
+    if (importedAlerts.length > 0) { priceAlerts = importedAlerts; savePriceAlerts(); }
+    if (importedNotifications.length > 0) { notifications = importedNotifications; saveNotifications(); }
+    if (importedProfile) { try { localStorage.setItem(LS_KEY_PROFILE_SETTINGS, JSON.stringify(importedProfile)); } catch (e) {} }
+    if (importedExchangeSettings) { exchangeSettings = Object.assign({ platform: 'binance', country: 'sa', feeProfile: 'standard' }, importedExchangeSettings); try { localStorage.setItem('muharraqi_pro_settings', JSON.stringify(exchangeSettings)); } catch (e) {} }
+    if (importedAvailableCash !== null) availableCash = importedAvailableCash;
+    if (importedTheme) { localStorage.setItem(LS_KEY_THEME, importedTheme); applyTheme(importedTheme); }
+    if (importedLang) { currentLang = importedLang; localStorage.setItem(LS_KEY_LANG, importedLang); }
+    if (importedCurrency) { currentCurrency = importedCurrency; localStorage.setItem(LS_KEY_CURRENCY, importedCurrency); }
+    if (importedPrivacyMode === '1') { try { localStorage.setItem('muharraqi_privacy_mode', '1'); if (!document.body.classList.contains('financial-privacy')) toggleFinancialPrivacy(); } catch (e) {} }
+    else if (importedPrivacyMode === '0') { try { localStorage.setItem('muharraqi_privacy_mode', '0'); if (document.body.classList.contains('financial-privacy')) toggleFinancialPrivacy(); } catch (e) {} }
+
+    finalizeImport();
+}
+
+/* ─── تجهيز بعد الاستيراد ─── */
+function finalizeImport() {
+    saveAllDataToLocalStorage();
+    localStorage.setItem(LS_KEY_CASH, availableCash.toString());
+    applyLanguage();
+    updateCashDisplay();
+    updateCashHistoryDisplay();
+    updateSalesCashHistoryDisplay();
+    updateCoinSelector();
+    updateSummaryTable();
+    updatePortfolioChart();
+    renderAlertsList();
+    renderNotifications();
+    loadProfileSettings();
+    loadExchangeSettings();
+    initDateModeToggles();
+    updateProfileStats();
+    if (typeof updateAdvancedCharts === 'function') {
+        try { updateAdvancedCharts(); } catch (e) {}
+    }
+}
+
+/* ─── التوافق العكسي: اسم قديم ─── */
+function handleImportTxtFile(event) { handleImportFile(event); }
 
 function openTradingView() {
     if (!activeCoinSymbol) { showError(currentLang === 'en' ? "Please select a coin first" : "يرجى اختيار عملة أولاً"); return; }
@@ -5506,7 +5764,7 @@ function deleteCurrentCoin() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   🖨️ printReport() — تقرير الطباعة الكامل
+   🖨️ printReport() — تقرير الطباعة/PDF
    ═══════════════════════════════════════════════════════════════ */
 function printReport() {
     const { summaryRows, totals } = calculateSummaryData();
@@ -5516,7 +5774,6 @@ function printReport() {
     const netSalesCash = Math.max(0, totalSalesCash);
     const totalCash = availableCash + netSalesCash;
 
-    /* ─── دوال مساعدة ─── */
     const fmtNum = (v, d) => {
         const n = Number(v);
         if (isNaN(n) || !isFinite(n)) return '0';
@@ -5539,27 +5796,16 @@ function printReport() {
         else dec = 8;
         return fmtNum(n, dec);
     };
-    const esc = (s) => String(s == null ? '' : s)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+    const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const pnlCls = (v) => v > 0 ? 'pdf-pnl-positive' : (v < 0 ? 'pdf-pnl-negative' : '');
 
-    /* ═════════════════════════════════════════════════════
-       بناء الصفحة 1: التقرير (مطابق لورقة "التقرير" في Excel)
-       ═════════════════════════════════════════════════════ */
     let html = '';
-
-    // 1. عنوان التطبيق (شريط داكن)
     html += '<div class="pdf-avoid-break">';
     html += '<div class="pdf-title-bar">📊 MUHARRAQI PRO — تقرير متابعة الصفقات الشاملة</div>';
     html += '<div class="pdf-subtitle-bar">Pro Edition 2.0.0  |  تاريخ التقرير: ' + esc(reportDate) + '</div>';
     html += '</div>';
 
-    // 2. شريط قسم "ملخص المحفظة"
     html += '<div class="pdf-section-bar">📈 ملخص المحفظة</div>';
-
-    // 3. بطاقات الإحصائيات (5 بطاقات بنفس ألوان Excel)
     const pnlAmtCls = totals.pnlAmount >= 0 ? 'green' : 'red';
     const pnlPctCls = totals.pnlPercent >= 0 ? 'green' : 'red';
     html += '<div class="pdf-stats-grid">';
@@ -5570,34 +5816,22 @@ function printReport() {
     html += '<div class="pdf-stat-card amber"><span class="pdf-stat-label">💰 إجمالي الكاش المتاح</span><span class="pdf-stat-value">' + fmtNum(totalCash, 2) + '</span></div>';
     html += '</div>';
 
-    // 4. شريط قسم "تفاصيل العملات والصفقات"
     html += '<div class="pdf-section-bar">🪙 تفاصيل العملات والصفقات  (' + summaryRows.length + ')</div>';
-
-    // 5. الجدول الرئيسي (10 أعمدة مع colgroup)
     html += '<table class="pdf-table">';
     html += '<colgroup>';
-    html += '<col style="width:17%">';   // العملة
-    html += '<col style="width:10%">';   // الكمية
-    html += '<col style="width:9%">';    // المستثمر $
-    html += '<col style="width:10%">';   // متوسط الدخول
-    html += '<col style="width:10%">';   // السعر الحالي
-    html += '<col style="width:11%">';   // القيمة الحالية
-    html += '<col style="width:11%">';   // الربح/الخسارة $
-    html += '<col style="width:9%">';    // الربح/الخسارة %
-    html += '<col style="width:9%">';    // الكاش من البيع $
-    html += '<col style="width:4%">';    // الحالة
+    html += '<col style="width:17%">';
+    html += '<col style="width:10%">';
+    html += '<col style="width:9%">';
+    html += '<col style="width:10%">';
+    html += '<col style="width:10%">';
+    html += '<col style="width:11%">';
+    html += '<col style="width:11%">';
+    html += '<col style="width:9%">';
+    html += '<col style="width:9%">';
+    html += '<col style="width:4%">';
     html += '</colgroup>';
     html += '<thead><tr>';
-    html += '<th>العملة</th>';
-    html += '<th>الكمية</th>';
-    html += '<th>المستثمر $</th>';
-    html += '<th>متوسط الدخول</th>';
-    html += '<th>السعر الحالي</th>';
-    html += '<th>القيمة الحالية</th>';
-    html += '<th>الربح/الخسارة $</th>';
-    html += '<th>الربح/الخسارة %</th>';
-    html += '<th>الكاش من البيع $</th>';
-    html += '<th>الحالة</th>';
+    html += '<th>العملة</th><th>الكمية</th><th>المستثمر $</th><th>متوسط الدخول</th><th>السعر الحالي</th><th>القيمة الحالية</th><th>الربح/الخسارة $</th><th>الربح/الخسارة %</th><th>الكاش من البيع $</th><th>الحالة</th>';
     html += '</tr></thead><tbody>';
 
     if (summaryRows.length === 0) {
@@ -5607,12 +5841,9 @@ function printReport() {
             const displayName = getDisplayNameFromKey(item.symbol);
             const entryData = allCoinData[item.symbol];
             const marketPriceValid = item.marketPrice !== null && !isNaN(item.marketPrice) && item.marketPrice > 0;
-
-            /* ─── صف الإدخال (Entry) ─── */
             const initialEntryPrice = parseFormattedNumber(entryData.initialEntryPrice);
             const initialAmount = parseFormattedNumber(entryData.initialAmountDollars);
             const hasEntry = initialEntryPrice > 0 && initialAmount > 0;
-
             if (hasEntry) {
                 const entryQty = initialAmount / initialEntryPrice;
                 const initialSales = entryData.initialSales || [];
@@ -5624,7 +5855,6 @@ function printReport() {
                 const pnlAmt = currentValue - investedRemaining;
                 const pnlPct = investedRemaining > 0 ? (pnlAmt / investedRemaining) * 100 : 0;
                 const status = remainingQty <= 0.00000001 ? 'تم البيع' : (soldQty > 0 ? 'بيع جزئي' : 'نشط');
-
                 html += '<tr class="pdf-row-entry">';
                 html += '<td>' + esc(displayName) + ' — دخول</td>';
                 html += '<td class="pdf-ltr">' + fmtNum(remainingQty, 4) + '</td>';
@@ -5638,8 +5868,6 @@ function printReport() {
                 html += '<td>' + status + '</td>';
                 html += '</tr>';
             }
-
-            /* ─── صفوف التعزيزات (DCAs) ─── */
             (entryData.repurchases || []).forEach((rp, dcaIdx) => {
                 const rpPrice = parseFormattedNumber(rp.price);
                 const rpAmount = parseFormattedNumber(rp.amount);
@@ -5654,10 +5882,7 @@ function printReport() {
                 const currentValue = remainingQty * (item.marketPrice || 0);
                 const pnlAmt = currentValue - investedRemaining;
                 const pnlPct = investedRemaining > 0 ? (pnlAmt / investedRemaining) * 100 : 0;
-                const status = !isSaved ? 'غير محفوظ' :
-                    (soldQty >= rpQty - 0.00000001 ? 'تم البيع' :
-                    (soldQty > 0 ? 'بيع جزئي' : 'نشط'));
-
+                const status = !isSaved ? 'غير محفوظ' : (soldQty >= rpQty - 0.00000001 ? 'تم البيع' : (soldQty > 0 ? 'بيع جزئي' : 'نشط'));
                 html += '<tr class="pdf-row-dca">';
                 html += '<td>' + esc(displayName) + ' — تعزيز #' + (dcaIdx + 1) + '</td>';
                 html += '<td class="pdf-ltr">' + fmtNum(remainingQty, 4) + '</td>';
@@ -5672,14 +5897,10 @@ function printReport() {
                 html += '</tr>';
             });
         });
-
-        /* ─── صف الإجمالي ─── */
         html += '<tr class="pdf-row-total">';
-        html += '<td>الإجمالي</td>';
-        html += '<td>—</td>';
+        html += '<td>الإجمالي</td><td>—</td>';
         html += '<td class="pdf-ltr">' + fmtNum(totals.invested, 2) + '</td>';
-        html += '<td>—</td>';
-        html += '<td>—</td>';
+        html += '<td>—</td><td>—</td>';
         html += '<td class="pdf-ltr">' + fmtNum(totals.currentValue, 2) + '</td>';
         html += '<td class="pdf-ltr">' + fmtNum(totals.pnlAmount, 2) + '</td>';
         html += '<td class="pdf-ltr">' + fmtNum(totals.pnlPercent, 2) + '%</td>';
@@ -5689,42 +5910,27 @@ function printReport() {
     }
     html += '</tbody></table>';
 
-    // 6. شريط قسم "ملخص الكاش" + الجدول
     html += '<div class="pdf-section-bar">💰 ملخص الكاش</div>';
-    html += '<table class="pdf-cash-table">';
-    html += '<tbody>';
+    html += '<table class="pdf-cash-table"><tbody>';
     html += '<tr><td>💵 كاش يدوي</td><td>' + fmtNum(availableCash, 2) + '</td></tr>';
     html += '<tr><td>💎 كاش من البيع</td><td>' + fmtNum(netSalesCash, 2) + '</td></tr>';
     html += '<tr class="pdf-cash-total"><td>💰 إجمالي الكاش المتاح</td><td>' + fmtNum(totalCash, 2) + '</td></tr>';
     html += '</tbody></table>';
 
-    // 7. شعار العلامة التجارية
     html += '<div class="pdf-brand-footer">MUHARRAQI  ·  Pro Edition  ·  © 2026  —  نسألكم الدعاء 🤲</div>';
 
-    /* ═════════════════════════════════════════════════════
-       فاصل صفحة → الصفحة 2: الملخص
-       ═════════════════════════════════════════════════════ */
     html += '<div class="pdf-page-break"></div>';
-
     html += '<div class="pdf-title-bar">📋 ملخص الصفقات</div>';
     html += '<div class="pdf-subtitle-bar">Pro Edition 2.0.0  |  تاريخ التقرير: ' + esc(reportDate) + '</div>';
-
     html += '<table class="pdf-summary-table">';
     html += '<colgroup>';
-    html += '<col style="width:25%">';   // العملة
-    html += '<col style="width:20%">';   // الكمية المتبقية
-    html += '<col style="width:19%">';   // إجمالي المستثمر
-    html += '<col style="width:19%">';   // القيمة الحالية
-    html += '<col style="width:17%">';   // الربح/الخسارة
+    html += '<col style="width:25%">';
+    html += '<col style="width:20%">';
+    html += '<col style="width:19%">';
+    html += '<col style="width:19%">';
+    html += '<col style="width:17%">';
     html += '</colgroup>';
-    html += '<thead><tr>';
-    html += '<th>العملة</th>';
-    html += '<th>الكمية المتبقية</th>';
-    html += '<th>إجمالي المستثمر</th>';
-    html += '<th>القيمة الحالية</th>';
-    html += '<th>الربح/الخسارة</th>';
-    html += '</tr></thead><tbody>';
-
+    html += '<thead><tr><th>العملة</th><th>الكمية المتبقية</th><th>إجمالي المستثمر</th><th>القيمة الحالية</th><th>الربح/الخسارة</th></tr></thead><tbody>';
     if (summaryRows.length === 0) {
         html += '<tr><td colspan="5" style="text-align:center;font-weight:700;padding:15px;">لا توجد بيانات</td></tr>';
     } else {
@@ -5738,19 +5944,11 @@ function printReport() {
             html += '<td class="pdf-ltr ' + pnlCls(item.pnlAmount) + '">' + fmtNum(item.pnlAmount, 2) + '</td>';
             html += '</tr>';
         });
-        html += '<tr class="pdf-summary-total">';
-        html += '<td>الإجمالي</td>';
-        html += '<td>—</td>';
-        html += '<td class="pdf-ltr">' + fmtNum(totals.invested, 2) + '</td>';
-        html += '<td class="pdf-ltr">' + fmtNum(totals.currentValue, 2) + '</td>';
-        html += '<td class="pdf-ltr">' + fmtNum(totals.pnlAmount, 2) + '</td>';
-        html += '</tr>';
+        html += '<tr class="pdf-summary-total"><td>الإجمالي</td><td>—</td><td class="pdf-ltr">' + fmtNum(totals.invested, 2) + '</td><td class="pdf-ltr">' + fmtNum(totals.currentValue, 2) + '</td><td class="pdf-ltr">' + fmtNum(totals.pnlAmount, 2) + '</td></tr>';
     }
     html += '</tbody></table>';
-
     html += '<div class="pdf-brand-footer" style="margin-top:14px;">MUHARRAQI  ·  Pro Edition  ·  © 2026  —  نسألكم الدعاء 🤲</div>';
 
-    /* ─── إدراج التقرير ثم الطباعة ─── */
     const printReportDiv = document.getElementById('printReport');
     printReportDiv.innerHTML = html;
     printReportDiv.style.display = 'block';
@@ -6082,18 +6280,10 @@ function showEstimateSellPopup() {
         tableHTML += '<tr data-symbol="' + coin.symbol + '" data-invested="' + coin.totalInvestedAmount + '" data-qty="' + coin.totalCoinQty + '"><td>' + getDisplayNameFromKey(coin.symbol) + '</td><td class="number-col">' + formatNumber(coin.totalCoinQty, 4) + '</td><td class="number-col">' + fmtMoney(coin.totalInvestedAmount, 2) + '</td><td class="number-col">' + fmtPrice(coin.averageEntryPrice) + '</td><td class="number-col">' + (coin.marketPrice > 0 ? fmtPrice(coin.marketPrice) : '---') + '</td><td><input type="text" id="estimatePrice_' + idx + '" value="' + estimateValue + '" oninput="validateNumberInput(this)" onblur="formatInputWithCommas(this); saveEstimatePriceForSymbol(\'' + coin.symbol + '\', ' + idx + '); updateEstimateCalculation(' + idx + ')" onfocus="removeCommasFromInput(this)" inputmode="decimal"></td><td class="number-col" id="estimatePnl_' + idx + '">---</td></tr>';
     });
     tableHTML += '</tbody></table></div>';
-
     tableHTML += '<div class="estimate-totals-box">';
-    tableHTML += '<div class="estimate-totals-item" id="estimateTotalInvestedBox">';
-    tableHTML += '<label>💰 ' + (currentLang === 'en' ? 'Total Invested' : 'إجمالي المستثمر') + '</label>';
-    tableHTML += '<div class="value" id="estimateTotalInvested">---</div>';
+    tableHTML += '<div class="estimate-totals-item" id="estimateTotalInvestedBox"><label>💰 ' + (currentLang === 'en' ? 'Total Invested' : 'إجمالي المستثمر') + '</label><div class="value" id="estimateTotalInvested">---</div></div>';
+    tableHTML += '<div class="estimate-totals-item highlight" id="estimateTotalPnlBox"><label>📈 ' + (currentLang === 'en' ? 'Total Expected Profit' : 'إجمالي الربح المتوقع') + '</label><div class="value" id="estimateTotalPnl">---</div></div>';
     tableHTML += '</div>';
-    tableHTML += '<div class="estimate-totals-item highlight" id="estimateTotalPnlBox">';
-    tableHTML += '<label>📈 ' + (currentLang === 'en' ? 'Total Expected Profit' : 'إجمالي الربح المتوقع') + '</label>';
-    tableHTML += '<div class="value" id="estimateTotalPnl">---</div>';
-    tableHTML += '</div>';
-    tableHTML += '</div>';
-
     tableHTML += '<div class="estimate-actions"><button class="estimate-save-btn" onclick="saveAllEstimatePrices()">💾 ' + (currentLang === 'en' ? 'Save' : 'حفظ') + '</button><button class="estimate-clear-btn" onclick="clearAllEstimatePrices()">🗑️ ' + (currentLang === 'en' ? 'Clear' : 'مسح') + '</button></div>';
     showPopup(currentLang === 'en' ? '📊 Estimated Sale' : '📊 البيع التقديري', tableHTML, currentLang === 'en' ? 'Close' : 'إغلاق', '', () => { saveAllEstimatePrices(); }, null);
     coinsData.forEach((coin, idx) => { updateEstimateCalculation(idx); });
@@ -6128,7 +6318,6 @@ function clearAllEstimatePrices() {
         showSuccess(currentLang === 'en' ? 'Prices cleared' : 'تم مسح الأسعار');
     });
 }
-
 function updateEstimateCalculation(idx) {
     const allRows = document.querySelectorAll('#estimateTable tbody tr');
     const rowElement = allRows[idx];
@@ -6146,44 +6335,28 @@ function updateEstimateCalculation(idx) {
     } else if (estimatePnlCell) { estimatePnlCell.textContent = '---'; estimatePnlCell.className = 'number-col'; }
     updateEstimateTotals();
 }
-
 function updateEstimateTotals() {
     const allRows = document.querySelectorAll('#estimateTable tbody tr');
-    let totalInvested = 0;
-    let totalPnl = 0;
-    let hasAnyEstimate = false;
-
+    let totalInvested = 0, totalPnl = 0, hasAnyEstimate = false;
     allRows.forEach((row, idx) => {
         const invested = parseFloat(row.dataset.invested) || 0;
         const qty = parseFloat(row.dataset.qty) || 0;
         const estimatePriceInput = document.getElementById('estimatePrice_' + idx);
         const estimatePrice = parseFormattedNumber(estimatePriceInput?.value);
-
         totalInvested += invested;
-
-        if (estimatePrice > 0 && qty > 0) {
-            hasAnyEstimate = true;
-            const estimatedValue = qty * estimatePrice;
-            totalPnl += (estimatedValue - invested);
-        }
+        if (estimatePrice > 0 && qty > 0) { hasAnyEstimate = true; totalPnl += (qty * estimatePrice - invested); }
     });
-
     const investedEl = document.getElementById('estimateTotalInvested');
     const pnlEl = document.getElementById('estimateTotalPnl');
     const pnlBoxEl = document.getElementById('estimateTotalPnlBox');
-
     if (investedEl) investedEl.textContent = fmtMoney(totalInvested, 2);
     if (pnlEl) {
         if (hasAnyEstimate) {
             pnlEl.textContent = fmtMoney(totalPnl, 2);
             pnlEl.classList.remove('positive', 'negative');
             if (pnlBoxEl) pnlBoxEl.classList.remove('negative');
-            if (totalPnl > 0) {
-                pnlEl.classList.add('positive');
-            } else if (totalPnl < 0) {
-                pnlEl.classList.add('negative');
-                if (pnlBoxEl) pnlBoxEl.classList.add('negative');
-            }
+            if (totalPnl > 0) pnlEl.classList.add('positive');
+            else if (totalPnl < 0) { pnlEl.classList.add('negative'); if (pnlBoxEl) pnlBoxEl.classList.add('negative'); }
         } else {
             pnlEl.textContent = '---';
             pnlEl.classList.remove('positive', 'negative');
@@ -6620,7 +6793,6 @@ function initAdvancedCharts() { loadPortfolioHistory(); updateAdvancedCharts(); 
 function loadPortfolioHistory() {
     try { const saved = localStorage.getItem('muharraqi_portfolio_history'); if (saved) portfolioHistory = JSON.parse(saved); } catch (e) { portfolioHistory = []; }
 }
-
 function savePortfolioHistory() {
     try {
         const now = Date.now();
@@ -6629,24 +6801,19 @@ function savePortfolioHistory() {
         const totalAssets = totals.currentValue + availableCash + Math.max(0, getNetSalesCash());
         const SNAPSHOT_INTERVAL = portfolioHistory.length < 2 ? 5000 : (30 * 1000);
         if (!lastEntry || (now - lastEntry.time) > SNAPSHOT_INTERVAL) {
-            if (lastEntry && lastEntry.value === 0 && totalAssets === 0 && portfolioHistory.length > 2) {
-                return;
-            }
+            if (lastEntry && lastEntry.value === 0 && totalAssets === 0 && portfolioHistory.length > 2) return;
             portfolioHistory.push({ time: now, value: totalAssets });
             if (portfolioHistory.length > 1000) portfolioHistory = portfolioHistory.slice(-1000);
             localStorage.setItem('muharraqi_portfolio_history', JSON.stringify(portfolioHistory));
-            console.log('📈 Snapshot: ' + totalAssets.toFixed(2) + ' (Total: ' + portfolioHistory.length + ' points)');
         }
     } catch (e) {}
 }
-
 function updateAdvancedCharts() {
     if (typeof Chart === 'undefined') return;
     savePortfolioHistory();
     updateDonutChart();
     updateTrendChart();
 }
-
 function updateDonutChart() {
     const canvas = document.getElementById('donutChart');
     if (!canvas) return;
@@ -6670,7 +6837,6 @@ function updateDonutChart() {
         return `<div class="legend-item"><span class="legend-color" style="background:${colors[i]}"></span><span>${label} (${pct}%)</span></div>`;
     }).join('');
 }
-
 function updateTrendChart() {
     const canvas = document.getElementById('trendChart');
     if (!canvas) return;
@@ -6687,12 +6853,7 @@ function updateTrendChart() {
         ctx.font = '13px Segoe UI, sans-serif';
         ctx.fillStyle = '#adb5bd';
         const remaining = 2 - (portfolioHistory?.length || 0);
-        ctx.fillText(
-            currentLang === 'en'
-                ? 'Chart will appear after ' + remaining + ' more point' + (remaining > 1 ? 's' : '') + ' (every few seconds)'
-                : 'سيظهر الرسم البياني بعد ' + remaining + ' نقطة إضافية (كل بضع ثوانٍ)',
-            w / 2, h / 2 + 15
-        );
+        ctx.fillText(currentLang === 'en' ? 'Chart will appear after ' + remaining + ' more point' + (remaining > 1 ? 's' : '') + ' (every few seconds)' : 'سيظهر الرسم البياني بعد ' + remaining + ' نقطة إضافية (كل بضع ثوانٍ)', w / 2, h / 2 + 15);
         return;
     }
     let filteredData = portfolioHistory;
@@ -6711,16 +6872,10 @@ function updateTrendChart() {
         ctx.font = '14px Segoe UI, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(
-            currentLang === 'en' ? 'Not enough data in this range' : 'لا توجد بيانات كافية في هذا النطاق الزمني',
-            w / 2, h / 2 - 12
-        );
+        ctx.fillText(currentLang === 'en' ? 'Not enough data in this range' : 'لا توجد بيانات كافية في هذا النطاق الزمني', w / 2, h / 2 - 12);
         ctx.font = '12px Segoe UI, sans-serif';
         ctx.fillStyle = '#adb5bd';
-        ctx.fillText(
-            currentLang === 'en' ? 'Try widening the range (ALL)' : 'جرّب توسيع النطاق (ALL)',
-            w / 2, h / 2 + 15
-        );
+        ctx.fillText(currentLang === 'en' ? 'Try widening the range (ALL)' : 'جرّب توسيع النطاق (ALL)', w / 2, h / 2 + 15);
         if (trendChart) { trendChart.destroy(); trendChart = null; }
         return;
     }
@@ -6881,7 +7036,7 @@ function resetAllData() {
     const item5 = currentLang === 'en' ? '📊 Saved estimated sale data' : '📊 بيانات البيع التقديري المحفوظة';
     const dontLoseTitle = currentLang === 'en' ? "💡 If you don't want to lose data," : '💡 إذا كنت لا تريد خسارة البيانات،';
     const exportFirst = currentLang === 'en' ? 'Export the file first' : 'قم بتصدير الملف أولاً';
-    const useSaveTxt = currentLang === 'en' ? 'Use 💾 Save TXT button from top' : '(استخدم زر 💾 حفظ TXT من الأعلى)';
+    const useSaveTxt = currentLang === 'en' ? 'Use 💾 Save TXT+JSON button from top' : '(استخدم زر 💾 حفظ TXT+JSON من الأعلى)';
     const confirmQuestion = currentLang === 'en' ? 'Are you absolutely sure to continue?' : 'هل أنت متأكد تماماً من المتابعة؟';
     const textAlign = currentLang === 'en' ? 'left' : 'right';
     const listPadding = currentLang === 'en' ? 'left' : 'right';
@@ -7002,11 +7157,8 @@ function toggleQuickNav(event) {
         menu.classList.add('active');
         toggle.classList.add('active');
         toggle.setAttribute('aria-expanded', 'true');
-    } else {
-        closeQuickNav();
-    }
+    } else closeQuickNav();
 }
-
 function closeQuickNav() {
     const menu = document.getElementById('quickNavMenu');
     const toggle = document.getElementById('quickNavToggle');
@@ -7015,22 +7167,14 @@ function closeQuickNav() {
     toggle.classList.remove('active');
     toggle.setAttribute('aria-expanded', 'false');
 }
-
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
-    if (!section) {
-        console.warn('⚠️ القسم غير موجود:', sectionId);
-        return;
-    }
+    if (!section) return;
     const contentMap = {
-        'section-cash': 'cashSectionContent',
-        'section-coinActive': 'coinActiveSectionContent',
-        'section-entryDetails': 'entryDetailsSectionContent',
-        'section-summary': 'summarySectionContent',
-        'section-currentStatus': 'currentStatusSectionContent',
-        'section-marketInsights': 'marketInsightsSectionContent',
-        'section-advancedCharts': 'advancedChartsSectionContent',
-        'section-riskCalculator': 'riskCalculatorSectionContent'
+        'section-cash': 'cashSectionContent', 'section-coinActive': 'coinActiveSectionContent',
+        'section-entryDetails': 'entryDetailsSectionContent', 'section-summary': 'summarySectionContent',
+        'section-currentStatus': 'currentStatusSectionContent', 'section-marketInsights': 'marketInsightsSectionContent',
+        'section-advancedCharts': 'advancedChartsSectionContent', 'section-riskCalculator': 'riskCalculatorSectionContent'
     };
     const contentId = contentMap[sectionId];
     if (contentId) {
@@ -7058,146 +7202,29 @@ function scrollToSection(sectionId) {
         }, 900);
     }, 60);
 }
-
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 /* ═══════════════════════════════════════════════════════════════
-   ✅ ✅ ✅  جديد: تصدير Excel (xlsx-js-style)  ✅ ✅ ✅
-   ═══════════════════════════════════════════════════════════════
-   المتطلبات المُنفَّذة:
-   ✅ مكتبة xlsx-js-style@1.2.0
-   ✅ RTL على مستوى الورقة والمصنف
-   ✅ عنوان التطبيق مدموج A:J بخلفية #0F172A ونص أبيض
-   ✅ شريط اسم القسم بخلفية متدرجة
-   ✅ رؤوس الجدول #1E3A5F ونص أبيض
-   ✅ رؤوس العملة الإدخال #0EA5E9
-   ✅ رؤوس العملة التحويل #8B5CF6
-   ✅ صفوف البيانات ملوّنة حسب التصنيف
-   ✅ صف الإجمالي #0F172A + قيمة #34D399
-   ✅ بطاقات إحصائيات ملوّنة
-   ✅ حدود رقيقة #94A3B8 + سميكة #0F172A
-   ✅ أرقام بـ Number ومنزلتين عشريتين
-   ✅ 10 أعمدة + دمج + عرض أعمدة + ارتفاع الصف الأول 30
-   ✅ ورقة "ملخص" ثانية
-   ✅ اسم الملف: trades-report-YYYY-MM-DD.xlsx
-   ✅ syncFromDOM() أولاً
-   ✅ showToast عند النجاح
+   ✅ دالة Toast (تُستخدم للتصدير والإشعارات الجميلة)
    ═══════════════════════════════════════════════════════════════ */
-
-/* لوحة ألوان موحّدة للتصدير */
-const XLSX_THEME = {
-    darkBg: '0F172A',
-    headerBg: '1E3A5F',
-    entryHeaderBg: '0EA5E9',
-    dcaHeaderBg: '8B5CF6',
-    totalBg: '0F172A',
-    totalValueColor: '34D399',
-    thinBorderColor: '94A3B8',
-    thickBorderColor: '0F172A',
-    white: 'FFFFFF',
-    black: '000000',
-    rowFlight: 'E0F2FE',   // إدخال (أزرق فاتح)
-    rowHotel: 'CCFBF1',    // تعزيز (أخضر فاتح)
-    rowOther: 'FEF3C7',    // أخرى (كهرماني)
-    statGreen: 'DCFCE7',
-    statPurple: 'EDE9FE',
-    statAmber: 'FEF3C7',
-    statRed: 'FEE2E2',
-    rowNeutral: 'F8FAFC'
-};
-
-/* ✅ دالة إنشاء خلية أنيقة مع كل الأنماط */
-function makeXlsxCell(value, opts) {
-    opts = opts || {};
-    const bold = opts.bold || false;
-    const color = opts.color || XLSX_THEME.black;
-    const bg = opts.bg || null;
-    const align = opts.align || 'center';
-    const valign = opts.valign || 'center';
-    const fontSize = opts.fontSize || 11;
-    const border = opts.border !== false;
-    const borderThick = opts.borderThick || false;
-    const wrap = opts.wrap || false;
-    const numFmt = opts.numFmt || null;
-    const isNumber = typeof value === 'number' && isFinite(value);
-
-    const style = {
-        font: { name: 'Calibri', sz: fontSize, bold: bold, color: { rgb: color } },
-        alignment: { horizontal: align, vertical: valign, wrapText: wrap, readingOrder: 2 }
-    };
-    if (bg) style.fill = { patternType: 'solid', fgColor: { rgb: bg } };
-    if (border) {
-        const bc = borderThick ? XLSX_THEME.thickBorderColor : XLSX_THEME.thinBorderColor;
-        const side = { style: borderThick ? 'medium' : 'thin', color: { rgb: bc } };
-        style.border = { top: side, bottom: side, left: side, right: side };
-    }
-    const cell = {
-        v: (value === null || value === undefined) ? '' : value,
-        t: isNumber ? 'n' : 's',
-        s: style
-    };
-    if (numFmt) cell.z = numFmt;
-    return cell;
-}
-
-/* ✅ دالة إنشاء صف فارغ بخلفية معينة (للتنسيق) */
-function makeXlsxEmptyRow(cols, bg) {
-    const row = [];
-    for (let i = 0; i < cols; i++) {
-        row.push(makeXlsxCell('', { bg: bg, border: false }));
-    }
-    return row;
-}
-
-/* ✅ دالة مزامنة القيم الحالية من الحقول إلى الذاكرة قبل التصدير */
-function syncFromDOM() {
-    try {
-        if (!activeCoinSymbol || !allCoinData[activeCoinSymbol]) return;
-        const data = allCoinData[activeCoinSymbol];
-        const entryPriceEl = document.getElementById('initialEntryPrice');
-        const amountEl = document.getElementById('initialAmountDollars');
-        if (entryPriceEl) data.initialEntryPrice = entryPriceEl.value || data.initialEntryPrice;
-        if (amountEl) data.initialAmountDollars = amountEl.value || data.initialAmountDollars;
-
-        (data.repurchases || []).forEach((rp, idx) => {
-            const priceInput = document.getElementById('dca_price_' + activeCoinSymbol + '_' + idx);
-            const amountInput = document.getElementById('dca_amount_' + activeCoinSymbol + '_' + idx);
-            if (priceInput && priceInput.value) rp.price = priceInput.value;
-            if (amountInput && amountInput.value) rp.amount = amountInput.value;
-        });
-        saveAllDataToLocalStorage();
-    } catch (e) { console.warn('syncFromDOM:', e); }
-}
-
-/* ✅ دالة Toast لإشعار نجاح تصدير Excel */
 function showToast(message, type) {
     try {
-        const existing = document.getElementById('xlsx-toast');
+        const existing = document.getElementById('app-toast');
         if (existing) existing.remove();
         const toast = document.createElement('div');
-        toast.id = 'xlsx-toast';
+        toast.id = 'app-toast';
         const isSuccess = type !== 'error';
         toast.style.cssText = `
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
+            position: fixed; bottom: 100px; left: 50%;
             transform: translateX(-50%) translateY(20px);
             background: ${isSuccess ? 'linear-gradient(135deg, #16a34a, #15803d)' : 'linear-gradient(135deg, #dc3545, #b91c1c)'};
-            color: #fff;
-            padding: 14px 26px;
-            border-radius: 12px;
+            color: #fff; padding: 14px 26px; border-radius: 12px;
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            font-weight: 700;
-            font-size: 0.95em;
+            font-weight: 700; font-size: 0.95em;
             box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-            z-index: 99999;
-            opacity: 0;
+            z-index: 99999; opacity: 0;
             transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            pointer-events: none;
-            max-width: 90vw;
-            text-align: center;
+            pointer-events: none; max-width: 90vw; text-align: center;
             direction: rtl;
         `;
         toast.textContent = message;
@@ -7211,88 +7238,107 @@ function showToast(message, type) {
             toast.style.transform = 'translateX(-50%) translateY(20px)';
             setTimeout(() => toast.remove(), 400);
         }, 3000);
-    } catch (e) {
-        console.warn('showToast:', e);
-    }
+    } catch (e) {}
 }
 
-/* ✅ دالة تصدير Excel الرئيسية */
+/* ═══════════════════════════════════════════════════════════════
+   📊 تصدير Excel (xlsx-js-style)
+   ═══════════════════════════════════════════════════════════════ */
+const XLSX_THEME = {
+    darkBg: '0F172A', headerBg: '1E3A5F',
+    totalBg: '0F172A', totalValueColor: '34D399',
+    thinBorderColor: '94A3B8', thickBorderColor: '0F172A',
+    white: 'FFFFFF', black: '000000',
+    rowFlight: 'E0F2FE', rowHotel: 'CCFBF1', rowOther: 'FEF3C7',
+    statGreen: 'DCFCE7', statPurple: 'EDE9FE', statAmber: 'FEF3C7', statRed: 'FEE2E2'
+};
+
+function makeXlsxCell(value, opts) {
+    opts = opts || {};
+    const bold = opts.bold || false;
+    const color = opts.color || XLSX_THEME.black;
+    const bg = opts.bg || null;
+    const align = opts.align || 'center';
+    const valign = opts.valign || 'center';
+    const fontSize = opts.fontSize || 11;
+    const border = opts.border !== false;
+    const borderThick = opts.borderThick || false;
+    const wrap = opts.wrap || false;
+    const numFmt = opts.numFmt || null;
+    const isNumber = typeof value === 'number' && isFinite(value);
+    const style = {
+        font: { name: 'Calibri', sz: fontSize, bold: bold, color: { rgb: color } },
+        alignment: { horizontal: align, vertical: valign, wrapText: wrap, readingOrder: 2 }
+    };
+    if (bg) style.fill = { patternType: 'solid', fgColor: { rgb: bg } };
+    if (border) {
+        const bc = borderThick ? XLSX_THEME.thickBorderColor : XLSX_THEME.thinBorderColor;
+        const side = { style: borderThick ? 'medium' : 'thin', color: { rgb: bc } };
+        style.border = { top: side, bottom: side, left: side, right: side };
+    }
+    const cell = { v: (value === null || value === undefined) ? '' : value, t: isNumber ? 'n' : 's', s: style };
+    if (numFmt) cell.z = numFmt;
+    return cell;
+}
+function makeXlsxEmptyRow(cols, bg) {
+    const row = [];
+    for (let i = 0; i < cols; i++) row.push(makeXlsxCell('', { bg: bg, border: false }));
+    return row;
+}
+function syncFromDOM() {
+    try {
+        if (!activeCoinSymbol || !allCoinData[activeCoinSymbol]) return;
+        const data = allCoinData[activeCoinSymbol];
+        const entryPriceEl = document.getElementById('initialEntryPrice');
+        const amountEl = document.getElementById('initialAmountDollars');
+        if (entryPriceEl) data.initialEntryPrice = entryPriceEl.value || data.initialEntryPrice;
+        if (amountEl) data.initialAmountDollars = amountEl.value || data.initialAmountDollars;
+        (data.repurchases || []).forEach((rp, idx) => {
+            const priceInput = document.getElementById('dca_price_' + activeCoinSymbol + '_' + idx);
+            const amountInput = document.getElementById('dca_amount_' + activeCoinSymbol + '_' + idx);
+            if (priceInput && priceInput.value) rp.price = priceInput.value;
+            if (amountInput && amountInput.value) rp.amount = amountInput.value;
+        });
+        saveAllDataToLocalStorage();
+    } catch (e) {}
+}
 function exportToExcel() {
-    // 1️⃣ التحقق من تحميل المكتبة
     if (typeof XLSX === 'undefined') {
-        showToast('⚠️ مكتبة Excel غير محمّلة. تحقق من الاتصال بالإنترنت.', 'error');
-        showError(currentLang === 'en'
-            ? 'Excel library (xlsx-js-style) is not loaded.\nCheck your internet connection and reload the page.'
-            : 'مكتبة Excel (xlsx-js-style) غير محمّلة.\nتحقق من الاتصال بالإنترنت ثم أعد تحميل الصفحة.');
+        showToast('⚠️ مكتبة Excel غير محمّلة', 'error');
+        showError(currentLang === 'en' ? 'Excel library is not loaded.' : 'مكتبة Excel غير محمّلة.');
         return;
     }
-
-    // 2️⃣ مزامنة أي تعديلات حالية
     syncFromDOM();
-
     try {
-        // 3️⃣ جمع البيانات
         const { summaryRows, totals } = calculateSummaryData();
         const totalSalesCash = salesCashHistory.deposits.reduce((s, r) => s + r.amount, 0) -
                                salesCashHistory.withdrawals.reduce((s, r) => s + r.amount, 0);
         const netSalesCash = Math.max(0, totalSalesCash);
         const totalCash = availableCash + netSalesCash;
-
         const now = new Date();
         const dateStr = now.toLocaleString('ar-EG');
-        const dateStrEn = now.toLocaleString('en-US');
         const fileDate = now.toISOString().slice(0, 10);
-
-        const COLS = 10; // A:J
-
-        /* ═════════════════════════════════════════════════════
-           الورقة 1: التقرير الرئيسي
-           ═════════════════════════════════════════════════════ */
+        const COLS = 10;
         const wsData = [];
         const merges = [];
 
-        // ✅ الصف 1: عنوان التطبيق (مدموج A1:J1)
-        const titleRow = [];
-        titleRow.push(makeXlsxCell('📊 MUHARRAQI PRO — تقرير متابعة الصفقات الشاملة', {
-            bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.darkBg,
-            fontSize: 16, align: 'center', border: false
-        }));
-        for (let i = 1; i < COLS; i++) {
-            titleRow.push(makeXlsxCell('', { bg: XLSX_THEME.darkBg, border: false }));
-        }
+        // Title
+        const titleRow = [makeXlsxCell('📊 MUHARRAQI PRO — تقرير متابعة الصفقات الشاملة', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.darkBg, fontSize: 16, align: 'center', border: false })];
+        for (let i = 1; i < COLS; i++) titleRow.push(makeXlsxCell('', { bg: XLSX_THEME.darkBg, border: false }));
         wsData.push(titleRow);
         merges.push({ s: { r: 0, c: 0 }, e: { r: 0, c: COLS - 1 } });
 
-        // ✅ الصف 2: معلومات التقرير (مدموج A2:J2)
-        const infoRow = [];
-        infoRow.push(makeXlsxCell('Pro Edition 2.0.0  |  تاريخ التقرير: ' + dateStr, {
-            bold: false, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg,
-            fontSize: 10, align: 'center', border: false
-        }));
-        for (let i = 1; i < COLS; i++) {
-            infoRow.push(makeXlsxCell('', { bg: XLSX_THEME.headerBg, border: false }));
-        }
+        const infoRow = [makeXlsxCell('Pro Edition 2.0.0  |  تاريخ التقرير: ' + dateStr, { color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, fontSize: 10, align: 'center', border: false })];
+        for (let i = 1; i < COLS; i++) infoRow.push(makeXlsxCell('', { bg: XLSX_THEME.headerBg, border: false }));
         wsData.push(infoRow);
         merges.push({ s: { r: 1, c: 0 }, e: { r: 1, c: COLS - 1 } });
-
-        // ✅ صف فاصل
         wsData.push(makeXlsxEmptyRow(COLS, XLSX_THEME.white));
 
-        // ✅ شريط "بطاقات الإحصائيات" (تدرّج بلون مختلف لكل بطاقة)
-        const statsBarRow = [];
-        statsBarRow.push(makeXlsxCell('📈 ملخص المحفظة', {
-            bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg,
-            fontSize: 13, align: 'right', border: false
-        }));
-        for (let i = 1; i < COLS; i++) {
-            statsBarRow.push(makeXlsxCell('', { bg: XLSX_THEME.headerBg, border: false }));
-        }
+        // Stats bar
+        const statsBarRow = [makeXlsxCell('📈 ملخص المحفظة', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, fontSize: 13, align: 'right', border: false })];
+        for (let i = 1; i < COLS; i++) statsBarRow.push(makeXlsxCell('', { bg: XLSX_THEME.headerBg, border: false }));
         wsData.push(statsBarRow);
         merges.push({ s: { r: 3, c: 0 }, e: { r: 3, c: COLS - 1 } });
-
-        // ✅ صف بطاقات الإحصائيات (5 بطاقات × عمودين لكل بطاقة = 10 أعمدة)
-        const statCardsRow1 = [];
-        const statCardsRow2 = [];
 
         const statsList = [
             { label: '💼 إجمالي المستثمر',  value: totals.invested,            bg: XLSX_THEME.statGreen  },
@@ -7301,76 +7347,43 @@ function exportToExcel() {
             { label: '📊 الربح / الخسارة %', value: totals.pnlPercent,         bg: totals.pnlPercent >= 0 ? XLSX_THEME.statGreen : XLSX_THEME.statRed },
             { label: '💰 إجمالي الكاش المتاح', value: totalCash,               bg: XLSX_THEME.statAmber  }
         ];
-
-        // نوزّع 5 بطاقات على 10 أعمدة (كل بطاقة بعمودين)
+        const statCardsRow1 = [], statCardsRow2 = [];
         statsList.forEach((stat) => {
-            // صف العنوان
-            statCardsRow1.push(makeXlsxCell(stat.label, {
-                bold: true, color: XLSX_THEME.black, bg: stat.bg,
-                fontSize: 10, align: 'center', wrap: true, border: true
-            }));
-            statCardsRow1.push(makeXlsxCell('', { bg: stat.bg, border: true }));
-            // صف القيمة
+            statCardsRow1.push(makeXlsxCell(stat.label, { bold: true, bg: stat.bg, fontSize: 10, align: 'center', wrap: true }));
+            statCardsRow1.push(makeXlsxCell('', { bg: stat.bg }));
             const isPct = stat.label.indexOf('%') !== -1;
-            statCardsRow2.push(makeXlsxCell(
-                isPct ? Number(stat.value) : Number(stat.value),
-                {
-                    bold: true, color: XLSX_THEME.black, bg: stat.bg,
-                    fontSize: 12, align: 'center',
-                    numFmt: isPct ? '0.00"%"' : '#,##0.00', border: true
-                }
-            ));
-            statCardsRow2.push(makeXlsxCell('', { bg: stat.bg, border: true }));
+            statCardsRow2.push(makeXlsxCell(Number(stat.value), { bold: true, bg: stat.bg, fontSize: 12, align: 'center', numFmt: isPct ? '0.00"%"' : '#,##0.00' }));
+            statCardsRow2.push(makeXlsxCell('', { bg: stat.bg }));
         });
-
         wsData.push(statCardsRow1);
-        // دمج كل بطاقة (عمودين)
-        for (let i = 0; i < 5; i++) {
-            merges.push({ s: { r: 4, c: i * 2 }, e: { r: 4, c: i * 2 + 1 } });
-        }
+        for (let i = 0; i < 5; i++) merges.push({ s: { r: 4, c: i * 2 }, e: { r: 4, c: i * 2 + 1 } });
         wsData.push(statCardsRow2);
-        for (let i = 0; i < 5; i++) {
-            merges.push({ s: { r: 5, c: i * 2 }, e: { r: 5, c: i * 2 + 1 } });
-        }
-
-        // ✅ صف فاصل
+        for (let i = 0; i < 5; i++) merges.push({ s: { r: 5, c: i * 2 }, e: { r: 5, c: i * 2 + 1 } });
         wsData.push(makeXlsxEmptyRow(COLS, XLSX_THEME.white));
 
-        // ✅ شريط قسم تفاصيل العملات
-        const sectionRow = [];
-        sectionRow.push(makeXlsxCell('🪙 تفاصيل العملات والصفقات  (' + summaryRows.length + ')', {
-            bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg,
-            fontSize: 13, align: 'right', border: false
-        }));
-        for (let i = 1; i < COLS; i++) {
-            sectionRow.push(makeXlsxCell('', { bg: XLSX_THEME.headerBg, border: false }));
-        }
+        // Section bar
+        const sectionRow = [makeXlsxCell('🪙 تفاصيل العملات والصفقات  (' + summaryRows.length + ')', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, fontSize: 13, align: 'right', border: false })];
+        for (let i = 1; i < COLS; i++) sectionRow.push(makeXlsxCell('', { bg: XLSX_THEME.headerBg, border: false }));
         wsData.push(sectionRow);
         merges.push({ s: { r: 7, c: 0 }, e: { r: 7, c: COLS - 1 } });
 
-        // ✅ رؤوس الجدول الرئيسي (10 أعمدة)
+        // Header row
         const headerRow = [
-            makeXlsxCell('العملة',       { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
-            makeXlsxCell('الكمية',        { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
-            makeXlsxCell('المستثمر $',    { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
-            makeXlsxCell('متوسط الدخول',  { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
-            makeXlsxCell('السعر الحالي',  { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
+            makeXlsxCell('العملة', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
+            makeXlsxCell('الكمية', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
+            makeXlsxCell('المستثمر $', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
+            makeXlsxCell('متوسط الدخول', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
+            makeXlsxCell('السعر الحالي', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
             makeXlsxCell('القيمة الحالية', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
             makeXlsxCell('الربح/الخسارة $', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
             makeXlsxCell('الربح/الخسارة %', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
             makeXlsxCell('الكاش من البيع $', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
-            makeXlsxCell('الحالة',        { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true })
+            makeXlsxCell('الحالة', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true })
         ];
         wsData.push(headerRow);
 
-        // ✅ صفوف العملات (إدخال + تعزيزات)
-        let summaryStartRow = wsData.length;
-
         if (summaryRows.length === 0) {
-            const emptyRow = [makeXlsxCell('لا توجد عملات مضافة حالياً', {
-                color: XLSX_THEME.black, bg: XLSX_THEME.rowOther,
-                align: 'center', fontSize: 11
-            })];
+            const emptyRow = [makeXlsxCell('لا توجد عملات مضافة حالياً', { bg: XLSX_THEME.rowOther, fontSize: 11 })];
             for (let i = 1; i < COLS; i++) emptyRow.push(makeXlsxCell('', { bg: XLSX_THEME.rowOther }));
             wsData.push(emptyRow);
             merges.push({ s: { r: wsData.length - 1, c: 0 }, e: { r: wsData.length - 1, c: COLS - 1 } });
@@ -7378,13 +7391,10 @@ function exportToExcel() {
             summaryRows.forEach(item => {
                 const displayName = getDisplayNameFromKey(item.symbol);
                 const marketPriceValid = item.marketPrice !== null && !isNaN(item.marketPrice) && item.marketPrice > 0;
-
-                // صف الإدخال (Entry)
                 const entryData = allCoinData[item.symbol];
                 const initialEntryPrice = parseFormattedNumber(entryData.initialEntryPrice);
                 const initialAmount = parseFormattedNumber(entryData.initialAmountDollars);
                 const hasEntry = initialEntryPrice > 0 && initialAmount > 0;
-
                 if (hasEntry) {
                     const entryQty = initialAmount / initialEntryPrice;
                     const initialSales = entryData.initialSales || [];
@@ -7395,8 +7405,7 @@ function exportToExcel() {
                     const currentValue = remainingQty * (item.marketPrice || 0);
                     const pnlAmt = currentValue - investedRemaining;
                     const pnlPct = investedRemaining > 0 ? (pnlAmt / investedRemaining) * 100 : 0;
-
-                    const entryRow = [
+                    wsData.push([
                         makeXlsxCell(displayName + ' — دخول', { bold: true, bg: XLSX_THEME.rowFlight, align: 'right' }),
                         makeXlsxCell(Number(remainingQty), { bg: XLSX_THEME.rowFlight, numFmt: '#,##0.0000' }),
                         makeXlsxCell(Number(investedRemaining), { bg: XLSX_THEME.rowFlight, numFmt: '#,##0.00' }),
@@ -7407,11 +7416,8 @@ function exportToExcel() {
                         makeXlsxCell(Number(pnlPct), { bg: XLSX_THEME.rowFlight, numFmt: '0.00"%"', color: pnlPct >= 0 ? '15803D' : 'B91C1C', bold: true }),
                         makeXlsxCell(Number(cashFromSales), { bg: XLSX_THEME.rowFlight, numFmt: '#,##0.00' }),
                         makeXlsxCell(remainingQty <= 0 ? 'تم البيع' : (soldQty > 0 ? 'بيع جزئي' : 'نشط'), { bg: XLSX_THEME.rowFlight })
-                    ];
-                    wsData.push(entryRow);
+                    ]);
                 }
-
-                // صفوف التعزيزات (DCAs)
                 (entryData.repurchases || []).forEach((rp, dcaIdx) => {
                     const rpPrice = parseFormattedNumber(rp.price);
                     const rpAmount = parseFormattedNumber(rp.amount);
@@ -7426,11 +7432,8 @@ function exportToExcel() {
                     const currentValue = remainingQty * (item.marketPrice || 0);
                     const pnlAmt = currentValue - investedRemaining;
                     const pnlPct = investedRemaining > 0 ? (pnlAmt / investedRemaining) * 100 : 0;
-                    const status = !isSaved ? 'غير محفوظ' :
-                        (soldQty >= rpQty - 0.00000001 ? 'تم البيع' :
-                        (soldQty > 0 ? 'بيع جزئي' : 'نشط'));
-
-                    const dcaRow = [
+                    const status = !isSaved ? 'غير محفوظ' : (soldQty >= rpQty - 0.00000001 ? 'تم البيع' : (soldQty > 0 ? 'بيع جزئي' : 'نشط'));
+                    wsData.push([
                         makeXlsxCell(displayName + ' — تعزيز #' + (dcaIdx + 1), { bold: true, bg: XLSX_THEME.rowHotel, align: 'right' }),
                         makeXlsxCell(Number(remainingQty), { bg: XLSX_THEME.rowHotel, numFmt: '#,##0.0000' }),
                         makeXlsxCell(Number(investedRemaining), { bg: XLSX_THEME.rowHotel, numFmt: '#,##0.00' }),
@@ -7441,14 +7444,13 @@ function exportToExcel() {
                         makeXlsxCell(Number(pnlPct), { bg: XLSX_THEME.rowHotel, numFmt: '0.00"%"', color: pnlPct >= 0 ? '15803D' : 'B91C1C', bold: true }),
                         makeXlsxCell(Number(cashFromSales), { bg: XLSX_THEME.rowHotel, numFmt: '#,##0.00' }),
                         makeXlsxCell(status, { bg: XLSX_THEME.rowHotel })
-                    ];
-                    wsData.push(dcaRow);
+                    ]);
                 });
             });
         }
 
-        // ✅ صف الإجمالي (خلفية داكنة + قيمة خضراء)
-        const totalRow = [
+        // Total row
+        wsData.push([
             makeXlsxCell('الإجمالي', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.totalBg, borderThick: true, align: 'right', fontSize: 12 }),
             makeXlsxCell('', { bg: XLSX_THEME.totalBg, borderThick: true }),
             makeXlsxCell(Number(totals.invested), { bold: true, color: XLSX_THEME.totalValueColor, bg: XLSX_THEME.totalBg, numFmt: '#,##0.00', borderThick: true, fontSize: 12 }),
@@ -7459,113 +7461,62 @@ function exportToExcel() {
             makeXlsxCell(Number(totals.pnlPercent), { bold: true, color: XLSX_THEME.totalValueColor, bg: XLSX_THEME.totalBg, numFmt: '0.00"%"', borderThick: true, fontSize: 12 }),
             makeXlsxCell(Number(totals.cashFromSales), { bold: true, color: XLSX_THEME.totalValueColor, bg: XLSX_THEME.totalBg, numFmt: '#,##0.00', borderThick: true, fontSize: 12 }),
             makeXlsxCell('', { bg: XLSX_THEME.totalBg, borderThick: true })
-        ];
-        wsData.push(totalRow);
+        ]);
 
-        // ✅ شريط قسم "سجل الكاش" + صفوف تفاصيل
         wsData.push(makeXlsxEmptyRow(COLS, XLSX_THEME.white));
-
-        const cashSectionRow = [];
-        cashSectionRow.push(makeXlsxCell('💰 ملخص الكاش', {
-            bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg,
-            fontSize: 13, align: 'right', border: false
-        }));
+        const cashSectionRow = [makeXlsxCell('💰 ملخص الكاش', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, fontSize: 13, align: 'right', border: false })];
         for (let i = 1; i < COLS; i++) cashSectionRow.push(makeXlsxCell('', { bg: XLSX_THEME.headerBg, border: false }));
         wsData.push(cashSectionRow);
         merges.push({ s: { r: wsData.length - 1, c: 0 }, e: { r: wsData.length - 1, c: COLS - 1 } });
 
-        const cashRows = [
-            ['💵 كاش يدوي', availableCash],
-            ['💎 كاش من البيع', netSalesCash],
-            ['💰 إجمالي الكاش المتاح', totalCash]
-        ];
-        cashRows.forEach(([label, val], i) => {
-            const row = [
-                makeXlsxCell(label, { bold: true, bg: XLSX_THEME.rowOther, align: 'right' }),
-                makeXlsxCell(Number(val), { bg: XLSX_THEME.rowOther, numFmt: '#,##0.00', bold: true, color: '0F172A' })
-            ];
+        [['💵 كاش يدوي', availableCash], ['💎 كاش من البيع', netSalesCash], ['💰 إجمالي الكاش المتاح', totalCash]].forEach(([label, val]) => {
+            const row = [makeXlsxCell(label, { bold: true, bg: XLSX_THEME.rowOther, align: 'right' }), makeXlsxCell(Number(val), { bg: XLSX_THEME.rowOther, numFmt: '#,##0.00', bold: true, color: '0F172A' })];
             for (let j = 2; j < COLS; j++) row.push(makeXlsxCell('', { bg: XLSX_THEME.rowOther }));
             wsData.push(row);
-            merges.push({ s: { r: wsData.length - 1, c: 0 }, e: { r: wsData.length - 1, c: 0 } });
             merges.push({ s: { r: wsData.length - 1, c: 1 }, e: { r: wsData.length - 1, c: COLS - 1 } });
         });
 
-        // ✅ صف شعار العلامة التجارية
         wsData.push(makeXlsxEmptyRow(COLS, XLSX_THEME.white));
-        const brandRow = [];
-        brandRow.push(makeXlsxCell('MUHARRAQI  ·  Pro Edition  ·  © 2026  —  نسألكم الدعاء 🤲', {
-            bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.darkBg,
-            fontSize: 10, align: 'center', border: false
-        }));
+        const brandRow = [makeXlsxCell('MUHARRAQI  ·  Pro Edition  ·  © 2026  —  نسألكم الدعاء 🤲', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.darkBg, fontSize: 10, align: 'center', border: false })];
         for (let i = 1; i < COLS; i++) brandRow.push(makeXlsxCell('', { bg: XLSX_THEME.darkBg, border: false }));
         wsData.push(brandRow);
         merges.push({ s: { r: wsData.length - 1, c: 0 }, e: { r: wsData.length - 1, c: COLS - 1 } });
 
-        // ✅ إنشاء الورقة
         const ws = XLSX.utils.aoa_to_sheet(wsData.map(row => row.map(c => c.v)));
-        // إعادة لصق الأنماط لأن aoa_to_sheet لا تحتفظ بها
         wsData.forEach((row, r) => {
             row.forEach((cell, c) => {
-                const addr = XLSX.utils.encode_cell({ r: r, c: c });
+                const addr = XLSX.utils.encode_cell({ r, c });
                 ws[addr] = cell;
             });
         });
-
-        // ✅ RTL على مستوى الورقة
         ws['!views'] = [{ RTL: true }];
-
-        // ✅ الدمج
         ws['!merges'] = merges;
-
-        // ✅ عرض الأعمدة
         ws['!cols'] = [
-            { wch: 22 }, // A: العملة
-            { wch: 16 }, // B: الكمية
-            { wch: 16 }, // C: المستثمر
-            { wch: 18 }, // D: متوسط الدخول
-            { wch: 18 }, // E: السعر الحالي
-            { wch: 18 }, // F: القيمة الحالية
-            { wch: 18 }, // G: الربح/الخسارة $
-            { wch: 16 }, // H: الربح/الخسارة %
-            { wch: 18 }, // I: الكاش من البيع
-            { wch: 14 }  // J: الحالة
+            { wch: 22 }, { wch: 16 }, { wch: 16 }, { wch: 18 }, { wch: 18 },
+            { wch: 18 }, { wch: 18 }, { wch: 16 }, { wch: 18 }, { wch: 14 }
         ];
-
-        // ✅ ارتفاع الصف الأول
         ws['!rows'] = [];
         ws['!rows'][0] = { hpt: 30 };
         ws['!rows'][1] = { hpt: 22 };
         ws['!rows'][4] = { hpt: 24 };
         ws['!rows'][5] = { hpt: 26 };
 
-        /* ═════════════════════════════════════════════════════
-           الورقة 2: ملخص
-           ═════════════════════════════════════════════════════ */
+        // Summary sheet
         const ws2Data = [];
         const merges2 = [];
-
-        // عنوان
-        const t2 = [];
-        t2.push(makeXlsxCell('📋 ملخص الصفقات', {
-            bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.darkBg,
-            fontSize: 15, align: 'center', border: false
-        }));
+        const t2 = [makeXlsxCell('📋 ملخص الصفقات', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.darkBg, fontSize: 15, align: 'center', border: false })];
         for (let i = 1; i < 5; i++) t2.push(makeXlsxCell('', { bg: XLSX_THEME.darkBg, border: false }));
         ws2Data.push(t2);
         merges2.push({ s: { r: 0, c: 0 }, e: { r: 0, c: 4 } });
-
-        // صف فراغ
         ws2Data.push(makeXlsxEmptyRow(5, XLSX_THEME.white));
 
-        // رؤوس الملخص
-        const h2 = [
-            makeXlsxCell('العملة',           { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
-            makeXlsxCell('الكمية المتبقية',  { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
-            makeXlsxCell('إجمالي المستثمر',  { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
-            makeXlsxCell('القيمة الحالية',   { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
-            makeXlsxCell('الربح/الخسارة',    { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true })
-        ];
-        ws2Data.push(h2);
+        ws2Data.push([
+            makeXlsxCell('العملة', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
+            makeXlsxCell('الكمية المتبقية', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
+            makeXlsxCell('إجمالي المستثمر', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
+            makeXlsxCell('القيمة الحالية', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true }),
+            makeXlsxCell('الربح/الخسارة', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, borderThick: true })
+        ]);
 
         if (summaryRows.length === 0) {
             const emptyR = [makeXlsxCell('لا توجد بيانات', { align: 'center', bg: XLSX_THEME.rowOther })];
@@ -7577,16 +7528,13 @@ function exportToExcel() {
                 const rowBg = item.pnlAmount >= 0 ? XLSX_THEME.rowFlight : XLSX_THEME.rowOther;
                 ws2Data.push([
                     makeXlsxCell(getDisplayNameFromKey(item.symbol), { bold: true, bg: rowBg, align: 'right' }),
-                    makeXlsxCell(Number(item.totalCoinQty),   { bg: rowBg, numFmt: '#,##0.0000' }),
+                    makeXlsxCell(Number(item.totalCoinQty), { bg: rowBg, numFmt: '#,##0.0000' }),
                     makeXlsxCell(Number(item.totalInvestedAmount), { bg: rowBg, numFmt: '#,##0.00' }),
                     makeXlsxCell(Number(item.currentPortfolioValue), { bg: rowBg, numFmt: '#,##0.00' }),
-                    makeXlsxCell(Number(item.pnlAmount), { bg: rowBg, numFmt: '#,##0.00', bold: true,
-                        color: item.pnlAmount >= 0 ? '15803D' : 'B91C1C' })
+                    makeXlsxCell(Number(item.pnlAmount), { bg: rowBg, numFmt: '#,##0.00', bold: true, color: item.pnlAmount >= 0 ? '15803D' : 'B91C1C' })
                 ]);
             });
         }
-
-        // صف الإجمالي
         ws2Data.push([
             makeXlsxCell('الإجمالي', { bold: true, color: XLSX_THEME.white, bg: XLSX_THEME.totalBg, borderThick: true, align: 'right' }),
             makeXlsxCell('', { bg: XLSX_THEME.totalBg, borderThick: true }),
@@ -7595,49 +7543,29 @@ function exportToExcel() {
             makeXlsxCell(Number(totals.pnlAmount), { bold: true, color: XLSX_THEME.totalValueColor, bg: XLSX_THEME.totalBg, numFmt: '#,##0.00', borderThick: true })
         ]);
 
-        // إنشاء ورقة الملخص
         const ws2 = XLSX.utils.aoa_to_sheet(ws2Data.map(r => r.map(c => c.v)));
         ws2Data.forEach((row, r) => {
             row.forEach((cell, c) => {
-                const addr = XLSX.utils.encode_cell({ r: r, c: c });
+                const addr = XLSX.utils.encode_cell({ r, c });
                 ws2[addr] = cell;
             });
         });
         ws2['!views'] = [{ RTL: true }];
         ws2['!merges'] = merges2;
-        ws2['!cols'] = [
-            { wch: 22 },
-            { wch: 18 },
-            { wch: 18 },
-            { wch: 18 },
-            { wch: 18 }
-        ];
+        ws2['!cols'] = [{ wch: 22 }, { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 18 }];
         ws2['!rows'] = [{ hpt: 30 }];
 
-        /* ═════════════════════════════════════════════════════
-           إنشاء المصنف + RTL على مستوى المصنف + الحفظ
-           ═════════════════════════════════════════════════════ */
         const wb = XLSX.utils.book_new();
-
-        // ✅ RTL على مستوى المصنف
         wb.Workbook = { Views: [{ RTL: true }] };
-
         XLSX.utils.book_append_sheet(wb, ws, 'التقرير');
         XLSX.utils.book_append_sheet(wb, ws2, 'ملخص');
-
-        // ✅ اسم الملف
         const fileName = 'trades-report-' + fileDate + '.xlsx';
         XLSX.writeFile(wb, fileName);
-
-        // ✅ إشعار النجاح
         showToast('تم تصدير Excel بنجاح ✅', 'success');
-
     } catch (err) {
         console.error('❌ خطأ في تصدير Excel:', err);
         showToast('فشل تصدير Excel: ' + (err.message || 'خطأ غير معروف'), 'error');
-        showError(currentLang === 'en'
-            ? 'Excel export failed:\n' + (err.message || 'Unknown error')
-            : 'فشل تصدير Excel:\n' + (err.message || 'خطأ غير معروف'));
+        showError(currentLang === 'en' ? 'Excel export failed:\n' + (err.message || 'Unknown error') : 'فشل تصدير Excel:\n' + (err.message || 'خطأ غير معروف'));
     }
 }
 
@@ -7667,8 +7595,9 @@ document.addEventListener('DOMContentLoaded', function() {
         updateToggleButtonsText();
     })();
 
-    const importInput = document.getElementById('importTxtFile');
-    if (importInput) importInput.addEventListener('change', handleImportTxtFile);
+    // ✅ ربط زر الاستيراد الموحّد
+    const importInput = document.getElementById('importFile');
+    if (importInput) importInput.addEventListener('change', handleImportFile);
 
     setTimeout(() => {
         fetchAllPrices().then(() => {
@@ -7729,21 +7658,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     setInterval(() => {
         if (typeof updateAdvancedCharts === 'function') {
-            try { updateAdvancedCharts(); } catch (e) { console.warn('Advanced charts timer:', e); }
+            try { updateAdvancedCharts(); } catch (e) {}
         }
     }, 30 * 1000);
 
-    setTimeout(() => {
-        if (typeof updateAdvancedCharts === 'function') {
-            try { updateAdvancedCharts(); } catch (e) {}
-        }
-    }, 2000);
-
-    setTimeout(() => {
-        if (typeof updateAdvancedCharts === 'function') {
-            try { updateAdvancedCharts(); } catch (e) {}
-        }
-    }, 7000);
+    setTimeout(() => { try { updateAdvancedCharts(); } catch (e) {} }, 2000);
+    setTimeout(() => { try { updateAdvancedCharts(); } catch (e) {} }, 7000);
 
     document.addEventListener('click', function(e) {
         const notifCenter = document.getElementById('notificationCenter');
@@ -7759,18 +7679,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const navMenu = document.getElementById('quickNavMenu');
         if (!navBar || !navMenu) return;
         if (!navMenu.classList.contains('active')) return;
-        if (!navBar.contains(e.target)) {
-            closeQuickNav();
-        }
+        if (!navBar.contains(e.target)) closeQuickNav();
     });
 
     let __quickNavScrollLock = false;
     window.addEventListener('scroll', function() {
         if (__quickNavScrollLock) return;
         const navMenu = document.getElementById('quickNavMenu');
-        if (navMenu && navMenu.classList.contains('active')) {
-            closeQuickNav();
-        }
+        if (navMenu && navMenu.classList.contains('active')) closeQuickNav();
         __quickNavScrollLock = true;
         setTimeout(() => { __quickNavScrollLock = false; }, 200);
     }, { passive: true });
