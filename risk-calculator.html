@@ -88,16 +88,7 @@ body{
 .icon-btn.print-btn{background:linear-gradient(135deg, color-mix(in srgb,var(--gold) 15%, transparent), transparent);
   border-color:color-mix(in srgb,var(--gold) 40%, transparent);color:var(--gold);}
 .icon-btn.print-btn:hover{border-color:var(--gold);color:var(--gold)}
-.icon-btn.share-pdf-btn{
-  background:linear-gradient(135deg, color-mix(in srgb,var(--purple) 18%, transparent), transparent);
-  border-color:color-mix(in srgb,var(--purple) 50%, transparent);
-  color:var(--purple);
-}
-.icon-btn.share-pdf-btn:hover{
-  border-color:var(--purple);color:var(--purple);
-  background:linear-gradient(135deg, color-mix(in srgb,var(--purple) 28%, transparent), color-mix(in srgb,var(--purple) 8%, transparent));
-  box-shadow:0 8px 20px -8px color-mix(in srgb,var(--purple) 70%, transparent);
-}
+.icon-btn.tb-btn{ /* shared toolbar style */ }
 .icon-btn.tb-btn.xlsx-export{
   background:linear-gradient(135deg, color-mix(in srgb,var(--green) 15%, transparent), transparent);
   border-color:color-mix(in srgb,var(--green) 45%, transparent);color:var(--green);
@@ -106,6 +97,15 @@ body{
   border-color:var(--green);color:var(--green);
   background:linear-gradient(135deg, var(--green-dim), color-mix(in srgb,var(--green) 6%, transparent));
 }
+.icon-btn.share-pdf-btn{
+  background:linear-gradient(135deg, color-mix(in srgb,var(--purple) 18%, transparent), transparent);
+  border-color:color-mix(in srgb,var(--purple) 50%, transparent);color:var(--purple);
+}
+.icon-btn.share-pdf-btn:hover{
+  border-color:var(--purple);color:var(--purple);
+  background:linear-gradient(135deg, color-mix(in srgb,var(--purple) 22%, transparent), color-mix(in srgb,var(--purple) 6%, transparent));
+}
+.icon-btn.share-pdf-btn:disabled{opacity:.55;cursor:wait}
 .ctrl-label{font-family:var(--mono);font-size:0.6875rem;letter-spacing:1px;color:var(--muted);font-weight:700;padding-inline-start:4px}
 .ctrl-sep{width:1px;height:24px;background:var(--border);margin-inline:4px}
 .font-btn{font-family:var(--mono);font-weight:800;padding:8px 11px;border-radius:8px;cursor:pointer;
@@ -484,7 +484,6 @@ html[data-theme="dark"] .toast{color:#04140d}
   transition:opacity .25s ease;
 }
 .modal-overlay.show{opacity:1;pointer-events:auto}
-
 .modal-box{
   background:linear-gradient(180deg,var(--panel-grad-1),var(--panel-grad-2));
   border:2px solid var(--red);border-radius:18px;
@@ -542,146 +541,7 @@ html[data-theme="dark"] .toast{color:#04140d}
   box-shadow:0 10px 26px -6px color-mix(in srgb,var(--red) 95%, transparent);
 }
 
-/* ============================================================
-   PDF Share Overlay + Container (html2canvas + jsPDF)
-   ============================================================ */
-.pdf-share-overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,0.9);
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  z-index:2147483646;
-  display:flex;align-items:center;justify-content:center;flex-direction:column;
-  gap:20px;padding:24px;text-align:center;
-  color:#ffffff;
-  font-family:'SF Mono',ui-monospace,Consolas,monospace;
-  opacity:0;transition:opacity .3s ease;
-}
-.pdf-share-overlay.show{opacity:1}
-.pdf-share-overlay .pdf-spinner{
-  width:64px;height:64px;
-  border:4px solid rgba(255,255,255,0.14);
-  border-top-color:#16c784;
-  border-radius:50%;
-  animation:pdfSpin .9s linear infinite;
-}
 @keyframes pdfSpin{to{transform:rotate(360deg)}}
-.pdf-share-overlay .pdf-status{
-  font-size:1rem;font-weight:800;letter-spacing:1.5px;color:#ffffff;
-}
-.pdf-share-overlay .pdf-hint{
-  font-size:0.75rem;font-weight:600;letter-spacing:.5px;
-  color:rgba(255,255,255,0.65);max-width:320px;line-height:1.6;
-}
-.pdf-share-overlay .pdf-progress{
-  width:min(340px,80vw);height:6px;border-radius:99px;
-  background:rgba(255,255,255,0.12);overflow:hidden;position:relative;
-}
-.pdf-share-overlay .pdf-progress::after{
-  content:"";position:absolute;top:0;left:0;height:100%;width:35%;
-  background:linear-gradient(90deg,transparent,#16c784,transparent);
-  animation:pdfSlide 1.4s ease-in-out infinite;
-}
-@keyframes pdfSlide{
-  0%{left:-40%}
-  100%{left:100%}
-}
-
-/* PDF container — VISIBLE in DOM, rendered by html2canvas, sits behind overlay */
-.pdf-share-container{
-  position:fixed;
-  top:0;
-  left:0;
-  width:1240px;
-  min-height:100px;
-  z-index:2147483645;
-  background:#f4f7fa;
-  color:#1a2330;
-  padding:24px 16px 60px;
-  box-sizing:border-box;
-  overflow:visible;
-  font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;
-  font-size:0.875rem;
-  line-height:1.5;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
-  /* Force light theme variables so CSS vars cascade correctly */
-  --bg:#f4f7fa; --bg-glow-1:rgba(16,165,111,.10); --bg-glow-2:rgba(43,127,212,.08);
-  --card:#ffffff; --card-2:#f5f8fb; --card-hover:#f8fafc;
-  --border:#d8e0e8; --border-soft:#e6ecf1;
-  --text:#1a2330; --text-strong:#0a0f15; --muted:#5a6878;
-  --green:#0f9b68; --green-2:#16c784; --green-dim:rgba(15,155,104,.12);
-  --red:#d62a35; --red-2:#ea3943; --red-dim:rgba(214,42,53,.10);
-  --red-strong:rgba(214,42,53,.15);
-  --orange:#e07b1f; --orange-dim:rgba(224,123,31,.12);
-  --gold:#c8930a; --gold-dim:rgba(200,147,10,.12);
-  --blue:#2b7fd4; --purple:#7c5bd1;
-  --input-bg:#ffffff;
-  --header-grad-1:#ffffff; --header-grad-2:#f0f5fa;
-  --panel-grad-1:#ffffff; --panel-grad-2:#f8fafc;
-  --scroll:#c8d2dc;
-}
-/* Hide interactive chrome inside the PDF render */
-.pdf-share-container .controls,
-.pdf-share-container .action-btns,
-.pdf-share-container .panel,
-.pdf-share-container .clear-fab,
-.pdf-share-container .modal-overlay,
-.pdf-share-container .toast,
-.pdf-share-container .pdf-share-overlay,
-.pdf-share-container .t-sell-btn,
-.pdf-share-container .sb-reset,
-.pdf-share-container .pc-actions,
-.pdf-share-container .mode-toggle-sm,
-.pdf-share-container .sl-mode-toggle,
-.pdf-share-container .input-mode-toggle,
-.pdf-share-container .imt-btn,
-.pdf-share-container .btn,
-.pdf-share-container .ctrl-group,
-.pdf-share-container .ctrl-sep,
-.pdf-share-container .ctrl-label,
-.pdf-share-container .icon-btn{
-  display:none !important;
-}
-/* Single column layout */
-.pdf-share-container .main-grid{
-  display:block !important;
-  grid-template-columns:1fr !important;
-  gap:0 !important;
-}
-/* Disable all animations/transitions */
-.pdf-share-container *,
-.pdf-share-container *::before,
-.pdf-share-container *::after{
-  animation:none !important;
-  transition:none !important;
-}
-/* Remove decorative sweep pseudo-elements */
-.pdf-share-container .header::after,
-.pdf-share-container .header::before{display:none !important;}
-
-/* Force print-header visible */
-.pdf-share-container .print-header{
-  display:block !important;text-align:center;
-  padding-bottom:12px;margin-bottom:16px;
-  border-bottom:3px double #16c784;
-}
-.pdf-share-container .print-header .ph-brand{
-  font-size:22pt;font-weight:900;letter-spacing:3px;color:#0a0e13;
-  margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:10px;
-}
-.pdf-share-container .print-header .ph-brand-star{color:#ffd23f;}
-.pdf-share-container .print-header .ph-sub{
-  font-size:14pt;color:#333;font-weight:800;margin-bottom:3px;letter-spacing:1.5px;
-}
-.pdf-share-container .print-header .ph-sub .sep{color:#999;margin:0 8px;font-weight:400;}
-.pdf-share-container .print-header .ph-sub .pair-val{color:#16c784;}
-.pdf-share-container .print-header .ph-sub .tag-val{
-  color:#0a0e13;background:#e6f7f1;padding:2px 10px;border-radius:4px;
-}
-.pdf-share-container .print-header .ph-meta{
-  font-size:10pt;color:#555;margin-top:4px;letter-spacing:.5px;
-}
-.pdf-share-container .print-header .ph-meta b{color:#16c784;}
 
 @media print{
   @page{size:A4;margin:12mm 10mm 14mm 10mm;}
@@ -694,7 +554,7 @@ html[data-theme="dark"] .toast{color:#04140d}
   .controls,.action-btns,.toast,.icon-btn,.ctrl-group,.ctrl-sep,.ctrl-label,.mode-toggle-sm,.btn,.t-sell-btn,
   .sale-banner .sb-reset,.pc-actions,.panel,.targets-header .mode-toggle-sm,.sl-mode-toggle,.dca-cnt-btn,
   .input-mode-toggle,.imt-btn,.footer-credit .made-with .heart,
-  .clear-fab,.modal-overlay,.pdf-share-overlay,.pdf-share-container{display:none !important;}
+  .clear-fab,.modal-overlay{display:none !important;}
   .panel{display:none !important;}
   .main-grid{display:block !important;grid-template-columns:1fr !important;gap:0 !important;}
   .print-header{display:block !important;text-align:center;padding-bottom:12px;margin-bottom:16px;
@@ -933,13 +793,11 @@ html.preparing-print *::after{
     <div class="ctrl-sep"></div>
     <button class="icon-btn" id="btnLang" onclick="toggleLang()">🌐 <span id="langLabel">EN</span></button>
     <div class="ctrl-sep"></div>
-    <!-- ✅ Share PDF Button -->
-    <button class="icon-btn share-pdf-btn" id="btnSharePDF" onclick="sharePDF()" title="Share PDF">
-      📄 <span data-i18n="sharePdfBtn">مشاركة PDF</span>
-    </button>
-    <!-- ✅ Excel Export Button -->
     <button class="icon-btn tb-btn xlsx-export" id="btnExcel" onclick="exportToExcel()" title="Export Excel">
       📊 <span>Excel</span>
+    </button>
+    <button class="icon-btn share-pdf-btn" id="btnSharePdf" onclick="sharePDF()" title="Share PDF">
+      📱 <span data-i18n="sharePdfBtn">مشاركة PDF</span>
     </button>
     <button class="icon-btn print-btn" id="btnPrint" onclick="printReport()" title="Print Report">
       🖨️ <span data-i18n="printBtn">طباعة التقرير</span>
@@ -1236,7 +1094,6 @@ html.preparing-print *::after{
   </div>
 </div>
 
-<!-- ✅ xlsx-js-style for Excel export -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 
 <script>
@@ -1353,13 +1210,13 @@ const I18N = {
     excelFailed:'⚠️ تعذّر تصدير Excel',
     excelNoLib:'⚠️ مكتبة Excel غير محمّلة',
     sharePdfBtn:'مشاركة PDF',
-    pdfGenerating:'جاري إنشاء PDF...',
-    pdfWait:'قد يستغرق بضع ثوانٍ...',
-    pdfSuccess:'✅ تم إنشاء PDF بنجاح',
-    pdfFailed:'⚠️ تعذّر إنشاء PDF',
-    pdfNoLib:'⚠️ تعذّر تحميل مكتبات PDF',
-    pdfShared:'✅ تمت مشاركة PDF',
-    pdfDownloaded:'✅ تم تنزيل PDF'
+    sharePdfGenerating:'⏳ جاري إنشاء PDF...',
+    sharePdfSuccess:'✅ تمت المشاركة بنجاح',
+    sharePdfDownloaded:'📥 تم تنزيل PDF — شاركه يدوياً',
+    sharePdfCancelled:'↩️ تم إلغاء المشاركة',
+    sharePdfFailed:'⚠️ تعذّر إنشاء ملف PDF',
+    sharePdfNoLib:'⚠️ تعذّر تحميل مكتبات PDF',
+    sharePdfUnsupported:'📥 تم تنزيل PDF (المشاركة غير مدعومة)'
   },
   en: {
     modeAuto:'⚡ Auto', modeManual:'✏️ Manual',
@@ -1472,13 +1329,13 @@ const I18N = {
     excelFailed:'⚠️ Could not export Excel',
     excelNoLib:'⚠️ Excel library not loaded',
     sharePdfBtn:'Share PDF',
-    pdfGenerating:'Generating PDF...',
-    pdfWait:'This may take a few seconds...',
-    pdfSuccess:'✅ PDF generated successfully',
-    pdfFailed:'⚠️ Could not generate PDF',
-    pdfNoLib:'⚠️ Could not load PDF libraries',
-    pdfShared:'✅ PDF shared',
-    pdfDownloaded:'✅ PDF downloaded'
+    sharePdfGenerating:'⏳ Generating PDF...',
+    sharePdfSuccess:'✅ Shared successfully',
+    sharePdfDownloaded:'📥 PDF downloaded — share it manually',
+    sharePdfCancelled:'↩️ Share cancelled',
+    sharePdfFailed:'⚠️ Could not create PDF',
+    sharePdfNoLib:'⚠️ Could not load PDF libraries',
+    sharePdfUnsupported:'📥 PDF downloaded (sharing not supported)'
   }
 };
 
@@ -2095,45 +1952,67 @@ function syncInputs(){
     if (el === activeEl) return;
     el.value = value;
   }
+  
   setVal('inPair', state.pair); setVal('inTag', state.tag);
   setVal('inEntry', state.entry); setVal('inCapital', state.capital);
   setVal('inPairM', state.pair); setVal('inTagM', state.tag);
   setVal('inEntryM', state.entry); setVal('inCapitalM', state.capital);
+  
   const entry = state.entry || 0;
   const entryAmt = state.capital * state.alloc[0] / 100;
   const cap = state.capital || 0;
+  
   const tMode = state.targetInputMode || 'percent';
   for (let i = 0; i < 4; i++) {
     const id = 'inT' + (i+1);
-    if (tMode === 'percent') setVal(id, (state.targetPcts[i] != null ? state.targetPcts[i] : 0).toFixed(2));
-    else setVal(id, fmtPriceForInput(state.targets[i]));
+    if (tMode === 'percent') {
+      setVal(id, (state.targetPcts[i] != null ? state.targetPcts[i] : 0).toFixed(2));
+    } else {
+      setVal(id, fmtPriceForInput(state.targets[i]));
+    }
   }
+  
   const dMode = state.dcaInputMode || 'percent';
   for (let i = 0; i < 4; i++) {
     const id = 'inD' + (i+1);
-    if (dMode === 'percent') setVal(id, (state.dcaPcts[i] != null ? state.dcaPcts[i] : 0).toFixed(2));
-    else setVal(id, fmtPriceForInput(state.dca[i]));
+    if (dMode === 'percent') {
+      setVal(id, (state.dcaPcts[i] != null ? state.dcaPcts[i] : 0).toFixed(2));
+    } else {
+      setVal(id, fmtPriceForInput(state.dca[i]));
+    }
   }
+  
   const aMode = state.allocInputMode || 'percent';
   for (let i = 0; i < 5; i++) {
     const id = 'inA' + i;
-    if (aMode === 'percent') setVal(id, state.alloc[i]);
-    else setVal(id, cap ? (state.alloc[i] * cap / 100).toFixed(2) : 0);
+    if (aMode === 'percent') {
+      setVal(id, state.alloc[i]);
+    } else {
+      setVal(id, cap ? (state.alloc[i] * cap / 100).toFixed(2) : 0);
+    }
   }
+  
   const sMode = state.scalingInputMode || 'percent';
   for (let i = 0; i < 4; i++) {
     const id = 'inS' + (i+1) + 'M';
-    if (sMode === 'percent') setVal(id, state.targetSellPcts[i]);
-    else setVal(id, entryAmt ? (state.targetSellPcts[i] * entryAmt / 100).toFixed(2) : 0);
+    if (sMode === 'percent') {
+      setVal(id, state.targetSellPcts[i]);
+    } else {
+      setVal(id, entryAmt ? (state.targetSellPcts[i] * entryAmt / 100).toFixed(2) : 0);
+    }
   }
+  
   setVal('inS1', state.targetSellPcts[0]); setVal('inS2', state.targetSellPcts[1]);
   setVal('inS3', state.targetSellPcts[2]); setVal('inS4', state.targetSellPcts[3]);
+  
   setVal('inSlPct', state.slPct); setVal('inSlPctM', state.slPct);
   if (state.slPrice) { setVal('inSlPrice', state.slPrice); setVal('inSlPriceM', state.slPrice); }
+  
   const dcaLabels = state.dcaCount === 0 ? t('noDcaShort') : ['−8%','−18%','−30%','−45%'].slice(0, state.dcaCount).join(' · ');
   const allocNums = state.alloc.slice(0, state.dcaCount+1).join(' / ');
   if($('autoDcaInfo')) $('autoDcaInfo').textContent = dcaLabels;
   if($('autoAllocInfo')) $('autoAllocInfo').textContent = allocNums;
+  
   $('dca1Field').style.display = state.dcaCount >= 1 ? '' : 'none';
   $('dca2Field').style.display = state.dcaCount >= 2 ? '' : 'none';
   $('dca3Field').style.display = state.dcaCount >= 3 ? '' : 'none';
@@ -2144,6 +2023,7 @@ function syncInputs(){
   $('alloc4Row').style.display = state.dcaCount >= 4 ? '' : 'none';
   const infoEl = $('dcaCountInfo');
   if(infoEl) infoEl.textContent = t('dcaCountInfo')(state.dcaCount);
+  
   updateInputModeButtons();
 }
 function syncManualFromState(){ syncInputs(); }
@@ -2182,8 +2062,11 @@ $('inD4').addEventListener('input', e => handleDCAInput(3, e.target.value));
 
 function handleAllocInput(i, value){
   const v = parseNum(value);
-  if (state.allocInputMode === 'percent') state.alloc[i] = v;
-  else state.alloc[i] = state.capital > 0 ? (v / state.capital) * 100 : 0;
+  if (state.allocInputMode === 'percent') {
+    state.alloc[i] = v;
+  } else {
+    state.alloc[i] = state.capital > 0 ? (v / state.capital) * 100 : 0;
+  }
   render();
 }
 for (let i = 0; i < 5; i++) {
@@ -2194,8 +2077,11 @@ for (let i = 0; i < 5; i++) {
 function handleScalingInput(i, value){
   const v = parseNum(value);
   const entryAmt = state.capital * state.alloc[0] / 100;
-  if (state.scalingInputMode === 'percent') state.targetSellPcts[i] = v;
-  else state.targetSellPcts[i] = entryAmt > 0 ? (v / entryAmt) * 100 : 0;
+  if (state.scalingInputMode === 'percent') {
+    state.targetSellPcts[i] = v;
+  } else {
+    state.targetSellPcts[i] = entryAmt > 0 ? (v / entryAmt) * 100 : 0;
+  }
   render();
 }
 $('inS1M').addEventListener('input', e => handleScalingInput(0, e.target.value));
@@ -2224,10 +2110,16 @@ $('inPairM').addEventListener('input', e => { state.pair = e.target.value; rende
 $('inTagM').addEventListener('input',  e => { state.tag  = e.target.value; render(); });
 $('inEntryM').addEventListener('input', e => {
   state.entry = parseNum(e.target.value);
-  if (state.targetInputMode === 'percent') state.targets = state.targetPcts.map(p => state.entry * (1 + p/100));
-  else state.targetPcts = state.targets.map(t => state.entry ? ((t/state.entry) - 1) * 100 : 0);
-  if (state.dcaInputMode === 'percent') state.dca = state.dcaPcts.map(p => state.entry * (1 + p/100));
-  else state.dcaPcts = state.dca.map(d => state.entry ? ((d/state.entry) - 1) * 100 : 0);
+  if (state.targetInputMode === 'percent') {
+    state.targets = state.targetPcts.map(p => state.entry * (1 + p/100));
+  } else {
+    state.targetPcts = state.targets.map(t => state.entry ? ((t/state.entry) - 1) * 100 : 0);
+  }
+  if (state.dcaInputMode === 'percent') {
+    state.dca = state.dcaPcts.map(p => state.entry * (1 + p/100));
+  } else {
+    state.dcaPcts = state.dca.map(d => state.entry ? ((d/state.entry) - 1) * 100 : 0);
+  }
   render();
 });
 $('inCapitalM').addEventListener('input', e => {
@@ -2353,13 +2245,20 @@ function showToast(msg){
   setTimeout(()=>toast.classList.remove('show'), 1600);
 }
 
-/* ==================== PRINT ==================== */
 let __printCleanupTimer = null;
-function prepareForPrint(){ document.documentElement.classList.add('preparing-print'); }
+
+function prepareForPrint(){
+  document.documentElement.classList.add('preparing-print');
+}
+
 function cleanupAfterPrint(){
   document.documentElement.classList.remove('preparing-print');
-  if(__printCleanupTimer){ clearTimeout(__printCleanupTimer); __printCleanupTimer = null; }
+  if(__printCleanupTimer){
+    clearTimeout(__printCleanupTimer);
+    __printCleanupTimer = null;
+  }
 }
+
 window.addEventListener('afterprint', cleanupAfterPrint);
 if(window.matchMedia){
   try{
@@ -2368,38 +2267,35 @@ if(window.matchMedia){
     else if(mq.addListener) mq.addListener(e => { if(!e.matches) cleanupAfterPrint(); });
   }catch(e){}
 }
-function buildPrintHeaderHTML(){
+
+function printReport(){
   const now = new Date();
   const locale = prefs.lang === 'ar' ? 'ar-EG' : 'en-US';
   const dateStr = now.toLocaleDateString(locale, {year:'numeric', month:'long', day:'numeric'})
     + ' — ' + now.toLocaleTimeString(locale, {hour:'2-digit', minute:'2-digit'});
-  return `
-    <div class="ph-brand"><span class="ph-brand-star">⭐️</span> ${t('printTitle')}</div>
-    <div class="ph-sub">
-      <span class="pair-val">${state.pair}</span>
-      <span class="sep">•</span>
-      <span class="tag-val">${state.tag}</span>
-    </div>
-    <div class="ph-meta">${t('printGenerated')} <b>${dateStr}</b></div>`;
-}
-function printReport(){
-  $('printHeader').innerHTML = buildPrintHeaderHTML();
+  const title = t('printTitle');
+  const sub = `<span class="pair-val">${state.pair}</span><span class="sep">•</span><span class="tag-val">${state.tag}</span>`;
+  const metaLabel = t('printGenerated');
+  $('printHeader').innerHTML = `
+    <div class="ph-brand"><span class="ph-brand-star">⭐️</span> ${title}</div>
+    <div class="ph-sub">${sub}</div>
+    <div class="ph-meta">${metaLabel} <b>${dateStr}</b></div>`;
+
   prepareForPrint();
   void document.documentElement.offsetHeight;
   window.print();
+
   if(__printCleanupTimer) clearTimeout(__printCleanupTimer);
   __printCleanupTimer = setTimeout(cleanupAfterPrint, 1500);
 }
 
-/* =====================================================================
-   ✅ SHARE PDF — html2canvas + jsPDF only (no html2pdf.js, no window.open)
-   ===================================================================== */
+/* ==================== ✅ SHARE PDF (html2canvas-pro + jsPDF) ==================== */
 
 const PDF_CDN_URLS = {
   html2canvas: [
-    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
-    'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',
-    'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js'
+    'https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.11/dist/html2canvas-pro.min.js',
+    'https://unpkg.com/html2canvas-pro@1.5.11/dist/html2canvas-pro.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas-pro/1.5.11/html2canvas-pro.min.js'
   ],
   jspdf: [
     'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
@@ -2408,23 +2304,18 @@ const PDF_CDN_URLS = {
   ]
 };
 
-/* Try loading a script from a list of CDN URLs (first success wins).
-   NOTE: we do NOT set crossOrigin, because some CDNs reject requests
-   with the `anonymous` mode and this was the main reason of the earlier
-   "silent failure / empty PDF" bug. */
 function loadScriptWithFallback(urls){
-  return new Promise((resolve, reject) => {
-    if (!urls || !urls.length) return reject(new Error('No URLs'));
+  return new Promise((resolve) => {
     let i = 0;
     const tryNext = () => {
-      if (i >= urls.length) return reject(new Error('All CDNs failed'));
+      if (i >= urls.length){ resolve(false); return; }
       const url = urls[i++];
       const s = document.createElement('script');
       s.src = url;
       s.async = true;
-      // NOTE: no crossOrigin — see above
-      s.onload = () => resolve(url);
-      s.onerror = () => { try { s.remove(); } catch(e){} tryNext(); };
+      s.crossOrigin = 'anonymous';
+      s.onload = () => resolve(true);
+      s.onerror = () => { try{ s.remove(); }catch(e){} tryNext(); };
       document.head.appendChild(s);
     };
     tryNext();
@@ -2432,231 +2323,297 @@ function loadScriptWithFallback(urls){
 }
 
 async function ensurePdfLibs(){
-  if (typeof window.html2canvas === 'undefined') {
-    await loadScriptWithFallback(PDF_CDN_URLS.html2canvas);
+  // html2canvas-pro registers itself as window.html2canvas for compatibility
+  if (typeof window.html2canvas === 'undefined'){
+    const ok = await loadScriptWithFallback(PDF_CDN_URLS.html2canvas);
+    if (!ok) return { ok:false, missing:'html2canvas-pro' };
   }
-  if (!(window.jspdf && window.jspdf.jsPDF)) {
-    await loadScriptWithFallback(PDF_CDN_URLS.jspdf);
+  const hasJsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+  if (!hasJsPDF){
+    const ok = await loadScriptWithFallback(PDF_CDN_URLS.jspdf);
+    if (!ok) return { ok:false, missing:'jspdf' };
   }
-  if (typeof window.html2canvas === 'undefined') throw new Error('html2canvas not available');
-  if (!(window.jspdf && window.jspdf.jsPDF)) throw new Error('jsPDF not available');
+  return { ok:true };
 }
 
-/* Build the loading overlay. */
-function buildPdfOverlay(){
-  const o = document.createElement('div');
-  o.className = 'pdf-share-overlay';
-  o.innerHTML = `
-    <div class="pdf-spinner"></div>
-    <div class="pdf-status">${t('pdfGenerating')}</div>
-    <div class="pdf-hint">${t('pdfWait')}</div>
-    <div class="pdf-progress"></div>`;
-  return o;
-}
-
-/* Build the visible PDF container:
-   - DOMParser splits the current document into head styles + body content.
-   - The styles are re-injected inside the container.
-   - The body content is placed after them.
-   - Base font/color/background styles are applied inline to guarantee
-     the container is self-sufficient (since <body> styles don't
-     cascade to a plain <div>). */
-function buildPdfContainer(){
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(document.documentElement.outerHTML, 'text/html');
-
-  // 1) Collect ALL style rules (head + inline)
-  const styleText = Array.from(doc.querySelectorAll('style'))
-    .map(s => s.textContent || '')
-    .join('\n');
-
-  // 2) Clone body, strip scripts and interactive overlays
-  const bodyClone = doc.body.cloneNode(true);
-  bodyClone.querySelectorAll('script').forEach(s => s.remove());
-  bodyClone.querySelectorAll(
-    '#clearFab, #clearModal, #toast, .clear-fab, .modal-overlay, .pdf-share-overlay, .pdf-share-container'
-  ).forEach(el => el.remove());
-
-  // 3) Container with inline base styles (equivalent of <body> styles)
-  const container = document.createElement('div');
-  container.className = 'pdf-share-container';
-  container.setAttribute('data-pdf-theme', 'light');
-  container.setAttribute('dir', prefs.lang === 'ar' ? 'rtl' : 'ltr');
-  container.setAttribute('lang', prefs.lang);
-  container.style.position = 'fixed';
-  container.style.top = '0';
-  container.style.left = '0';
-  container.style.width = '1240px';
-  container.style.minHeight = '100px';
-  container.style.zIndex = '2147483645';
-  container.style.background = '#f4f7fa';
-  container.style.color = '#1a2330';
-  container.style.padding = '24px 16px 60px';
-  container.style.boxSizing = 'border-box';
-  container.style.overflow = 'visible';
-  container.style.fontFamily = "'Segoe UI',system-ui,-apple-system,Arial,sans-serif";
-  container.style.fontSize = '0.875rem';
-  container.style.lineHeight = '1.5';
-  container.style.webkitFontSmoothing = 'antialiased';
-
-  // 4) Inject styles
-  const styleTag = document.createElement('style');
-  styleTag.textContent = styleText;
-  container.appendChild(styleTag);
-
-  // 5) Inject body content
-  const contentDiv = document.createElement('div');
-  contentDiv.className = 'pdf-content';
-  contentDiv.innerHTML = bodyClone.innerHTML;
-  container.appendChild(contentDiv);
-
-  // 6) Fill the print-header
-  const ph = container.querySelector('.print-header');
-  if (ph) ph.innerHTML = buildPrintHeaderHTML();
-
-  return container;
-}
-
-/* Main share handler */
 async function sharePDF(){
-  console.log('[SharePDF] start');
+  const btn = $('btnSharePdf');
+  if (btn) btn.disabled = true;
+  showToast(t('sharePdfGenerating'));
 
-  const overlay = buildPdfOverlay();
-  document.body.appendChild(overlay);
-  // Force a reflow so the transition triggers
-  void overlay.offsetHeight;
-  requestAnimationFrame(() => overlay.classList.add('show'));
+  const prevTheme = document.documentElement.getAttribute('data-theme');
+  const prevFontsize = document.documentElement.getAttribute('data-fontsize');
+  let hostEl = null;
+  let overlayEl = null;
+  let spinnerStyleEl = null;
 
-  let container = null;
+  const cleanupPdfDom = () => {
+    try { if (hostEl && hostEl.parentNode) hostEl.remove(); } catch(e){}
+    try { if (overlayEl && overlayEl.parentNode) overlayEl.remove(); } catch(e){}
+    try { if (spinnerStyleEl && spinnerStyleEl.parentNode) spinnerStyleEl.remove(); } catch(e){}
+    try { if (prevTheme) document.documentElement.setAttribute('data-theme', prevTheme); } catch(e){}
+    try { if (prevFontsize) document.documentElement.setAttribute('data-fontsize', prevFontsize); } catch(e){}
+    if (btn) btn.disabled = false;
+  };
 
-  try {
-    // ---- 1) Load libs (3 CDNs each) ----
-    console.log('[SharePDF] loading libs...');
-    await ensurePdfLibs();
-    console.log('[SharePDF] libs ready');
-
-    // ---- 2) Build visible container ----
-    console.log('[SharePDF] building container...');
-    container = buildPdfContainer();
-    document.body.appendChild(container);
-
-    // ---- 3) Wait for layout (spec: 500ms) ----
-    await new Promise(r => setTimeout(r, 500));
-
-    const scrollW = container.scrollWidth || container.offsetWidth || 1240;
-    const scrollH = container.scrollHeight || container.offsetHeight || 1;
-    console.log('[SharePDF] container size:', scrollW, 'x', scrollH);
-
-    if (scrollH < 50) {
-      throw new Error('Container rendered empty');
+  try{
+    const libCheck = await ensurePdfLibs();
+    if (!libCheck.ok){
+      console.error('[Share PDF] Failed to load:', libCheck.missing);
+      showToast(`${t('sharePdfNoLib')} (${libCheck.missing})`);
+      cleanupPdfDom();
+      return;
     }
 
-    // ---- 4) Dynamic scale: min(2, max(0.8, targetPx / scrollWidth)) ----
-    const targetPx = 1600;
-    const scale = Math.min(2, Math.max(0.8, targetPx / scrollW));
-    console.log('[SharePDF] scale =', scale);
-
-    // ---- 5) Render with html2canvas (scrollX/Y = 0) ----
-    console.log('[SharePDF] html2canvas...');
-    const canvas = await window.html2canvas(container, {
-      scale: scale,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: '#ffffff',
-      scrollX: 0,
-      scrollY: 0,
-      windowWidth: scrollW,
-      windowHeight: scrollH,
-      logging: false
-    });
-    console.log('[SharePDF] canvas:', canvas.width, 'x', canvas.height);
-    if (canvas.width === 0 || canvas.height === 0) throw new Error('Empty canvas');
-
-    // ---- 6) Build multi-page A4 PDF ----
-    const JsPDF = window.jspdf.jsPDF;
-    const pdf = new JsPDF('p', 'mm', 'a4', true);
-    const pdfW = pdf.internal.pageSize.getWidth();
-    const pdfH = pdf.internal.pageSize.getHeight();
-
-    const imgW = pdfW;
-    const imgH = (canvas.height * imgW) / canvas.width;
-    const imgData = canvas.toDataURL('image/jpeg', 0.92);
-
-    let heightLeft = imgH;
-    let position = 0;
-    pdf.addImage(imgData, 'JPEG', 0, position, imgW, imgH, undefined, 'FAST');
-    heightLeft -= pdfH;
-    while (heightLeft > 1) {
-      position -= pdfH;
-      pdf.addPage();
-      pdf.addImage(imgData, 'JPEG', 0, position, imgW, imgH, undefined, 'FAST');
-      heightLeft -= pdfH;
+    const html2canvasFn = window.html2canvas;
+    const JsPDFCtor = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+    if (!html2canvasFn || !JsPDFCtor){
+      console.error('[Share PDF] Libraries present but constructors missing');
+      showToast(t('sharePdfNoLib'));
+      cleanupPdfDom();
+      return;
     }
 
-    // ---- 7) Filename + blob ----
     const now = new Date();
-    const ymd = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-    const safePair = (state.pair || 'plan').replace(/[^A-Za-z0-9_-]/g, '-');
-    const filename = `Trading-Plan-${safePair}-${ymd}.pdf`;
-    const blob = pdf.output('blob');
-    console.log('[SharePDF] PDF blob size =', blob.size);
+    const locale = prefs.lang === 'ar' ? 'ar-EG' : 'en-US';
+    const dateStr = now.toLocaleDateString(locale, {year:'numeric', month:'long', day:'numeric'})
+      + ' — ' + now.toLocaleTimeString(locale, {hour:'2-digit', minute:'2-digit'});
+    const title = t('printTitle');
+    const sub = `<span class="pair-val">${state.pair}</span><span class="sep">•</span><span class="tag-val">${state.tag}</span>`;
+    const metaLabel = t('printGenerated');
 
-    // ---- 8) Share (Web Share API) or download ----
-    let shared = false;
+    const htmlString = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+    const parsedDoc = new DOMParser().parseFromString(htmlString, 'text/html');
+    parsedDoc.querySelectorAll('script').forEach(s => s.remove());
+
+    const styleTagsHTML = Array.from(parsedDoc.querySelectorAll('head style')).map(el => el.outerHTML).join('\n');
+    const linkTagsHTML  = Array.from(parsedDoc.querySelectorAll('head link[rel="stylesheet"]')).map(el => el.outerHTML).join('\n');
+
+    const parsedWrap = parsedDoc.querySelector('.wrap');
+    if (parsedWrap){
+      const ph = parsedWrap.querySelector('#printHeader');
+      if (ph){
+        ph.innerHTML = `
+          <div class="ph-brand"><span class="ph-brand-star">⭐️</span> ${title}</div>
+          <div class="ph-sub">${sub}</div>
+          <div class="ph-meta">${metaLabel} <b>${dateStr}</b></div>`;
+      }
+    }
+
+    hostEl = document.createElement('div');
+    hostEl.id = 'pdfRenderHost';
+    hostEl.setAttribute('dir', prefs.lang === 'ar' ? 'rtl' : 'ltr');
+    hostEl.setAttribute('data-theme', 'light');
+    hostEl.setAttribute('data-fontsize', 'md');
+    hostEl.style.cssText = [
+      'position:fixed','top:0','left:0',
+      'width:1180px','min-height:100vh','box-sizing:border-box',
+      'padding:12px','z-index:2147483000',
+      'background:#ffffff','color:#111111',
+      'overflow:visible','margin:0'
+    ].join(';');
+
+    const styleContainer = document.createElement('div');
+    styleContainer.style.cssText = 'display:contents';
+    styleContainer.innerHTML = linkTagsHTML + styleTagsHTML;
+    hostEl.appendChild(styleContainer);
+
+    const bodyContainer = document.createElement('div');
+    bodyContainer.style.cssText = 'background:#ffffff;color:#111111;width:100%;';
+    while (parsedDoc.body.firstChild){
+      bodyContainer.appendChild(parsedDoc.body.firstChild);
+    }
+    hostEl.appendChild(bodyContainer);
+
+    const hideSel = [
+      '.controls','.action-btns','.toast',
+      '.ctrl-group','.ctrl-sep','.ctrl-label',
+      '.mode-toggle-sm','.t-sell-btn',
+      '.sale-banner .sb-reset','.pc-actions',
+      '.sl-mode-toggle','.dca-cnt-btn',
+      '.input-mode-toggle','.imt-btn',
+      '.clear-fab','.modal-overlay',
+      '.footer-credit .made-with .heart'
+    ].join(',');
+    hostEl.querySelectorAll(hideSel).forEach(el => { el.style.display = 'none'; });
+    hostEl.querySelectorAll('.panel').forEach(el => { el.style.display = 'none'; });
+    hostEl.querySelectorAll('.main-grid').forEach(el => {
+      el.style.display = 'block';
+      el.style.gridTemplateColumns = '1fr';
+      el.style.gap = '0';
+    });
+    hostEl.querySelectorAll('.print-header').forEach(el => { el.style.display = 'block'; });
+    hostEl.querySelectorAll('.dca-arrow').forEach(el => { el.style.display = 'none'; });
+
+    hostEl.querySelectorAll('*').forEach(el => {
+      el.style.animation = 'none';
+      el.style.transition = 'none';
+    });
+
+    spinnerStyleEl = document.createElement('style');
+    spinnerStyleEl.textContent = '@keyframes pdfSpin{to{transform:rotate(360deg)}}';
+    document.head.appendChild(spinnerStyleEl);
+
+    overlayEl = document.createElement('div');
+    overlayEl.style.cssText = [
+      'position:fixed','inset:0',
+      'background:rgba(0,0,0,0.9)','color:#ffffff',
+      'display:flex','align-items:center','justify-content:center',
+      'flex-direction:column','gap:16px',
+      'z-index:2147483600',
+      'font-family:monospace','font-size:1rem','font-weight:800',
+      'letter-spacing:1px','pointer-events:all'
+    ].join(';');
+    overlayEl.innerHTML = `
+      <div style="width:56px;height:56px;border:4px solid rgba(255,255,255,0.18);border-top-color:#16c784;border-radius:50%;animation:pdfSpin 0.85s linear infinite"></div>
+      <div style="text-align:center;padding:0 20px">${t('sharePdfGenerating')}</div>`;
+
+    document.body.appendChild(hostEl);
+    document.body.appendChild(overlayEl);
+    document.documentElement.setAttribute('data-theme', 'light');
+
+    await new Promise(r => setTimeout(r, 500));
+    if (document.fonts && document.fonts.ready){
+      try { await Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 800))]); } catch(e){}
+    }
+    await new Promise(r => setTimeout(r, 100));
+
+    const targetPx = 1000;
+    const scrollW  = hostEl.scrollWidth || 1180;
+    let scale = Math.min(2, Math.max(0.8, targetPx / scrollW));
+
+    const MAX_CANVAS_H = 16000;
+    const estimatedH = hostEl.scrollHeight * scale;
+    if (estimatedH > MAX_CANVAS_H){
+      scale = Math.max(0.5, scale * (MAX_CANVAS_H / estimatedH));
+    }
+
+    let canvas;
     try {
-      if (navigator.canShare && navigator.share && window.File) {
-        const file = new File([blob], filename, { type: 'application/pdf' });
-        if (navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            files: [file],
-            title: 'Trading Planner',
-            text: prefs.lang === 'ar' ? 'خطة التداول' : 'Trading Plan'
-          });
-          shared = true;
-          showToast(t('pdfShared'));
+      canvas = await html2canvasFn(hostEl, {
+        scale: scale,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth:  scrollW,
+        windowHeight: hostEl.scrollHeight
+      });
+    } catch(innerErr){
+      console.warn('[Share PDF] html2canvas-pro failed, retrying with scale 1:', innerErr);
+      canvas = await html2canvasFn(hostEl, {
+        scale: 1,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth:  scrollW,
+        windowHeight: hostEl.scrollHeight
+      });
+    }
+
+    if (!canvas || canvas.width === 0 || canvas.height === 0){
+      throw new Error('html2canvas returned empty canvas');
+    }
+
+    const pdf = new JsPDFCtor({ orientation:'portrait', unit:'mm', format:'a4', compress:true });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const margin = 6;
+    const contentW = pageW - margin * 2;
+    const contentH = pageH - margin * 2;
+
+    const pxPerMm = canvas.width / contentW;
+    const sliceHeightPx = Math.floor(contentH * pxPerMm);
+
+    let yOffsetPx = 0;
+    let pageIndex = 0;
+
+    while (yOffsetPx < canvas.height){
+      const slicePx = Math.min(sliceHeightPx, canvas.height - yOffsetPx);
+      if (slicePx <= 0) break;
+
+      const sliceCanvas = document.createElement('canvas');
+      sliceCanvas.width  = canvas.width;
+      sliceCanvas.height = slicePx;
+      const sctx = sliceCanvas.getContext('2d');
+      sctx.fillStyle = '#ffffff';
+      sctx.fillRect(0, 0, sliceCanvas.width, sliceCanvas.height);
+      sctx.drawImage(canvas, 0, yOffsetPx, canvas.width, slicePx, 0, 0, canvas.width, slicePx);
+
+      const imgData = sliceCanvas.toDataURL('image/jpeg', 0.92);
+      const sliceHmm = slicePx / pxPerMm;
+
+      if (pageIndex > 0) pdf.addPage();
+      pdf.addImage(imgData, 'JPEG', margin, margin, contentW, sliceHmm, undefined, 'FAST');
+
+      yOffsetPx += slicePx;
+      pageIndex++;
+    }
+
+    const pdfBlob = pdf.output('blob');
+
+    cleanupPdfDom();
+
+    const safePair = String(state.pair || 'plan').replace(/[\\/:*?"<>|]/g, '-');
+    const stamp = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}-${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+    const filename = `trading-plan-${safePair}-${stamp}.pdf`;
+
+    const file = new File([pdfBlob], filename, { type:'application/pdf' });
+    const canShareFiles = navigator.canShare && navigator.canShare({ files:[file] });
+    const canShare = typeof navigator.share === 'function';
+
+    if (canShare && canShareFiles){
+      try{
+        await navigator.share({
+          files: [file],
+          title: t('printTitle') || 'Trading Plan',
+          text:  `${state.pair} • ${state.tag}`
+        });
+        showToast(t('sharePdfSuccess'));
+        return;
+      }catch(err){
+        if (err && err.name === 'AbortError'){
+          showToast(t('sharePdfCancelled'));
+          return;
         }
       }
-    } catch (shareErr) {
-      // User cancelled → do NOT also download
-      if (shareErr && shareErr.name === 'AbortError') {
-        shared = true;
-      } else {
-        console.warn('[SharePDF] share failed, falling back to download:', shareErr);
-      }
     }
 
-    if (!shared) {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 2000);
-      showToast(t('pdfDownloaded'));
-    }
-  } catch (err) {
-    console.error('[SharePDF] ERROR:', err);
-    showToast(t('pdfFailed') + (err && err.message ? ': ' + err.message : ''));
-  } finally {
-    // ---- 9) Cleanup DOM ----
-    if (container && container.parentNode) container.parentNode.removeChild(container);
-    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
-    // Belt-and-suspenders
-    document.querySelectorAll('.pdf-share-container, .pdf-share-overlay').forEach(el => {
-      if (el.parentNode) el.parentNode.removeChild(el);
-    });
-    console.log('[SharePDF] done');
+    const url = URL.createObjectURL(pdfBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+    showToast(canShare ? t('sharePdfDownloaded') : t('sharePdfUnsupported'));
+
+  }catch(err){
+    console.error('[Share PDF] Error:', err);
+    console.error('[Share PDF] Stack:', err && err.stack);
+    cleanupPdfDom();
+    if (err && err.name === 'AbortError') return;
+    showToast(t('sharePdfFailed'));
   }
 }
 
-/* ==================== EXCEL EXPORT ==================== */
+/* ==================== ✅ EXCEL EXPORT ==================== */
 function exportToExcel(){
-  if (typeof XLSX === 'undefined'){ showToast(t('excelNoLib')); return; }
+  if (typeof XLSX === 'undefined'){
+    showToast(t('excelNoLib'));
+    return;
+  }
+
   try {
     const L = prefs.lang;
     const tr = (ar, en) => (L === 'ar' ? ar : en);
+
     const F = 'Calibri';
     const bThin = (color='94A3B8') => ({
       top:{style:'thin',color:{rgb:color}}, bottom:{style:'thin',color:{rgb:color}},
@@ -2666,21 +2623,46 @@ function exportToExcel(){
       top:{style:'medium',color:{rgb:color}}, bottom:{style:'medium',color:{rgb:color}},
       left:{style:'medium',color:{rgb:color}}, right:{style:'medium',color:{rgb:color}}
     });
-    const sTitle = {font:{name:F, sz:16, bold:true, color:{rgb:'FFFFFF'}}, fill:{fgColor:{rgb:'0F172A'}}, alignment:{horizontal:'center', vertical:'center', readingOrder:2}};
-    const sSub = {font:{name:F, sz:12, bold:true, color:{rgb:'FFFFFF'}}, fill:{fgColor:{rgb:'1E3A5F'}}, alignment:{horizontal:'center', vertical:'center', readingOrder:2}};
-    const sSection = (bg, fg='FFFFFF') => ({font:{name:F, sz:11, bold:true, color:{rgb:fg}}, fill:{fgColor:{rgb:bg}}, alignment:{horizontal:'center', vertical:'center', readingOrder:2}, border: bMed()});
-    const sColHead = (bg, fg='FFFFFF') => ({font:{name:F, sz:10, bold:true, color:{rgb:fg}}, fill:{fgColor:{rgb:bg}}, alignment:{horizontal:'center', vertical:'center', readingOrder:2, wrapText:true}, border: bMed()});
-    const sBase = {font:{name:F, sz:10, color:{rgb:'1A2330'}}, alignment:{horizontal:'center', vertical:'center', readingOrder:2, wrapText:true}, border: bThin()};
-    const sNum = Object.assign({}, sBase, {numFmt:'0.00'});
-    const sPrice = Object.assign({}, sBase, {numFmt:'0.0000000'});
-    const sBold = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'0A0F15'}}});
-    const sGreen = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'0F9B68'}}});
-    const sRed = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'D62A35'}}});
-    const sGold = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'C8930A'}}});
-    const sBlue = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'2B7FD4'}}});
-    const sOrange = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'E07B1F'}}});
+
+    const sTitle = {
+      font:{name:F, sz:16, bold:true, color:{rgb:'FFFFFF'}},
+      fill:{fgColor:{rgb:'0F172A'}},
+      alignment:{horizontal:'center', vertical:'center', readingOrder:2}
+    };
+    const sSub = {
+      font:{name:F, sz:12, bold:true, color:{rgb:'FFFFFF'}},
+      fill:{fgColor:{rgb:'1E3A5F'}},
+      alignment:{horizontal:'center', vertical:'center', readingOrder:2}
+    };
+    const sSection = (bg, fg='FFFFFF') => ({
+      font:{name:F, sz:11, bold:true, color:{rgb:fg}},
+      fill:{fgColor:{rgb:bg}},
+      alignment:{horizontal:'center', vertical:'center', readingOrder:2},
+      border: bMed()
+    });
+    const sColHead = (bg, fg='FFFFFF') => ({
+      font:{name:F, sz:10, bold:true, color:{rgb:fg}},
+      fill:{fgColor:{rgb:bg}},
+      alignment:{horizontal:'center', vertical:'center', readingOrder:2, wrapText:true},
+      border: bMed()
+    });
+
+    const sBase = {
+      font:{name:F, sz:10, color:{rgb:'1A2330'}},
+      alignment:{horizontal:'center', vertical:'center', readingOrder:2, wrapText:true},
+      border: bThin()
+    };
+    const sNum     = Object.assign({}, sBase, {numFmt:'0.00'});
+    const sPrice   = Object.assign({}, sBase, {numFmt:'0.0000000'});
+    const sBold    = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'0A0F15'}}});
+    const sGreen   = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'0F9B68'}}});
+    const sRed     = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'D62A35'}}});
+    const sGold    = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'C8930A'}}});
+    const sBlue    = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'2B7FD4'}}});
+    const sOrange  = Object.assign({}, sBase, {font:{name:F, sz:10, bold:true, color:{rgb:'E07B1F'}}});
 
     const entryAmt = state.capital * state.alloc[0] / 100;
+
     let fullQty = entryAmt / state.entry;
     let fullCost = entryAmt;
     for (let i = 0; i < state.dcaCount; i++){
@@ -2688,16 +2670,17 @@ function exportToExcel(){
       fullQty += amt / state.dca[i];
       fullCost += amt;
     }
-    const fullAvg = fullCost / fullQty;
-    const fullTP = fullAvg * 1.05;
-    const fullProfit = (fullQty * fullTP) - fullCost;
+    const fullAvg   = fullCost / fullQty;
+    const fullTP    = fullAvg * 1.05;
+    const fullProfit= (fullQty * fullTP) - fullCost;
+
     const lastDcaPrice = getLastActiveDca() || state.entry;
     let slP;
     if (state.slMode === 'auto') slP = lastDcaPrice * (1 - state.slPct/100);
     else slP = (state.slPrice && state.slPrice > 0) ? state.slPrice : lastDcaPrice * (1 - state.slPct/100);
     const valueAtSL = fullQty * slP;
-    const lossAmt = valueAtSL - fullCost;
-    const lossPct = fullCost > 0 ? (lossAmt / fullCost) * 100 : 0;
+    const lossAmt   = valueAtSL - fullCost;
+    const lossPct   = fullCost > 0 ? (lossAmt / fullCost) * 100 : 0;
     const distanceBelowLastDca = pctOf(slP, lastDcaPrice);
 
     const ws = {};
@@ -2719,18 +2702,23 @@ function exportToExcel(){
 
     put(r, 1, tr('📌 المعلومات الأساسية','📌 Basic Information'), sSection('16C784'));
     mrg(r, 1, r, 10); setH(r, 22); r++;
-    const basicHeaders = [tr('الزوج','Pair'), tr('الوسم','Tag'), tr('سعر الدخول','Entry'), tr('رأس المال','Capital'), tr('عدد DCA','DCA Count')];
-    const basicValues = [ state.pair, state.tag, state.entry, state.capital, state.dcaCount ];
-    const basicStyles = [ sBold, sBold, sPrice, sNum, sBold ];
-    const basicTypes = [ 's','s','n','n','n' ];
+    const basicHeaders = [tr('الزوج','Pair'), tr('الوسم','Tag'), tr('سعر الدخول','Entry'),
+                          tr('رأس المال','Capital'), tr('عدد DCA','DCA Count')];
+    const basicValues  = [ state.pair, state.tag, state.entry, state.capital, state.dcaCount ];
+    const basicStyles  = [ sBold, sBold, sPrice, sNum, sBold ];
+    const basicTypes   = [ 's','s','n','n','n' ];
     for (let i = 0; i < 5; i++){
       const c = 1 + i*2;
-      put(r, c, basicHeaders[i], sColHead('1E3A5F')); mrg(r, c, r, c+1); put(r, c+1, '', sColHead('1E3A5F'));
+      put(r, c, basicHeaders[i], sColHead('1E3A5F'));
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sColHead('1E3A5F'));
     }
     setH(r, 22); r++;
     for (let i = 0; i < 5; i++){
       const c = 1 + i*2;
-      put(r, c, basicValues[i], basicStyles[i], basicTypes[i]); mrg(r, c, r, c+1); put(r, c+1, '', basicStyles[i], basicTypes[i]);
+      put(r, c, basicValues[i], basicStyles[i], basicTypes[i]);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', basicStyles[i], basicTypes[i]);
     }
     setH(r, 24); r++;
     setH(r, 6); r++;
@@ -2740,18 +2728,24 @@ function exportToExcel(){
     const allocLabels = [tr('الدخول','Entry'), 'DCA 1', 'DCA 2', 'DCA 3', 'DCA 4'];
     for (let i = 0; i < 5; i++){
       const c = 1 + i*2;
-      put(r, c, allocLabels[i], sColHead('0EA5E9')); mrg(r, c, r, c+1); put(r, c+1, '', sColHead('0EA5E9'));
+      put(r, c, allocLabels[i], sColHead('0EA5E9'));
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sColHead('0EA5E9'));
     }
     setH(r, 22); r++;
     for (let i = 0; i < 5; i++){
       const c = 1 + i*2;
-      put(r, c, state.alloc[i], sNum); mrg(r, c, r, c+1); put(r, c+1, '', sNum);
+      put(r, c, state.alloc[i], sNum);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sNum);
     }
     setH(r, 22); r++;
     for (let i = 0; i < 5; i++){
       const c = 1 + i*2;
       const amt = state.capital * state.alloc[i] / 100;
-      put(r, c, amt, sGold); mrg(r, c, r, c+1); put(r, c+1, '', sGold);
+      put(r, c, amt, sGold);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sGold);
     }
     setH(r, 22); r++;
     setH(r, 6); r++;
@@ -2759,65 +2753,94 @@ function exportToExcel(){
     put(r, 1, tr('🥇 الأهداف','🥇 Targets'), sSection('C8930A'));
     mrg(r, 1, r, 10); setH(r, 22); r++;
     const tColors = ['FFD23F','C9D1D9','CD7F32','16C784'];
-    const tFg = ['0A0F15','0A0F15','FFFFFF','FFFFFF'];
-    const tMeds = ['🥇','🥈','🥉','🏁'];
+    const tFg     = ['0A0F15','0A0F15','FFFFFF','FFFFFF'];
+    const tMeds   = ['🥇','🥈','🥉','🏁'];
     for (let i = 0; i < 4; i++){
       const c = 1 + i*2;
       put(r, c, `${tMeds[i]} ${tr('هدف','Target')} ${i+1}`, sColHead(tColors[i], tFg[i]));
-      mrg(r, c, r, c+1); put(r, c+1, '', sColHead(tColors[i], tFg[i]));
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sColHead(tColors[i], tFg[i]));
     }
-    put(r, 9, tr('الوضع','Mode'), sColHead('1E3A5F')); mrg(r, 9, r, 10); put(r, 10, '', sColHead('1E3A5F'));
+    put(r, 9, tr('الوضع','Mode'), sColHead('1E3A5F'));
+    mrg(r, 9, r, 10);
+    put(r, 10, '', sColHead('1E3A5F'));
     setH(r, 22); r++;
     for (let i = 0; i < 4; i++){
       const c = 1 + i*2;
-      put(r, c, state.targets[i], sPrice); mrg(r, c, r, c+1); put(r, c+1, '', sPrice);
+      put(r, c, state.targets[i], sPrice);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sPrice);
     }
     put(r, 9, state.targetsMode === 'scale' ? tr('تدريجي','Scale') : tr('كامل','Full'), sBold);
-    mrg(r, 9, r, 10); put(r, 10, '', sBold);
+    mrg(r, 9, r, 10);
+    put(r, 10, '', sBold);
     setH(r, 22); r++;
     for (let i = 0; i < 4; i++){
       const c = 1 + i*2;
-      put(r, c, state.targetPcts[i], sGold); mrg(r, c, r, c+1); put(r, c+1, '', sGold);
+      put(r, c, state.targetPcts[i], sGold);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sGold);
     }
-    put(r, 9, tr('النسبة %','Pct %'), sColHead('1E3A5F')); mrg(r, 9, r, 10); put(r, 10, '', sColHead('1E3A5F'));
+    put(r, 9, tr('النسبة %','Pct %'), sColHead('1E3A5F'));
+    mrg(r, 9, r, 10);
+    put(r, 10, '', sColHead('1E3A5F'));
     setH(r, 22); r++;
     for (let i = 0; i < 4; i++){
       const c = 1 + i*2;
       const profit = entryAmt * (state.targetPcts[i]/100);
-      put(r, c, profit, sGreen); mrg(r, c, r, c+1); put(r, c+1, '', sGreen);
+      put(r, c, profit, sGreen);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sGreen);
     }
-    put(r, 9, tr('الربح $','Profit $'), sColHead('1E3A5F')); mrg(r, 9, r, 10); put(r, 10, '', sColHead('1E3A5F'));
+    put(r, 9, tr('الربح $','Profit $'), sColHead('1E3A5F'));
+    mrg(r, 9, r, 10);
+    put(r, 10, '', sColHead('1E3A5F'));
     setH(r, 22); r++;
     for (let i = 0; i < 4; i++){
       const c = 1 + i*2;
       const isSold = state.soldTargets.includes(i);
       const cellStyle = isSold ? sGreen : sBase;
-      put(r, c, isSold ? tr('✅ مباع','✅ Sold') : '—', cellStyle); mrg(r, c, r, c+1); put(r, c+1, '', cellStyle);
+      put(r, c, isSold ? tr('✅ مباع','✅ Sold') : '—', cellStyle);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', cellStyle);
     }
-    put(r, 9, tr('الحالة','Status'), sColHead('1E3A5F')); mrg(r, 9, r, 10); put(r, 10, '', sColHead('1E3A5F'));
+    put(r, 9, tr('الحالة','Status'), sColHead('1E3A5F'));
+    mrg(r, 9, r, 10);
+    put(r, 10, '', sColHead('1E3A5F'));
     setH(r, 22); r++;
     setH(r, 6); r++;
 
     put(r, 1, tr('🔻 مستويات DCA','🔻 DCA Levels'), sSection('EA3943'));
     mrg(r, 1, r, 10); setH(r, 22); r++;
-    const dcaHeaders = [tr('المستوى','Level'), tr('السعر','Price'), tr('الانخفاض %','Drop %'), tr('التخصيص %','Alloc %'), tr('المبلغ $','Amount $')];
+    const dcaHeaders = [
+      tr('المستوى','Level'), tr('السعر','Price'), tr('الانخفاض %','Drop %'),
+      tr('التخصيص %','Alloc %'), tr('المبلغ $','Amount $')
+    ];
     for (let i = 0; i < 5; i++){
       const c = 1 + i*2;
-      put(r, c, dcaHeaders[i], sColHead('EA3943')); mrg(r, c, r, c+1); put(r, c+1, '', sColHead('EA3943'));
+      put(r, c, dcaHeaders[i], sColHead('EA3943'));
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sColHead('EA3943'));
     }
     setH(r, 22); r++;
     if (state.dcaCount === 0){
       put(r, 1, tr('بدون تعزيز — دخول 100%','No DCA — 100% entry'), sBold);
-      mrg(r, 1, r, 10); setH(r, 22); r++;
+      mrg(r, 1, r, 10);
+      setH(r, 22); r++;
     } else {
       for (let i = 0; i < state.dcaCount; i++){
         const c1 = 1;
         const amt = state.capital * state.alloc[i+1] / 100;
-        put(r, c1, `DCA ${i+1}`, sBold); mrg(r, c1, r, c1+1); put(r, c1+1, '', sBold);
-        put(r, c1+2, state.dca[i], sPrice); mrg(r, c1+2, r, c1+3); put(r, c1+3, '', sPrice);
-        put(r, c1+4, state.dcaPcts[i], sRed); mrg(r, c1+4, r, c1+5); put(r, c1+5, '', sRed);
-        put(r, c1+6, state.alloc[i+1], sOrange); mrg(r, c1+6, r, c1+7); put(r, c1+7, '', sOrange);
-        put(r, c1+8, amt, sGold); mrg(r, c1+8, r, c1+9); put(r, c1+9, '', sGold);
+        put(r, c1, `DCA ${i+1}`, sBold);
+        mrg(r, c1, r, c1+1); put(r, c1+1, '', sBold);
+        put(r, c1+2, state.dca[i], sPrice);
+        mrg(r, c1+2, r, c1+3); put(r, c1+3, '', sPrice);
+        put(r, c1+4, state.dcaPcts[i], sRed);
+        mrg(r, c1+4, r, c1+5); put(r, c1+5, '', sRed);
+        put(r, c1+6, state.alloc[i+1], sOrange);
+        mrg(r, c1+6, r, c1+7); put(r, c1+7, '', sOrange);
+        put(r, c1+8, amt, sGold);
+        mrg(r, c1+8, r, c1+9); put(r, c1+9, '', sGold);
         setH(r, 22); r++;
       }
     }
@@ -2825,24 +2848,34 @@ function exportToExcel(){
 
     put(r, 1, tr('🛑 وقف الخسارة','🛑 Stop Loss'), sSection('B6252F'));
     mrg(r, 1, r, 10); setH(r, 22); r++;
-    const slHeaders = [tr('السعر','Price'), tr('الخسارة $','Loss $'), tr('الخسارة %','Loss %'), tr('المتبقي $','Remaining $'), tr('المسافة %','Distance %')];
+    const slHeaders = [
+      tr('السعر','Price'), tr('الخسارة $','Loss $'), tr('الخسارة %','Loss %'),
+      tr('المتبقي $','Remaining $'), tr('المسافة %','Distance %')
+    ];
     const slValues = [ slP, lossAmt, lossPct, valueAtSL, distanceBelowLastDca ];
     const slStyles = [ sRed, sRed, sRed, sGreen, sRed ];
     for (let i = 0; i < 5; i++){
       const c = 1 + i*2;
-      put(r, c, slHeaders[i], sColHead('B6252F')); mrg(r, c, r, c+1); put(r, c+1, '', sColHead('B6252F'));
+      put(r, c, slHeaders[i], sColHead('B6252F'));
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', sColHead('B6252F'));
     }
     setH(r, 22); r++;
     for (let i = 0; i < 5; i++){
       const c = 1 + i*2;
-      put(r, c, slValues[i], slStyles[i]); mrg(r, c, r, c+1); put(r, c+1, '', slStyles[i]);
+      put(r, c, slValues[i], slStyles[i]);
+      mrg(r, c, r, c+1);
+      put(r, c+1, '', slStyles[i]);
     }
     setH(r, 24); r++;
 
     ws['!ref'] = XLSX.utils.encode_range({ s:{r:0,c:0}, e:{r:r-1, c:9} });
     ws['!merges'] = merges;
     ws['!views'] = [{ RTL: true }];
-    ws['!cols'] = [{wch:14},{wch:14},{wch:14},{wch:14},{wch:14},{wch:14},{wch:14},{wch:14},{wch:14},{wch:14}];
+    ws['!cols'] = [
+      {wch:14},{wch:14},{wch:14},{wch:14},{wch:14},
+      {wch:14},{wch:14},{wch:14},{wch:14},{wch:14}
+    ];
     ws['!rows'] = rowHeights;
 
     const ws2 = {};
@@ -2862,14 +2895,27 @@ function exportToExcel(){
     mrg2(r2, 1, r2, 6); setH2(r2, 22); r2++;
     setH2(r2, 6); r2++;
 
-    const cardHeaders = [tr('إجمالي الكمية','Total Qty'), tr('متوسط السعر','Avg Price'), tr('الهدف النهائي','Final Target'), tr('إجمالي الاستثمار','Total Invest'), tr('الربح المتوقع','Expected Profit'), tr('وقف الخسارة','Stop Loss')];
+    const cardHeaders = [
+      tr('إجمالي الكمية','Total Qty'),
+      tr('متوسط السعر','Avg Price'),
+      tr('الهدف النهائي','Final Target'),
+      tr('إجمالي الاستثمار','Total Invest'),
+      tr('الربح المتوقع','Expected Profit'),
+      tr('وقف الخسارة','Stop Loss')
+    ];
     const cardValues = [ fullQty, fullAvg, fullTP, fullCost, fullProfit, slP ];
     const cardStyles = [ sBlue, sOrange, sGreen, sGold, sGreen, sRed ];
     const cardColors = ['0EA5E9','8B5CF6','16C784','FFD23F','0F9B68','EA3943'];
-    const cardFg = ['FFFFFF','FFFFFF','FFFFFF','0A0F15','FFFFFF','FFFFFF'];
-    cardHeaders.forEach((h, i) => { put2(r2, i+1, h, sColHead(cardColors[i], cardFg[i])); setH2(r2, 26); });
+    const cardFg     = ['FFFFFF','FFFFFF','FFFFFF','0A0F15','FFFFFF','FFFFFF'];
+    cardHeaders.forEach((h, i) => {
+      put2(r2, i+1, h, sColHead(cardColors[i], cardFg[i]));
+      setH2(r2, 26);
+    });
     r2++;
-    cardValues.forEach((v, i) => { put2(r2, i+1, v, cardStyles[i]); setH2(r2, 28); });
+    cardValues.forEach((v, i) => {
+      put2(r2, i+1, v, cardStyles[i]);
+      setH2(r2, 28);
+    });
     r2++;
     setH2(r2, 6); r2++;
 
@@ -2886,8 +2932,10 @@ function exportToExcel(){
       [tr('وقف الخسارة','Stop Loss'), state.slMode === 'auto' ? tr('تلقائي','Auto') : tr('يدوي','Manual')]
     ];
     details.forEach(([k, v]) => {
-      put2(r2, 1, k, sColHead('1E3A5F')); mrg2(r2, 1, r2, 3);
-      put2(r2, 2, '', sColHead('1E3A5F')); put2(r2, 3, '', sColHead('1E3A5F'));
+      put2(r2, 1, k, sColHead('1E3A5F'));
+      mrg2(r2, 1, r2, 3);
+      put2(r2, 2, '', sColHead('1E3A5F'));
+      put2(r2, 3, '', sColHead('1E3A5F'));
       const isNum = typeof v === 'number';
       put2(r2, 4, isNum ? v : String(v), isNum ? sNum : sBold, isNum ? 'n' : 's');
       mrg2(r2, 4, r2, 6);
@@ -2904,12 +2952,13 @@ function exportToExcel(){
 
     const wb = XLSX.utils.book_new();
     wb.Workbook = { Views: [{ RTL: true }] };
-    XLSX.utils.book_append_sheet(wb, ws, tr('الخطة','Plan'));
+    XLSX.utils.book_append_sheet(wb, ws,  tr('الخطة','Plan'));
     XLSX.utils.book_append_sheet(wb, ws2, tr('ملخص','Summary'));
 
     const today = new Date();
     const dateStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
     XLSX.writeFile(wb, `trading-plan-${dateStr}.xlsx`);
+
     showToast(t('excelExported'));
   } catch (err) {
     console.error('[Excel Export] Error:', err);
@@ -2917,16 +2966,27 @@ function exportToExcel(){
   }
 }
 
-function openClearModal(){ const m = $('clearModal'); if(m) m.classList.add('show'); }
-function closeClearModal(){ const m = $('clearModal'); if(m) m.classList.remove('show'); }
+function openClearModal(){
+  const modal = $('clearModal');
+  if(!modal) return;
+  modal.classList.add('show');
+}
+function closeClearModal(){
+  const modal = $('clearModal');
+  if(!modal) return;
+  modal.classList.remove('show');
+}
 function confirmClearData(){
   try{
     localStorage.removeItem('xrpeth_plan_v28');
     localStorage.removeItem('xrpeth_prefs_v28');
   }catch(e){}
+
   state = JSON.parse(JSON.stringify(DEFAULT_STATE));
   prefs = { lang:'ar', theme:'dark', fontsize:'md' };
+
   closeClearModal();
+
   applyPrefs();
   setMode(state.mode);
   setTargetsMode(state.targetsMode);
@@ -2934,8 +2994,10 @@ function confirmClearData(){
   setDCACount(state.dcaCount);
   syncInputs();
   render();
+
   showToast(t('clearSuccess'));
 }
+
 document.addEventListener('keydown', e => {
   if(e.key === 'Escape'){
     const modal = $('clearModal');
