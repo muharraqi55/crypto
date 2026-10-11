@@ -7,6 +7,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+
 <style>
 /* ═══════════════════════════════════════════════════════════
    🌗 المتغيرات (Variables) — الوضع الفاتح والداكن
@@ -2610,7 +2611,190 @@ body.lang-en .asset-filter-bar {
 /* ═══════════════════════════════════════════════════════════
    ✅ نهاية إضافات دعم الأسهم
    ═══════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   ✅✅✅ [جديد] سجل جلب الأسعار + التحقق قبل الإضافة
+   ═══════════════════════════════════════════════════════════════ */
+
+#fetchLogBtn {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: white;
+    padding: 8px 14px;
+    font-size: 0.95em;
+}
+#fetchLogBtn:hover {
+    background: linear-gradient(135deg, #4f46e5, #3730a3);
+    transform: translateY(-1px);
+}
+
+.fetch-log-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--bg-color), var(--section-bg));
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+.fetch-log-stat {
+    text-align: center;
+    padding: 12px 8px;
+    border-radius: 10px;
+    background: var(--section-bg);
+    border: 2px solid var(--border-color);
+}
+.fetch-log-stat.success {
+    border-color: var(--positive-color);
+    background: linear-gradient(135deg, rgba(25, 135, 84, 0.08), rgba(32, 201, 151, 0.08));
+}
+.fetch-log-stat.failed {
+    border-color: var(--negative-color);
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.08), rgba(250, 82, 82, 0.08));
+}
+.fetch-log-stat.total {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(0, 86, 179, 0.08), rgba(0, 123, 255, 0.08));
+}
+.fetch-log-stat-label {
+    font-size: 0.78em;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+.fetch-log-stat-value {
+    font-size: 1.6em;
+    font-weight: 700;
+    font-family: 'Roboto Mono', monospace;
+    direction: ltr;
+}
+.fetch-log-stat.success .fetch-log-stat-value { color: var(--positive-color); }
+.fetch-log-stat.failed .fetch-log-stat-value { color: var(--negative-color); }
+.fetch-log-stat.total .fetch-log-stat-value { color: var(--primary-color); }
+
+.fetch-log-section-title {
+    font-size: 1em;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fetch-log-list {
+    max-height: 320px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--bg-color);
+    padding: 8px;
+}
+.fetch-log-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    background: var(--section-bg);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    gap: 10px;
+}
+.fetch-log-item:last-child { margin-bottom: 0; }
+.fetch-log-item:hover {
+    transform: translateX(-3px);
+    box-shadow: 0 3px 10px var(--shadow-color);
+}
+.fetch-log-item.failed-item {
+    border-right: 4px solid var(--negative-color);
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.05), var(--section-bg));
+}
+.fetch-log-item.success-item {
+    border-right: 4px solid var(--positive-color);
+}
+.fetch-log-item-symbol {
+    font-weight: 700;
+    font-size: 1em;
+    color: var(--text-color);
+    font-family: 'Roboto Mono', monospace;
+    direction: ltr;
+    min-width: 100px;
+}
+.fetch-log-item-detail {
+    flex: 1;
+    font-size: 0.85em;
+    color: var(--text-muted);
+    font-family: 'Roboto Mono', monospace;
+    direction: ltr;
+    text-align: left;
+}
+.fetch-log-item-source {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.72em;
+    font-weight: 700;
+    background: rgba(0, 86, 179, 0.12);
+    color: var(--primary-color);
+    white-space: nowrap;
+}
+.fetch-log-item-source.error-source {
+    background: rgba(220, 53, 69, 0.12);
+    color: var(--negative-color);
+}
+.fetch-log-empty {
+    text-align: center;
+    padding: 25px;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+/* نافذة التحقق */
+.validate-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: validateSpin 0.8s linear infinite;
+    margin: 0 auto;
+}
+@keyframes validateSpin {
+    to { transform: rotate(360deg); }
+}
+.validate-success {
+    font-size: 3em;
+    margin-bottom: 10px;
+    animation: validatePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.validate-error {
+    font-size: 3em;
+    margin-bottom: 10px;
+    animation: validatePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes validatePop {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 560px) {
+    .fetch-log-stats { grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; }
+    .fetch-log-stat:last-child { grid-column: span 2; }
+    .fetch-log-stat-value { font-size: 1.3em; }
+    .fetch-log-item { flex-wrap: wrap; padding: 8px 10px; }
+    .fetch-log-item-symbol { min-width: auto; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ✅ نهاية إضافات سجل الجلب والتحقق
+   ═══════════════════════════════════════════════════════════════ */
 </style>
+
 </head>
 <body>
 
@@ -2864,6 +3048,9 @@ body.lang-en .asset-filter-bar {
 <div id="apiStatus">اختر عملة لجلب السعر</div>
 <div id="coinStatus">العملات: 0</div>
 <button id="refreshPriceBtn" title="تحديث الأسعار" onclick="fetchAllPrices()" class="btn-pulse">🔄 تحديث</button>
+<!-- ✅ [جديد] زر سجل جلب الأسعار -->
+<button id="fetchLogBtn" title="عرض سجل آخر جلب للأسعار" onclick="showFetchLog()" class="btn-pulse">📋 سجل الجلب</button>
+<!-- ✅ نهاية الإضافة -->
 <button id="deleteCoinBtn" onclick="deleteCurrentCoin()" disabled title="حذف العملة المحددة">🗑️ حذف</button>
 <button id="tradingViewBtn" onclick="openTradingView()" title="فتح TradingView" class="btn-pulse">📈 TradingView</button>
 </div>
@@ -3488,6 +3675,9 @@ body.lang-en .asset-filter-bar {
 <li>📈 <strong>جديد:</strong> دعم الأسهم العالمية (Twelve Data + Finnhub)</li>
 <li>🔍 <strong>جديد:</strong> كشف تلقائي لنوع الأصل (كريبتو / سهم)</li>
 <li>🎛️ <strong>جديد:</strong> فلتر نوع الأصل في جدول الملخص</li>
+<li>📋 <strong>جديد:</strong> زر سجل جلب الأسعار (لمعرفة من فشل)</li>
+<li>✅ <strong>جديد:</strong> التحقق من صحة العملة/السهم قبل الإضافة</li>
+<li>🎯 <strong>جديد:</strong> إصلاح TradingView (يتعرف على الأسهم العربية)</li>
 </ul>
 </div>
 <button onclick="closeUpdatePopup()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">ممتاز!</button>
@@ -3555,18 +3745,54 @@ body.lang-en .asset-filter-bar {
     </div>
 </div>
 
+<!-- ✅ [جديد] نافذة سجل جلب الأسعار -->
+<div class="popup-overlay" id="fetchLogPopup">
+    <div class="popup-content" style="max-width: 700px;">
+        <div class="popup-header">
+            <h3 class="popup-title">📋 سجل جلب الأسعار</h3>
+            <button class="popup-close" onclick="closeFetchLogPopup()">&times;</button>
+        </div>
+        <div class="popup-body" id="fetchLogBody">
+            <div style="text-align: center; padding: 30px; color: var(--text-muted);">
+                لا توجد بيانات. اضغط على زر "🔄 تحديث" أولاً.
+            </div>
+        </div>
+        <div class="popup-footer">
+            <button class="popup-btn popup-btn-primary" onclick="closeFetchLogPopup()">إغلاق</button>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ [جديد] نافذة التحقق من الأصل قبل الإضافة -->
+<div class="popup-overlay" id="validateAssetPopup">
+    <div class="popup-content" style="max-width: 500px;">
+        <div class="popup-header">
+            <h3 class="popup-title" id="validateTitle">🔍 جاري التحقق...</h3>
+            <button class="popup-close" onclick="closeValidatePopup()">&times;</button>
+        </div>
+        <div class="popup-body" id="validateBody" style="text-align: center; padding: 25px;">
+            <div class="validate-spinner"></div>
+            <div style="margin-top: 15px; color: var(--text-muted);" id="validateMessage">جاري التحقق من صحة العملة/السهم...</div>
+        </div>
+    </div>
+</div>
+
 <div id="printReport" style="display: none;"></div>
 
 <!-- ✅ استيراد موحّد: يقبل .txt و .json معاً -->
 <input type="file" id="importFile" accept=".txt,.json,application/json,text/plain" style="display: none;">
+
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — النسخة النهائية v12 (مع إصلاح اسم العملة النشط)
+   JavaScript — النسخة النهائية v13
    ✅ حفظ موحّد: زر واحد يحفظ TXT + JSON معاً
    ✅ استيراد موحّد: يكتشف .txt / .json تلقائياً
    ✅ نافذة معلومات العملة (Coin Info Modal)
    ✅ دعم الأسهم العالمية (Twelve Data + Finnhub + Yahoo)
-   ✅➕ [إصلاح] اسم العملة يتحدّث فوراً عند التبديل
+   ✅ اسم العملة يتحدّث فوراً عند التبديل
+   ✅➕ [جديد] سجل جلب الأسعار (لمعرفة من فشل)
+   ✅➕ [جديد] التحقق من صحة العملة/السهم قبل الإضافة
+   ✅➕ [جديد] إصلاح TradingView (يتعرف على الأسهم العربية)
    ═══════════════════════════════════════════════════════════════ */
 
 // 🔑 Cloudflare Worker الخاص بك
@@ -3592,6 +3818,9 @@ const coinIdCache = new Map();
 
 // ✅ فلتر نوع الأصل الحالي
 let currentSummaryAssetFilter = 'all';
+
+// ✅ [جديد] سجل آخر جلب للأسعار
+let lastFetchResults = { timestamp: null, success: [], failed: [] };
 
 function generateUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
@@ -3868,7 +4097,19 @@ const AR_EN_DICT = {
     'ℹ️ عرض معلومات العملة': 'ℹ️ View Coin Info',
     '🔍 تلقائي': '🔍 Auto', '₿ كريبتو': '₿ Crypto', '📈 سهم': '📈 Stock',
     '🔎 فلتر:': '🔎 Filter:', '🌍 الكل': '🌍 All', '📈 أسهم': '📈 Stocks',
-    '📈 السهم': '📈 Stock', '₿ الكريبتو': '₿ Crypto'
+    '📈 السهم': '📈 Stock', '₿ الكريبتو': '₿ Crypto',
+    '📋 سجل الجلب': '📋 Fetch Log',
+    '📋 سجل جلب الأسعار': '📋 Fetch Prices Log',
+    'جاري التحقق...': 'Validating...',
+    'جاري التحقق من صحة العملة/السهم...': 'Validating coin/stock...',
+    'تم التحقق بنجاح!': 'Verified successfully!',
+    'لم يتم العثور على الأصل': 'Asset not found',
+    'الأصول الفاشلة': 'Failed assets',
+    'الأصول الناجحة': 'Successful assets',
+    'الإجمالي': 'Total',
+    'ناجح': 'Succeeded',
+    'فشل': 'Failed',
+    'آخر جلب:': 'Last fetch:'
 };
 
 function translateDOM(root, direction) {
@@ -3938,7 +4179,6 @@ function refreshDynamicContent() {
         if (typeof updateAllSectionTitles === 'function') updateAllSectionTitles();
         if (typeof updateToggleButtonsText === 'function') updateToggleButtonsText();
         if (typeof updateActiveAssetBadge === 'function') updateActiveAssetBadge();
-        // ✅ [إصلاح] تحديث اسم العملة الحالي بعد أي تغيير
         if (activeCoinSymbol) {
             updateCurrentCoinDisplay(activeCoinSymbol);
         }
@@ -4522,12 +4762,9 @@ function clearUIFields() {
 
 /* ═══════════════════════════════════════════════════════════════
    ✅ [إصلاح رئيسي] updateCurrentCoinDisplay
-   السبب: القسم "تفاصيل الدخول" يُعاد بناؤه في updateAllSectionTitles()
-   مما يجعل المراجع القديمة "ميتة". الحل: البحث المباشر في DOM.
    ═══════════════════════════════════════════════════════════════ */
 function updateCurrentCoinDisplay(symbol) {
     const displayText = symbol ? getDisplayNameFromKey(symbol) : "---";
-    // ✅ نبحث عن العناصر مباشرة في DOM في كل مرة (لا نحتفظ بمرجع قديم)
     const ids = ['currentCoinDisplay1', 'currentCoinDisplay2', 'currentCoinDisplay3'];
     ids.forEach(id => {
         const el = document.getElementById(id);
@@ -6010,6 +6247,7 @@ async function fetchSinglePrice(symbol) {
     }
 }
 
+/* ✅ [معدّلة] fetchAllPrices — تحفظ سجل الجلب */
 async function fetchAllPrices(isAutoRefresh = false) {
     const trackedSymbols = Object.keys(allCoinData);
     if (trackedSymbols.length === 0) {
@@ -6029,22 +6267,40 @@ async function fetchAllPrices(isAutoRefresh = false) {
     let successCount = 0, failCount = 0;
     const fetchTimestamp = new Date();
     const allResults = [];
+    const resultsDetails = [];
+    
     for (let i = 0; i < trackedSymbols.length; i += CONCURRENCY) {
         const batch = trackedSymbols.slice(i, i + CONCURRENCY);
         const batchResults = await Promise.allSettled(batch.map(s => fetchSinglePrice(s)));
         allResults.push(...batchResults);
         if (i + CONCURRENCY < trackedSymbols.length) await new Promise(r => setTimeout(r, 200));
     }
-    allResults.forEach(result => {
+    
+    allResults.forEach((result, idx) => {
+        const symbol = trackedSymbols[idx];
         if (result.status === 'fulfilled') {
-            const { symbol, price, error } = result.value;
-            if (error === null && price !== null) { currentMarketPrices[symbol] = price; successCount++; }
-            else {
+            const { price, error, source } = result.value;
+            if (error === null && price !== null && price > 0) {
+                currentMarketPrices[symbol] = price;
+                successCount++;
+                resultsDetails.push({ symbol, success: true, price, source: source || '—', error: null });
+            } else {
                 if (currentMarketPrices[symbol] === undefined || currentMarketPrices[symbol] === null) currentMarketPrices[symbol] = null;
                 failCount++;
+                resultsDetails.push({ symbol, success: false, price: null, source: null, error: error || (currentLang === 'en' ? 'Unknown error' : 'خطأ غير معروف') });
             }
-        } else failCount++;
+        } else {
+            failCount++;
+            resultsDetails.push({ symbol, success: false, price: null, source: null, error: (currentLang === 'en' ? 'Rejected: ' : 'مرفوض: ') + (result.reason?.message || 'Unknown') });
+        }
     });
+    
+    lastFetchResults = {
+        timestamp: fetchTimestamp,
+        success: resultsDetails.filter(r => r.success),
+        failed: resultsDetails.filter(r => !r.success)
+    };
+    
     if (activeCoinSymbol) {
         const price = currentMarketPrices[activeCoinSymbol];
         if (price !== null && price !== undefined && !isNaN(price)) {
@@ -6587,13 +6843,29 @@ function finalizeImport() {
 
 function handleImportTxtFile(event) { handleImportFile(event); }
 
+/* ✅ [معدّلة] openTradingView — يزيل اللواحق لأن TradingView يتعرف على الرمز الأساسي */
 function openTradingView() {
-    if (!activeCoinSymbol) { showError(currentLang === 'en' ? "Please select a coin first" : "يرجى اختيار عملة أولاً"); return; }
+    if (!activeCoinSymbol) { 
+        showError(currentLang === 'en' ? "Please select a coin first" : "يرجى اختيار عملة أولاً"); 
+        return; 
+    }
     let symbol = getBaseSymbolFromKey(activeCoinSymbol);
     const data = allCoinData[activeCoinSymbol];
     const assetType = (data && data.assetType) ? data.assetType : detectAssetType(symbol, 'auto');
+
     if (assetType === 'stock') {
-        window.open('https://www.tradingview.com/chart/?symbol=' + encodeURIComponent(symbol), '_blank');
+        const suffixes = [
+            '.SR', '.AE', '.QA', '.KW', '.BH', '.OM', '.JO', '.CA',
+            '.L', '.T', '.HK', '.DE', '.PA', '.MI', '.AS', '.AX', '.TO', '.V'
+        ];
+        let cleanSymbol = symbol;
+        for (const suffix of suffixes) {
+            if (cleanSymbol.toUpperCase().endsWith(suffix)) {
+                cleanSymbol = cleanSymbol.slice(0, -suffix.length);
+                break;
+            }
+        }
+        window.open('https://www.tradingview.com/chart/?symbol=' + encodeURIComponent(cleanSymbol), '_blank');
     } else {
         if (!symbol.includes('USDT') && !symbol.includes('BUSD')) symbol += 'USDT';
         window.open('https://www.tradingview.com/chart/?symbol=BINANCE:' + symbol, '_blank');
@@ -7108,14 +7380,48 @@ function calculateAndDisplay() {
     updateSummaryTable();
     updatePortfolioChart();
 }
-function addOrSwitchCoin() {
+
+/* ✅ [جديد] التحقق من صحة الأصل قبل الإضافة */
+async function addOrSwitchCoin() {
     const inputSymbol = newCoinNameInput.value.trim().toUpperCase();
-    if (!inputSymbol) { showError(currentLang === 'en' ? "Please enter a coin symbol" : "يرجى إدخال رمز العملة"); return; }
-    if (!/^[A-Z0-9\.\-_]{2,20}$/.test(inputSymbol)) { showError((currentLang === 'en' ? 'Invalid coin symbol "' : 'رمز العملة "') + inputSymbol + '"'); return; }
+    if (!inputSymbol) { 
+        showError(currentLang === 'en' ? "Please enter a coin symbol" : "يرجى إدخال رمز العملة"); 
+        return; 
+    }
+    if (!/^[A-Z0-9\.\-_]{2,20}$/.test(inputSymbol)) { 
+        showError((currentLang === 'en' ? 'Invalid coin symbol "' : 'رمز العملة "') + inputSymbol + '"'); 
+        return; 
+    }
+    
     const assetTypeSelect = document.getElementById('newAssetType');
     const userChoice = assetTypeSelect ? assetTypeSelect.value : 'auto';
     const detectedType = detectAssetType(inputSymbol, userChoice);
+    
+    // عرض نافذة التحقق
+    openValidatePopup(inputSymbol, detectedType);
+    
+    // التحقق الفعلي
+    const validation = await validateNewAsset(inputSymbol, detectedType);
+    
+    if (!validation.valid) {
+        showValidateError(inputSymbol, validation.error);
+        apiStatusDiv.textContent = (currentLang === 'en' ? '❌ ' + inputSymbol + ' not found' : '❌ ' + inputSymbol + ' غير موجود');
+        apiStatusDiv.style.color = 'var(--negative-color)';
+        return;
+    }
+    
+    showValidateSuccess(inputSymbol, detectedType, validation.price, validation.source);
+    
+    setTimeout(() => {
+        closeValidatePopup();
+        proceedWithAddOrSwitch(inputSymbol, detectedType);
+    }, 1200);
+}
+
+/* ✅ [جديد] المتابعة بعد نجاح التحقق */
+function proceedWithAddOrSwitch(inputSymbol, detectedType) {
     const existingKeys = Object.keys(allCoinData).filter(k => getBaseSymbolFromKey(k) === inputSymbol);
+    
     if (existingKeys.length > 0) {
         showPopup(
             currentLang === 'en' ? '📌 Coin Exists' : '📌 العملة موجودة',
@@ -7141,7 +7447,11 @@ function addOrSwitchCoin() {
                     if (result.price !== null) { currentMarketPrices[newKey] = result.price; if (activeCoinSymbol === newKey) displayCoinData(newKey); updateSummaryTable(); }
                 });
             },
-            () => { coinSelector.value = existingKeys[0]; handleCoinSelectionChange(); newCoinNameInput.value = ''; }
+            () => { 
+                coinSelector.value = existingKeys[0]; 
+                handleCoinSelectionChange(); 
+                newCoinNameInput.value = ''; 
+            }
         );
     } else {
         allCoinData[inputSymbol] = getDefaultCoinDataStructure();
@@ -7157,10 +7467,15 @@ function addOrSwitchCoin() {
         const typeLabel = detectedType === 'stock' ? (currentLang === 'en' ? 'Stock' : 'سهم') : (currentLang === 'en' ? 'Crypto' : 'كريبتو');
         showInfo((currentLang === 'en' ? 'Added ' : 'تمت إضافة ') + inputSymbol + ' (' + typeLabel + ')');
         fetchSinglePrice(inputSymbol).then(result => {
-            if (result.price !== null) { currentMarketPrices[inputSymbol] = result.price; if (activeCoinSymbol === inputSymbol) displayCoinData(inputSymbol); updateSummaryTable(); }
+            if (result.price !== null) { 
+                currentMarketPrices[inputSymbol] = result.price; 
+                if (activeCoinSymbol === inputSymbol) displayCoinData(inputSymbol); 
+                updateSummaryTable(); 
+            }
         });
     }
 }
+
 function handleCoinSelectionChange() {
     const selectedSymbol = coinSelector.value;
     if (selectedSymbol && allCoinData[selectedSymbol]) {
@@ -8304,6 +8619,219 @@ function showToast(message, type) {
     } catch (e) {}
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   ✅ [جديد] سجل جلب الأسعار
+   ═══════════════════════════════════════════════════════════════ */
+function showFetchLog() {
+    const popup = document.getElementById('fetchLogPopup');
+    const body = document.getElementById('fetchLogBody');
+    
+    if (!lastFetchResults || !lastFetchResults.timestamp) {
+        body.innerHTML = '<div class="fetch-log-empty">📭 ' + 
+            (currentLang === 'en' ? 'No data yet. Click "🔄 Refresh" first.' : 'لا توجد بيانات بعد. اضغط على "🔄 تحديث" أولاً.') + 
+            '</div>';
+        popup.classList.add('active');
+        return;
+    }
+    
+    const total = lastFetchResults.success.length + lastFetchResults.failed.length;
+    const ts = lastFetchResults.timestamp.toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG');
+    
+    let html = '';
+    
+    html += '<div class="fetch-log-stats">';
+    html += '<div class="fetch-log-stat total"><div class="fetch-log-stat-label">' + (currentLang === 'en' ? 'Total' : 'الإجمالي') + '</div><div class="fetch-log-stat-value">' + total + '</div></div>';
+    html += '<div class="fetch-log-stat success"><div class="fetch-log-stat-label">✅ ' + (currentLang === 'en' ? 'Succeeded' : 'ناجح') + '</div><div class="fetch-log-stat-value">' + lastFetchResults.success.length + '</div></div>';
+    html += '<div class="fetch-log-stat failed"><div class="fetch-log-stat-label">❌ ' + (currentLang === 'en' ? 'Failed' : 'فشل') + '</div><div class="fetch-log-stat-value">' + lastFetchResults.failed.length + '</div></div>';
+    html += '</div>';
+    
+    html += '<div style="text-align: center; margin-bottom: 15px; font-size: 0.85em; color: var(--text-muted);">';
+    html += '🕐 ' + (currentLang === 'en' ? 'Last fetch: ' : 'آخر جلب: ') + ts;
+    html += '</div>';
+    
+    if (lastFetchResults.failed.length > 0) {
+        html += '<div class="fetch-log-section-title" style="color: var(--negative-color);">❌ ' + 
+                (currentLang === 'en' ? 'Failed assets (' + lastFetchResults.failed.length + ')' : 'الأصول الفاشلة (' + lastFetchResults.failed.length + ')') + 
+                '</div>';
+        html += '<div class="fetch-log-list" style="margin-bottom: 15px; border-color: var(--negative-color);">';
+        lastFetchResults.failed.forEach(item => {
+            html += '<div class="fetch-log-item failed-item">';
+            html += '<div class="fetch-log-item-symbol">' + item.symbol + '</div>';
+            html += '<div class="fetch-log-item-detail">' + (item.error || '—') + '</div>';
+            html += '<span class="fetch-log-item-source error-source">❌ ' + (currentLang === 'en' ? 'Failed' : 'فشل') + '</span>';
+            html += '</div>';
+        });
+        html += '</div>';
+    }
+    
+    if (lastFetchResults.success.length > 0) {
+        html += '<div class="fetch-log-section-title" style="color: var(--positive-color);">✅ ' + 
+                (currentLang === 'en' ? 'Succeeded assets (' + lastFetchResults.success.length + ')' : 'الأصول الناجحة (' + lastFetchResults.success.length + ')') + 
+                '</div>';
+        html += '<div class="fetch-log-list">';
+        lastFetchResults.success.forEach(item => {
+            const priceText = item.price !== null ? formatNumber(item.price, guessDecimalPlaces(item.price)) : '—';
+            html += '<div class="fetch-log-item success-item">';
+            html += '<div class="fetch-log-item-symbol">' + item.symbol + '</div>';
+            html += '<div class="fetch-log-item-detail">$' + priceText + '</div>';
+            html += '<span class="fetch-log-item-source">' + (item.source || '—') + '</span>';
+            html += '</div>';
+        });
+        html += '</div>';
+    }
+    
+    body.innerHTML = html;
+    popup.classList.add('active');
+}
+function closeFetchLogPopup() {
+    document.getElementById('fetchLogPopup').classList.remove('active');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ✅ [جديد] التحقق من صحة العملة/السهم قبل الإضافة
+   ═══════════════════════════════════════════════════════════════ */
+function openValidatePopup(symbol, assetType) {
+    const popup = document.getElementById('validateAssetPopup');
+    const title = document.getElementById('validateTitle');
+    const body = document.getElementById('validateBody');
+    
+    const typeLabel = assetType === 'stock' 
+        ? (currentLang === 'en' ? 'Stock' : 'سهم') 
+        : (currentLang === 'en' ? 'Crypto' : 'كريبتو');
+    
+    title.textContent = '🔍 ' + (currentLang === 'en' ? 'Validating ' : 'جاري التحقق من ') + symbol;
+    body.innerHTML = 
+        '<div class="validate-spinner"></div>' +
+        '<div style="margin-top: 15px; color: var(--text-muted);" id="validateMessage">' +
+        (currentLang === 'en' 
+            ? 'Checking ' + symbol + ' as ' + typeLabel + '...' 
+            : 'جاري التحقق من ' + symbol + ' كـ ' + typeLabel + '...') +
+        '</div>';
+    popup.classList.add('active');
+}
+function closeValidatePopup() {
+    document.getElementById('validateAssetPopup').classList.remove('active');
+}
+function showValidateSuccess(symbol, assetType, price, source) {
+    const body = document.getElementById('validateBody');
+    const title = document.getElementById('validateTitle');
+    const typeLabel = assetType === 'stock' 
+        ? (currentLang === 'en' ? 'Stock' : 'سهم') 
+        : (currentLang === 'en' ? 'Crypto' : 'كريبتو');
+    const priceText = price ? formatNumber(price, guessDecimalPlaces(price)) : '—';
+    
+    title.textContent = '✅ ' + (currentLang === 'en' ? 'Asset verified!' : 'تم التحقق بنجاح!');
+    body.innerHTML = 
+        '<div class="validate-success">✅</div>' +
+        '<div style="font-weight: 700; font-size: 1.2em; color: var(--positive-color); margin-bottom: 8px;">' + symbol + '</div>' +
+        '<div style="color: var(--text-muted); margin-bottom: 12px;">' + typeLabel + '</div>' +
+        '<div style="padding: 12px; background: var(--bg-color); border-radius: 10px; border: 1px dashed var(--border-color);">' +
+        '<div style="font-size: 0.85em; color: var(--text-muted); margin-bottom: 5px;">' + (currentLang === 'en' ? 'Current Price' : 'السعر الحالي') + '</div>' +
+        '<div style="font-size: 1.4em; font-weight: 700; font-family: \'Roboto Mono\', monospace; color: var(--primary-color); direction: ltr;">$' + priceText + '</div>' +
+        '<div style="font-size: 0.75em; color: var(--text-muted); margin-top: 5px;">📡 ' + (source || '—') + '</div>' +
+        '</div>' +
+        '<div style="margin-top: 15px; font-size: 0.85em; color: var(--positive-color); font-weight: 600;">' +
+        (currentLang === 'en' ? '✓ Adding to list...' : '✓ جاري الإضافة...') + '</div>';
+}
+function showValidateError(symbol, errorMsg) {
+    const body = document.getElementById('validateBody');
+    const title = document.getElementById('validateTitle');
+    
+    title.textContent = '❌ ' + (currentLang === 'en' ? 'Asset not found' : 'لم يتم العثور على الأصل');
+    body.innerHTML = 
+        '<div class="validate-error">❌</div>' +
+        '<div style="font-weight: 700; font-size: 1.2em; color: var(--negative-color); margin-bottom: 8px;">' + symbol + '</div>' +
+        '<div style="color: var(--text-color); margin-bottom: 15px; padding: 12px; background: rgba(220, 53, 69, 0.08); border: 1px dashed var(--negative-color); border-radius: 10px; font-size: 0.9em;">' +
+        (errorMsg || (currentLang === 'en' ? 'Could not fetch price. Please verify the symbol.' : 'لم يتمكن من جلب السعر. يرجى التأكد من صحة الرمز.')) +
+        '</div>' +
+        '<div style="font-size: 0.85em; color: var(--text-muted); line-height: 1.6;">' +
+        (currentLang === 'en' 
+            ? '💡 Tips:\n• Check the symbol spelling\n• Try with .SR for Saudi stocks\n• Or with USDT for crypto' 
+            : '💡 نصائح:\n• تأكد من كتابة الرمز بشكل صحيح\n• جرّب مع .SR للأسهم السعودية\n• أو مع USDT للعملات الرقمية') +
+        '</div>' +
+        '<button onclick="closeValidatePopup()" style="margin-top: 18px; padding: 10px 24px; background: var(--text-muted); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: inherit;">' +
+        (currentLang === 'en' ? 'Close' : 'إغلاق') + '</button>';
+}
+
+/* ✅ [جديد] التحقق الفعلي من صحة العملة/السهم */
+async function validateNewAsset(symbol, assetType) {
+    try {
+        if (assetType === 'stock') {
+            const result = await fetchStockPrice(symbol);
+            if (result && result.price && result.price > 0) {
+                return { valid: true, price: result.price, source: result.source };
+            }
+            return { 
+                valid: false, 
+                error: currentLang === 'en' 
+                    ? 'Stock not found or no data available. Check the symbol.' 
+                    : 'السهم غير موجود أو لا توجد بيانات. تأكد من الرمز.' 
+            };
+        } else {
+            const result = await fetchCryptoPriceDirect(symbol);
+            if (result && result.price && result.price > 0) {
+                return { valid: true, price: result.price, source: result.source };
+            }
+            return { 
+                valid: false, 
+                error: currentLang === 'en' 
+                    ? 'Coin not found or no data available. Check the symbol.' 
+                    : 'العملة غير موجودة أو لا توجد بيانات. تأكد من الرمز.' 
+            };
+        }
+    } catch (e) {
+        return { 
+            valid: false, 
+            error: (currentLang === 'en' ? 'Validation error: ' : 'خطأ في التحقق: ') + e.message 
+        };
+    }
+}
+
+/* ✅ [جديد] جلب سعر الكريبتو مباشرة (بدون الاعتماد على allCoinData) */
+async function fetchCryptoPriceDirect(symbol) {
+    const binanceDomains = ['https://api.binance.com', 'https://data-api.binance.vision'];
+    for (const domain of binanceDomains) {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            const response = await fetch(domain + '/api/v3/ticker/price?symbol=' + symbol, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            if (response.ok) {
+                const data = await response.json();
+                if (data && data.price && !isNaN(parseFloat(data.price))) {
+                    return { price: parseFloat(data.price), source: 'Binance' };
+                }
+            }
+        } catch (e) {}
+    }
+    const altExchanges = [
+        { name: 'MEXC', url: 'https://api.mexc.com/api/v3/ticker/price?symbol=' + symbol, extract: (d) => d.price },
+        { name: 'OKX', url: 'https://www.okx.com/api/v5/market/ticker?instId=' + symbol.replace('USDT', '-USDT'), extract: (d) => d.data && d.data[0] ? d.data[0].last : null },
+        { name: 'KuCoin', url: 'https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=' + symbol.replace('USDT', '-USDT'), extract: (d) => d.code === '200000' && d.data ? d.data.price : null },
+        { name: 'Bybit', url: 'https://api.bybit.com/v5/market/tickers?category=spot&symbol=' + symbol, extract: (d) => d.result && d.result.list && d.result.list[0] ? d.result.list[0].lastPrice : null }
+    ];
+    for (const ex of altExchanges) {
+        try {
+            const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(ex.url);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            const response = await fetch(fetchUrl, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            if (response.ok) {
+                const data = await response.json();
+                const price = ex.extract(data);
+                if (price && !isNaN(parseFloat(price))) {
+                    return { price: parseFloat(price), source: ex.name };
+                }
+            }
+        } catch (e) {}
+    }
+    return null;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ✅ Excel Export (xlsx-js-style)
+   ═══════════════════════════════════════════════════════════════ */
 const XLSX_THEME = {
     darkBg: '0F172A', headerBg: '1E3A5F',
     totalBg: '0F172A', totalValueColor: '34D399',
@@ -8709,6 +9237,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    const fetchLogOverlay = document.getElementById('fetchLogPopup');
+    if (fetchLogOverlay) {
+        fetchLogOverlay.addEventListener('click', function(e) {
+            if (e.target === fetchLogOverlay) closeFetchLogPopup();
+        });
+    }
+
+    const validateOverlay = document.getElementById('validateAssetPopup');
+    if (validateOverlay) {
+        validateOverlay.addEventListener('click', function(e) {
+            if (e.target === validateOverlay) closeValidatePopup();
+        });
+    }
+
     updatePortfolioChart();
     loadPrivacyMode();
     updateCryptoTicker();
@@ -8770,5 +9312,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 2000);
 });
 </script>
+
 </body>
 </html>
