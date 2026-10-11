@@ -7,7 +7,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
-
 <style>
 /* ═══════════════════════════════════════════════════════════
    🌗 المتغيرات (Variables) — الوضع الفاتح والداكن
@@ -1937,9 +1936,7 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   ═══════════════════════════════════════════════════════════════
    ✅✅✅  الإضافات الجديدة — معلومات العملة (Coin Info)
-   ═══════════════════════════════════════════════════════════════
    ═══════════════════════════════════════════════════════════════ */
 
 /* 🔵 زر المعلومات ℹ️ في جدول الملخص — بجانب اسم العملة */
@@ -2363,6 +2360,256 @@ body.lang-en .coin-info-subtitle { text-align: left; }
 body.lang-en .coin-info-hero { flex-direction: row; }
 body.lang-en .coin-info-price-hero { text-align: right; padding-left: 0; padding-right: 10px; }
 body.lang-en .coin-info-item::before { right: auto; left: 0; }
+
+/* ═══════════════════════════════════════════════════════════════
+   ═══════════════════════════════════════════════════════════════
+   ✅✅✅ [جديد] الإضافات الخاصة بدعم الأسهم (Stocks)
+   ═══════════════════════════════════════════════════════════════
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 🎛️ قائمة اختيار نوع الأصل (تلقائي / كريبتو / سهم) */
+.asset-type-select {
+    padding: 10px 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--bg-color), var(--section-bg));
+    color: var(--text-color);
+    font-size: 0.9em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    flex-shrink: 0;
+    min-width: 130px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.asset-type-select:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 86, 179, 0.15);
+}
+.asset-type-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+.asset-type-select option {
+    background: var(--section-bg);
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+/* 💡 صندوق التلميح أسفل شريط التحكم */
+.asset-type-hint {
+    display: block;
+    background: linear-gradient(135deg, rgba(0, 86, 179, 0.06), rgba(0, 123, 255, 0.06));
+    border: 1px dashed rgba(0, 86, 179, 0.35);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 0.85em;
+    color: var(--text-color);
+    line-height: 1.7;
+    text-align: right;
+}
+.asset-type-hint strong {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+.asset-type-hint code {
+    background: var(--output-field-bg);
+    color: var(--primary-color);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'Roboto Mono', 'Consolas', monospace;
+    font-size: 0.9em;
+    font-weight: 700;
+    direction: ltr;
+    display: inline-block;
+}
+.dark-mode .asset-type-hint {
+    background: linear-gradient(135deg, rgba(77, 171, 247, 0.12), rgba(116, 192, 252, 0.12));
+    border-color: rgba(77, 171, 247, 0.4);
+}
+
+/* 🏷️ شارة نوع الأصل بجانب ترويسة "العملة النشطة" */
+.active-asset-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.55em;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
+    letter-spacing: 0.3px;
+    line-height: 1;
+    animation: badgeSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes badgeSlideIn {
+    from { opacity: 0; transform: translateX(-8px) scale(0.85); }
+    to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+.active-asset-badge.crypto {
+    background: linear-gradient(135deg, #f7931a, #ffb347);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(247, 147, 26, 0.4);
+}
+.active-asset-badge.stock {
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.4);
+}
+.dark-mode .active-asset-badge.crypto {
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+.dark-mode .active-asset-badge.stock {
+    background: linear-gradient(135deg, #15803d, #16a34a);
+}
+
+/* 🔎 شريط فلتر نوع الأصل في جدول الملخص */
+.asset-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, var(--bg-color), var(--section-bg));
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    margin: 12px 0;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 6px var(--shadow-color);
+}
+.asset-filter-label {
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 8px;
+    border-left: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+.asset-filter-btn {
+    padding: 7px 16px;
+    border: 2px solid var(--border-color);
+    background: var(--section-bg);
+    color: var(--text-muted);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.85em;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+}
+.asset-filter-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-1px);
+}
+.asset-filter-btn.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 3px 10px rgba(0, 86, 179, 0.3);
+}
+
+/* 🏷️ شارة نوع الأصل الصغيرة داخل جدول الملخص (بجانب اسم العملة) */
+.asset-type-badge-inline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    font-size: 0.75em;
+    font-weight: 700;
+    margin: 0 4px;
+    vertical-align: middle;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    line-height: 1;
+    cursor: help;
+}
+.asset-type-badge-inline.crypto {
+    background: linear-gradient(135deg, #f7931a, #ffb347);
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(247, 147, 26, 0.3);
+}
+.asset-type-badge-inline.stock {
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.3);
+}
+.asset-type-badge-inline:hover {
+    transform: scale(1.15);
+}
+.dark-mode .asset-type-badge-inline.crypto {
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+.dark-mode .asset-type-badge-inline.stock {
+    background: linear-gradient(135deg, #15803d, #16a34a);
+}
+
+/* 📱 استجابة الجوال لشريط الفلتر وقائمة النوع */
+@media (max-width: 768px) {
+    .asset-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px;
+    }
+    .asset-filter-label {
+        border-left: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-left: 0;
+        padding-bottom: 8px;
+        margin-bottom: 6px;
+        justify-content: center;
+    }
+    .asset-filter-btn {
+        padding: 8px 12px;
+        font-size: 0.82em;
+        justify-content: center;
+    }
+    .asset-type-select {
+        min-width: 110px;
+        font-size: 0.85em;
+        padding: 8px 10px;
+    }
+    .asset-type-hint {
+        font-size: 0.78em;
+        padding: 8px 10px;
+    }
+    .active-asset-badge {
+        font-size: 0.5em;
+        padding: 3px 8px;
+        margin-right: 6px;
+    }
+}
+
+/* دعم اللغة الإنجليزية للفلتر */
+body.lang-en .asset-filter-label {
+    border-left: none;
+    border-right: 1px solid var(--border-color);
+    padding-left: 0;
+    padding-right: 8px;
+    flex-direction: row-reverse;
+}
+body.lang-en .asset-type-hint {
+    text-align: left;
+}
+body.lang-en .asset-filter-bar {
+    direction: ltr;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ✅ نهاية إضافات دعم الأسهم
+   ═══════════════════════════════════════════════════════════ */
 </style>
 </head>
 <body>
@@ -2595,7 +2842,7 @@ body.lang-en .coin-info-item::before { right: auto; left: 0; }
 
 <section class="section card-hover section-custom" id="section-coinActive">
 <div class="section-header">
-<h2>العملة النشطة</h2>
+<h2>العملة النشطة <span id="activeAssetTypeBadge" class="active-asset-badge" style="display:none;"></span></h2>
 <button class="toggle-btn" onclick="toggleSection('coinActive')">طي</button>
 </div>
 <div class="section-content" id="coinActiveSectionContent">
@@ -2603,7 +2850,16 @@ body.lang-en .coin-info-item::before { right: auto; left: 0; }
 <label for="coinSelector">العملة النشطة:</label>
 <select id="coinSelector" onchange="handleCoinSelectionChange()"></select>
 <label for="newCoinName">إضافة/بحث:</label>
-<input type="text" id="newCoinName" placeholder="BTCUSDT">
+<input type="text" id="newCoinName" placeholder="BTCUSDT أو AAPL" onkeypress="handleNewCoinEnter(event)">
+
+<!-- ✅ [جديد] قائمة اختيار نوع الأصل -->
+<select id="newAssetType" class="asset-type-select" title="نوع الأصل — تلقائي: يكتشف النوع من الرمز">
+    <option value="auto">🔍 تلقائي</option>
+    <option value="crypto">₿ كريبتو</option>
+    <option value="stock">📈 سهم</option>
+</select>
+<!-- ✅ نهاية الإضافة -->
+
 <button onclick="addOrSwitchCoin()" class="btn-pulse">➕ إضافة/تبديل</button>
 <div id="apiStatus">اختر عملة لجلب السعر</div>
 <div id="coinStatus">العملات: 0</div>
@@ -2611,6 +2867,15 @@ body.lang-en .coin-info-item::before { right: auto; left: 0; }
 <button id="deleteCoinBtn" onclick="deleteCurrentCoin()" disabled title="حذف العملة المحددة">🗑️ حذف</button>
 <button id="tradingViewBtn" onclick="openTradingView()" title="فتح TradingView" class="btn-pulse">📈 TradingView</button>
 </div>
+
+<!-- ✅ [جديد] نصيحة توضيحية -->
+<div class="asset-type-hint">
+    💡 <strong>تلميح:</strong> اترك النوع على <strong>"تلقائي"</strong> ليكتشف النظام نوع الأصل تلقائياً.
+    الرموز المنتهية بـ <code>USDT / BUSD / USDC</code> = كريبتو.
+    بقية الرموز (مثل <code>AAPL</code>, <code>2222.SR</code>, <code>ARAMCO.SR</code>) = أسهم.
+</div>
+<!-- ✅ نهاية الإضافة -->
+
 </div>
 </section>
 
@@ -2709,6 +2974,15 @@ body.lang-en .coin-info-item::before { right: auto; left: 0; }
     <input type="datetime-local" id="dcaManualDateInput" class="date-mode-input" style="display:none;">
     <span class="date-mode-hint" id="dcaDateHint" style="display:none;">💡 سيتم تسجيل كل تعزيز جديد بالتاريخ المختار.</span>
 </div>
+
+<!-- ✅ [جديد] فلتر نوع الأصل في جدول الملخص -->
+<div class="asset-filter-bar">
+    <span class="asset-filter-label">🔎 فلتر:</span>
+    <button class="asset-filter-btn active" data-filter="all" onclick="setSummaryAssetFilter('all', this)">🌍 الكل</button>
+    <button class="asset-filter-btn" data-filter="crypto" onclick="setSummaryAssetFilter('crypto', this)">₿ كريبتو</button>
+    <button class="asset-filter-btn" data-filter="stock" onclick="setSummaryAssetFilter('stock', this)">📈 أسهم</button>
+</div>
+<!-- ✅ نهاية الإضافة -->
 
 <div class="summary-table-container">
 <table class="summary-table table-hover-effect">
@@ -3210,7 +3484,10 @@ body.lang-en .coin-info-item::before { right: auto; left: 0; }
 <li>🔒 وضع خصوصية مالية موسّع (سجلات + ملخص + اتجاه المحفظة)</li>
 <li>📊 زر تصدير Excel مع ألوان وحدود ودمج احترافي</li>
 <li>💾 زر حفظ موحّد: يحفظ TXT و JSON معاً بضغطة واحدة</li>
-<li>ℹ️ <strong>جديد:</strong> زر معلومات العملة (Market Cap / Supply) في جدول الملخص</li>
+<li>ℹ️ زر معلومات العملة (Market Cap / Supply) في جدول الملخص</li>
+<li>📈 <strong>جديد:</strong> دعم الأسهم العالمية (Twelve Data + Finnhub)</li>
+<li>🔍 <strong>جديد:</strong> كشف تلقائي لنوع الأصل (كريبتو / سهم)</li>
+<li>🎛️ <strong>جديد:</strong> فلتر نوع الأصل في جدول الملخص</li>
 </ul>
 </div>
 <button onclick="closeUpdatePopup()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">ممتاز!</button>
@@ -3255,7 +3532,7 @@ body.lang-en .coin-info-item::before { right: auto; left: 0; }
 </div>
 </div>
 
-<!-- ✅✅✅ نافذة معلومات العملة (الإضافة الجديدة) ✅✅✅ -->
+<!-- ✅ نافذة معلومات العملة -->
 <div class="popup-overlay" id="coinInfoPopup">
     <div class="coin-info-modal" onclick="event.stopPropagation();">
         <div class="coin-info-header">
@@ -3282,27 +3559,39 @@ body.lang-en .coin-info-item::before { right: auto; left: 0; }
 
 <!-- ✅ استيراد موحّد: يقبل .txt و .json معاً -->
 <input type="file" id="importFile" accept=".txt,.json,application/json,text/plain" style="display: none;">
-
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — النسخة النهائية v10
+   JavaScript — النسخة النهائية v12 (مع إصلاح اسم العملة النشط)
    ✅ حفظ موحّد: زر واحد يحفظ TXT + JSON معاً
    ✅ استيراد موحّد: يكتشف .txt / .json تلقائياً
-   ✅➕ جديد: نافذة معلومات العملة (Coin Info Modal)
+   ✅ نافذة معلومات العملة (Coin Info Modal)
+   ✅ دعم الأسهم العالمية (Twelve Data + Finnhub + Yahoo)
+   ✅➕ [إصلاح] اسم العملة يتحدّث فوراً عند التبديل
    ═══════════════════════════════════════════════════════════════ */
 
 // 🔑 Cloudflare Worker الخاص بك
 const MY_PROXY_URL = 'https://crypto-proxy.qwqwqwzx5.workers.dev';
 
-// ✅ ذاكرة مؤقتة للأسعار
+// 🔑 مفاتيح API لمزودي الأسهم
+const FINNHUB_API_KEY = 'db5rvuhr01qmd5lf9cl0db5rvuhr01qmd5lf9clg';
+const TWELVE_DATA_API_KEY = 'a0c201956c7540ceb8b1df362830b1c7';
+
+// ✅ ذاكرة مؤقتة للأسعار (كريبتو)
 const priceCache = new Map();
 const PRICE_CACHE_TTL = 25000;
 
-// ✅➕ ذاكرة مؤقتة لمعلومات العملات (Coin Info)
+// ✅ ذاكرة مؤقتة لأسعار الأسهم
+const stockPriceCache = new Map();
+const STOCK_PRICE_CACHE_TTL = 5 * 60 * 1000;
+
+// ✅ ذاكرة مؤقتة لمعلومات العملات
 const coinInfoCache = new Map();
-const COIN_INFO_CACHE_TTL = 10 * 60 * 1000; // 10 دقائق
-let currentCoinInfoSymbol = null; // العملة المعروضة حالياً في النافذة
-const coinIdCache = new Map(); // cache للـ coinId المستخرج من CoinGecko
+const COIN_INFO_CACHE_TTL = 10 * 60 * 1000;
+let currentCoinInfoSymbol = null;
+const coinIdCache = new Map();
+
+// ✅ فلتر نوع الأصل الحالي
+let currentSummaryAssetFilter = 'all';
 
 function generateUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
@@ -3340,7 +3629,74 @@ function getNextInstanceKey(baseSymbol) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   🌐💱 نظام اللغة والعملة
+   دوال كشف نوع الأصل وإدارته
+   ═══════════════════════════════════════════════════════════════ */
+function detectAssetType(symbol, userChoice) {
+    if (!symbol) return 'crypto';
+    if (userChoice === 'crypto' || userChoice === 'stock') return userChoice;
+    const upper = String(symbol).toUpperCase();
+    const cryptoQuoteSuffixes = ['USDT', 'BUSD', 'USDC', 'TUSD', 'USDP', 'FDUSD', 'DAI', 'USDD', 'USDE'];
+    for (const suffix of cryptoQuoteSuffixes) {
+        if (upper.endsWith(suffix) && upper.length > suffix.length + 1) return 'crypto';
+    }
+    const knownCryptos = [
+        'BTC', 'ETH', 'BNB', 'SOL', 'XRP', 'ADA', 'DOGE', 'DOT', 'MATIC', 'AVAX',
+        'LINK', 'LTC', 'TRX', 'ATOM', 'XLM', 'ALGO', 'NEAR', 'FTM', 'SAND', 'MANA',
+        'UNI', 'AAVE', 'MKR', 'COMP', 'SUSHI', 'CRV', 'SHIB', 'PEPE', 'FLOKI'
+    ];
+    if (knownCryptos.includes(upper)) return 'crypto';
+    const stockExchangeSuffixes = ['.SR', '.CA', '.AE', '.QA', '.KW', '.BH', '.OM', '.JO', '.L', '.T', '.HK', '.DE', '.PA', '.MI', '.AS', '.AX', '.TO', '.V'];
+    for (const suffix of stockExchangeSuffixes) {
+        if (upper.endsWith(suffix)) return 'stock';
+    }
+    return 'stock';
+}
+
+function getAssetTypeBadgeHTML(assetType, symbol) {
+    if (assetType === 'crypto') {
+        return '<span class="asset-type-badge-inline crypto" title="' + (currentLang === 'en' ? 'Cryptocurrency' : 'عملة رقمية') + '">₿</span>';
+    } else if (assetType === 'stock') {
+        return '<span class="asset-type-badge-inline stock" title="' + (currentLang === 'en' ? 'Stock' : 'سهم') + '">📈</span>';
+    }
+    return '';
+}
+
+function updateActiveAssetBadge() {
+    const badge = document.getElementById('activeAssetTypeBadge');
+    if (!badge) return;
+    if (!activeCoinSymbol || !allCoinData[activeCoinSymbol]) {
+        badge.style.display = 'none';
+        return;
+    }
+    const data = allCoinData[activeCoinSymbol];
+    const assetType = data.assetType || detectAssetType(getBaseSymbolFromKey(activeCoinSymbol), 'auto');
+    badge.style.display = 'inline-flex';
+    badge.classList.remove('crypto', 'stock');
+    if (assetType === 'crypto') {
+        badge.classList.add('crypto');
+        badge.textContent = '₿ ' + (currentLang === 'en' ? 'Crypto' : 'كريبتو');
+    } else {
+        badge.classList.add('stock');
+        badge.textContent = '📈 ' + (currentLang === 'en' ? 'Stock' : 'سهم');
+    }
+}
+
+function handleNewCoinEnter(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        addOrSwitchCoin();
+    }
+}
+
+function setSummaryAssetFilter(filter, btn) {
+    currentSummaryAssetFilter = filter;
+    document.querySelectorAll('.asset-filter-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    updateSummaryTable();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   نظام اللغة والعملة
    ═══════════════════════════════════════════════════════════════ */
 const LS_KEY_LANG = 'muharraqi_lang_v1';
 const LS_KEY_CURRENCY = 'muharraqi_currency_v1';
@@ -3500,23 +3856,19 @@ const AR_EN_DICT = {
     '🔄 مسح': '🔄 Clear', 'مسح': 'Clear', '⚠️ القيم غير صحيحة': '⚠️ Invalid values',
     '⚠️ الكمية تتجاوز المتاح': '⚠️ Quantity exceeds available', '⚠️ المبلغ يتجاوز القيمة المتاحة': '⚠️ Amount exceeds available value',
     '⚠️ غير محفوظ': '⚠️ Not Saved', '⚠️ يجب حفظ التعزيز أولاً قبل البيع': '⚠️ Save the DCA first before selling',
-    /* ✅➕ ترجمات نافذة معلومات العملة */
     'ℹ️ معلومات العملة': 'ℹ️ Coin Information',
     '⏳ جاري تحميل المعلومات...': '⏳ Loading information...',
-    'إغلاق': 'Close',
-    '🔄 تحديث': '🔄 Refresh',
-    'Market Cap': 'Market Cap',
-    'Circulating Supply': 'Circulating Supply',
-    'Max Supply': 'Max Supply',
-    'Total Supply': 'Total Supply',
-    'Volume 24h': 'Volume 24h',
-    'Rank': 'Rank',
-    'غير محدد': 'N/A',
-    'غير متوفر': 'N/A',
+    'Market Cap': 'Market Cap', 'Circulating Supply': 'Circulating Supply',
+    'Max Supply': 'Max Supply', 'Total Supply': 'Total Supply',
+    'Volume 24h': 'Volume 24h', 'Rank': 'Rank',
+    'غير محدد': 'N/A', 'غير متوفر': 'N/A',
     'جاري تحميل البيانات...': 'Loading data...',
     'فشل جلب المعلومات': 'Failed to fetch info',
     '⚠️ تعذر جلب بيانات العملة': '⚠️ Could not fetch coin data',
-    'ℹ️ عرض معلومات العملة': 'ℹ️ View Coin Info'
+    'ℹ️ عرض معلومات العملة': 'ℹ️ View Coin Info',
+    '🔍 تلقائي': '🔍 Auto', '₿ كريبتو': '₿ Crypto', '📈 سهم': '📈 Stock',
+    '🔎 فلتر:': '🔎 Filter:', '🌍 الكل': '🌍 All', '📈 أسهم': '📈 Stocks',
+    '📈 السهم': '📈 Stock', '₿ الكريبتو': '₿ Crypto'
 };
 
 function translateDOM(root, direction) {
@@ -3550,6 +3902,7 @@ function changeLanguage(lang) {
     localStorage.setItem(LS_KEY_LANG, lang);
     applyLanguage();
     refreshDynamicContent();
+    updateActiveAssetBadge();
 }
 function applyLanguage() {
     const html = document.documentElement;
@@ -3584,6 +3937,11 @@ function refreshDynamicContent() {
         if (typeof updateProfileStats === 'function') updateProfileStats();
         if (typeof updateAllSectionTitles === 'function') updateAllSectionTitles();
         if (typeof updateToggleButtonsText === 'function') updateToggleButtonsText();
+        if (typeof updateActiveAssetBadge === 'function') updateActiveAssetBadge();
+        // ✅ [إصلاح] تحديث اسم العملة الحالي بعد أي تغيير
+        if (activeCoinSymbol) {
+            updateCurrentCoinDisplay(activeCoinSymbol);
+        }
         if (typeof updateInitialSalesHistory === 'function' && activeCoinSymbol && allCoinData[activeCoinSymbol]) {
             updateInitialSalesHistory(allCoinData[activeCoinSymbol].initialSales || []);
         }
@@ -3609,6 +3967,7 @@ function updateAllSectionTitles() {
         if (!section) return;
         const h2 = section.querySelector('.section-header h2');
         if (!h2) return;
+        if (id === 'section-coinActive') return;
         if (h2.innerHTML.includes('<span')) return;
         h2.textContent = sectionTitleMap[id][currentLang];
     });
@@ -3752,11 +4111,6 @@ const totalCurrentValueSummaryEl = document.getElementById('totalCurrentValueSum
 const totalPnlPercentSummaryEl = document.getElementById('totalPnlPercentSummary');
 const totalCashFromSalesSummaryEl = document.getElementById('totalCashFromSalesSummary');
 const saveEntryBtn = document.getElementById('saveEntryBtn');
-const currentCoinDisplayElements = [
-    document.getElementById('currentCoinDisplay1'),
-    document.getElementById('currentCoinDisplay2'),
-    document.getElementById('currentCoinDisplay3')
-];
 const cashInput = document.getElementById('cashInput');
 const cashManualDisplay = document.getElementById('cashManualDisplay');
 const cashSalesDisplay = document.getElementById('cashSalesDisplay');
@@ -4037,7 +4391,8 @@ function getDefaultCoinDataStructure() {
     return {
         initialEntryPrice: '', initialAmountDollars: '', initialSavedAmount: 0,
         initialSales: [], initialTotalSoldQty: '0', initialPurchaseDate: '',
-        initialPurchaseDateRaw: '', isEntrySaved: false, repurchases: []
+        initialPurchaseDateRaw: '', isEntrySaved: false, repurchases: [],
+        assetType: 'crypto'
     };
 }
 function saveAllDataToLocalStorage() {
@@ -4066,6 +4421,9 @@ function loadAllDataFromLocalStorage() {
                     if (!allCoinData[symbol].initialPurchaseDateRaw) allCoinData[symbol].initialPurchaseDateRaw = '';
                     if (allCoinData[symbol].isEntrySaved === undefined) allCoinData[symbol].isEntrySaved = false;
                     if (allCoinData[symbol].initialSavedAmount === undefined) allCoinData[symbol].initialSavedAmount = 0;
+                    if (!allCoinData[symbol].assetType) {
+                        allCoinData[symbol].assetType = detectAssetType(getBaseSymbolFromKey(symbol), 'auto');
+                    }
                     if (allCoinData[symbol].targets) delete allCoinData[symbol].targets;
                     (allCoinData[symbol].repurchases || []).forEach(rp => {
                         if (rp.savedAmount === undefined) rp.savedAmount = 0;
@@ -4116,6 +4474,7 @@ function updateCoinSelector() {
     updateCoinStatus();
     updateSellAllGlobalBtnText();
     updateAlertSymbolSelector();
+    updateActiveAssetBadge();
 }
 function displayCoinData(symbol) {
     activeCoinSymbol = symbol;
@@ -4145,6 +4504,7 @@ function displayCoinData(symbol) {
     calculateActiveCoinDetails();
     updateCoinStatus();
     updateSummaryTable();
+    updateActiveAssetBadge();
     setTimeout(() => { updateSummaryTable(); }, 100);
 }
 function clearUIFields() {
@@ -4157,11 +4517,24 @@ function clearUIFields() {
     apiStatusDiv.style.color = 'var(--text-muted)';
     updateCurrentCoinDisplay(currentLang === 'en' ? 'No coin selected' : "لا عملة محددة");
     calculateActiveCoinDetails();
+    updateActiveAssetBadge();
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   ✅ [إصلاح رئيسي] updateCurrentCoinDisplay
+   السبب: القسم "تفاصيل الدخول" يُعاد بناؤه في updateAllSectionTitles()
+   مما يجعل المراجع القديمة "ميتة". الحل: البحث المباشر في DOM.
+   ═══════════════════════════════════════════════════════════════ */
 function updateCurrentCoinDisplay(symbol) {
     const displayText = symbol ? getDisplayNameFromKey(symbol) : "---";
-    currentCoinDisplayElements.forEach(el => { if (el) el.textContent = displayText; });
+    // ✅ نبحث عن العناصر مباشرة في DOM في كل مرة (لا نحتفظ بمرجع قديم)
+    const ids = ['currentCoinDisplay1', 'currentCoinDisplay2', 'currentCoinDisplay3'];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = displayText;
+    });
 }
+
 function updateCoinStatus() {
     const count = Object.keys(allCoinData).length;
     coinStatusDiv.textContent = (currentLang === 'en' ? 'Coins: ' : 'العملات: ') + count;
@@ -5223,11 +5596,13 @@ function calculateSummaryData() {
         totalCurrentValue += currentPortfolioValue;
         totalPnlAmount += pnlAmount;
         totalCashFromSales += coinCashFromSales;
+        const assetType = data.assetType || detectAssetType(getBaseSymbolFromKey(symbol), 'auto');
         summaryRows.push({
             symbol: symbol, totalCoinQty: totalCoinQty, totalInvestedAmount: totalInvestedAmount,
             averageEntryPrice: totalCoinQty > 0 ? totalInvestedAmount / totalCoinQty : 0,
             marketPrice: marketPrice, currentPortfolioValue: currentPortfolioValue,
             pnlAmount: pnlAmount, pnlPercent: pnlPercent, totalCashFromSales: coinCashFromSales,
+            assetType: assetType,
             error: marketPrice === null ? (currentLang === 'en' ? 'Price fetch failed' : 'فشل جلب السعر') : null
         });
     });
@@ -5237,14 +5612,20 @@ function calculateSummaryData() {
         totals: { invested: totalInvested, currentValue: totalCurrentValue, pnlAmount: totalPnlAmount, pnlPercent: totalPnlPercent, cashFromSales: totalCashFromSales }
     };
 }
-/* ═══════════════════════════════════════════════════════════════
-   📊 updateSummaryTable() — معدّلة لإضافة زر ℹ️ بجانب اسم العملة
-   ═══════════════════════════════════════════════════════════════ */
+
 function updateSummaryTable() {
-    const { summaryRows, totals } = calculateSummaryData();
+    const { summaryRows: allSummaryRows, totals } = calculateSummaryData();
+    const summaryRows = currentSummaryAssetFilter === 'all'
+        ? allSummaryRows
+        : allSummaryRows.filter(item => item.assetType === currentSummaryAssetFilter);
+
     summaryTableBody.innerHTML = '';
     if (summaryRows.length === 0) {
-        summaryTableBody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 30px; font-weight: normal; color: var(--text-muted);">' + (currentLang === 'en' ? 'No coins added yet.' : 'لا توجد عملات مضافة حالياً.') + '</td></tr>';
+        let emptyMsg = currentLang === 'en' ? 'No coins added yet.' : 'لا توجد عملات مضافة حالياً.';
+        if (currentSummaryAssetFilter !== 'all' && allSummaryRows.length > 0) {
+            emptyMsg = currentLang === 'en' ? 'No coins match this filter.' : 'لا توجد عملات تطابق هذا الفلتر.';
+        }
+        summaryTableBody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 30px; font-weight: normal; color: var(--text-muted);">' + emptyMsg + '</td></tr>';
         resetTotals();
         updateSellAllGlobalBtnText();
         return;
@@ -5270,13 +5651,14 @@ function updateSummaryTable() {
         const displayCash = !isNaN(item.totalCashFromSales) ? fmtMoney(item.totalCashFromSales, 2) : '0.00';
         const displayName = getDisplayNameFromKey(item.symbol);
 
-        // ✅➕ إضافة زر المعلومات ℹ️ بجانب اسم العملة
         const infoButtonHtml = '<button class="coin-info-btn" ' +
             'onclick="event.stopPropagation(); openCoinInfoModal(\'' + item.symbol + '\');" ' +
             'title="' + (currentLang === 'en' ? 'View Coin Info' : 'عرض معلومات العملة') + '" ' +
             'aria-label="' + (currentLang === 'en' ? 'Coin info' : 'معلومات العملة') + '">ℹ</button>';
 
-        row.innerHTML = '<td class="coin-symbol summary-coin-clickable" data-symbol="' + item.symbol + '" title="' + (currentLang === 'en' ? 'Activate ' : 'تنشيط ') + displayName + '">' + displayName + infoButtonHtml + '<button class="expand-btn ' + (isExpanded ? 'expanded' : '') + '" onclick="event.stopPropagation(); toggleCoinDetails(\'' + item.symbol + '\')" title="' + (isExpanded ? (currentLang === 'en' ? 'Hide details' : 'إخفاء التفاصيل') : (currentLang === 'en' ? 'Show details' : 'عرض التفاصيل')) + '">+</button></td><td class="number-col">' + displayQuantity + '</td><td class="number-col">' + displayInvested + '</td><td class="number-col">' + displayAvgPrice + '</td><td class="number-col">' + displayPrice + '</td><td class="number-col">' + displayPortfolioValue + '</td><td class="number-col ' + pnlAmountClass + '">' + displayPnlAmount + '</td><td class="number-col ' + pnlPercentClass + '">' + displayPnlPercent + '</td><td class="number-col ' + cashClass + '">' + displayCash + '</td>';
+        const assetBadgeHtml = getAssetTypeBadgeHTML(item.assetType, item.symbol);
+
+        row.innerHTML = '<td class="coin-symbol summary-coin-clickable" data-symbol="' + item.symbol + '" title="' + (currentLang === 'en' ? 'Activate ' : 'تنشيط ') + displayName + '">' + assetBadgeHtml + displayName + infoButtonHtml + '<button class="expand-btn ' + (isExpanded ? 'expanded' : '') + '" onclick="event.stopPropagation(); toggleCoinDetails(\'' + item.symbol + '\')" title="' + (isExpanded ? (currentLang === 'en' ? 'Hide details' : 'إخفاء التفاصيل') : (currentLang === 'en' ? 'Show details' : 'عرض التفاصيل')) + '">+</button></td><td class="number-col">' + displayQuantity + '</td><td class="number-col">' + displayInvested + '</td><td class="number-col">' + displayAvgPrice + '</td><td class="number-col">' + displayPrice + '</td><td class="number-col">' + displayPortfolioValue + '</td><td class="number-col ' + pnlAmountClass + '">' + displayPnlAmount + '</td><td class="number-col ' + pnlPercentClass + '">' + displayPnlPercent + '</td><td class="number-col ' + cashClass + '">' + displayCash + '</td>';
         summaryTableBody.appendChild(row);
         if (isExpanded) {
             const detailsRow = document.createElement('tr');
@@ -5330,40 +5712,24 @@ function loadExpandedCoins() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   ℹ️➕➕➕ نافذة معلومات العملة (Coin Info Modal) — دوال جديدة
+   نافذة معلومات العملة (Coin Info Modal)
    ═══════════════════════════════════════════════════════════════ */
-
-/**
- * فتح نافذة معلومات العملة
- * @param {string} symbol - رمز العملة (مثل BTCUSDT أو BTCUSDT__2)
- */
 async function openCoinInfoModal(symbol) {
     if (!symbol) { showError(currentLang === 'en' ? 'No coin specified' : 'لم يتم تحديد العملة'); return; }
     currentCoinInfoSymbol = symbol;
-
     const modal = document.getElementById('coinInfoPopup');
     const body = document.getElementById('coinInfoBody');
     const title = document.getElementById('coinInfoTitle');
     const subtitle = document.getElementById('coinInfoSubtitle');
-
     if (!modal || !body) return;
-
-    // إظهار النافذة
     modal.classList.add('active');
-
-    // تحديث الترويسة
     const displayName = getDisplayNameFromKey(symbol);
     const baseSymbol = getBaseSymbolFromKey(symbol);
     title.textContent = 'ℹ️ ' + (currentLang === 'en' ? 'Coin Information' : 'معلومات العملة');
     subtitle.textContent = displayName + ' · ' + baseSymbol;
-
-    // إظهار مؤشر التحميل
     body.innerHTML = '<div class="coin-info-loading"><div class="coin-info-spinner"></div><div>⏳ ' + (currentLang === 'en' ? 'Loading information...' : 'جاري تحميل المعلومات...') + '</div></div>';
-
-    // تفعيل/تعطيل زر التحديث
     const refreshBtn = document.querySelector('.coin-info-btn-refresh');
     if (refreshBtn) refreshBtn.disabled = true;
-
     try {
         const data = await fetchCoinInfoData(baseSymbol);
         renderCoinInfoData(data, symbol);
@@ -5374,76 +5740,33 @@ async function openCoinInfoModal(symbol) {
         if (refreshBtn) refreshBtn.disabled = false;
     }
 }
-
-/**
- * إغلاق نافذة معلومات العملة
- */
 function closeCoinInfoModal() {
     const modal = document.getElementById('coinInfoPopup');
     if (modal) modal.classList.remove('active');
     currentCoinInfoSymbol = null;
 }
-
-/**
- * إعادة تحديث المعلومات (مسح الكاش)
- */
 async function refreshCoinInfo() {
     if (!currentCoinInfoSymbol) return;
     const baseSymbol = getBaseSymbolFromKey(currentCoinInfoSymbol);
-    // مسح من الكاش
     coinInfoCache.delete(baseSymbol);
     coinIdCache.delete(baseSymbol);
-    // إعادة الفتح (سيجلب من جديد)
     await openCoinInfoModal(currentCoinInfoSymbol);
 }
-
-/**
- * جلب معلومات العملة من CoinGecko (مع cache)
- * @param {string} baseSymbol - مثل BTCUSDT أو ETHUSDT
- * @returns {Promise<Object>} بيانات العملة
- */
 async function fetchCoinInfoData(baseSymbol) {
-    // التحقق من الكاش
     if (coinInfoCache.has(baseSymbol)) {
         const cached = coinInfoCache.get(baseSymbol);
-        if (Date.now() - cached.time < COIN_INFO_CACHE_TTL) {
-            return cached.data;
-        }
+        if (Date.now() - cached.time < COIN_INFO_CACHE_TTL) return cached.data;
     }
-
-    // استخراج رمز العملة (إزالة USDT وما شابه)
     const cleanSymbol = baseSymbol
-        .replace(/USDT$/i, '')
-        .replace(/BUSD$/i, '')
-        .replace(/USDC$/i, '')
-        .replace(/TUSD$/i, '')
-        .replace(/USDP$/i, '')
-        .trim()
-        .toLowerCase();
-
+        .replace(/USDT$/i, '').replace(/BUSD$/i, '').replace(/USDC$/i, '')
+        .replace(/TUSD$/i, '').replace(/USDP$/i, '').trim().toLowerCase();
     if (!cleanSymbol) throw new Error(currentLang === 'en' ? 'Invalid symbol' : 'رمز غير صالح');
-
-    // البحث عن coinId
     let coinId = coinIdCache.get(cleanSymbol);
-    if (!coinId) {
-        coinId = await findCoinGeckoId(cleanSymbol);
-        coinIdCache.set(cleanSymbol, coinId);
-    }
-
-    // جلب بيانات السوق
+    if (!coinId) { coinId = await findCoinGeckoId(cleanSymbol); coinIdCache.set(cleanSymbol, coinId); }
     const marketData = await fetchCoinGeckoMarketData(coinId);
-
-    // تخزين في الكاش
     coinInfoCache.set(baseSymbol, { time: Date.now(), data: marketData });
-
     return marketData;
 }
-
-/**
- * البحث عن CoinGecko ID من رمز العملة
- * @param {string} symbol - مثل btc, eth, doge
- * @returns {Promise<string>} - مثل bitcoin, ethereum, dogecoin
- */
 async function findCoinGeckoId(symbol) {
     const url = 'https://api.coingecko.com/api/v3/search?query=' + encodeURIComponent(symbol);
     const response = await fetch(url);
@@ -5452,36 +5775,21 @@ async function findCoinGeckoId(symbol) {
     if (!data.coins || data.coins.length === 0) {
         throw new Error((currentLang === 'en' ? 'Coin not found: ' : 'العملة غير موجودة: ') + symbol.toUpperCase());
     }
-    // البحث عن تطابق تام
     const exactMatch = data.coins.find(c => c.symbol.toLowerCase() === symbol.toLowerCase());
     if (exactMatch) return exactMatch.id;
-    // إذا لم يوجد، نأخذ الأول (الأكثر شهرة)
     return data.coins[0].id;
 }
-
-/**
- * جلب بيانات السوق من CoinGecko
- * @param {string} coinId
- */
 async function fetchCoinGeckoMarketData(coinId) {
-    const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=' + encodeURIComponent(coinId) +
-                '&order=market_cap_desc&per_page=1&page=1&sparkline=false&price_change_percentage=24h';
+    const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=' + encodeURIComponent(coinId) + '&order=market_cap_desc&per_page=1&page=1&sparkline=false&price_change_percentage=24h';
     const response = await fetch(url);
     if (!response.ok) throw new Error('CoinGecko markets failed: ' + response.status);
     const data = await response.json();
-    if (!data || data.length === 0) {
-        throw new Error(currentLang === 'en' ? 'No data available' : 'لا توجد بيانات متاحة');
-    }
+    if (!data || data.length === 0) throw new Error(currentLang === 'en' ? 'No data available' : 'لا توجد بيانات متاحة');
     return data[0];
 }
-
-/**
- * عرض بيانات العملة في النافذة
- */
 function renderCoinInfoData(coin, originalSymbol) {
     const body = document.getElementById('coinInfoBody');
     if (!body) return;
-
     const formatBigNumber = (num) => {
         if (num === null || num === undefined || isNaN(num)) return (currentLang === 'en' ? 'N/A' : 'غير محدد');
         const n = Number(num);
@@ -5491,7 +5799,6 @@ function renderCoinInfoData(coin, originalSymbol) {
         if (n >= 1e3) return (n / 1e3).toFixed(2) + 'K';
         return n.toLocaleString('en-US', { maximumFractionDigits: 2 });
     };
-
     const formatPriceFull = (num) => {
         if (num === null || num === undefined || isNaN(num)) return (currentLang === 'en' ? 'N/A' : 'غير محدد');
         const n = Number(num);
@@ -5500,7 +5807,6 @@ function renderCoinInfoData(coin, originalSymbol) {
         if (n >= 0.01) return '$' + n.toFixed(6);
         return '$' + n.toFixed(8);
     };
-
     const price = coin.current_price || 0;
     const change24h = coin.price_change_percentage_24h || 0;
     const changeClass = change24h >= 0 ? 'up' : 'down';
@@ -5511,102 +5817,147 @@ function renderCoinInfoData(coin, originalSymbol) {
     const maxSupply = coin.max_supply;
     const totalSupply = coin.total_supply;
     const rank = coin.market_cap_rank;
-
     const nameLabel = coin.name || getDisplayNameFromKey(originalSymbol);
     const symbolLabel = (coin.symbol || '').toUpperCase();
     const iconUrl = coin.image || ('https://assets.coincap.io/assets/icons/' + symbolLabel.toLowerCase() + '@2x.png');
-
     let html = '';
-
-    // بطاقة الهيرو
     html += '<div class="coin-info-hero">';
     html += '<img class="coin-info-hero-icon" src="' + iconUrl + '" alt="' + symbolLabel + '" onerror="this.style.opacity=0.3;">';
     html += '<div class="coin-info-hero-text">';
     html += '<div class="coin-info-hero-name">' + nameLabel + '</div>';
     html += '<div class="coin-info-hero-symbol">' + symbolLabel + '</div>';
-    if (rank) {
-        html += '<span class="coin-info-hero-rank">#' + rank + (currentLang === 'en' ? ' Rank' : ' ترتيب') + '</span>';
-    }
+    if (rank) html += '<span class="coin-info-hero-rank">#' + rank + (currentLang === 'en' ? ' Rank' : ' ترتيب') + '</span>';
     html += '</div>';
     html += '<div class="coin-info-price-hero">';
     html += '<div class="coin-info-price-current">' + formatPriceFull(price) + '</div>';
     html += '<div class="coin-info-price-change ' + changeClass + '">' + changeSign + change24h.toFixed(2) + '% (24h)</div>';
     html += '</div>';
     html += '</div>';
-
-    // شبكة المعلومات
     html += '<div class="coin-info-grid">';
-
-    // Market Cap
-    html += '<div class="coin-info-item green">';
-    html += '<div class="coin-info-item-label">💰 Market Cap</div>';
-    html += '<div class="coin-info-item-value highlight">$' + formatBigNumber(marketCap) + '</div>';
+    html += '<div class="coin-info-item green"><div class="coin-info-item-label">💰 Market Cap</div><div class="coin-info-item-value highlight">$' + formatBigNumber(marketCap) + '</div></div>';
+    html += '<div class="coin-info-item blue"><div class="coin-info-item-label">📊 Volume 24h</div><div class="coin-info-item-value small">$' + formatBigNumber(volume) + '</div></div>';
+    html += '<div class="coin-info-item purple"><div class="coin-info-item-label">🔄 Circulating Supply</div><div class="coin-info-item-value small">' + formatBigNumber(circulating) + ' ' + symbolLabel + '</div></div>';
+    html += '<div class="coin-info-item amber"><div class="coin-info-item-label">🔝 Max Supply</div><div class="coin-info-item-value small">' + (maxSupply ? formatBigNumber(maxSupply) + ' ' + symbolLabel : (currentLang === 'en' ? 'Unlimited' : 'غير محدود')) + '</div></div>';
+    html += '<div class="coin-info-item blue"><div class="coin-info-item-label">📦 Total Supply</div><div class="coin-info-item-value small">' + (totalSupply ? formatBigNumber(totalSupply) + ' ' + symbolLabel : (currentLang === 'en' ? 'N/A' : 'غير محدد')) + '</div></div>';
+    html += '<div class="coin-info-item green"><div class="coin-info-item-label">🏆 Rank</div><div class="coin-info-item-value">' + (rank ? '#' + rank : (currentLang === 'en' ? 'N/A' : 'غير محدد')) + '</div></div>';
     html += '</div>';
-
-    // Volume 24h
-    html += '<div class="coin-info-item blue">';
-    html += '<div class="coin-info-item-label">📊 Volume 24h</div>';
-    html += '<div class="coin-info-item-value small">$' + formatBigNumber(volume) + '</div>';
-    html += '</div>';
-
-    // Circulating Supply
-    html += '<div class="coin-info-item purple">';
-    html += '<div class="coin-info-item-label">🔄 Circulating Supply</div>';
-    html += '<div class="coin-info-item-value small">' + formatBigNumber(circulating) + ' ' + symbolLabel + '</div>';
-    html += '</div>';
-
-    // Max Supply
-    html += '<div class="coin-info-item amber">';
-    html += '<div class="coin-info-item-label">🔝 Max Supply</div>';
-    html += '<div class="coin-info-item-value small">' + (maxSupply ? formatBigNumber(maxSupply) + ' ' + symbolLabel : (currentLang === 'en' ? 'Unlimited' : 'غير محدود')) + '</div>';
-    html += '</div>';
-
-    // Total Supply
-    html += '<div class="coin-info-item blue">';
-    html += '<div class="coin-info-item-label">📦 Total Supply</div>';
-    html += '<div class="coin-info-item-value small">' + (totalSupply ? formatBigNumber(totalSupply) + ' ' + symbolLabel : (currentLang === 'en' ? 'N/A' : 'غير محدد')) + '</div>';
-    html += '</div>';
-
-    // Rank
-    html += '<div class="coin-info-item green">';
-    html += '<div class="coin-info-item-label">🏆 Rank</div>';
-    html += '<div class="coin-info-item-value">' + (rank ? '#' + rank : (currentLang === 'en' ? 'N/A' : 'غير محدد')) + '</div>';
-    html += '</div>';
-
-    html += '</div>';
-
     body.innerHTML = html;
 }
-
-/**
- * عرض خطأ في النافذة
- */
 function renderCoinInfoError(errorMsg) {
     const body = document.getElementById('coinInfoBody');
     if (!body) return;
-    body.innerHTML = '<div class="coin-info-error">' +
-        '<span class="coin-info-error-icon">⚠️</span>' +
-        '<div>' + (currentLang === 'en' ? 'Could not fetch coin data' : 'تعذر جلب بيانات العملة') + '</div>' +
-        '<div class="coin-info-error-hint">' + (errorMsg || (currentLang === 'en' ? 'Please try again later' : 'يرجى المحاولة لاحقاً')) + '</div>' +
-        '</div>';
+    body.innerHTML = '<div class="coin-info-error"><span class="coin-info-error-icon">⚠️</span><div>' + (currentLang === 'en' ? 'Could not fetch coin data' : 'تعذر جلب بيانات العملة') + '</div><div class="coin-info-error-hint">' + (errorMsg || (currentLang === 'en' ? 'Please try again later' : 'يرجى المحاولة لاحقاً')) + '</div></div>';
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   💰 جلب الأسعار
+   جلب أسعار الأسهم من عدة مزودين
    ═══════════════════════════════════════════════════════════════ */
+async function fetchTwelveDataPrice(symbol) {
+    try {
+        const url = 'https://api.twelvedata.com/price?symbol=' + encodeURIComponent(symbol) + '&apikey=' + TWELVE_DATA_API_KEY;
+        const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(url);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+        const response = await fetch(fetchUrl, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (!response.ok) return null;
+        const data = await response.json();
+        if (data && data.price && !isNaN(parseFloat(data.price))) {
+            return { symbol: symbol, price: parseFloat(data.price), source: 'Twelve Data', error: null };
+        }
+        if (data && data.code === 429) console.warn('⚠️ Twelve Data rate limit reached');
+        return null;
+    } catch (e) {
+        console.warn('⚠️ Twelve Data failed for', symbol, e.message);
+        return null;
+    }
+}
+
+async function fetchFinnhubPrice(symbol) {
+    try {
+        const url = 'https://finnhub.io/api/v1/quote?symbol=' + encodeURIComponent(symbol) + '&token=' + FINNHUB_API_KEY;
+        const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(url);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+        const response = await fetch(fetchUrl, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (!response.ok) return null;
+        const data = await response.json();
+        if (data && typeof data.c === 'number' && data.c > 0) {
+            return { symbol: symbol, price: data.c, source: 'Finnhub', error: null };
+        }
+        return null;
+    } catch (e) {
+        console.warn('⚠️ Finnhub failed for', symbol, e.message);
+        return null;
+    }
+}
+
+async function fetchYahooPrice(symbol) {
+    try {
+        const url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol);
+        const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(url);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+        const response = await fetch(fetchUrl, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (!response.ok) return null;
+        const data = await response.json();
+        if (data && data.chart && data.chart.result && data.chart.result[0]) {
+            const result = data.chart.result[0];
+            const price = result.meta && result.meta.regularMarketPrice;
+            if (price && !isNaN(parseFloat(price))) {
+                return { symbol: symbol, price: parseFloat(price), source: 'Yahoo Finance', error: null };
+            }
+        }
+        return null;
+    } catch (e) {
+        console.warn('⚠️ Yahoo Finance failed for', symbol, e.message);
+        return null;
+    }
+}
+
+async function fetchStockPrice(symbol) {
+    if (stockPriceCache.has(symbol)) {
+        const cached = stockPriceCache.get(symbol);
+        if (Date.now() - cached.time < STOCK_PRICE_CACHE_TTL && cached.data && cached.data.price) {
+            return cached.data;
+        }
+    }
+    let result = await fetchTwelveDataPrice(symbol);
+    if (result && result.price) {
+        stockPriceCache.set(symbol, { time: Date.now(), data: result });
+        return result;
+    }
+    result = await fetchFinnhubPrice(symbol);
+    if (result && result.price) {
+        stockPriceCache.set(symbol, { time: Date.now(), data: result });
+        return result;
+    }
+    result = await fetchYahooPrice(symbol);
+    if (result && result.price) {
+        stockPriceCache.set(symbol, { time: Date.now(), data: result });
+        return result;
+    }
+    return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'All stock providers failed' : 'فشل جميع مزودي الأسهم' };
+}
+
 async function fetchSinglePrice(symbol) {
     const baseSymbol = getBaseSymbolFromKey(symbol);
-    if (!baseSymbol || typeof baseSymbol !== 'string' || baseSymbol.length < 4) {
+    if (!baseSymbol || typeof baseSymbol !== 'string' || baseSymbol.length < 2) {
         return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'Invalid symbol' : 'رمز غير صالح' };
     }
-
+    const data = allCoinData[symbol];
+    const assetType = (data && data.assetType) ? data.assetType : detectAssetType(baseSymbol, 'auto');
+    if (assetType === 'stock') {
+        return await fetchStockPrice(baseSymbol);
+    }
     if (priceCache.has(symbol)) {
         const cached = priceCache.get(symbol);
         if (Date.now() - cached.time < PRICE_CACHE_TTL && cached.data && cached.data.price) {
             return cached.data;
         }
     }
-
     const binanceDomains = ['https://api.binance.com', 'https://data-api.binance.vision'];
     for (const domain of binanceDomains) {
         try {
@@ -5624,7 +5975,6 @@ async function fetchSinglePrice(symbol) {
             }
         } catch (e) {}
     }
-
     const altExchanges = [
         { name: 'MEXC',    url: 'https://api.mexc.com/api/v3/ticker/price?symbol=' + baseSymbol, extract: (d) => d.price },
         { name: 'Gate.io', url: 'https://api.gateio.ws/api/v4/spot/tickers?currency_pair=' + baseSymbol.replace('USDT', '_USDT'), extract: (d) => Array.isArray(d) && d[0] ? d[0].last : null },
@@ -5632,7 +5982,6 @@ async function fetchSinglePrice(symbol) {
         { name: 'KuCoin',  url: 'https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=' + baseSymbol.replace('USDT', '-USDT'), extract: (d) => d.code === '200000' && d.data ? d.data.price : null },
         { name: 'Bybit',   url: 'https://api.bybit.com/v5/market/tickers?category=spot&symbol=' + baseSymbol, extract: (d) => d.result && d.result.list && d.result.list[0] ? d.result.list[0].lastPrice : null }
     ];
-
     const promises = altExchanges.map(exchange => {
         return (async () => {
             try {
@@ -5651,7 +6000,6 @@ async function fetchSinglePrice(symbol) {
             } catch (e) { return null; }
         })();
     });
-
     try {
         const winner = await Promise.any(promises.map(p => p.then(r => { if (!r) throw new Error('no result'); return r; })));
         const result = { symbol: symbol, price: winner.price, source: winner.name, error: null };
@@ -5674,22 +6022,19 @@ async function fetchAllPrices(isAutoRefresh = false) {
         return;
     }
     if (!isAutoRefresh) {
-        apiStatusDiv.textContent = (currentLang === 'en' ? 'Fetching prices for ' + trackedSymbols.length + ' coins...' : 'جاري جلب أسعار ' + trackedSymbols.length + ' عملة...');
+        apiStatusDiv.textContent = (currentLang === 'en' ? 'Fetching prices for ' + trackedSymbols.length + ' assets...' : 'جاري جلب أسعار ' + trackedSymbols.length + ' أصل...');
         apiStatusDiv.style.color = 'var(--primary-color)';
     }
-
     const CONCURRENCY = 3;
     let successCount = 0, failCount = 0;
     const fetchTimestamp = new Date();
     const allResults = [];
-
     for (let i = 0; i < trackedSymbols.length; i += CONCURRENCY) {
         const batch = trackedSymbols.slice(i, i + CONCURRENCY);
         const batchResults = await Promise.allSettled(batch.map(s => fetchSinglePrice(s)));
         allResults.push(...batchResults);
         if (i + CONCURRENCY < trackedSymbols.length) await new Promise(r => setTimeout(r, 200));
     }
-
     allResults.forEach(result => {
         if (result.status === 'fulfilled') {
             const { symbol, price, error } = result.value;
@@ -5700,7 +6045,6 @@ async function fetchAllPrices(isAutoRefresh = false) {
             }
         } else failCount++;
     });
-
     if (activeCoinSymbol) {
         const price = currentMarketPrices[activeCoinSymbol];
         if (price !== null && price !== undefined && !isNaN(price)) {
@@ -5774,9 +6118,6 @@ function sanitizeTxtField(value) {
     return String(value).replace(/\|/g, '¦').replace(/\n/g, ' ').replace(/\r/g, '').trim();
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   💾 حفظ البيانات كملف TXT (دالة أصلية)
-   ═══════════════════════════════════════════════════════════════ */
 function downloadAllDataAsTxt(silent = false) {
     const hasCoins = allCoinData && Object.keys(allCoinData).length > 0;
     if (!hasCoins && availableCash <= 0 && cashHistory.deposits.length === 0) {
@@ -5788,7 +6129,7 @@ function downloadAllDataAsTxt(silent = false) {
     content += "   بيانات متابعة الصفقات الشاملة — Muharraqi Pro Edition\n";
     content += "═══════════════════════════════════════════════════════════\n";
     content += "تاريخ الإنشاء: " + new Date().toLocaleString('ar-EG') + "\n";
-    content += "الإصدار: Pro 2.0.0\n\n";
+    content += "الإصدار: Pro 2.1.0 (مع دعم الأسهم)\n\n";
     content += "=== ملخص الكاش ===\n";
     const totalSalesCash = salesCashHistory.deposits.reduce((sum, r) => sum + r.amount, 0) - salesCashHistory.withdrawals.reduce((sum, r) => sum + r.amount, 0);
     content += "availableCash=" + availableCash + "\n";
@@ -5809,6 +6150,8 @@ function downloadAllDataAsTxt(silent = false) {
     if (!hasCoins) content += "(لا توجد عملات)\n";
     else for (const [symbol, data] of Object.entries(allCoinData)) {
         content += "\n--- " + symbol + " ---\n";
+        const assetType = data.assetType || detectAssetType(getBaseSymbolFromKey(symbol), 'auto');
+        content += "assetType=" + assetType + "\n";
         content += "initialEntryPrice=" + sanitizeTxtField(data.initialEntryPrice) + "\n";
         content += "initialAmountDollars=" + sanitizeTxtField(data.initialAmountDollars) + "\n";
         content += "initialSavedAmount=" + (data.initialSavedAmount || 0) + "\n";
@@ -5882,9 +6225,6 @@ function downloadAllDataAsTxt(silent = false) {
     return true;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   💾 حفظ البيانات كملف JSON (دالة داخلية)
-   ═══════════════════════════════════════════════════════════════ */
 function downloadAllDataAsJSON(silent = false) {
     try {
         const hasCoins = allCoinData && Object.keys(allCoinData).length > 0;
@@ -5893,21 +6233,19 @@ function downloadAllDataAsJSON(silent = false) {
                         (salesCashHistory && (salesCashHistory.deposits.length > 0 || salesCashHistory.withdrawals.length > 0));
         const hasAlerts = priceAlerts && priceAlerts.length > 0;
         const hasNotifications = notifications && notifications.length > 0;
-
         if (!hasCoins && !hasCash && !hasAlerts && !hasNotifications) {
             if (!silent) showError(currentLang === 'en' ? "No data to save." : "لا توجد بيانات لحفظها.");
             return false;
         }
-
         const jsonData = {
             _meta: {
                 app: 'Muharraqi Pro Edition',
-                version: '2.0.0',
+                version: '2.1.0',
                 exportDate: new Date().toISOString(),
                 exportDateLocal: new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG'),
-                schemaVersion: 1,
+                schemaVersion: 2,
                 format: 'json',
-                description: 'Muharraqi Trades Tracker — Full Backup (JSON)'
+                description: 'Muharraqi Trades Tracker — Full Backup (JSON) with Stocks Support'
             },
             settings: {
                 language: currentLang,
@@ -5937,7 +6275,6 @@ function downloadAllDataAsJSON(silent = false) {
                 try { const s = localStorage.getItem('sectionColors'); return s ? JSON.parse(s) : {}; } catch (e) { return {}; }
             })()
         };
-
         const jsonString = JSON.stringify(jsonData, null, 2);
         const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8' });
         const link = document.createElement('a');
@@ -5956,9 +6293,6 @@ function downloadAllDataAsJSON(silent = false) {
     }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   ✅✅✅ الدالة الموحّدة لحفظ كل البيانات (TXT + JSON)
-   ═══════════════════════════════════════════════════════════════ */
 function saveAllDataBothFormats() {
     try {
         const hasCoins = allCoinData && Object.keys(allCoinData).length > 0;
@@ -5969,11 +6303,7 @@ function saveAllDataBothFormats() {
             showError(currentLang === 'en' ? "No data to save." : "لا توجد بيانات لحفظها.");
             return;
         }
-
-        // حفظ TXT
         const txtOk = downloadAllDataAsTxt(true);
-
-        // حفظ JSON بعد تأخير بسيط
         setTimeout(() => {
             const jsonOk = downloadAllDataAsJSON(true);
             if (txtOk && jsonOk) {
@@ -5989,36 +6319,27 @@ function saveAllDataBothFormats() {
                     : '⚠️ تم حفظ ملف واحد فقط. تحقق من إعدادات التنزيل في المتصفح.');
             }
         }, 400);
-
     } catch (err) {
         console.error('❌ خطأ في الحفظ الموحّد:', err);
         showError(currentLang === 'en' ? 'Save failed: ' + err.message : 'فشل الحفظ: ' + err.message);
     }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   ✅✅✅ استيراد موحّد: يستقبل TXT و JSON ويكتشف النوع تلقائياً
-   ═══════════════════════════════════════════════════════════════ */
 function handleImportFile(event) {
     const file = event.target.files[0];
     if (!file) return;
-
     if (file.size > 20 * 1024 * 1024) {
         showError(currentLang === 'en' ? 'File too large (max 20 MB)' : 'الملف كبير جداً (الحد الأقصى 20 ميجابايت)');
         event.target.value = '';
         return;
     }
-
     const fileName = (file.name || '').toLowerCase();
     const isJson = fileName.endsWith('.json') || file.type === 'application/json';
-
     const confirmMsg = currentLang === 'en'
         ? '⚠️ Import will REPLACE all current data:\n\n• All coins and trades\n• All DCAs and sales\n• Cash records and history\n• Price alerts and notifications\n• Settings and preferences\n\nType detected: ' + (isJson ? 'JSON' : 'TXT') + '\n\nContinue?'
         : '⚠️ الاستيراد سيستبدل جميع البيانات الحالية:\n\n• جميع العملات والصفقات\n• جميع التعزيزات والمبيعات\n• سجلات الكاش والسجلات\n• تنبيهات الأسعار والإشعارات\n• الإعدادات والتفضيلات\n\nنوع الملف المكتشف: ' + (isJson ? 'JSON' : 'TXT') + '\n\nهل تريد المتابعة؟';
-
     showConfirm(confirmMsg, () => {
         const reader = new FileReader();
-
         reader.onload = function(e) {
             const content = e.target.result;
             try {
@@ -6030,11 +6351,11 @@ function handleImportFile(event) {
                 const coinsCount = Object.keys(allCoinData).length;
                 const fmtLabel = isJson ? 'JSON' : 'TXT';
                 if (typeof showToast === 'function') {
-                    showToast((currentLang === 'en' ? '✅ Imported ' + fmtLabel + ' (' : '✅ تم استيراد ') + fmtLabel + (currentLang === 'en' ? ' ' : ' (') + coinsCount + (currentLang === 'en' ? ' coins)' : ' عملة)'), 'success');
+                    showToast((currentLang === 'en' ? '✅ Imported ' + fmtLabel + ' (' : '✅ تم استيراد ') + fmtLabel + (currentLang === 'en' ? ' ' : ' (') + coinsCount + (currentLang === 'en' ? ' assets)' : ' أصل)'), 'success');
                 }
                 showSuccess(currentLang === 'en'
-                    ? '✅ Data imported successfully from ' + fmtLabel + '!\n\n📊 Coins: ' + coinsCount + '\n💰 Cash: ' + fmtUSD(availableCash, 2)
-                    : '✅ تم استيراد البيانات بنجاح من ' + fmtLabel + '!\n\n📊 العملات: ' + coinsCount + '\n💰 الكاش: ' + fmtUSD(availableCash, 2));
+                    ? '✅ Data imported successfully from ' + fmtLabel + '!\n\n📊 Assets: ' + coinsCount + '\n💰 Cash: ' + fmtUSD(availableCash, 2)
+                    : '✅ تم استيراد البيانات بنجاح من ' + fmtLabel + '!\n\n📊 الأصول: ' + coinsCount + '\n💰 الكاش: ' + fmtUSD(availableCash, 2));
             } catch (err) {
                 console.error('❌ خطأ في الاستيراد:', err);
                 if (typeof showToast === 'function') {
@@ -6047,21 +6368,17 @@ function handleImportFile(event) {
                 event.target.value = '';
             }
         };
-
         reader.onerror = function() {
             showError(currentLang === 'en' ? '❌ Failed to read file' : '❌ فشل في قراءة الملف');
             event.target.value = '';
         };
-
         reader.readAsText(file, 'utf-8');
     }, () => { event.target.value = ''; });
 }
 
-/* ─── استيراد من محتوى JSON ─── */
 function importFromJSONContent(content) {
     const data = JSON.parse(content);
     if (!data || typeof data !== 'object') throw new Error('Invalid JSON structure');
-
     if (data.coins && data.coins.allCoinData) {
         allCoinData = data.coins.allCoinData;
         Object.keys(allCoinData).forEach(symbol => {
@@ -6073,6 +6390,9 @@ function importFromJSONContent(content) {
             if (!allCoinData[symbol].initialPurchaseDateRaw) allCoinData[symbol].initialPurchaseDateRaw = '';
             if (allCoinData[symbol].isEntrySaved === undefined) allCoinData[symbol].isEntrySaved = false;
             if (allCoinData[symbol].initialSavedAmount === undefined) allCoinData[symbol].initialSavedAmount = 0;
+            if (!allCoinData[symbol].assetType) {
+                allCoinData[symbol].assetType = detectAssetType(getBaseSymbolFromKey(symbol), 'auto');
+            }
             (allCoinData[symbol].repurchases || []).forEach(rp => {
                 if (rp.savedAmount === undefined) rp.savedAmount = 0;
                 if (!rp.sales) rp.sales = [];
@@ -6086,7 +6406,6 @@ function importFromJSONContent(content) {
         if (Array.isArray(data.coins.expandedCoins)) expandedCoins = new Set(data.coins.expandedCoins);
         if (data.coins.savedEstimatePrices) { savedEstimatePrices = data.coins.savedEstimatePrices; saveEstimatePrices(); }
     }
-
     if (data.cash) {
         if (typeof data.cash.availableCash === 'number') availableCash = data.cash.availableCash;
         if (data.cash.cashHistory) {
@@ -6102,19 +6421,15 @@ function importFromJSONContent(content) {
             saveSalesCashHistory();
         }
     }
-
     if (Array.isArray(data.alerts)) { priceAlerts = data.alerts; savePriceAlerts(); }
     if (Array.isArray(data.notifications)) { notifications = data.notifications; saveNotifications(); }
-
     if (data.exchangeSettings) {
         exchangeSettings = Object.assign({ platform: 'binance', country: 'sa', feeProfile: 'standard' }, data.exchangeSettings);
         try { localStorage.setItem('muharraqi_pro_settings', JSON.stringify(exchangeSettings)); } catch (e) {}
     }
-
     if (data.profile) {
         try { localStorage.setItem(LS_KEY_PROFILE_SETTINGS, JSON.stringify(data.profile)); } catch (e) {}
     }
-
     if (data.settings) {
         if (data.settings.language) { currentLang = data.settings.language; localStorage.setItem(LS_KEY_LANG, currentLang); }
         if (data.settings.currency) { currentCurrency = data.settings.currency; localStorage.setItem(LS_KEY_CURRENCY, currentCurrency); }
@@ -6129,26 +6444,21 @@ function importFromJSONContent(content) {
             } catch (e) {}
         }
     }
-
     if (data.dateModes) {
         if (data.dateModes.cash) cashDateMode = data.dateModes.cash;
         if (data.dateModes.salesCash) salesCashDateMode = data.dateModes.salesCash;
         if (data.dateModes.entry) entryDateMode = data.dateModes.entry;
         if (data.dateModes.dca) dcaDateMode = data.dateModes.dca;
     }
-
     if (data.sectionStates && typeof data.sectionStates === 'object') {
         try { localStorage.setItem('sectionToggleStates', JSON.stringify(data.sectionStates)); } catch (e) {}
     }
-
     if (data.sectionColors && typeof data.sectionColors === 'object') {
         try { localStorage.setItem('sectionColors', JSON.stringify(data.sectionColors)); applyColorSettings(); } catch (e) {}
     }
-
     finalizeImport();
 }
 
-/* ─── استيراد من محتوى TXT ─── */
 function importFromTXTContent(content) {
     const lines = content.split('\n');
     let currentSection = '', currentCoinSymbol = null, coinData = null;
@@ -6159,14 +6469,13 @@ function importFromTXTContent(content) {
     let importedProfile = null, importedExchangeSettings = null;
     let importedPrivacyMode = null, importedTheme = null, importedAvailableCash = null;
     let importedLang = null, importedCurrency = null;
-
     lines.forEach(rawLine => {
         const line = rawLine.replace(/\r$/, '').trim();
         if (!line) return;
         if (line.startsWith('════') || line.startsWith('   بيانات') || line.startsWith('تم إنشاء') || line.startsWith('تاريخ الإنشاء') || line.startsWith('الإصدار') || line.startsWith('نهاية الملف')) return;
         if (line.startsWith('===')) { currentSection = line.replace(/=/g, '').trim(); return; }
         if (line.startsWith('---')) {
-            const coinMatch = line.match(/---\s+([A-Z0-9_]+)\s+---/);
+            const coinMatch = line.match(/---\s+([A-Z0-9_\.]+)\s+---/);
             if (coinMatch) {
                 if (currentCoinSymbol && coinData) importedCoins[currentCoinSymbol] = coinData;
                 currentCoinSymbol = coinMatch[1];
@@ -6196,7 +6505,11 @@ function importFromTXTContent(content) {
         }
         if (currentSection.includes('بيانات العملات') && currentCoinSymbol && coinData) {
             if (line === '(لا توجد مبيعات)' || line === '(لا توجد تعزيزات)') return;
-            if (line.startsWith('initialEntryPrice=')) coinData.initialEntryPrice = line.split('=')[1];
+            if (line.startsWith('assetType=')) {
+                const val = line.split('=')[1].trim();
+                if (val === 'crypto' || val === 'stock') coinData.assetType = val;
+            }
+            else if (line.startsWith('initialEntryPrice=')) coinData.initialEntryPrice = line.split('=')[1];
             else if (line.startsWith('initialAmountDollars=')) coinData.initialAmountDollars = line.split('=')[1];
             else if (line.startsWith('initialSavedAmount=')) coinData.initialSavedAmount = parseFloat(line.split('=')[1]) || 0;
             else if (line.startsWith('initialPurchaseDate=')) coinData.initialPurchaseDate = line.split('=')[1];
@@ -6225,8 +6538,12 @@ function importFromTXTContent(content) {
         if (currentSection.includes('الإشعارات')) { if (line.startsWith('NOTIF|')) { const p = line.split('|'); if (p.length >= 7) importedNotifications.push({ id: parseInt(p[1]) || Date.now(), title: p[2], message: p[3], type: p[4], time: p[5], read: p[6] === 'true' }); } return; }
         if (currentSection.includes('الإعدادات العامة')) { if (line.startsWith('privacyMode=')) importedPrivacyMode = line.split('=')[1].trim(); else if (line.startsWith('theme=')) importedTheme = line.split('=')[1].trim(); else if (line.startsWith('lang=')) importedLang = line.split('=')[1].trim(); else if (line.startsWith('currency=')) importedCurrency = line.split('=')[1].trim(); return; }
     });
-
     if (currentCoinSymbol && coinData) importedCoins[currentCoinSymbol] = coinData;
+    Object.keys(importedCoins).forEach(sym => {
+        if (!importedCoins[sym].assetType) {
+            importedCoins[sym].assetType = detectAssetType(getBaseSymbolFromKey(sym), 'auto');
+        }
+    });
     if (Object.keys(importedCoins).length > 0) allCoinData = importedCoins;
     if (Object.keys(importedPrices).length > 0) Object.keys(importedPrices).forEach(sym => { currentMarketPrices[sym] = importedPrices[sym]; });
     if (Object.keys(importedEstimates).length > 0) { savedEstimatePrices = importedEstimates; saveEstimatePrices(); }
@@ -6242,11 +6559,9 @@ function importFromTXTContent(content) {
     if (importedCurrency) { currentCurrency = importedCurrency; localStorage.setItem(LS_KEY_CURRENCY, importedCurrency); }
     if (importedPrivacyMode === '1') { try { localStorage.setItem('muharraqi_privacy_mode', '1'); if (!document.body.classList.contains('financial-privacy')) toggleFinancialPrivacy(); } catch (e) {} }
     else if (importedPrivacyMode === '0') { try { localStorage.setItem('muharraqi_privacy_mode', '0'); if (document.body.classList.contains('financial-privacy')) toggleFinancialPrivacy(); } catch (e) {} }
-
     finalizeImport();
 }
 
-/* ─── تجهيز بعد الاستيراد ─── */
 function finalizeImport() {
     saveAllDataToLocalStorage();
     localStorage.setItem(LS_KEY_CASH, availableCash.toString());
@@ -6263,6 +6578,8 @@ function finalizeImport() {
     loadExchangeSettings();
     initDateModeToggles();
     updateProfileStats();
+    updateActiveAssetBadge();
+    if (activeCoinSymbol) updateCurrentCoinDisplay(activeCoinSymbol);
     if (typeof updateAdvancedCharts === 'function') {
         try { updateAdvancedCharts(); } catch (e) {}
     }
@@ -6273,8 +6590,14 @@ function handleImportTxtFile(event) { handleImportFile(event); }
 function openTradingView() {
     if (!activeCoinSymbol) { showError(currentLang === 'en' ? "Please select a coin first" : "يرجى اختيار عملة أولاً"); return; }
     let symbol = getBaseSymbolFromKey(activeCoinSymbol);
-    if (!symbol.includes('USDT') && !symbol.includes('BUSD')) symbol += 'USDT';
-    window.open('https://www.tradingview.com/chart/?symbol=BINANCE:' + symbol, '_blank');
+    const data = allCoinData[activeCoinSymbol];
+    const assetType = (data && data.assetType) ? data.assetType : detectAssetType(symbol, 'auto');
+    if (assetType === 'stock') {
+        window.open('https://www.tradingview.com/chart/?symbol=' + encodeURIComponent(symbol), '_blank');
+    } else {
+        if (!symbol.includes('USDT') && !symbol.includes('BUSD')) symbol += 'USDT';
+        window.open('https://www.tradingview.com/chart/?symbol=BINANCE:' + symbol, '_blank');
+    }
 }
 function getNowForDatetimeInput() {
     const now = new Date();
@@ -6496,9 +6819,6 @@ function deleteCurrentCoin() {
     popupOverlay.onclick = (e) => { if (e.target === popupOverlay) closeFn(); };
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🖨️ printReport()
-   ═══════════════════════════════════════════════════════════════ */
 function printReport() {
     const { summaryRows, totals } = calculateSummaryData();
     const reportDate = new Date().toLocaleString('ar-EG');
@@ -6535,7 +6855,7 @@ function printReport() {
     let html = '';
     html += '<div class="pdf-avoid-break">';
     html += '<div class="pdf-title-bar">📊 MUHARRAQI PRO — تقرير متابعة الصفقات الشاملة</div>';
-    html += '<div class="pdf-subtitle-bar">Pro Edition 2.0.0  |  تاريخ التقرير: ' + esc(reportDate) + '</div>';
+    html += '<div class="pdf-subtitle-bar">Pro Edition 2.1.0  |  تاريخ التقرير: ' + esc(reportDate) + '</div>';
     html += '</div>';
 
     html += '<div class="pdf-section-bar">📈 ملخص المحفظة</div>';
@@ -6654,7 +6974,7 @@ function printReport() {
 
     html += '<div class="pdf-page-break"></div>';
     html += '<div class="pdf-title-bar">📋 ملخص الصفقات</div>';
-    html += '<div class="pdf-subtitle-bar">Pro Edition 2.0.0  |  تاريخ التقرير: ' + esc(reportDate) + '</div>';
+    html += '<div class="pdf-subtitle-bar">Pro Edition 2.1.0  |  تاريخ التقرير: ' + esc(reportDate) + '</div>';
     html += '<table class="pdf-summary-table">';
     html += '<colgroup>';
     html += '<col style="width:25%">';
@@ -6791,7 +7111,10 @@ function calculateAndDisplay() {
 function addOrSwitchCoin() {
     const inputSymbol = newCoinNameInput.value.trim().toUpperCase();
     if (!inputSymbol) { showError(currentLang === 'en' ? "Please enter a coin symbol" : "يرجى إدخال رمز العملة"); return; }
-    if (!/^[A-Z0-9]{3,15}$/.test(inputSymbol)) { showError((currentLang === 'en' ? 'Invalid coin symbol "' : 'رمز العملة "') + inputSymbol + '"'); return; }
+    if (!/^[A-Z0-9\.\-_]{2,20}$/.test(inputSymbol)) { showError((currentLang === 'en' ? 'Invalid coin symbol "' : 'رمز العملة "') + inputSymbol + '"'); return; }
+    const assetTypeSelect = document.getElementById('newAssetType');
+    const userChoice = assetTypeSelect ? assetTypeSelect.value : 'auto';
+    const detectedType = detectAssetType(inputSymbol, userChoice);
     const existingKeys = Object.keys(allCoinData).filter(k => getBaseSymbolFromKey(k) === inputSymbol);
     if (existingKeys.length > 0) {
         showPopup(
@@ -6802,6 +7125,7 @@ function addOrSwitchCoin() {
             () => {
                 const newKey = getNextInstanceKey(inputSymbol);
                 allCoinData[newKey] = getDefaultCoinDataStructure();
+                allCoinData[newKey].assetType = detectedType;
                 currentMarketPrices[newKey] = null;
                 activeCoinSymbol = newKey;
                 updateCoinSelector();
@@ -6810,7 +7134,9 @@ function addOrSwitchCoin() {
                 updateCoinStatus();
                 updateSummaryTable();
                 displayCoinData(newKey);
-                showSuccess((currentLang === 'en' ? '✅ New trade created: ' : '✅ تم إنشاء صفقة جديدة: ') + getDisplayNameFromKey(newKey));
+                updateActiveAssetBadge();
+                const typeLabel = detectedType === 'stock' ? (currentLang === 'en' ? 'Stock' : 'سهم') : (currentLang === 'en' ? 'Crypto' : 'كريبتو');
+                showSuccess((currentLang === 'en' ? '✅ New trade created: ' : '✅ تم إنشاء صفقة جديدة: ') + getDisplayNameFromKey(newKey) + ' (' + typeLabel + ')');
                 fetchSinglePrice(newKey).then(result => {
                     if (result.price !== null) { currentMarketPrices[newKey] = result.price; if (activeCoinSymbol === newKey) displayCoinData(newKey); updateSummaryTable(); }
                 });
@@ -6819,6 +7145,7 @@ function addOrSwitchCoin() {
         );
     } else {
         allCoinData[inputSymbol] = getDefaultCoinDataStructure();
+        allCoinData[inputSymbol].assetType = detectedType;
         currentMarketPrices[inputSymbol] = null;
         activeCoinSymbol = inputSymbol;
         updateCoinSelector();
@@ -6826,7 +7153,9 @@ function addOrSwitchCoin() {
         saveAllDataToLocalStorage();
         updateCoinStatus();
         updateSummaryTable();
-        showInfo((currentLang === 'en' ? 'Added ' : 'تمت إضافة ') + inputSymbol);
+        updateActiveAssetBadge();
+        const typeLabel = detectedType === 'stock' ? (currentLang === 'en' ? 'Stock' : 'سهم') : (currentLang === 'en' ? 'Crypto' : 'كريبتو');
+        showInfo((currentLang === 'en' ? 'Added ' : 'تمت إضافة ') + inputSymbol + ' (' + typeLabel + ')');
         fetchSinglePrice(inputSymbol).then(result => {
             if (result.price !== null) { currentMarketPrices[inputSymbol] = result.price; if (activeCoinSymbol === inputSymbol) displayCoinData(inputSymbol); updateSummaryTable(); }
         });
@@ -6963,7 +7292,7 @@ function executeSellSelectedCoins(selectedCoins) {
     saveAllDataToLocalStorage();
     updateSummaryTable();
     calculateAndDisplay();
-    showSuccess((currentLang === 'en' ? '✅ Sold ' : '✅ تم بيع ') + selectedCoins.length + (currentLang === 'en' ? ' coin(s)' : ' عملة'));
+    showSuccess((currentLang === 'en' ? '✅ Sold ' : '✅ تم بيع ') + selectedCoins.length + (currentLang === 'en' ? ' coin(s)' : ' أصل'));
 }
 
 function showEstimateSellPopup() {
@@ -7105,6 +7434,7 @@ function migrateOldData() {
         if (data.initialSales) data.initialSales.forEach(sale => { if (!sale.id) { sale.id = generateUniqueId(); migrated = true; } });
         if (data.repurchases) data.repurchases.forEach(rp => { if (rp.sales) rp.sales.forEach(sale => { if (!sale.id) { sale.id = generateUniqueId(); migrated = true; } }); });
         if (data.targets) { delete data.targets; migrated = true; }
+        if (!data.assetType) { data.assetType = detectAssetType(getBaseSymbolFromKey(symbol), 'auto'); migrated = true; }
     }
     if (migrated) saveAllDataToLocalStorage();
 }
@@ -7651,6 +7981,8 @@ function openNewEntryTransactionDialog() {
     showConfirm(msg, () => {
         const newKey = getNextInstanceKey(baseSymbol);
         allCoinData[newKey] = getDefaultCoinDataStructure();
+        const originalData = allCoinData[activeCoinSymbol];
+        allCoinData[newKey].assetType = (originalData && originalData.assetType) ? originalData.assetType : detectAssetType(baseSymbol, 'auto');
         currentMarketPrices[newKey] = null;
         activeCoinSymbol = newKey;
         updateCoinSelector();
@@ -7658,6 +7990,7 @@ function openNewEntryTransactionDialog() {
         updateCoinStatus();
         updateSummaryTable();
         displayCoinData(newKey);
+        updateActiveAssetBadge();
         fetchSinglePrice(newKey).then(result => {
             if (result.price !== null) { currentMarketPrices[newKey] = result.price; if (activeCoinSymbol === newKey) displayCoinData(newKey); updateSummaryTable(); }
         });
@@ -7937,9 +8270,6 @@ function scrollToSection(sectionId) {
 }
 function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-/* ═══════════════════════════════════════════════════════════════
-   ✅ دالة Toast
-   ═══════════════════════════════════════════════════════════════ */
 function showToast(message, type) {
     try {
         const existing = document.getElementById('app-toast');
@@ -7974,9 +8304,6 @@ function showToast(message, type) {
     } catch (e) {}
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   📊 تصدير Excel (xlsx-js-style)
-   ═══════════════════════════════════════════════════════════════ */
 const XLSX_THEME = {
     darkBg: '0F172A', headerBg: '1E3A5F',
     totalBg: '0F172A', totalValueColor: '34D399',
@@ -8060,7 +8387,7 @@ function exportToExcel() {
         wsData.push(titleRow);
         merges.push({ s: { r: 0, c: 0 }, e: { r: 0, c: COLS - 1 } });
 
-        const infoRow = [makeXlsxCell('Pro Edition 2.0.0  |  تاريخ التقرير: ' + dateStr, { color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, fontSize: 10, align: 'center', border: false })];
+        const infoRow = [makeXlsxCell('Pro Edition 2.1.0  |  تاريخ التقرير: ' + dateStr, { color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, fontSize: 10, align: 'center', border: false })];
         for (let i = 1; i < COLS; i++) infoRow.push(makeXlsxCell('', { bg: XLSX_THEME.headerBg, border: false }));
         wsData.push(infoRow);
         merges.push({ s: { r: 1, c: 0 }, e: { r: 1, c: COLS - 1 } });
@@ -8296,9 +8623,6 @@ function exportToExcel() {
     }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🚀 نقطة البداية (DOMContentLoaded)
-   ═══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', function() {
     loadThemePreference();
     loadAllDataFromLocalStorage();
@@ -8311,6 +8635,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadProfileSettings();
     updateCoinSelector();
     initDateModeToggles();
+    updateActiveAssetBadge();
 
     (function initLangCurrency() {
         const langSel = document.getElementById('langSelector');
@@ -8348,9 +8673,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     summaryTableBody.addEventListener('click', (event) => {
-        // ✅ تجاهل النقر على زر المعلومات ℹ️ أو زر التوسيع أو داخل DCA
         if (event.target.closest('.expand-btn')) return;
-        if (event.target.closest('.coin-info-btn')) return; // ➕ جديد
+        if (event.target.closest('.coin-info-btn')) return;
         if (event.target.closest('.dca-table')) return;
         if (event.target.closest('.coin-details')) return;
         if (event.target.closest('input')) return;
@@ -8378,7 +8702,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ✅➕ إغلاق نافذة معلومات العملة عند النقر خارجها
     const coinInfoOverlay = document.getElementById('coinInfoPopup');
     if (coinInfoOverlay) {
         coinInfoOverlay.addEventListener('click', function(e) {
@@ -8427,7 +8750,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => { __quickNavScrollLock = false; }, 200);
     }, { passive: true });
 
-    // ✅ Escape يغلق كل النوافذ بما فيها نافذة معلومات العملة الجديدة
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             document.querySelectorAll('.popup-overlay.active, .profile-modal-overlay.active, .notification-center.active, .update-popup.active, .sell-partial-modal-overlay.active').forEach(el => {
@@ -8442,12 +8764,11 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         addNotification(
             currentLang === 'en' ? 'Welcome!' : 'مرحباً بك!',
-            currentLang === 'en' ? 'Pro Edition is ready with new features 🎉' : 'نسخة Pro Edition جاهزة مع ميزات جديدة 🎉',
+            currentLang === 'en' ? 'Pro Edition 2.1 is ready with Stocks support 📈₿' : 'نسخة Pro 2.1 جاهزة مع دعم الأسهم 📈₿',
             'success'
         );
     }, 2000);
 });
 </script>
-
 </body>
 </html>
