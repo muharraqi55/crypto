@@ -164,6 +164,96 @@ body{
 .alloc-legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--mono);font-size:0.75rem;color:var(--muted)}
 .alloc-legend b{color:var(--text)}
 .dot{display:inline-block;width:9px;height:9px;border-radius:3px;margin-inline-end:7px;vertical-align:middle}
+
+/* ============ PRESET BAR (shared for alloc + targets + dca) ============ */
+.alloc-preset-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;
+  padding:10px 12px;background:var(--card-2);border:1px solid var(--border);border-radius:12px;
+  transition:background .25s, border-color .25s;}
+.alloc-preset-bar.targets-preset-bar{border-color:color-mix(in srgb,var(--gold) 30%, transparent);
+  background:linear-gradient(135deg, color-mix(in srgb,var(--gold) 4%, transparent), var(--card-2) 60%);}
+.alloc-preset-bar.dca-preset-bar{border-color:color-mix(in srgb,var(--red) 30%, transparent);
+  background:linear-gradient(135deg, color-mix(in srgb,var(--red) 4%, transparent), var(--card-2) 60%);}
+.alloc-preset-bar .preset-label{font-family:var(--mono);font-size:0.6875rem;font-weight:800;
+  color:var(--muted);letter-spacing:.5px;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.alloc-preset-bar .preset-select{flex:1;min-width:200px;background:var(--input-bg);
+  border:1px solid var(--border);border-radius:9px;padding:9px 12px;color:var(--text);
+  font-family:var(--mono);font-size:0.8125rem;font-weight:700;outline:none;cursor:pointer;
+  transition:.2s;appearance:none;-webkit-appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),
+                   linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 16px) 50%, calc(100% - 11px) 50%;
+  background-size:5px 5px, 5px 5px;background-repeat:no-repeat;
+  padding-inline-end:36px;}
+[dir="rtl"] .alloc-preset-bar .preset-select{
+  background-position:16px 50%, 21px 50%;
+  padding-inline-end:12px;padding-inline-start:36px;}
+.alloc-preset-bar .preset-select:focus{border-color:var(--green);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 15%, transparent);}
+.alloc-preset-bar .preset-select:hover{border-color:var(--green);}
+.alloc-preset-bar .preset-select option{background:var(--card);color:var(--text);}
+.targets-preset-bar .preset-select:hover,.targets-preset-bar .preset-select:focus{border-color:var(--gold);}
+.targets-preset-bar .preset-select:focus{box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 18%, transparent);}
+.dca-preset-bar .preset-select:hover,.dca-preset-bar .preset-select:focus{border-color:var(--red);}
+.dca-preset-bar .preset-select:focus{box-shadow:0 0 0 3px color-mix(in srgb,var(--red) 18%, transparent);}
+.preset-help-btn{width:36px;height:36px;flex:none;border-radius:50%;
+  border:2px solid color-mix(in srgb,var(--gold) 55%, transparent);
+  background:var(--gold-dim);color:var(--gold);font-size:1.0625rem;font-weight:900;cursor:pointer;
+  display:grid;place-items:center;transition:.2s;font-family:var(--mono);line-height:1;
+  padding:0;}
+.preset-help-btn:hover{transform:scale(1.12);border-color:var(--gold);color:#04140d;
+  background:var(--gold);
+  box-shadow:0 0 0 5px color-mix(in srgb,var(--gold) 22%, transparent);}
+.preset-help-btn:active{transform:scale(.95);}
+
+/* ============ PRESET HELP MODAL ============ */
+.preset-help-box{max-width:720px !important;max-height:88vh;overflow-y:auto;text-align:start !important;
+  border:2px solid var(--gold) !important;
+  box-shadow:0 28px 70px -22px color-mix(in srgb,var(--gold) 85%, transparent) !important;}
+.preset-help-box::before{
+  background:linear-gradient(90deg,transparent,var(--gold),transparent) !important;
+  animation:none !important;}
+.preset-help-box .modal-title{color:var(--gold) !important;}
+.preset-help-box .modal-icon{
+  filter:drop-shadow(0 0 18px color-mix(in srgb,var(--gold) 75%, transparent)) !important;
+  animation:none !important;font-size:2.5rem !important;}
+.preset-help-intro{font-family:var(--mono);font-size:0.75rem;color:var(--text);
+  line-height:1.85;font-weight:700;padding:12px 14px;border-radius:10px;
+  background:var(--card-2);border:1px dashed var(--border);
+  margin-bottom:14px;text-align:start;}
+.preset-table{width:100%;border-collapse:collapse;font-family:var(--mono);
+  font-size:0.71875rem;margin-bottom:14px;}
+.preset-table th{background:var(--card-2);color:var(--gold);padding:9px 6px;text-align:center;
+  border:1px solid var(--border);font-weight:800;font-size:0.6875rem;letter-spacing:.3px;
+  white-space:nowrap;}
+.preset-table td{padding:9px 6px;text-align:center;border:1px solid var(--border);
+  color:var(--text);font-weight:800;}
+.preset-table tr:hover td{background:var(--card-hover);}
+.preset-table td.name{font-weight:800;color:var(--green);text-align:start;
+  font-size:0.75rem;white-space:nowrap;}
+.preset-table td.strat{font-size:0.6875rem;color:var(--muted);text-align:start;
+  line-height:1.5;font-weight:700;}
+.preset-table td.num{color:var(--orange);font-weight:800;}
+.preset-table td.num.strong{color:var(--red);}
+.preset-table.dca-table td.num{color:var(--red);}
+.preset-table.dca-table td.num.strong{color:var(--red);}
+.preset-note{margin-bottom:14px;padding:12px 14px;border-radius:10px;
+  background:var(--green-dim);border:1px solid color-mix(in srgb,var(--green) 35%, transparent);
+  font-family:var(--mono);font-size:0.71875rem;color:var(--text);line-height:1.85;font-weight:700;}
+.preset-when{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:14px;}
+.preset-when-item{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:flex-start;
+  padding:10px 12px;background:var(--card-2);border:1px solid var(--border);border-radius:10px;
+  font-family:var(--mono);font-size:0.71875rem;line-height:1.65;}
+.preset-when-item .icon{font-size:1.0625rem;line-height:1;}
+.preset-when-item .txt{color:var(--text);font-weight:700;}
+.preset-when-item .txt b{color:var(--green);font-weight:900;}
+@media (max-width:640px){
+  .preset-table{font-size:0.625rem;}
+  .preset-table th{padding:6px 3px;font-size:0.59375rem;}
+  .preset-table td{padding:6px 3px;}
+  .preset-table td.name{font-size:0.6875rem;}
+  .preset-help-box{padding:20px 16px !important;}
+}
+
 .targets-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .t-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
   padding:16px 14px;text-align:center;transition:.25s;position:relative;overflow:hidden;
@@ -554,7 +644,7 @@ html[data-theme="dark"] .toast{color:#04140d}
   .controls,.action-btns,.toast,.icon-btn,.ctrl-group,.ctrl-sep,.ctrl-label,.mode-toggle-sm,.btn,.t-sell-btn,
   .sale-banner .sb-reset,.pc-actions,.panel,.targets-header .mode-toggle-sm,.sl-mode-toggle,.dca-cnt-btn,
   .input-mode-toggle,.imt-btn,.footer-credit .made-with .heart,
-  .clear-fab,.modal-overlay{display:none !important;}
+  .clear-fab,.modal-overlay,.alloc-preset-bar{display:none !important;}
   .panel{display:none !important;}
   .main-grid{display:block !important;grid-template-columns:1fr !important;gap:0 !important;}
   .print-header{display:block !important;text-align:center;padding-bottom:12px;margin-bottom:16px;
@@ -757,6 +847,10 @@ html.preparing-print *::after{
   .modal-title{font-size:0.875rem}
   .modal-desc{font-size:0.75rem}
   .modal-actions{grid-template-columns:1fr}
+  .alloc-preset-bar{padding:8px 10px;gap:8px}
+  .alloc-preset-bar .preset-select{min-width:0;font-size:0.75rem;}
+  .alloc-preset-bar .preset-label{font-size:0.625rem;}
+  .preset-help-btn{width:32px;height:32px;font-size:0.9375rem;}
 }
 </style>
 </head>
@@ -830,6 +924,19 @@ html.preparing-print *::after{
 
       <section class="section">
         <div class="sec-title" data-i18n="capitalAllocation">توزيع رأس المال</div>
+        <div class="alloc-preset-bar">
+          <span class="preset-label">📊 <span data-i18n="presetLabel">نمط التوزيع:</span></span>
+          <select id="allocPresetSelect" class="preset-select" onchange="applyAllocPreset(this.value)">
+            <option value="current" data-i18n="presetCurrent">الحالي (30 / 15 / 15 / 20 / 20)</option>
+            <option value="uniform" data-i18n="presetUniform">موحّد (30 / 17.5 / 17.5 / 17.5 / 17.5)</option>
+            <option value="linear" data-i18n="presetLinear">خطي (30 / 10 / 15 / 20 / 25)</option>
+            <option value="fib" data-i18n="presetFib">فيبوناتشي (30 / 8 / 13 / 21 / 28)</option>
+            <option value="aggressive" data-i18n="presetAggressive">هجومي (30 / 7 / 13 / 20 / 30)</option>
+            <option value="front" data-i18n="presetFront">أمامي (30 / 25 / 25 / 15 / 5)</option>
+            <option value="custom" data-i18n="presetCustom">✏️ مخصص</option>
+          </select>
+          <button class="preset-help-btn" onclick="openPresetHelpModal()" title="Help" type="button">؟</button>
+        </div>
         <div class="alloc-bar" id="allocBar"></div>
         <div class="alloc-legend" id="allocLegend"></div>
       </section>
@@ -846,6 +953,20 @@ html.preparing-print *::after{
             </button>
           </div>
         </div>
+        <div class="alloc-preset-bar targets-preset-bar">
+          <span class="preset-label">🎯 <span data-i18n="targetPresetLabel">نمط الأهداف:</span></span>
+          <select id="targetPresetSelect" class="preset-select" onchange="applyTargetPreset(this.value)">
+            <option value="current" data-i18n="targetPresetCurrent">الحالي (+5% · +10% · +15% · +20%)</option>
+            <option value="conservative" data-i18n="targetPresetConservative">محافظ (+3% · +5% · +7% · +10%)</option>
+            <option value="scalp" data-i18n="targetPresetScalp">سكالب سريع (+2% · +4% · +6% · +8%)</option>
+            <option value="fibonacci" data-i18n="targetPresetFibonacci">فيبوناتشي (+5% · +13% · +21% · +34%)</option>
+            <option value="exponential" data-i18n="targetPresetExponential">أسّي مضاعف (+5% · +10% · +20% · +40%)</option>
+            <option value="aggressive" data-i18n="targetPresetAggressive">هجومي (+10% · +20% · +30% · +50%)</option>
+            <option value="runner" data-i18n="targetPresetRunner">مطاردة (+5% · +15% · +30% · +50%)</option>
+            <option value="custom" data-i18n="presetCustom">✏️ مخصص</option>
+          </select>
+          <button class="preset-help-btn" onclick="openTargetHelpModal()" title="Help" type="button">؟</button>
+        </div>
         <div class="targets-info-bar" id="targetsInfoBar"></div>
         <div class="targets-grid" id="targetsGrid"></div>
         <div id="targetsTotalWrap"></div>
@@ -855,6 +976,22 @@ html.preparing-print *::after{
 
       <section class="section" id="dcaSection">
         <div class="sec-title dca" data-i18n="dcaLevels">مستويات DCA</div>
+        <!-- ═══════════ NEW: DCA PRESET BAR ═══════════ -->
+        <div class="alloc-preset-bar dca-preset-bar">
+          <span class="preset-label">🔻 <span data-i18n="dcaPresetLabel">نمط DCA:</span></span>
+          <select id="dcaPresetSelect" class="preset-select" onchange="applyDCAPreset(this.value)">
+            <option value="current" data-i18n="dcaPresetCurrent">الحالي (−8% · −18% · −30% · −45%)</option>
+            <option value="uniform" data-i18n="dcaPresetUniform">موحّد (−12% · −24% · −36% · −48%)</option>
+            <option value="conservative" data-i18n="dcaPresetConservative">محافظ (−5% · −10% · −15% · −20%)</option>
+            <option value="progressive" data-i18n="dcaPresetProgressive">متدرّج (−5% · −12% · −22% · −35%)</option>
+            <option value="aggressive" data-i18n="dcaPresetAggressive">هجومي (−10% · −25% · −45% · −70%)</option>
+            <option value="deep" data-i18n="dcaPresetDeep">عميق (−15% · −30% · −50% · −75%)</option>
+            <option value="shallow" data-i18n="dcaPresetShallow">سطحي (−3% · −7% · −12% · −18%)</option>
+            <option value="custom" data-i18n="presetCustom">✏️ مخصص</option>
+          </select>
+          <button class="preset-help-btn" onclick="openDCAHelpModal()" title="Help" type="button">؟</button>
+        </div>
+        <!-- ═══════════ END NEW ═══════════ -->
         <div id="dcaNoteWrap"></div>
         <div class="dca-list" id="dcaList"></div>
       </section>
@@ -870,7 +1007,7 @@ html.preparing-print *::after{
         <h3 data-i18n="panelAutoTitle">⚡ الوضع التلقائي</h3>
         <div class="auto-info">
           <div class="head" data-i18n="autoInfoHead">⚙️ النسب المُطبَّقة تلقائياً</div>
-          <div class="row"><span data-i18n="autoInfoTargets">🥇🥈🥉🏁 الأهداف:</span><b>+5% · +10% · +15% · +20%</b></div>
+          <div class="row"><span data-i18n="autoInfoTargets">🥇🥈🥉🏁 الأهداف:</span><b id="autoTargetsInfo">+5% · +10% · +15% · +20%</b></div>
           <div class="row"><span data-i18n="autoInfoDCA">🔻 مستويات DCA:</span><b id="autoDcaInfo">−8% · −18% · −30% · −45%</b></div>
           <div class="row"><span data-i18n="autoInfoAlloc">💰 التوزيع:</span><b id="autoAllocInfo">30 / 15 / 15 / 20 / 20</b></div>
         </div>
@@ -1094,6 +1231,46 @@ html.preparing-print *::after{
   </div>
 </div>
 
+<!-- Alloc preset help modal -->
+<div class="modal-overlay" id="presetHelpModal"
+     onclick="if(event.target===this)closePresetHelpModal()">
+  <div class="modal-box preset-help-box" id="presetHelpBox">
+    <div class="modal-icon">📊</div>
+    <div class="modal-title" id="presetHelpTitle">دليل أنماط التوزيع</div>
+    <div id="presetHelpBody"></div>
+    <div class="modal-actions" style="grid-template-columns:1fr">
+      <button class="modal-btn cancel" onclick="closePresetHelpModal()" id="presetHelpCloseBtn">✅ فهمت</button>
+    </div>
+  </div>
+</div>
+
+<!-- Target help modal -->
+<div class="modal-overlay" id="targetHelpModal"
+     onclick="if(event.target===this)closeTargetHelpModal()">
+  <div class="modal-box preset-help-box" id="targetHelpBox">
+    <div class="modal-icon">🎯</div>
+    <div class="modal-title" id="targetHelpTitle">دليل أنماط الأهداف</div>
+    <div id="targetHelpBody"></div>
+    <div class="modal-actions" style="grid-template-columns:1fr">
+      <button class="modal-btn cancel" onclick="closeTargetHelpModal()" id="targetHelpCloseBtn">✅ فهمت</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ NEW: DCA HELP MODAL ═══════════ -->
+<div class="modal-overlay" id="dcaHelpModal"
+     onclick="if(event.target===this)closeDCAHelpModal()">
+  <div class="modal-box preset-help-box" id="dcaHelpBox">
+    <div class="modal-icon">🔻</div>
+    <div class="modal-title" id="dcaHelpTitle">دليل أنماط DCA</div>
+    <div id="dcaHelpBody"></div>
+    <div class="modal-actions" style="grid-template-columns:1fr">
+      <button class="modal-btn cancel" onclick="closeDCAHelpModal()" id="dcaHelpCloseBtn">✅ فهمت</button>
+    </div>
+  </div>
+</div>
+<!-- ═══════════ END NEW ═══════════ -->
+
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 
 <script>
@@ -1216,7 +1393,82 @@ const I18N = {
     sharePdfCancelled:'↩️ تم إلغاء المشاركة',
     sharePdfFailed:'⚠️ تعذّر إنشاء ملف PDF',
     sharePdfNoLib:'⚠️ تعذّر تحميل مكتبات PDF',
-    sharePdfUnsupported:'📥 تم تنزيل PDF (المشاركة غير مدعومة)'
+    sharePdfUnsupported:'📥 تم تنزيل PDF (المشاركة غير مدعومة)',
+    /* ============ ALLOC PRESETS ============ */
+    presetLabel:'نمط التوزيع:',
+    presetCurrent:'الحالي (30 / 15 / 15 / 20 / 20)',
+    presetUniform:'موحّد (30 / 17.5 / 17.5 / 17.5 / 17.5)',
+    presetLinear:'خطي (30 / 10 / 15 / 20 / 25)',
+    presetFib:'فيبوناتشي (30 / 8 / 13 / 21 / 28)',
+    presetAggressive:'هجومي (30 / 7 / 13 / 20 / 30)',
+    presetFront:'أمامي (30 / 25 / 25 / 15 / 5)',
+    presetCustom:'✏️ مخصص',
+    presetApplied:(name)=>`✓ تم تطبيق: ${name}`,
+    presetHelpTitle:'📊 دليل أنماط توزيع رأس المال',
+    presetHelpIntro:'اختر النمط المناسب حسب توقعك لعمق الهبوط. كل الأنماط تعطي الدخول 30% وتوزّع الـ70% المتبقية على مستويات DCA. الافتراضي هو "الحالي" (15/15/20/20).',
+    presetHelpColStyle:'النمط',
+    presetHelpColBest:'الأفضل متى؟',
+    presetHelpRowCurrent:'متوازن بميل بسيط لأسفل — الخيار الافتراضي الآمن',
+    presetHelpRowUniform:'بسيط ومحايد — توزيع متساوٍ على كل المستويات',
+    presetHelpRowLinear:'ميل أقوى لأسفل — تحسين متوسط السعر قليلاً',
+    presetHelpRowFib:'توازن مع تحيّز للأسفل — نسبة ذهبية كلاسيكية',
+    presetHelpRowAggressive:'ميل قوي جداً لأسفل — للسوق المتقلب بعنف',
+    presetHelpRowFront:'وزن أمامي (للسوق الصاعد) — تُنفق مبكراً',
+    presetHelpWhen1:'📉 <b>تتوقع هبوط قوي؟</b> اختر "هجومي" أو "فيبوناتشي" — كلما زاد الوزن في DCA3/DCA4، انخفض متوسط السعر النهائي (لكن تحتاج أن يصل السعر لمستوياتك العميقة).',
+    presetHelpWhen2:'📈 <b>تتوقع سوق صاعد؟</b> اختر "أمامي" — وزن أكبر في DCA1/DCA2 لتستفيد من الارتدادات المبكرة.',
+    presetHelpWhen3:'⚖️ <b>متردد أو سوق عرضي؟</b> ابقَ على "الحالي" (15/15/20/20) — أفضل توازن بين المخاطرة والمكافأة.',
+    presetHelpWhen4:'💡 <b>القاعدة الذهبية:</b> كل مستوى أعمق = سعر أرخص = كمية أكبر. زيادة الوزن في العمق تخفض متوسط السعر لكنها ترقد على كاش طويلاً إذا لم يهبط السوق.',
+    presetHelpClose:'✅ فهمت',
+    /* ============ TARGET PRESETS ============ */
+    targetPresetLabel:'نمط الأهداف:',
+    targetPresetCurrent:'الحالي (+5% · +10% · +15% · +20%)',
+    targetPresetConservative:'محافظ (+3% · +5% · +7% · +10%)',
+    targetPresetScalp:'سكالب سريع (+2% · +4% · +6% · +8%)',
+    targetPresetFibonacci:'فيبوناتشي (+5% · +13% · +21% · +34%)',
+    targetPresetExponential:'أسّي مضاعف (+5% · +10% · +20% · +40%)',
+    targetPresetAggressive:'هجومي (+10% · +20% · +30% · +50%)',
+    targetPresetRunner:'مطاردة (+5% · +15% · +30% · +50%)',
+    targetHelpTitle:'🎯 دليل أنماط الأهداف',
+    targetHelpIntro:'اختر النمط حسب توقعك لحركة السعر وطبيعة العملة. الأهداف الأعلى تعني ربحاً أكبر لكن احتمال الوصول إليها أقل. الافتراضي هو "الحالي" (+5/10/15/20).',
+    targetHelpColStyle:'النمط',
+    targetHelpColBest:'الأفضل متى؟',
+    targetHelpRowCurrent:'تدرج خطي متوازن — الافتراضي لمعظم الحالات',
+    targetHelpRowConservative:'أهداف صغيرة قريبة — تقليل المخاطرة وجني سريع',
+    targetHelpRowScalp:'أهداف ضيقة جداً — لصفقات الساعات',
+    targetHelpRowFibonacci:'تسلسل فيبوناتشي — كل هدف ≈ 1.618× السابق',
+    targetHelpRowExponential:'مضاعفة تدريجية — للسوق الصاعد القوي',
+    targetHelpRowAggressive:'أهداف عالية — للاتجاه الصاعد القوي جداً',
+    targetHelpRowRunner:'أهداف متسارعة — للاستفادة من حركات كبيرة',
+    targetHelpWhen1:'📊 <b>عملة مستقرة (BTC/ETH)؟</b> اختر "محافظ" أو "الحالي" — التقلب محدود والأهداف العالية قد لا تتحقق بسرعة.',
+    targetHelpWhen2:'🚀 <b>عملة صاعدة بقوة (Altseason)؟</b> اختر "أسّي" أو "هجومي" — العملات البديلة تتحرك +50% بسهولة في السوق الصاعد.',
+    targetHelpWhen3:'⚡ <b>تداول سريع خلال ساعات؟</b> اختر "سكالب" أو "محافظ" — كل هدف صغير ومضمون نسبياً.',
+    targetHelpWhen4:'💡 <b>القاعدة الذهبية:</b> كل هدف أعلى = ربح أكبر لكن احتمال أقل للوصول. اختر بناءً على متوسط الحركة اليومية للعملة (ATR). إذا تحركت ±3% يومياً، فأهداف +50% تحتاج أسابيع.',
+    targetHelpClose:'✅ فهمت',
+    /* ============ DCA PRESETS ============ */
+    dcaPresetLabel:'نمط DCA:',
+    dcaPresetCurrent:'الحالي (−8% · −18% · −30% · −45%)',
+    dcaPresetUniform:'موحّد (−12% · −24% · −36% · −48%)',
+    dcaPresetConservative:'محافظ (−5% · −10% · −15% · −20%)',
+    dcaPresetProgressive:'متدرّج (−5% · −12% · −22% · −35%)',
+    dcaPresetAggressive:'هجومي (−10% · −25% · −45% · −70%)',
+    dcaPresetDeep:'عميق (−15% · −30% · −50% · −75%)',
+    dcaPresetShallow:'سطحي (−3% · −7% · −12% · −18%)',
+    dcaHelpTitle:'🔻 دليل أنماط DCA',
+    dcaHelpIntro:'اختر نمط مستويات التعزيز بناءً على متوسط تقلب العملة وتوقعك لعمق الهبوط. المستويات الأعمق تعني انتظاراً أطول لكن دخولاً عند أسعار أفضل. الافتراضي هو "الحالي" (−8/−18/−30/−45).',
+    dcaHelpColStyle:'النمط',
+    dcaHelpColBest:'الأفضل متى؟',
+    dcaHelpRowCurrent:'تباعد متزايد — الافتراضي لمعظم الحالات',
+    dcaHelpRowUniform:'تباعد ثابت 12% — بسيط ومنتظم',
+    dcaHelpRowConservative:'مستويات قريبة — لعملات مستقرة (BTC/ETH)',
+    dcaHelpRowProgressive:'ميل خفيف — تصحيحات صغيرة في سوق صاعد',
+    dcaHelpRowAggressive:'مستويات عميقة — لعملات شديدة التقلب',
+    dcaHelpRowDeep:'مستويات شديدة العمق — لسوق هبوطي أو بحث عن قاع',
+    dcaHelpRowShallow:'مستويات ضيقة — لا تنتظر هبوطاً كبيراً',
+    dcaHelpWhen1:'🛡️ <b>عملة مستقرة (BTC/ETH)؟</b> اختر "محافظ" أو "سطحي" — لا تنتظر هبوطاً عميقاً لأن هذه العملات أقل تقلباً.',
+    dcaHelpWhen2:'🎢 <b>عملة شديدة التقلب (Altcoin)؟</b> اختر "هجومي" أو "عميق" — الاستفادة من الهبوط الكبير بأسعار ممتازة.',
+    dcaHelpWhen3:'📈 <b>سوق صاعد بقوة؟</b> اختر "متدرّج" أو "سطحي" — لا تنفق رأس مالك كله على مستويات لن يصلها السعر.',
+    dcaHelpWhen4:'💡 <b>القاعدة الذهبية:</b> كل مستوى أعمق = دولارك يشتري كمية أكبر. لكن لا تضع مستويات عميقة جداً إن كنت تتوقع ارتداداً سريعاً — قد لا تصل إليها أبداً. اجعل آخر مستوى عند مستوى الدعم التاريخي.',
+    dcaHelpClose:'✅ فهمت'
   },
   en: {
     modeAuto:'⚡ Auto', modeManual:'✏️ Manual',
@@ -1335,13 +1587,88 @@ const I18N = {
     sharePdfCancelled:'↩️ Share cancelled',
     sharePdfFailed:'⚠️ Could not create PDF',
     sharePdfNoLib:'⚠️ Could not load PDF libraries',
-    sharePdfUnsupported:'📥 PDF downloaded (sharing not supported)'
+    sharePdfUnsupported:'📥 PDF downloaded (sharing not supported)',
+    /* ============ ALLOC PRESETS ============ */
+    presetLabel:'Allocation Style:',
+    presetCurrent:'Current (30 / 15 / 15 / 20 / 20)',
+    presetUniform:'Uniform (30 / 17.5 / 17.5 / 17.5 / 17.5)',
+    presetLinear:'Linear (30 / 10 / 15 / 20 / 25)',
+    presetFib:'Fibonacci (30 / 8 / 13 / 21 / 28)',
+    presetAggressive:'Aggressive (30 / 7 / 13 / 20 / 30)',
+    presetFront:'Front-Loaded (30 / 25 / 25 / 15 / 5)',
+    presetCustom:'✏️ Custom',
+    presetApplied:(name)=>`✓ Applied: ${name}`,
+    presetHelpTitle:'📊 Capital Allocation Guide',
+    presetHelpIntro:'Choose the style that matches your expected drop depth. All styles allocate 30% to entry and split the remaining 70% across DCA levels. Default is "Current" (15/15/20/20).',
+    presetHelpColStyle:'Style',
+    presetHelpColBest:'Best when?',
+    presetHelpRowCurrent:'Balanced with slight downward tilt — safe default',
+    presetHelpRowUniform:'Simple and neutral — equal on every level',
+    presetHelpRowLinear:'Stronger downward tilt — improves average slightly',
+    presetHelpRowFib:'Balance with downward bias — classic golden ratio',
+    presetHelpRowAggressive:'Very strong downward tilt — for volatile markets',
+    presetHelpRowFront:'Front-loaded (bull market) — spends early',
+    presetHelpWhen1:'📉 <b>Expecting a strong drop?</b> Pick "Aggressive" or "Fibonacci" — heavier weight on DCA3/DCA4 lowers average price (but requires price to actually reach your deep levels).',
+    presetHelpWhen2:'📈 <b>Expecting a bull market?</b> Pick "Front-Loaded" — more weight on DCA1/DCA2 to catch early rebounds.',
+    presetHelpWhen3:'⚖️ <b>Unsure or range-bound market?</b> Stay with "Current" (15/15/20/20) — best risk/reward balance.',
+    presetHelpWhen4:'💡 <b>Golden rule:</b> Deeper level = cheaper price = bigger quantity. Heavier weight deep lowers avg price but leaves you sitting on cash if price never drops.',
+    presetHelpClose:'✅ Got it',
+    /* ============ TARGET PRESETS ============ */
+    targetPresetLabel:'Targets Style:',
+    targetPresetCurrent:'Current (+5% · +10% · +15% · +20%)',
+    targetPresetConservative:'Conservative (+3% · +5% · +7% · +10%)',
+    targetPresetScalp:'Quick Scalp (+2% · +4% · +6% · +8%)',
+    targetPresetFibonacci:'Fibonacci (+5% · +13% · +21% · +34%)',
+    targetPresetExponential:'Exponential (+5% · +10% · +20% · +40%)',
+    targetPresetAggressive:'Aggressive (+10% · +20% · +30% · +50%)',
+    targetPresetRunner:'Runner (+5% · +15% · +30% · +50%)',
+    targetHelpTitle:'🎯 Target Style Guide',
+    targetHelpIntro:'Choose the style based on your expected price movement and coin nature. Higher targets = bigger profit but lower probability. Default is "Current" (+5/10/15/20).',
+    targetHelpColStyle:'Style',
+    targetHelpColBest:'Best when?',
+    targetHelpRowCurrent:'Linear balanced progression — default for most cases',
+    targetHelpRowConservative:'Small close targets — reduce risk and take quick profits',
+    targetHelpRowScalp:'Very tight targets — for hourly trades',
+    targetHelpRowFibonacci:'Fibonacci sequence — each target ≈ 1.618× the previous',
+    targetHelpRowExponential:'Doubling progression — for strong bull markets',
+    targetHelpRowAggressive:'High targets — for very strong uptrends',
+    targetHelpRowRunner:'Accelerating targets — catch big moves',
+    targetHelpWhen1:'📊 <b>Stable coin (BTC/ETH)?</b> Pick "Conservative" or "Current" — limited volatility, high targets may take a long time.',
+    targetHelpWhen2:'🚀 <b>Strong uptrend (Altseason)?</b> Pick "Exponential" or "Aggressive" — altcoins can move +50% easily in a bull market.',
+    targetHelpWhen3:'⚡ <b>Scalping intraday?</b> Pick "Scalp" or "Conservative" — small targets, relatively achievable.',
+    targetHelpWhen4:'💡 <b>Golden rule:</b> Higher target = bigger profit but lower probability. Base your choice on the coin\'s average daily range (ATR). If it moves ±3% daily, +50% targets take weeks.',
+    targetHelpClose:'✅ Got it',
+    /* ============ DCA PRESETS ============ */
+    dcaPresetLabel:'DCA Style:',
+    dcaPresetCurrent:'Current (−8% · −18% · −30% · −45%)',
+    dcaPresetUniform:'Uniform (−12% · −24% · −36% · −48%)',
+    dcaPresetConservative:'Conservative (−5% · −10% · −15% · −20%)',
+    dcaPresetProgressive:'Progressive (−5% · −12% · −22% · −35%)',
+    dcaPresetAggressive:'Aggressive (−10% · −25% · −45% · −70%)',
+    dcaPresetDeep:'Deep (−15% · −30% · −50% · −75%)',
+    dcaPresetShallow:'Shallow (−3% · −7% · −12% · −18%)',
+    dcaHelpTitle:'🔻 DCA Style Guide',
+    dcaHelpIntro:'Choose DCA levels based on the coin\'s average volatility and your expected drop depth. Deeper levels mean longer waits but better entry prices. Default is "Current" (−8/−18/−30/−45).',
+    dcaHelpColStyle:'Style',
+    dcaHelpColBest:'Best when?',
+    dcaHelpRowCurrent:'Increasing spacing — safe default for most cases',
+    dcaHelpRowUniform:'Fixed 12% spacing — simple and regular',
+    dcaHelpRowConservative:'Close levels — for stable coins (BTC/ETH)',
+    dcaHelpRowProgressive:'Mild tilt — small pullbacks in bull market',
+    dcaHelpRowAggressive:'Deep levels — for highly volatile coins',
+    dcaHelpRowDeep:'Very deep levels — bear market or bottom hunting',
+    dcaHelpRowShallow:'Tight levels — you don\'t expect a big drop',
+    dcaHelpWhen1:'🛡️ <b>Stable coin (BTC/ETH)?</b> Pick "Conservative" or "Shallow" — don\'t wait for deep drops; these coins are less volatile.',
+    dcaHelpWhen2:'🎢 <b>Highly volatile coin (Altcoin)?</b> Pick "Aggressive" or "Deep" — take advantage of big drops at excellent prices.',
+    dcaHelpWhen3:'📈 <b>Strong bull market?</b> Pick "Progressive" or "Shallow" — don\'t waste capital on levels the price will never reach.',
+    dcaHelpWhen4:'💡 <b>Golden rule:</b> Deeper level = your dollar buys more. But don\'t place levels too deep if you expect a quick bounce — they may never be hit. Put the last level at a historical support.',
+    dcaHelpClose:'✅ Got it'
   }
 };
 
 const AUTO = {
   targetPcts:[5,10,15,20],
-  dcaPcts:[-7.9963235294, -17.9963235294, -30.0, -45.0],
+  dcaPcts:[-8, -18, -30, -45],
   allocByCount:{
     0: [100, 0, 0, 0, 0],
     1: [30, 70, 0, 0, 0],
@@ -1351,12 +1678,44 @@ const AUTO = {
   }
 };
 
+/* ============ ALLOCATION PRESETS ============ */
+const ALLOC_PRESETS = {
+  current:    { alloc:[30, 15, 15, 20, 20],        dcaCount:4 },
+  uniform:    { alloc:[30, 17.5, 17.5, 17.5, 17.5], dcaCount:4 },
+  linear:     { alloc:[30, 10, 15, 20, 25],        dcaCount:4 },
+  fib:        { alloc:[30, 8, 13, 21, 28],         dcaCount:4 },
+  aggressive: { alloc:[30, 7, 13, 20, 30],         dcaCount:4 },
+  front:      { alloc:[30, 25, 25, 15, 5],         dcaCount:4 }
+};
+
+/* ============ TARGET PRESETS ============ */
+const TARGET_PRESETS = {
+  current:      [5, 10, 15, 20],
+  conservative: [3, 5, 7, 10],
+  scalp:        [2, 4, 6, 8],
+  fibonacci:    [5, 13, 21, 34],
+  exponential:  [5, 10, 20, 40],
+  aggressive:   [10, 20, 30, 50],
+  runner:       [5, 15, 30, 50]
+};
+
+/* ============ DCA PRESETS ============ */
+const DCA_PRESETS = {
+  current:      [-8, -18, -30, -45],
+  uniform:      [-12, -24, -36, -48],
+  conservative: [-5, -10, -15, -20],
+  progressive:  [-5, -12, -22, -35],
+  aggressive:   [-10, -25, -45, -70],
+  deep:         [-15, -30, -50, -75],
+  shallow:      [-3, -7, -12, -18]
+};
+
 const DEFAULT_STATE = {
   mode:'auto',
   pair:'BTCUSDT', tag:'TREADING',
   entry:0.1,
   targetPcts:[5,10,15,20],
-  dcaPcts:[-7.9963235294, -17.9963235294, -30.0, -45.0],
+  dcaPcts:[-8, -18, -30, -45],
   targets:[0.105, 0.11, 0.115, 0.12],
   dca:[0.092, 0.082, 0.07, 0.055],
   alloc:[30, 15, 15, 20, 20],
@@ -1371,7 +1730,10 @@ const DEFAULT_STATE = {
   targetInputMode:'percent',
   scalingInputMode:'percent',
   dcaInputMode:'percent',
-  allocInputMode:'percent'
+  allocInputMode:'percent',
+  allocPreset:'current',
+  targetPreset:'current',
+  dcaPreset:'current'
 };
 
 let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
@@ -1449,6 +1811,9 @@ function applyPrefs(){
   ['fsSm','fsMd','fsLg','fsXl'].forEach(id => $(id).classList.remove('active'));
   const map = { sm:'fsSm', md:'fsMd', lg:'fsLg', xl:'fsXl' };
   $(map[prefs.fontsize]).classList.add('active');
+  renderPresetHelpModalContent();
+  renderTargetHelpModalContent();
+  renderDCAHelpModalContent();
 }
 function applyTranslations(){
   document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -1463,11 +1828,27 @@ function applyTranslations(){
   updateInputModeButtons();
 }
 function applyAutoMode(){
-  state.targetPcts = [...AUTO.targetPcts];
-  state.dcaPcts = [...AUTO.dcaPcts];
-  state.targets = AUTO.targetPcts.map(p => state.entry * (1 + p/100));
-  state.dca     = AUTO.dcaPcts.map(p => state.entry * (1 + p/100));
-  state.alloc   = [...AUTO.allocByCount[state.dcaCount]];
+  // Apply target preset if set
+  if (TARGET_PRESETS[state.targetPreset]) {
+    state.targetPcts = [...TARGET_PRESETS[state.targetPreset]];
+  } else {
+    state.targetPcts = [...AUTO.targetPcts];
+  }
+  // Apply DCA preset if set
+  if (DCA_PRESETS[state.dcaPreset]) {
+    state.dcaPcts = [...DCA_PRESETS[state.dcaPreset]];
+  } else {
+    state.dcaPcts = [...AUTO.dcaPcts];
+  }
+  state.targets = state.targetPcts.map(p => state.entry * (1 + p/100));
+  state.dca     = state.dcaPcts.map(p => state.entry * (1 + p/100));
+  // Apply allocation preset if active
+  const preset = ALLOC_PRESETS[state.allocPreset];
+  if (preset && preset.dcaCount === state.dcaCount) {
+    state.alloc = [...preset.alloc];
+  } else {
+    state.alloc = [...AUTO.allocByCount[state.dcaCount]];
+  }
 }
 function setInputMode(section, mode){
   state[section + 'InputMode'] = mode;
@@ -1492,9 +1873,300 @@ function updateInputModeButtons(){
     });
   });
 }
+
+/* ============ ALLOC PRESET FUNCTIONS ============ */
+function updatePresetSelect(){
+  const sel = $('allocPresetSelect');
+  if (!sel) return;
+  if (ALLOC_PRESETS[state.allocPreset]) {
+    sel.value = state.allocPreset;
+  } else {
+    sel.value = 'custom';
+  }
+}
+function applyAllocPreset(presetKey){
+  if (presetKey === 'custom') {
+    state.allocPreset = 'custom';
+    updatePresetSelect();
+    return;
+  }
+  const preset = ALLOC_PRESETS[presetKey];
+  if (!preset) return;
+  state.allocPreset = presetKey;
+  state.alloc = [...preset.alloc];
+
+  if (state.dcaCount !== preset.dcaCount) {
+    state.dcaCount = preset.dcaCount;
+    [0,1,2,3,4].forEach(k=>{
+      const a = $('dcaCnt'+k);
+      const b = $('dcaCnt'+k+'M');
+      if(a) a.classList.toggle('active', k === state.dcaCount);
+      if(b) b.classList.toggle('active', k === state.dcaCount);
+    });
+    for (let i = 1; i <= 4; i++) {
+      const df = $('dca'+i+'Field');
+      const ar = $('alloc'+i+'Row');
+      if (df) df.style.display = state.dcaCount >= i ? '' : 'none';
+      if (ar) ar.style.display = state.dcaCount >= i ? '' : 'none';
+    }
+    const infoEl = $('dcaCountInfo');
+    if(infoEl) infoEl.textContent = t('dcaCountInfo')(state.dcaCount);
+  }
+
+  updatePresetSelect();
+  syncInputs();
+  render();
+
+  const presetName = t('preset' + presetKey.charAt(0).toUpperCase() + presetKey.slice(1));
+  showToast(t('presetApplied')(presetName));
+}
+function buildPresetHelpBodyHTML(){
+  const rows = [
+    { key:'current',    alloc:[15, 15, 20, 20],     stratKey:'presetHelpRowCurrent',    strong:[false,false,false,false] },
+    { key:'uniform',    alloc:[17.5, 17.5, 17.5, 17.5], stratKey:'presetHelpRowUniform', strong:[false,false,false,false] },
+    { key:'linear',     alloc:[10, 15, 20, 25],     stratKey:'presetHelpRowLinear',     strong:[false,false,false,true] },
+    { key:'fib',        alloc:[8, 13, 21, 28],      stratKey:'presetHelpRowFib',        strong:[false,false,false,true] },
+    { key:'aggressive', alloc:[7, 13, 20, 30],      stratKey:'presetHelpRowAggressive', strong:[false,false,false,true] },
+    { key:'front',      alloc:[25, 25, 15, 5],      stratKey:'presetHelpRowFront',      strong:[true,true,false,false] }
+  ];
+  const headerCells = ['presetHelpColStyle','DCA1','DCA2','DCA3','DCA4','presetHelpColBest']
+    .map((k) => {
+      if (k.startsWith('presetHelp')) return `<th>${t(k)}</th>`;
+      return `<th>${k}</th>`;
+    }).join('');
+  const bodyRows = rows.map(r => {
+    const name = t('preset' + r.key.charAt(0).toUpperCase() + r.key.slice(1));
+    const strat = t(r.stratKey);
+    const cells = r.alloc.map((v,i) => `<td class="num${r.strong[i]?' strong':''}">${v}%</td>`).join('');
+    return `<tr><td class="name">${name}</td>${cells}<td class="strat">${strat}</td></tr>`;
+  }).join('');
+
+  const whenItems = ['presetHelpWhen1','presetHelpWhen2','presetHelpWhen3','presetHelpWhen4']
+    .map(k => {
+      const raw = t(k);
+      const iconMatch = raw.match(/^([\p{Emoji}\u2600-\u27BF]+)\s*(.*)$/u);
+      const icon = iconMatch ? iconMatch[1] : '•';
+      const txt = iconMatch ? iconMatch[2] : raw;
+      return `<div class="preset-when-item"><span class="icon">${icon}</span><span class="txt">${txt}</span></div>`;
+    }).join('');
+
+  return `
+    <div class="preset-help-intro">${t('presetHelpIntro')}</div>
+    <table class="preset-table">
+      <thead><tr>${headerCells}</tr></thead>
+      <tbody>${bodyRows}</tbody>
+    </table>
+    <div class="preset-when">${whenItems}</div>
+  `;
+}
+function renderPresetHelpModalContent(){
+  const titleEl = $('presetHelpTitle');
+  const bodyEl = $('presetHelpBody');
+  const closeBtn = $('presetHelpCloseBtn');
+  if (titleEl) titleEl.textContent = t('presetHelpTitle');
+  if (bodyEl) bodyEl.innerHTML = buildPresetHelpBodyHTML();
+  if (closeBtn) closeBtn.textContent = t('presetHelpClose');
+}
+function openPresetHelpModal(){
+  renderPresetHelpModalContent();
+  const modal = $('presetHelpModal');
+  if (!modal) return;
+  modal.classList.add('show');
+}
+function closePresetHelpModal(){
+  const modal = $('presetHelpModal');
+  if (!modal) return;
+  modal.classList.remove('show');
+}
+
+/* ============ TARGET PRESET FUNCTIONS ============ */
+function updateTargetPresetSelect(){
+  const sel = $('targetPresetSelect');
+  if (!sel) return;
+  if (TARGET_PRESETS[state.targetPreset]) {
+    sel.value = state.targetPreset;
+  } else {
+    sel.value = 'custom';
+  }
+}
+function applyTargetPreset(presetKey){
+  if (presetKey === 'custom') {
+    state.targetPreset = 'custom';
+    updateTargetPresetSelect();
+    return;
+  }
+  const preset = TARGET_PRESETS[presetKey];
+  if (!preset) return;
+  state.targetPreset = presetKey;
+  state.targetPcts = [...preset];
+  state.targets = state.targetPcts.map(p => state.entry * (1 + p/100));
+
+  updateTargetPresetSelect();
+  syncInputs();
+  render();
+
+  const presetName = t('targetPreset' + presetKey.charAt(0).toUpperCase() + presetKey.slice(1));
+  showToast(t('presetApplied')(presetName));
+}
+function buildTargetHelpBodyHTML(){
+  const rows = [
+    { key:'current',      vals:[5, 10, 15, 20],  stratKey:'targetHelpRowCurrent',      strong:[false,false,false,false] },
+    { key:'conservative', vals:[3, 5, 7, 10],    stratKey:'targetHelpRowConservative', strong:[false,false,false,false] },
+    { key:'scalp',        vals:[2, 4, 6, 8],     stratKey:'targetHelpRowScalp',        strong:[false,false,false,false] },
+    { key:'fibonacci',    vals:[5, 13, 21, 34],  stratKey:'targetHelpRowFibonacci',    strong:[false,false,false,true] },
+    { key:'exponential',  vals:[5, 10, 20, 40],  stratKey:'targetHelpRowExponential',  strong:[false,false,true,true] },
+    { key:'aggressive',   vals:[10, 20, 30, 50], stratKey:'targetHelpRowAggressive',   strong:[false,true,true,true] },
+    { key:'runner',       vals:[5, 15, 30, 50],  stratKey:'targetHelpRowRunner',       strong:[false,false,true,true] }
+  ];
+  const headerCells = ['targetHelpColStyle','T1','T2','T3','T4','targetHelpColBest']
+    .map((k) => {
+      if (k.startsWith('targetHelp')) return `<th>${t(k)}</th>`;
+      return `<th>${k}</th>`;
+    }).join('');
+  const bodyRows = rows.map(r => {
+    const name = t('targetPreset' + r.key.charAt(0).toUpperCase() + r.key.slice(1));
+    const strat = t(r.stratKey);
+    const cells = r.vals.map((v,i) => `<td class="num${r.strong[i]?' strong':''}">+${v}%</td>`).join('');
+    return `<tr><td class="name">${name}</td>${cells}<td class="strat">${strat}</td></tr>`;
+  }).join('');
+
+  const whenItems = ['targetHelpWhen1','targetHelpWhen2','targetHelpWhen3','targetHelpWhen4']
+    .map(k => {
+      const raw = t(k);
+      const iconMatch = raw.match(/^([\p{Emoji}\u2600-\u27BF]+)\s*(.*)$/u);
+      const icon = iconMatch ? iconMatch[1] : '•';
+      const txt = iconMatch ? iconMatch[2] : raw;
+      return `<div class="preset-when-item"><span class="icon">${icon}</span><span class="txt">${txt}</span></div>`;
+    }).join('');
+
+  return `
+    <div class="preset-help-intro">${t('targetHelpIntro')}</div>
+    <table class="preset-table">
+      <thead><tr>${headerCells}</tr></thead>
+      <tbody>${bodyRows}</tbody>
+    </table>
+    <div class="preset-when">${whenItems}</div>
+  `;
+}
+function renderTargetHelpModalContent(){
+  const titleEl = $('targetHelpTitle');
+  const bodyEl = $('targetHelpBody');
+  const closeBtn = $('targetHelpCloseBtn');
+  if (titleEl) titleEl.textContent = t('targetHelpTitle');
+  if (bodyEl) bodyEl.innerHTML = buildTargetHelpBodyHTML();
+  if (closeBtn) closeBtn.textContent = t('targetHelpClose');
+}
+function openTargetHelpModal(){
+  renderTargetHelpModalContent();
+  const modal = $('targetHelpModal');
+  if (!modal) return;
+  modal.classList.add('show');
+}
+function closeTargetHelpModal(){
+  const modal = $('targetHelpModal');
+  if (!modal) return;
+  modal.classList.remove('show');
+}
+
+/* ============ DCA PRESET FUNCTIONS ============ */
+function updateDCAPresetSelect(){
+  const sel = $('dcaPresetSelect');
+  if (!sel) return;
+  if (DCA_PRESETS[state.dcaPreset]) {
+    sel.value = state.dcaPreset;
+  } else {
+    sel.value = 'custom';
+  }
+}
+function applyDCAPreset(presetKey){
+  if (presetKey === 'custom') {
+    state.dcaPreset = 'custom';
+    updateDCAPresetSelect();
+    return;
+  }
+  const preset = DCA_PRESETS[presetKey];
+  if (!preset) return;
+  state.dcaPreset = presetKey;
+  state.dcaPcts = [...preset];
+  state.dca = state.dcaPcts.map(p => state.entry * (1 + p/100));
+
+  updateDCAPresetSelect();
+  syncInputs();
+  render();
+
+  const presetName = t('dcaPreset' + presetKey.charAt(0).toUpperCase() + presetKey.slice(1));
+  showToast(t('presetApplied')(presetName));
+}
+function buildDCAHelpBodyHTML(){
+  const rows = [
+    { key:'current',      vals:[-8, -18, -30, -45],  stratKey:'dcaHelpRowCurrent',      strong:[false,false,false,true] },
+    { key:'uniform',      vals:[-12, -24, -36, -48], stratKey:'dcaHelpRowUniform',      strong:[false,false,false,false] },
+    { key:'conservative', vals:[-5, -10, -15, -20],  stratKey:'dcaHelpRowConservative', strong:[false,false,false,false] },
+    { key:'progressive',  vals:[-5, -12, -22, -35],  stratKey:'dcaHelpRowProgressive',  strong:[false,false,false,true] },
+    { key:'aggressive',   vals:[-10, -25, -45, -70], stratKey:'dcaHelpRowAggressive',   strong:[false,false,true,true] },
+    { key:'deep',         vals:[-15, -30, -50, -75], stratKey:'dcaHelpRowDeep',         strong:[false,true,true,true] },
+    { key:'shallow',      vals:[-3, -7, -12, -18],   stratKey:'dcaHelpRowShallow',      strong:[false,false,false,false] }
+  ];
+  const headerCells = ['dcaHelpColStyle','DCA1','DCA2','DCA3','DCA4','dcaHelpColBest']
+    .map((k) => {
+      if (k.startsWith('dcaHelp')) return `<th>${t(k)}</th>`;
+      return `<th>${k}</th>`;
+    }).join('');
+  const bodyRows = rows.map(r => {
+    const name = t('dcaPreset' + r.key.charAt(0).toUpperCase() + r.key.slice(1));
+    const strat = t(r.stratKey);
+    const cells = r.vals.map((v,i) => `<td class="num${r.strong[i]?' strong':''}">${v}%</td>`).join('');
+    return `<tr><td class="name">${name}</td>${cells}<td class="strat">${strat}</td></tr>`;
+  }).join('');
+
+  const whenItems = ['dcaHelpWhen1','dcaHelpWhen2','dcaHelpWhen3','dcaHelpWhen4']
+    .map(k => {
+      const raw = t(k);
+      const iconMatch = raw.match(/^([\p{Emoji}\u2600-\u27BF]+)\s*(.*)$/u);
+      const icon = iconMatch ? iconMatch[1] : '•';
+      const txt = iconMatch ? iconMatch[2] : raw;
+      return `<div class="preset-when-item"><span class="icon">${icon}</span><span class="txt">${txt}</span></div>`;
+    }).join('');
+
+  return `
+    <div class="preset-help-intro">${t('dcaHelpIntro')}</div>
+    <table class="preset-table dca-table">
+      <thead><tr>${headerCells}</tr></thead>
+      <tbody>${bodyRows}</tbody>
+    </table>
+    <div class="preset-when">${whenItems}</div>
+  `;
+}
+function renderDCAHelpModalContent(){
+  const titleEl = $('dcaHelpTitle');
+  const bodyEl = $('dcaHelpBody');
+  const closeBtn = $('dcaHelpCloseBtn');
+  if (titleEl) titleEl.textContent = t('dcaHelpTitle');
+  if (bodyEl) bodyEl.innerHTML = buildDCAHelpBodyHTML();
+  if (closeBtn) closeBtn.textContent = t('dcaHelpClose');
+}
+function openDCAHelpModal(){
+  renderDCAHelpModalContent();
+  const modal = $('dcaHelpModal');
+  if (!modal) return;
+  modal.classList.add('show');
+}
+function closeDCAHelpModal(){
+  const modal = $('dcaHelpModal');
+  if (!modal) return;
+  modal.classList.remove('show');
+}
+
 function setDCACount(n){
   state.dcaCount = n;
-  state.alloc = [...AUTO.allocByCount[n]];
+  const preset = ALLOC_PRESETS[state.allocPreset];
+  if (preset && preset.dcaCount === n) {
+    state.alloc = [...preset.alloc];
+  } else {
+    state.alloc = [...AUTO.allocByCount[n]];
+    if (state.allocPreset !== 'custom') state.allocPreset = 'custom';
+  }
+  updatePresetSelect();
   [0,1,2,3,4].forEach(k=>{
     const a = $('dcaCnt'+k);
     const b = $('dcaCnt'+k+'M');
@@ -1895,6 +2567,9 @@ function render(){
   const barDots = ['#16c784','#f59e42','#f4745c','#ea3943','#b6252f'];
   $('allocBar').innerHTML = allocActive.map((a,i)=>`<div class="alloc-seg ${barColors[i]}" style="width:${a}%"><span>${fmtN(a)}%</span></div>`).join('');
   $('allocLegend').innerHTML = allocActive.map((a,i)=>`<div><span class="dot" style="background:${barDots[i]}"></span>${barLabels[i]} <b>${fmtN(a)}%</b></div>`).join('');
+  updatePresetSelect();
+  updateTargetPresetSelect();
+  updateDCAPresetSelect();
   renderTargets();
   renderDCASection();
   if (isFullySold()) {
@@ -2010,8 +2685,10 @@ function syncInputs(){
   
   const dcaLabels = state.dcaCount === 0 ? t('noDcaShort') : ['−8%','−18%','−30%','−45%'].slice(0, state.dcaCount).join(' · ');
   const allocNums = state.alloc.slice(0, state.dcaCount+1).join(' / ');
+  const targetLabels = state.targetPcts.slice(0,4).map(p => '+' + (p % 1 === 0 ? p : p.toFixed(1)) + '%').join(' · ');
   if($('autoDcaInfo')) $('autoDcaInfo').textContent = dcaLabels;
   if($('autoAllocInfo')) $('autoAllocInfo').textContent = allocNums;
+  if($('autoTargetsInfo')) $('autoTargetsInfo').textContent = targetLabels;
   
   $('dca1Field').style.display = state.dcaCount >= 1 ? '' : 'none';
   $('dca2Field').style.display = state.dcaCount >= 2 ? '' : 'none';
@@ -2024,6 +2701,9 @@ function syncInputs(){
   const infoEl = $('dcaCountInfo');
   if(infoEl) infoEl.textContent = t('dcaCountInfo')(state.dcaCount);
   
+  updatePresetSelect();
+  updateTargetPresetSelect();
+  updateDCAPresetSelect();
   updateInputModeButtons();
 }
 function syncManualFromState(){ syncInputs(); }
@@ -2037,6 +2717,8 @@ function handleTargetInput(i, value){
     state.targets[i] = v;
     state.targetPcts[i] = state.entry ? ((v / state.entry) - 1) * 100 : 0;
   }
+  state.targetPreset = 'custom';
+  updateTargetPresetSelect();
   render();
 }
 $('inT1').addEventListener('input', e => handleTargetInput(0, e.target.value));
@@ -2053,6 +2735,8 @@ function handleDCAInput(i, value){
     state.dca[i] = v;
     state.dcaPcts[i] = state.entry ? ((v / state.entry) - 1) * 100 : 0;
   }
+  state.dcaPreset = 'custom';
+  updateDCAPresetSelect();
   render();
 }
 $('inD1').addEventListener('input', e => handleDCAInput(0, e.target.value));
@@ -2067,6 +2751,8 @@ function handleAllocInput(i, value){
   } else {
     state.alloc[i] = state.capital > 0 ? (v / state.capital) * 100 : 0;
   }
+  state.allocPreset = 'custom';
+  updatePresetSelect();
   render();
 }
 for (let i = 0; i < 5; i++) {
@@ -2194,6 +2880,9 @@ function loadPlan(){
     if(raw){
       const saved = JSON.parse(raw);
       state = Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)), saved);
+      if(!state.allocPreset) state.allocPreset = 'custom';
+      if(!state.targetPreset) state.targetPreset = 'custom';
+      if(!state.dcaPreset) state.dcaPreset = 'custom';
       if(state.mode === 'auto') applyAutoMode();
     }
   }catch(e){}
@@ -2226,6 +2915,9 @@ function importPlan(){
       try{
         const data = JSON.parse(ev.target.result);
         state = Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)), data);
+        if(!state.allocPreset) state.allocPreset = 'custom';
+        if(!state.targetPreset) state.targetPreset = 'custom';
+        if(!state.dcaPreset) state.dcaPreset = 'custom';
         if(state.mode === 'auto') applyAutoMode();
         setMode(state.mode);
         setTargetsMode(state.targetsMode);
@@ -2323,7 +3015,6 @@ function loadScriptWithFallback(urls){
 }
 
 async function ensurePdfLibs(){
-  // html2canvas-pro registers itself as window.html2canvas for compatibility
   if (typeof window.html2canvas === 'undefined'){
     const ok = await loadScriptWithFallback(PDF_CDN_URLS.html2canvas);
     if (!ok) return { ok:false, missing:'html2canvas-pro' };
@@ -2433,6 +3124,7 @@ async function sharePDF(){
       '.sl-mode-toggle','.dca-cnt-btn',
       '.input-mode-toggle','.imt-btn',
       '.clear-fab','.modal-overlay',
+      '.alloc-preset-bar',
       '.footer-credit .made-with .heart'
     ].join(',');
     hostEl.querySelectorAll(hideSel).forEach(el => { el.style.display = 'none'; });
@@ -3000,8 +3692,14 @@ function confirmClearData(){
 
 document.addEventListener('keydown', e => {
   if(e.key === 'Escape'){
-    const modal = $('clearModal');
-    if(modal && modal.classList.contains('show')) closeClearModal();
+    const clearModal = $('clearModal');
+    if(clearModal && clearModal.classList.contains('show')) { closeClearModal(); return; }
+    const presetModal = $('presetHelpModal');
+    if(presetModal && presetModal.classList.contains('show')) { closePresetHelpModal(); return; }
+    const targetModal = $('targetHelpModal');
+    if(targetModal && targetModal.classList.contains('show')) { closeTargetHelpModal(); return; }
+    const dcaModal = $('dcaHelpModal');
+    if(dcaModal && dcaModal.classList.contains('show')) { closeDCAHelpModal(); return; }
   }
 });
 
