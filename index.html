@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -10,7 +11,7 @@
 
 
 <style>
-    /* ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
    🌗 المتغيرات (Variables) — الوضع الفاتح والداكن
    ═══════════════════════════════════════════════════════════ */
 :root {
@@ -2441,9 +2442,7 @@ body.lang-en .coin-info-price-hero { text-align: right; padding-left: 0; padding
 body.lang-en .coin-info-item::before { right: auto; left: 0; }
 
 /* ═══════════════════════════════════════════════════════════════
-   ═══════════════════════════════════════════════════════════════
    ✅✅✅ [جديد] الإضافات الخاصة بدعم الأسهم (Stocks)
-   ═══════════════════════════════════════════════════════════════
    ═══════════════════════════════════════════════════════════════ */
 
 /* 🎛️ قائمة اختيار نوع الأصل (تلقائي / كريبتو / سهم) */
@@ -2925,6 +2924,54 @@ body.lang-en .asset-filter-bar {
 .dark-mode .entry-disabled-title { color: #fde68a; }
 .dark-mode .entry-disabled-message { color: #fef3c7; }
 
+/* ═══════════════════════════════════════════════════════════
+   🇧🇭 [جديد] شارة مصدر البحرين (InsightSentry) — اختيارية
+   لا تؤثر على أي عنصر موجود، فقط تُستخدم عند الحاجة
+   ═══════════════════════════════════════════════════════════ */
+.bahrain-source-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, #ce1126, #ff4d5e);
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.68em;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    box-shadow: 0 2px 6px rgba(206, 17, 38, 0.3);
+    margin: 0 4px;
+    vertical-align: middle;
+}
+.bahrain-source-badge::before {
+    content: '🇧🇭';
+    font-size: 0.9em;
+}
+.dark-mode .bahrain-source-badge {
+    background: linear-gradient(135deg, #a00d1e, #ce1126);
+    box-shadow: 0 2px 6px rgba(206, 17, 38, 0.45);
+}
+
+/* شارة "BHD" للعملات المسعرة بالدينار البحريني */
+.bhd-currency-badge {
+    display: inline-block;
+    background: rgba(206, 17, 38, 0.12);
+    color: #ce1126;
+    border: 1px solid rgba(206, 17, 38, 0.35);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.7em;
+    font-weight: 700;
+    font-family: 'Roboto Mono', monospace;
+    direction: ltr;
+    margin: 0 3px;
+    vertical-align: middle;
+}
+.dark-mode .bhd-currency-badge {
+    background: rgba(255, 77, 94, 0.15);
+    color: #ff7a88;
+    border-color: rgba(255, 77, 94, 0.4);
+}
 </style>
 
 </head>
@@ -3429,7 +3476,7 @@ body.lang-en .asset-filter-bar {
 <h3>📚 معلومات</h3>
 <ul class="footer-links">
 <li><a href="#" onclick="showInfo('جميع البيانات محفوظة محلياً في متصفحك باستخدام localStorage'); return false;">🔒 الخصوصية</a></li>
-<li><a href="#" onclick="showInfo('📡 مصادر البيانات المعتمدة:<br><br>• Binance<br>• Binance Vision<br>• MEXC<br>• Gate<br>• OKX<br>• KuCoin<br>• Bybit<br>• CoinGecko (عبر البروكسي)<br>• Alternative.me<br>• Twelve Data<br>• Finnhub<br>• Yahoo Finance'); return false;">📡 مصادر البيانات</a></li>
+<li><a href="#" onclick="showInfo('📡 مصادر البيانات المعتمدة:<br><br>• Binance<br>• Binance Vision<br>• MEXC<br>• Gate<br>• OKX<br>• KuCoin<br>• Bybit<br>• CoinGecko (عبر البروكسي)<br>• Alternative.me<br>• Twelve Data<br>• Finnhub<br>• Yahoo Finance<br>• EODHD<br>• InsightSentry (البحرين)'); return false;">📡 مصادر البيانات</a></li>
 </ul>
 </div>
 </div>
@@ -3820,12 +3867,13 @@ body.lang-en .asset-filter-bar {
 <li>📊 زر تصدير Excel مع ألوان وحدود ودمج احترافي</li>
 <li>💾 زر حفظ موحّد: يحفظ TXT و JSON معاً بضغطة واحدة</li>
 <li>ℹ️ زر معلومات العملة (Market Cap / Supply) في جدول الملخص</li>
-<li>📈 <strong>جديد:</strong> دعم الأسهم العالمية (Twelve Data + Finnhub)</li>
+<li>📈 <strong>جديد:</strong> دعم الأسهم العالمية (EODHD + Twelve Data + Finnhub)</li>
 <li>🔍 <strong>جديد:</strong> كشف تلقائي لنوع الأصل (كريبتو / سهم)</li>
 <li>🎛️ <strong>جديد:</strong> فلتر نوع الأصل في جدول الملخص</li>
 <li>📋 <strong>جديد:</strong> زر سجل جلب الأسعار (لمعرفة من فشل)</li>
 <li>✅ <strong>جديد:</strong> التحقق من صحة العملة/السهم قبل الإضافة</li>
 <li>🎯 <strong>جديد:</strong> إصلاح TradingView (يتعرف على الأسهم العربية)</li>
+<li>🇧🇭 <strong>جديد:</strong> دعم بورصة البحرين عبر InsightSentry API</li>
 </ul>
 </div>
 <button onclick="closeUpdatePopup()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">ممتاز!</button>
@@ -3930,25 +3978,101 @@ body.lang-en .asset-filter-bar {
 <!-- ✅ استيراد موحّد: يقبل .txt و .json معاً -->
 <input type="file" id="importFile" accept=".txt,.json,application/json,text/plain" style="display: none;">
 
-
 <script>
-    /* ═══════════════════════════════════════════════════════════════
-   JavaScript — النسخة النهائية v17.2
+/* ═══════════════════════════════════════════════════════════════
+   JavaScript — النسخة النهائية v18.2
    ✅ [v17]   تعطيل تفاصيل الدخول بعد البيع الكامل
-   ✅ [v17]   زر حفظ (TXT + JSON) في نافذة الضبط الافتراضي
    ✅ [v17.2] تعطيل زر إضافة التعزيز عند البيع الكامل
+   ✅ [v18]   دعم البحرين عبر InsightSentry
+   ✅ [v18]   دعم EODHD للأسهم العالمية
+   ✅ [v18.1] إصلاح KASUSDT → TONUSDT
+   ✅ [v18.2] كاش CoinGecko مع cooldown بعد 429
+   ✅ [v18.2] الشرق الأوسط → Yahoo أولاً (بدون EODHD 404)
    ═══════════════════════════════════════════════════════════════ */
 
 const MY_PROXY_URL = 'https://crypto-proxy.qwqwqwzx5.workers.dev';
 const FINNHUB_API_KEY = 'db5rvuhr01qmd5lf9cl0db5rvuhr01qmd5lf9clg';
 const TWELVE_DATA_API_KEY = 'a0c201956c7540ceb8b1df362830b1c7';
 
+const EODHD_API_KEY = '6ad7b1c99d8a22.75564773';
+const INSIGHTSENTRY_API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3cXdxd3p4NUBnbWFpbC5jb20iLCJjcmVhdGVkX2F0IjoxNzkyNTcwMDc2ODI4fQ.wSxnmAGTNb-GEcQM3g1ZJtS-i7CChA7lenyNzRX3Duw';
+const INSIGHTSENTRY_BASE = 'https://api.insightsentry.com';
+const insightSentryCache = new Map();
+const INSIGHTSENTRY_CACHE_TTL = 15 * 60 * 1000;
+
+// ✅ [v18.3] كاش CoinGecko مع منع الطلبات المتوازية + كولداون أطول
+const coinGeckoGlobalCache = { data: null, time: 0, cooldownUntil: 0, lastError: null };
+let coinGeckoGlobalPendingPromise = null;  // ← يمنع الطلبات المتوازية
+const COINGECKO_GLOBAL_TTL = 5 * 60 * 1000;         // 5 دقائق للكاش العادي
+const COINGECKO_COOLDOWN_429 = 15 * 60 * 1000;       // 15 دقيقة بعد 429 (بدل 3)
+const COINGECKO_COOLDOWN_OTHER = 60 * 1000;          // 1 دقيقة لأي فشل آخر
+
+async function fetchCoinGeckoGlobalCached() {
+    // 1️⃣ منع الطلبات المتوازية: إذا كان هناك طلب قيد التنفيذ، أعِد نفس الـ Promise
+    if (coinGeckoGlobalPendingPromise) {
+        return coinGeckoGlobalPendingPromise;
+    }
+
+    // 2️⃣ هل الكولداون نشط؟ (بعد 429 سابق)
+    if (coinGeckoGlobalCache.cooldownUntil && Date.now() < coinGeckoGlobalCache.cooldownUntil) {
+        if (coinGeckoGlobalCache.data) return coinGeckoGlobalCache.data;
+        const wait = Math.ceil((coinGeckoGlobalCache.cooldownUntil - Date.now()) / 1000);
+        throw new Error('CoinGecko cooldown active (' + wait + 's remaining)');
+    }
+
+    // 3️⃣ هل الكاش لا يزال صالحاً؟
+    if (coinGeckoGlobalCache.data && (Date.now() - coinGeckoGlobalCache.time) < COINGECKO_GLOBAL_TTL) {
+        return coinGeckoGlobalCache.data;
+    }
+
+    // 4️⃣ جلب جديد — الطلبات المتوازية ستشارك هذا الـ Promise نفسه
+    coinGeckoGlobalPendingPromise = (async () => {
+        try {
+            const targetUrl = 'https://api.coingecko.com/api/v3/global';
+            const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(targetUrl);
+            const response = await fetch(fetchUrl);
+            if (!response.ok) {
+                if (response.status === 429) {
+                    coinGeckoGlobalCache.cooldownUntil = Date.now() + COINGECKO_COOLDOWN_429;
+                    console.warn('⏸️ CoinGecko: 429 → cooldown ' + (COINGECKO_COOLDOWN_429 / 60000) + ' دقيقة');
+                } else {
+                    coinGeckoGlobalCache.cooldownUntil = Date.now() + COINGECKO_COOLDOWN_OTHER;
+                }
+                throw new Error('CoinGecko global HTTP ' + response.status);
+            }
+            const data = await response.json();
+            coinGeckoGlobalCache.data = data;
+            coinGeckoGlobalCache.time = Date.now();
+            coinGeckoGlobalCache.cooldownUntil = 0;
+            coinGeckoGlobalCache.lastError = null;
+            return data;
+        } catch (e) {
+            coinGeckoGlobalCache.lastError = e.message;
+            throw e;
+        } finally {
+            // مهما حدث، امسح الـ pending بعد انتهاء الطلب
+            coinGeckoGlobalPendingPromise = null;
+        }
+    })();
+
+    return coinGeckoGlobalPendingPromise;
+}
+
 const priceCache = new Map();
 const PRICE_CACHE_TTL = 25000;
 const stockPriceCache = new Map();
 const STOCK_PRICE_CACHE_TTL = 5 * 60 * 1000;
+
+// ✅ كاش معلومات العملات والأسعار السوقية
 const coinInfoCache = new Map();
-const COIN_INFO_CACHE_TTL = 10 * 60 * 1000;
+const COIN_INFO_CACHE_TTL = 10 * 60 * 1000; // 10 دقائق
+const COIN_INFO_STALE_TTL = 24 * 60 * 60 * 1000; // يمكن عرض النسخة القديمة مع تنبيه لمدة أقصاها 24 ساعة
+const COIN_INFO_STORAGE_PREFIX = 'muharraqi_coin_info_cache_v2_';
+const coinInfoPendingRequests = new Map();
+
+// ✅ إيقاف مؤقت لـ CoinGecko بعد 429 + كولداون خاص بكل عملة
+const coinGeckoInfoCooldown = new Map();
+let coinGeckoInfoGlobalCooldownUntil = 0;
 let currentCoinInfoSymbol = null;
 const coinIdCache = new Map();
 let __coinInfoSessionToken = 0;
@@ -4103,7 +4227,6 @@ function removeLinkedCashRecords(ids) {
     return removed;
 }
 
-/* ✅ [v17.2] فحص ما إذا كانت صفقة الدخول مكتملة البيع (الدخول فقط) */
 function isEntryFullySold(symbol) {
     const data = allCoinData[symbol];
     if (!data) return false;
@@ -4117,7 +4240,6 @@ function isEntryFullySold(symbol) {
     return remaining <= 0.00000001;
 }
 
-/* ✅ [v17.1] تحديث حالة حاوية تفاصيل الدخول */
 function updateEntrySectionState() {
     if (!activeCoinSymbol) return;
     const section = document.getElementById('section-entryDetails');
@@ -5413,16 +5535,10 @@ function saveDCATransaction(symbol, index) {
     } else showSuccess((currentLang === 'en' ? 'DCA ' + (index+1) + ' saved for ' : 'تم حفظ صفقة التعزيز ' + (index+1) + ' لـ ') + getDisplayNameFromKey(symbol) + (currentLang === 'en' ? ' and deducted ' : ' بنجاح وخصم ') + fmtUSD(repurchaseAmount, 2));
 }
 
-/* ✅ [v17.2] addDCAForCoin — يحمي ضد البيع الكامل */
 function addDCAForCoin(symbol) {
-    if (!symbol || !allCoinData[symbol]) { 
-        showError(currentLang === 'en' ? "Please select a coin first" : "يرجى اختيار عملة أولاً"); 
-        return; 
-    }
+    if (!symbol || !allCoinData[symbol]) { showError(currentLang === 'en' ? "Please select a coin first" : "يرجى اختيار عملة أولاً"); return; }
     if (isEntryFullySold(symbol)) {
-        showError(currentLang === 'en' 
-            ? '⚠️ Cannot add DCA: The entry trade is fully sold.\n\nOpen a new trade first to continue buying this coin.' 
-            : '⚠️ لا يمكن إضافة تعزيز: صفقة الدخول مباعة بالكامل.\n\nافتح صفقة جديدة أولاً للاستمرار في الشراء.');
+        showError(currentLang === 'en' ? '⚠️ Cannot add DCA: The entry trade is fully sold.\n\nOpen a new trade first to continue buying this coin.' : '⚠️ لا يمكن إضافة تعزيز: صفقة الدخول مباعة بالكامل.\n\nافتح صفقة جديدة أولاً للاستمرار في الشراء.');
         return;
     }
     const data = allCoinData[symbol];
@@ -5478,7 +5594,6 @@ function updateDCADataFromInputs(symbol, index) {
 function calculateTotalSoldQty(sales) { return sales.reduce((total, sale) => total + sale.qty, 0); }
 function calculateCashFromSales(sales) { return sales.reduce((total, sale) => total + (sale.qty * sale.price), 0); }
 
-/* ✅ [v17.2] getDCARowsHTML — يخفي "إضافة تعزيز" عند البيع الكامل */
 function getDCARowsHTML(symbol, data) {
     const initialEntryPrice = parseFormattedNumber(data.initialEntryPrice);
     const initialAmountDollars = parseFormattedNumber(data.initialAmountDollars);
@@ -5491,15 +5606,11 @@ function getDCARowsHTML(symbol, data) {
     const entryFullySold = isEntryFullySold(symbol);
     
     if (!data || ((!data.repurchases || data.repurchases.length === 0) && !hasEntry)) {
-        let emptyDcaHtml = '<div style="text-align:center; padding:15px; color:var(--text-muted);">' + 
-            (currentLang === 'en' ? 'No trades recorded for this coin' : 'لا توجد صفقات مسجلة لهذه العملة');
+        let emptyDcaHtml = '<div style="text-align:center; padding:15px; color:var(--text-muted);">' + (currentLang === 'en' ? 'No trades recorded for this coin' : 'لا توجد صفقات مسجلة لهذه العملة');
         if (entryFullySold) {
-            emptyDcaHtml += '<br><div style="margin-top:10px; padding:10px; background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 8px; color: #92400e; font-weight: 600; font-size: 0.9em;">🔒 ' + 
-                (currentLang === 'en' ? 'Trade fully sold — Open new trade first' : 'تم البيع الكامل — افتح صفقة جديدة أولاً') + 
-                '</div>';
+            emptyDcaHtml += '<br><div style="margin-top:10px; padding:10px; background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 8px; color: #92400e; font-weight: 600; font-size: 0.9em;">🔒 ' + (currentLang === 'en' ? 'Trade fully sold — Open new trade first' : 'تم البيع الكامل — افتح صفقة جديدة أولاً') + '</div>';
         } else {
-            emptyDcaHtml += '<br><button class="add-dca-btn" onclick="addDCAForCoin(\'' + symbol + '\')">➕ ' + 
-                (currentLang === 'en' ? 'Add DCA' : 'إضافة تعزيز') + '</button>';
+            emptyDcaHtml += '<br><button class="add-dca-btn" onclick="addDCAForCoin(\'' + symbol + '\')">➕ ' + (currentLang === 'en' ? 'Add DCA' : 'إضافة تعزيز') + '</button>';
         }
         emptyDcaHtml += '</div>';
         return emptyDcaHtml;
@@ -5625,9 +5736,7 @@ function getDCARowsHTML(symbol, data) {
     html += '</tbody></table>';
     
     if (entryFullySold) {
-        html += '<div style="text-align:center; padding:14px; margin-top:12px; background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 10px; color: #92400e; font-weight: 600; font-size: 0.9em;">🔒 ' + 
-            (currentLang === 'en' ? 'Cannot add DCA — Trade fully sold. Open a new trade first.' : 'لا يمكن إضافة تعزيز — الصفقة مباعة بالكامل. افتح صفقة جديدة أولاً.') + 
-            '</div>';
+        html += '<div style="text-align:center; padding:14px; margin-top:12px; background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 10px; color: #92400e; font-weight: 600; font-size: 0.9em;">🔒 ' + (currentLang === 'en' ? 'Cannot add DCA — Trade fully sold. Open a new trade first.' : 'لا يمكن إضافة تعزيز — الصفقة مباعة بالكامل. افتح صفقة جديدة أولاً.') + '</div>';
     } else {
         html += '<button class="add-dca-btn" onclick="addDCAForCoin(\'' + symbol + '\')">➕ ' + (currentLang === 'en' ? 'Add New DCA' : 'إضافة تعزيز جديد') + '</button>';
     }
@@ -5957,39 +6066,193 @@ function closeCoinInfoModal() { __coinInfoSessionToken++; const modal = document
 async function refreshCoinInfo() {
     if (!currentCoinInfoSymbol) return;
     const baseSymbol = getBaseSymbolFromKey(currentCoinInfoSymbol);
-    coinInfoCache.delete(baseSymbol);
-    coinIdCache.delete(baseSymbol);
+    const normalizedBase = String(baseSymbol || '').toUpperCase();
+    coinInfoCache.delete(normalizedBase);
+    const cleanSymbol = normalizedBase.replace(/USDT$/i, '').replace(/BUSD$/i, '').replace(/USDC$/i, '').replace(/TUSD$/i, '').replace(/USDP$/i, '').trim().toLowerCase();
+    coinIdCache.delete(cleanSymbol);
+    try { localStorage.removeItem(getCoinInfoStorageKey(normalizedBase)); } catch (e) {}
     await openCoinInfoModal(currentCoinInfoSymbol);
 }
+function getCoinInfoStorageKey(baseSymbol) {
+    return COIN_INFO_STORAGE_PREFIX + encodeURIComponent(String(baseSymbol || '').toUpperCase());
+}
+function readStoredCoinInfo(baseSymbol) {
+    try {
+        const raw = localStorage.getItem(getCoinInfoStorageKey(baseSymbol));
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || !parsed.data || !Number.isFinite(Number(parsed.savedAt))) return null;
+        return parsed;
+    } catch (e) { return null; }
+}
+function saveStoredCoinInfo(baseSymbol, data) {
+    try {
+        localStorage.setItem(getCoinInfoStorageKey(baseSymbol), JSON.stringify({ savedAt: Date.now(), data }));
+    } catch (e) {
+        // قد يكون التخزين ممتلئًا أو معطلًا؛ الذاكرة المؤقتة ما زالت تعمل
+    }
+}
+async function fetchJsonThroughProxy(targetUrl, timeoutMs = 10000) {
+    const proxyUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(targetUrl);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+        const response = await fetch(proxyUrl, { signal: controller.signal });
+        if (!response.ok) {
+            const error = new Error('HTTP ' + response.status);
+            error.status = response.status;
+            throw error;
+        }
+        return await response.json();
+    } finally {
+        clearTimeout(timeoutId);
+    }
+}
 async function fetchCoinInfoData(baseSymbol) {
-    if (coinInfoCache.has(baseSymbol)) { const cached = coinInfoCache.get(baseSymbol); if (Date.now() - cached.time < COIN_INFO_CACHE_TTL) return cached.data; }
-    const cleanSymbol = baseSymbol.replace(/USDT$/i, '').replace(/BUSD$/i, '').replace(/USDC$/i, '').replace(/TUSD$/i, '').replace(/USDP$/i, '').trim().toLowerCase();
-    if (!cleanSymbol) throw new Error(currentLang === 'en' ? 'Invalid symbol' : 'رمز غير صالح');
-    let coinId = coinIdCache.get(cleanSymbol);
-    if (!coinId) { coinId = await findCoinGeckoId(cleanSymbol); coinIdCache.set(cleanSymbol, coinId); }
-    const marketData = await fetchCoinGeckoMarketData(coinId);
-    coinInfoCache.set(baseSymbol, { time: Date.now(), data: marketData });
-    return marketData;
+    const normalizedBase = String(baseSymbol || '').toUpperCase();
+    const memoryEntry = coinInfoCache.get(normalizedBase);
+    if (memoryEntry && Date.now() - memoryEntry.time < COIN_INFO_CACHE_TTL) return memoryEntry.data;
+
+    const storedEntry = readStoredCoinInfo(normalizedBase);
+    if (storedEntry && Date.now() - storedEntry.savedAt < COIN_INFO_CACHE_TTL) {
+        coinInfoCache.set(normalizedBase, { time: storedEntry.savedAt, data: storedEntry.data });
+        return storedEntry.data;
+    }
+
+    // يمنع النقر المتكرر من إطلاق عدة طلبات لنفس العملة
+    if (coinInfoPendingRequests.has(normalizedBase)) return coinInfoPendingRequests.get(normalizedBase);
+
+    const staleEntry = (memoryEntry && memoryEntry.data)
+        ? { savedAt: memoryEntry.time, data: memoryEntry.data }
+        : storedEntry;
+
+    const requestPromise = (async () => {
+        const cleanSymbol = normalizedBase
+            .replace(/USDT$/i, '').replace(/BUSD$/i, '').replace(/USDC$/i, '')
+            .replace(/TUSD$/i, '').replace(/USDP$/i, '').trim().toLowerCase();
+        if (!cleanSymbol) throw new Error(currentLang === 'en' ? 'Invalid symbol' : 'رمز غير صالح');
+
+        let coinGeckoError = null;
+        // المصدر الأول: CoinGecko، إلا إذا كان هناك إيقاف مؤقت بسبب 429
+        if (Date.now() >= coinGeckoInfoGlobalCooldownUntil) {
+            try {
+                let coinId = coinIdCache.get(cleanSymbol);
+                if (!coinId) {
+                    coinId = await findCoinGeckoId(cleanSymbol);
+                    coinIdCache.set(cleanSymbol, coinId);
+                }
+                const marketData = await fetchCoinGeckoMarketData(coinId);
+                const normalizedData = { ...marketData, _source: 'CoinGecko', _stale: false };
+                coinInfoCache.set(normalizedBase, { time: Date.now(), data: normalizedData });
+                saveStoredCoinInfo(normalizedBase, normalizedData);
+                return normalizedData;
+            } catch (e) {
+                coinGeckoError = e;
+                if (Number(e && e.status) === 429 || /429|rate.limit|rate-limited|تجاوز حد/i.test(String(e && e.message || ''))) {
+                    coinGeckoInfoGlobalCooldownUntil = Date.now() + 2 * 60 * 1000;
+                }
+                console.warn('⚠️ CoinGecko unavailable; trying CoinPaprika:', e && e.message ? e.message : e);
+            }
+        }
+
+        // المصدر البديل: CoinPaprika، ولا يحتاج مفتاح API للاستخدام الأساسي
+        try {
+            const paprikaData = await fetchCoinPaprikaMarketData(cleanSymbol);
+            const normalizedData = { ...paprikaData, _source: 'CoinPaprika', _stale: false };
+            coinInfoCache.set(normalizedBase, { time: Date.now(), data: normalizedData });
+            saveStoredCoinInfo(normalizedBase, normalizedData);
+            return normalizedData;
+        } catch (paprikaError) {
+            console.warn('⚠️ CoinPaprika fallback failed:', paprikaError && paprikaError.message ? paprikaError.message : paprikaError);
+        }
+
+        // إن فشل المصدران، أظهر آخر بيانات محفوظة بشرط وضع تنبيه واضح بأنها قديمة
+        if (staleEntry && staleEntry.data && Date.now() - Number(staleEntry.savedAt || 0) < COIN_INFO_STALE_TTL) {
+            return { ...staleEntry.data, _stale: true, _staleSavedAt: Number(staleEntry.savedAt || 0) };
+        }
+
+        const geckoMessage = coinGeckoError && coinGeckoError.message ? coinGeckoError.message : '';
+        throw new Error(currentLang === 'en'
+            ? 'CoinGecko is rate-limited and CoinPaprika could not provide this coin. ' + geckoMessage
+            : 'CoinGecko يرفض الطلبات، وتعذر الحصول على بيانات هذه العملة من CoinPaprika أيضًا. ' + geckoMessage);
+    })();
+
+    coinInfoPendingRequests.set(normalizedBase, requestPromise);
+    try {
+        return await requestPromise;
+    } finally {
+        coinInfoPendingRequests.delete(normalizedBase);
+    }
 }
 async function findCoinGeckoId(symbol) {
     const targetUrl = 'https://api.coingecko.com/api/v3/search?query=' + encodeURIComponent(symbol);
-    const url = MY_PROXY_URL + '?url=' + encodeURIComponent(targetUrl);
-    const response = await fetch(url);
-    if (!response.ok) throw new Error('CoinGecko search failed: ' + response.status);
-    const data = await response.json();
+    const data = await fetchJsonThroughProxy(targetUrl);
     if (!data.coins || data.coins.length === 0) throw new Error((currentLang === 'en' ? 'Coin not found: ' : 'العملة غير موجودة: ') + symbol.toUpperCase());
-    const exactMatch = data.coins.find(c => c.symbol.toLowerCase() === symbol.toLowerCase());
-    if (exactMatch) return exactMatch.id;
+    const exactMatches = data.coins.filter(c => String(c.symbol || '').toLowerCase() === symbol.toLowerCase());
+    if (exactMatches.length) return exactMatches[0].id;
     return data.coins[0].id;
 }
 async function fetchCoinGeckoMarketData(coinId) {
+    const cooldownUntil = coinGeckoInfoCooldown.get(coinId) || 0;
+    if (Date.now() < cooldownUntil) {
+        const err = new Error(currentLang === 'en' ? 'CoinGecko cooldown active' : 'توقف CoinGecko مؤقتًا');
+        err.status = 429;
+        throw err;
+    }
+
+    const cacheKey = 'mkt_' + coinId;
+    const cached = coinInfoCache.get(cacheKey);
+    if (cached && Date.now() - cached.time < COIN_INFO_CACHE_TTL) return cached.data;
+
     const targetUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=' + encodeURIComponent(coinId) + '&order=market_cap_desc&per_page=1&page=1&sparkline=false&price_change_percentage=24h';
-    const url = MY_PROXY_URL + '?url=' + encodeURIComponent(targetUrl);
-    const response = await fetch(url);
-    if (!response.ok) throw new Error('CoinGecko markets failed: ' + response.status);
-    const data = await response.json();
-    if (!data || data.length === 0) throw new Error(currentLang === 'en' ? 'No data available' : 'لا توجد بيانات متاحة');
+    let data;
+    try {
+        data = await fetchJsonThroughProxy(targetUrl);
+    } catch (e) {
+        if (Number(e && e.status) === 429) {
+            coinGeckoInfoCooldown.set(coinId, Date.now() + 2 * 60 * 1000);
+            coinGeckoInfoGlobalCooldownUntil = Date.now() + 2 * 60 * 1000;
+        }
+        throw e;
+    }
+    if (!Array.isArray(data) || data.length === 0) throw new Error(currentLang === 'en' ? 'No CoinGecko market data available' : 'لا توجد بيانات سوق من CoinGecko');
+
+    coinInfoCache.set(cacheKey, { time: Date.now(), data: data[0] });
     return data[0];
+}
+async function fetchCoinPaprikaMarketData(symbol) {
+    const searchUrl = 'https://api.coinpaprika.com/v1/search/?q=' + encodeURIComponent(symbol) + '&c=currencies&limit=20';
+    const searchData = await fetchJsonThroughProxy(searchUrl);
+    const currencies = Array.isArray(searchData.currencies) ? searchData.currencies : [];
+    const matches = currencies.filter(item => String(item.symbol || '').toUpperCase() === String(symbol).toUpperCase() && item.id && item.is_active !== false);
+    if (!matches.length) throw new Error('CoinPaprika could not find an exact symbol match for ' + symbol.toUpperCase());
+    // عند وجود أكثر من عملة بالرمز نفسه، اختر الأعلى ترتيبًا المتاح من نتائج البحث
+    matches.sort((a, b) => {
+        const ar = Number(a.rank) || Number.MAX_SAFE_INTEGER;
+        const br = Number(b.rank) || Number.MAX_SAFE_INTEGER;
+        return ar - br;
+    });
+    const coinId = matches[0].id;
+    const tickerUrl = 'https://api.coinpaprika.com/v1/tickers/' + encodeURIComponent(coinId);
+    const ticker = await fetchJsonThroughProxy(tickerUrl);
+    const usd = ticker && ticker.quotes && ticker.quotes.USD;
+    if (!usd || !Number.isFinite(Number(usd.price))) throw new Error('CoinPaprika returned no usable USD market data');
+    return {
+        id: ticker.id || coinId,
+        name: ticker.name || matches[0].name || symbol.toUpperCase(),
+        symbol: String(ticker.symbol || symbol).toLowerCase(),
+        current_price: Number(usd.price),
+        market_cap: usd.market_cap == null ? null : Number(usd.market_cap),
+        total_volume: usd.volume_24h == null ? null : Number(usd.volume_24h),
+        circulating_supply: ticker.circulating_supply == null ? null : Number(ticker.circulating_supply),
+        max_supply: ticker.max_supply == null ? null : Number(ticker.max_supply),
+        total_supply: ticker.total_supply == null ? null : Number(ticker.total_supply),
+        market_cap_rank: ticker.rank == null ? (matches[0].rank || null) : Number(ticker.rank),
+        price_change_percentage_24h: usd.percent_change_24h == null ? 0 : Number(usd.percent_change_24h),
+        _source: 'CoinPaprika',
+        _source_updated_at: ticker.last_updated || null,
+        _stale: false
+    };
 }
 function renderCoinInfoData(coin, originalSymbol) {
     const body = document.getElementById('coinInfoBody');
@@ -6019,6 +6282,12 @@ function renderCoinInfoData(coin, originalSymbol) {
     const symbolLabel = escapeHtml((coin.symbol || '').toUpperCase());
     const iconUrl = coin.image || ('https://assets.coincap.io/assets/icons/' + symbolLabel.toLowerCase() + '@2x.png');
     let html = '';
+    if (coin._stale) {
+        const staleTime = coin._staleSavedAt ? new Date(coin._staleSavedAt).toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-BH') : '';
+        html += '<div style="margin-bottom:12px;padding:10px 12px;border-radius:8px;background:#fff3cd;color:#856404;font-size:0.85em;line-height:1.5;">⚠️ ' + (currentLang === 'en' ? 'Showing saved data because live providers are unavailable.' : 'تُعرض بيانات محفوظة لأن مصادر البيانات المباشرة غير متاحة.') + (staleTime ? ' · ' + escapeHtml(staleTime) : '') + '</div>';
+    } else if (coin._source) {
+        html += '<div style="margin-bottom:10px;color:var(--text-muted);font-size:0.78em;">' + (currentLang === 'en' ? 'Source: ' : 'المصدر: ') + escapeHtml(coin._source) + (coin._source_updated_at ? ' · ' + escapeHtml(String(coin._source_updated_at)) : '') + '</div>';
+    }
     html += '<div class="coin-info-hero">';
     html += '<img class="coin-info-hero-icon" src="' + iconUrl + '" alt="' + symbolLabel + '" onerror="this.style.opacity=0.3;">';
     html += '<div class="coin-info-hero-text">';
@@ -6074,6 +6343,70 @@ async function fetchFinnhubPrice(symbol) {
         return null;
     } catch (e) { console.warn('⚠️ Finnhub failed for', symbol, e.message); return null; }
 }
+
+async function fetchBahrainBoursePrice(symbol) {
+    if (!symbol || !symbol.toUpperCase().endsWith('.BH')) return null;
+    const cleanSymbol = symbol.replace(/\.BH$/i, '').toUpperCase();
+    const fullSymbol = 'BAHRAIN:' + cleanSymbol;
+    if (insightSentryCache.has(fullSymbol)) {
+        const cached = insightSentryCache.get(fullSymbol);
+        if (Date.now() - cached.time < INSIGHTSENTRY_CACHE_TTL) return cached.data;
+    }
+    try {
+        const response = await fetch(INSIGHTSENTRY_BASE + '/v3/symbols/quotes?symbols=' + encodeURIComponent(fullSymbol), {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + INSIGHTSENTRY_API_KEY, 'Accept': 'application/json' }
+        });
+        if (response.status === 429) {
+            console.warn('⚠️ InsightSentry: تجاوز حد الطلبات (429)');
+            if (insightSentryCache.has(fullSymbol)) return insightSentryCache.get(fullSymbol).data;
+            return { symbol: symbol, price: null, source: null, error: 'Rate limited (429)' };
+        }
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const json = await response.json();
+        if (json.data && json.data.length > 0) {
+            const quote = json.data[0];
+            const priceBHD = parseFloat(quote.last_price) || parseFloat(quote.regular_close_price) || parseFloat(quote.prev_close_price);
+            if (priceBHD > 0 && !isNaN(priceBHD)) {
+                const priceUSD = priceBHD / 0.376;
+                console.log('✅ InsightSentry (' + fullSymbol + '): ' + priceBHD + ' BHD ≈ $' + priceUSD.toFixed(4) + ' USD');
+                const result = { symbol: symbol, price: priceUSD, priceOriginal: priceBHD, currency: 'BHD', source: 'InsightSentry', error: null };
+                insightSentryCache.set(fullSymbol, { time: Date.now(), data: result });
+                return result;
+            }
+        }
+        return { symbol: symbol, price: null, source: null, error: 'No price in response' };
+    } catch (e) {
+        console.error('❌ InsightSentry error:', e);
+        return { symbol: symbol, price: null, source: null, error: e.message };
+    }
+}
+
+async function fetchEODHDPrice(symbol) {
+    try {
+        const url = 'https://eodhd.com/api/real-time/' + encodeURIComponent(symbol) + '?api_token=' + EODHD_API_KEY + '&fmt=json';
+        const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(url);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+        const response = await fetch(fetchUrl, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (!response.ok) {
+            console.warn('⚠️ EODHD HTTP', response.status, 'for', symbol);
+            return null;
+        }
+        const data = await response.json();
+                if (!data || (data.code && data.code === 'N/D')) {
+            console.warn('⚠️ EODHD: invalid symbol or N/D for', symbol);
+            return null;
+        }
+        const price = parseFloat(data.close || data.previousClose || data.price);
+        if (price > 0 && !isNaN(price)) {
+            return { symbol: symbol, price: price, source: 'EODHD', error: null };
+        }
+        return null;
+    } catch (e) { console.warn('⚠️ EODHD failed for', symbol, e.message); return null; }
+}
+
 async function fetchYahooPrice(symbol) {
     try {
         const url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol);
@@ -6092,16 +6425,83 @@ async function fetchYahooPrice(symbol) {
         return null;
     } catch (e) { console.warn('⚠️ Yahoo Finance failed for', symbol, e.message); return null; }
 }
+
+// ✅ [v18.2] fetchStockPrice — أولويات محسّنة لكل سوق
 async function fetchStockPrice(symbol) {
-    if (stockPriceCache.has(symbol)) { const cached = stockPriceCache.get(symbol); if (Date.now() - cached.time < STOCK_PRICE_CACHE_TTL && cached.data && cached.data.price) return cached.data; }
-    let result = await fetchTwelveDataPrice(symbol);
-    if (result && result.price) { stockPriceCache.set(symbol, { time: Date.now(), data: result }); return result; }
+    if (stockPriceCache.has(symbol)) {
+        const cached = stockPriceCache.get(symbol);
+        if (Date.now() - cached.time < STOCK_PRICE_CACHE_TTL && cached.data && cached.data.price) {
+            return cached.data;
+        }
+    }
+    
+    const upper = String(symbol).toUpperCase();
+    
+    // 🇧🇭 البحرين: InsightSentry أولاً
+    if (upper.endsWith('.BH')) {
+        console.log('🇧🇭 سهم بحريني → InsightSentry API:', symbol);
+        const bhbResult = await fetchBahrainBoursePrice(symbol);
+        if (bhbResult && bhbResult.price) {
+            stockPriceCache.set(symbol, { time: Date.now(), data: bhbResult });
+            return bhbResult;
+        }
+        console.log('⚠️ فشل InsightSentry، جاري تجربة Yahoo...');
+        const yahooResult = await fetchYahooPrice(symbol);
+        if (yahooResult && yahooResult.price) {
+            stockPriceCache.set(symbol, { time: Date.now(), data: yahooResult });
+            return yahooResult;
+        }
+        return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'All Bahrain sources failed' : 'فشل جميع مصادر البحرين' };
+    }
+    
+    // 🌍 الشرق الأوسط → Yahoo أولاً (EODHD لا يدعم .SR مجاناً)
+    const middleEastSuffixes = ['.SR', '.AE', '.QA', '.KW', '.OM', '.JO', '.SA'];
+    const isMiddleEast = middleEastSuffixes.some(s => upper.endsWith(s));
+    
+    if (isMiddleEast) {
+        console.log('🌍 سهم شرق أوسطي → Yahoo أولاً:', symbol);
+        let result = await fetchYahooPrice(symbol);
+        if (result && result.price) {
+            stockPriceCache.set(symbol, { time: Date.now(), data: result });
+            return result;
+        }
+        result = await fetchTwelveDataPrice(symbol);
+        if (result && result.price) {
+            stockPriceCache.set(symbol, { time: Date.now(), data: result });
+            return result;
+        }
+        result = await fetchFinnhubPrice(symbol);
+        if (result && result.price) {
+            stockPriceCache.set(symbol, { time: Date.now(), data: result });
+            return result;
+        }
+        return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'All Middle East providers failed' : 'فشل جميع مزودي الشرق الأوسط' };
+    }
+    
+    // 🌐 أسهم عالمية: EODHD → TwelveData → Finnhub → Yahoo
+    let result = await fetchEODHDPrice(symbol);
+    if (result && result.price) {
+        stockPriceCache.set(symbol, { time: Date.now(), data: result });
+        return result;
+    }
+    result = await fetchTwelveDataPrice(symbol);
+    if (result && result.price) {
+        stockPriceCache.set(symbol, { time: Date.now(), data: result });
+        return result;
+    }
     result = await fetchFinnhubPrice(symbol);
-    if (result && result.price) { stockPriceCache.set(symbol, { time: Date.now(), data: result }); return result; }
+    if (result && result.price) {
+        stockPriceCache.set(symbol, { time: Date.now(), data: result });
+        return result;
+    }
     result = await fetchYahooPrice(symbol);
-    if (result && result.price) { stockPriceCache.set(symbol, { time: Date.now(), data: result }); return result; }
+    if (result && result.price) {
+        stockPriceCache.set(symbol, { time: Date.now(), data: result });
+        return result;
+    }
     return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'All stock providers failed' : 'فشل جميع مزودي الأسهم' };
 }
+
 async function fetchSinglePrice(symbol) {
     const baseSymbol = getBaseSymbolFromKey(symbol);
     if (!baseSymbol || typeof baseSymbol !== 'string' || baseSymbol.length < 2) return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'Invalid symbol' : 'رمز غير صالح' };
@@ -6109,22 +6509,29 @@ async function fetchSinglePrice(symbol) {
     const assetType = (data && data.assetType) ? data.assetType : detectAssetType(baseSymbol, 'auto');
     if (assetType === 'stock') return await fetchStockPrice(baseSymbol);
     if (priceCache.has(symbol)) { const cached = priceCache.get(symbol); if (Date.now() - cached.time < PRICE_CACHE_TTL && cached.data && cached.data.price) return cached.data; }
-    const binanceDomains = ['https://api.binance.com', 'https://data-api.binance.vision'];
+    // تجاوز Binance للعملات التي قد يرفض أزواجها، وتجربة المصادر البديلة
+    const binanceDomains = ['KASUSDT', 'XDBUSDT'].includes(baseSymbol.toUpperCase())
+        ? []
+        : ['https://api.binance.com'];
     for (const domain of binanceDomains) {
+        let timeoutId;
         try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 5000);
-            const response = await fetch(domain + '/api/v3/ticker/price?symbol=' + baseSymbol, { signal: controller.signal });
-            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => controller.abort(), 5000);
+            const response = await fetch(domain + '/api/v3/ticker/price?symbol=' + encodeURIComponent(baseSymbol), { signal: controller.signal });
             if (response.ok) {
                 const data = await response.json();
-                if (data && data.price && !isNaN(parseFloat(data.price))) {
-                    const result = { symbol: symbol, price: parseFloat(data.price), source: 'Binance', error: null };
+                if (data && data.price && Number.isFinite(Number(data.price))) {
+                    const result = { symbol: symbol, price: Number(data.price), source: 'Binance', error: null };
                     priceCache.set(symbol, { time: Date.now(), data: result });
                     return result;
                 }
             }
-        } catch (e) {}
+        } catch (e) {
+            // تابع إلى المصدر البديل عند فشل Binance
+        } finally {
+            if (timeoutId) clearTimeout(timeoutId);
+        }
     }
     const altExchanges = [
         { name: 'MEXC',    url: 'https://api.mexc.com/api/v3/ticker/price?symbol=' + baseSymbol, extract: (d) => d.price },
@@ -6133,28 +6540,43 @@ async function fetchSinglePrice(symbol) {
         { name: 'KuCoin',  url: 'https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=' + baseSymbol.replace('USDT', '-USDT'), extract: (d) => d.code === '200000' && d.data ? d.data.price : null },
         { name: 'Bybit',   url: 'https://api.bybit.com/v5/market/tickers?category=spot&symbol=' + baseSymbol, extract: (d) => d.result && d.result.list && d.result.list[0] ? d.result.list[0].lastPrice : null }
     ];
-    const promises = altExchanges.map(exchange => {
-        return (async () => {
-            try {
-                const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(exchange.url);
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 10000);
-                const response = await fetch(fetchUrl, { signal: controller.signal });
-                clearTimeout(timeoutId);
-                if (!response.ok) return null;
-                const data = await response.json();
-                const extractedPrice = exchange.extract(data);
-                if (extractedPrice && !isNaN(parseFloat(extractedPrice))) return { name: exchange.name, price: parseFloat(extractedPrice) };
-                return null;
-            } catch (e) { return null; }
-        })();
-    });
-    try {
-        const winner = await Promise.any(promises.map(p => p.then(r => { if (!r) throw new Error('no result'); return r; })));
-        const result = { symbol: symbol, price: winner.price, source: winner.name, error: null };
-        priceCache.set(symbol, { time: Date.now(), data: result });
-        return result;
-    } catch (e) { return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'Failed on all sources' : 'فشل من جميع المصادر' }; }
+    // جرب المصادر البديلة بالتتابع لتقليل الطلبات المتزامنة على البروكسي
+    for (const exchange of altExchanges) {
+        let timeoutId;
+        try {
+            const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(exchange.url);
+            const controller = new AbortController();
+            timeoutId = setTimeout(() => controller.abort(), 10000);
+            const response = await fetch(fetchUrl, { signal: controller.signal });
+            if (!response.ok) continue;
+
+            const data = await response.json();
+            const extractedPrice = exchange.extract(data);
+            const numericPrice = Number(extractedPrice);
+
+            if (extractedPrice != null && Number.isFinite(numericPrice) && numericPrice > 0) {
+                const result = {
+                    symbol: symbol,
+                    price: numericPrice,
+                    source: exchange.name,
+                    error: null
+                };
+                priceCache.set(symbol, { time: Date.now(), data: result });
+                return result;
+            }
+        } catch (e) {
+            // انتقل إلى المنصة التالية عند timeout أو خطأ في الشبكة
+        } finally {
+            if (timeoutId) clearTimeout(timeoutId);
+        }
+    }
+
+    return {
+        symbol: symbol,
+        price: null,
+        source: null,
+        error: currentLang === 'en' ? 'Failed on all sources' : 'فشل من جميع المصادر'
+    };
 }
 async function fetchAllPrices(isAutoRefresh = false) {
     const trackedSymbols = Object.keys(allCoinData);
@@ -6256,7 +6678,7 @@ function downloadAllDataAsTxt(silent = false) {
     content += "   بيانات متابعة الصفقات الشاملة — Muharraqi Pro Edition\n";
     content += "═══════════════════════════════════════════════════════════\n";
     content += "تاريخ الإنشاء: " + new Date().toLocaleString('ar-EG') + "\n";
-    content += "الإصدار: Pro 2.1.0 (مع دعم الأسهم)\n\n";
+    content += "الإصدار: Pro 2.1.2 (مع دعم الأسهم والبحرين)\n\n";
     content += "=== ملخص الكاش ===\n";
     const totalSalesCash = salesCashHistory.deposits.reduce((sum, r) => sum + r.amount, 0) - salesCashHistory.withdrawals.reduce((sum, r) => sum + r.amount, 0);
     content += "availableCash=" + availableCash + "\n";
@@ -6358,7 +6780,7 @@ function downloadAllDataAsJSON(silent = false) {
         const hasNotifications = notifications && notifications.length > 0;
         if (!hasCoins && !hasCash && !hasAlerts && !hasNotifications) { if (!silent) showError(currentLang === 'en' ? "No data to save." : "لا توجد بيانات لحفظها."); return false; }
         const jsonData = {
-            _meta: { app: 'Muharraqi Pro Edition', version: '2.1.0', exportDate: new Date().toISOString(), exportDateLocal: new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG'), schemaVersion: 2, format: 'json', description: 'Muharraqi Trades Tracker — Full Backup (JSON) with Stocks Support' },
+            _meta: { app: 'Muharraqi Pro Edition', version: '2.1.2', exportDate: new Date().toISOString(), exportDateLocal: new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG'), schemaVersion: 2, format: 'json', description: 'Muharraqi Trades Tracker — Full Backup with Stocks + Bahrain' },
             settings: { language: currentLang, currency: currentCurrency, theme: localStorage.getItem(LS_KEY_THEME) || 'light', privacyMode: localStorage.getItem('muharraqi_privacy_mode') || '0', summaryAssetFilter: currentSummaryAssetFilter },
             dateModes: { cash: cashDateMode, salesCash: salesCashDateMode, entry: entryDateMode, dca: dcaDateMode },
             cash: { availableCash, cashHistory, salesCashHistory },
@@ -6829,7 +7251,7 @@ function printReport() {
     let html = '';
     html += '<div class="pdf-avoid-break">';
     html += '<div class="pdf-title-bar">📊 MUHARRAQI PRO — تقرير متابعة الصفقات الشاملة</div>';
-    html += '<div class="pdf-subtitle-bar">Pro Edition 2.1.0  |  ' + (currentLang === 'en' ? 'Report Date: ' : 'تاريخ التقرير: ') + esc(reportDate) + '  |  ' + (currentLang === 'en' ? 'Currency: ' : 'العملة: ') + currentCurrency + '</div>';
+    html += '<div class="pdf-subtitle-bar">Pro Edition 2.1.2  |  ' + (currentLang === 'en' ? 'Report Date: ' : 'تاريخ التقرير: ') + esc(reportDate) + '  |  ' + (currentLang === 'en' ? 'Currency: ' : 'العملة: ') + currentCurrency + '</div>';
     html += '</div>';
     html += '<div class="pdf-section-bar">📈 ' + (currentLang === 'en' ? 'Portfolio Summary' : 'ملخص المحفظة') + '</div>';
     const pnlAmtCls = totals.pnlAmount >= 0 ? 'green' : 'red';
@@ -6928,7 +7350,7 @@ function printReport() {
     html += '<div class="pdf-brand-footer">MUHARRAQI  ·  Pro Edition  ·  © 2026  —  ' + (currentLang === 'en' ? 'Remember us in your prayers 🤲' : 'نسألكم الدعاء 🤲') + '</div>';
     html += '<div class="pdf-page-break"></div>';
     html += '<div class="pdf-title-bar">📋 ' + (currentLang === 'en' ? 'Trades Summary' : 'ملخص الصفقات') + '</div>';
-    html += '<div class="pdf-subtitle-bar">Pro Edition 2.1.0  |  ' + (currentLang === 'en' ? 'Report Date: ' : 'تاريخ التقرير: ') + esc(reportDate) + '</div>';
+    html += '<div class="pdf-subtitle-bar">Pro Edition 2.1.2  |  ' + (currentLang === 'en' ? 'Report Date: ' : 'تاريخ التقرير: ') + esc(reportDate) + '</div>';
     html += '<table class="pdf-summary-table"><colgroup><col style="width:25%"><col style="width:20%"><col style="width:19%"><col style="width:19%"><col style="width:17%"></colgroup>';
     html += '<thead><tr><th>' + (currentLang === 'en' ? 'Coin' : 'العملة') + '</th><th>' + (currentLang === 'en' ? 'Remaining Qty' : 'الكمية المتبقية') + '</th><th>' + (currentLang === 'en' ? 'Total Invested' : 'إجمالي المستثمر') + '</th><th>' + (currentLang === 'en' ? 'Current Value' : 'القيمة الحالية') + '</th><th>P/L</th></tr></thead><tbody>';
     if (summaryRows.length === 0) html += '<tr><td colspan="5" style="text-align:center;font-weight:700;padding:15px;">' + (currentLang === 'en' ? 'No data' : 'لا توجد بيانات') + '</td></tr>';
@@ -7382,7 +7804,9 @@ function handleFloatingRefreshClick() {
         setTimeout(() => { location.reload(); }, 300);
     });
 }
-const TOP_COINS_TICKER = ['BTCUSDT','ETHUSDT','BNBUSDT','SOLUSDT','XRPUSDT','ADAUSDT','DOGEUSDT','AVAXUSDT','DOTUSDT','MATICUSDT','LINKUSDT','LTCUSDT','KASUSDT','PEPEUSDT','QNTUSDT','SUIUSDT','XLMUSDT','HBARUSDT','WLDUSDT','APTUSDT','CHZUSDT','GRTUSDT','ENJUSDT','CHRUSDT'];
+
+// ✅ [v18.1] KASUSDT → TONUSDT
+const TOP_COINS_TICKER = ['BTCUSDT','ETHUSDT','BNBUSDT','SOLUSDT','XRPUSDT','ADAUSDT','DOGEUSDT','AVAXUSDT','DOTUSDT','MATICUSDT','LINKUSDT','LTCUSDT','TONUSDT','PEPEUSDT','QNTUSDT','SUIUSDT','XLMUSDT','HBARUSDT','WLDUSDT','APTUSDT','CHZUSDT','GRTUSDT','ENJUSDT','CHRUSDT'];
 let tickerData = {};
 function getCoinIconUrl(binanceSymbol) { const shortSymbol = binanceSymbol.replace('USDT', '').toLowerCase(); return 'https://assets.coincap.io/assets/icons/' + shortSymbol + '@2x.png'; }
 function getCoinIconFallback(shortSymbol) {
@@ -7423,51 +7847,51 @@ function formatTickerPrice(price) {
     if (price >= 0.01) return price.toFixed(4);
     return price.toFixed(6);
 }
+
 async function initMarketInsights() {
     try {
-        const mcTargetUrl = 'https://api.coingecko.com/api/v3/global';
-        const mcFetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(mcTargetUrl);
-        const mcResponse = await fetch(mcFetchUrl);
-        if (mcResponse.ok) {
-            const mcData = await mcResponse.json();
-            const marketCap = mcData.data.total_market_cap.usd;
-            const change24h = mcData.data.market_cap_change_percentage_24h_usd;
-            window.__lastMarketCap = marketCap;
-            const converted = convertFromUSD(marketCap);
-            const symbol = currentCurrency === 'USD' ? '$' : getCurrencyInfo().symbol + ' ';
-            document.getElementById('miMarketCap').textContent = symbol + formatLargeNumber(converted);
-            const changeEl = document.getElementById('miMarketCapChange');
-            changeEl.textContent = (change24h >= 0 ? '+' : '') + change24h.toFixed(2) + '%';
-            changeEl.className = 'mi-change ' + (change24h >= 0 ? 'up' : 'down');
-            drawSparkline();
-        }
-        const fngTargetUrl = 'https://api.alternative.me/fng/?limit=1';
-        const fngFetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(fngTargetUrl);
-        const fngResponse = await fetch(fngFetchUrl);
-        if (fngResponse.ok) {
-            const fngData = await fngResponse.json();
-            const value = parseInt(fngData.data[0].value);
-            const classification = fngData.data[0].value_classification;
-            document.getElementById('miFngValue').textContent = value;
-            document.getElementById('miFngLabel').textContent = translateFngLabel(classification);
-            drawFngGauge(value);
-        }
-        const altcoinValue = await calculateAltcoinSeasonIndex();
+        const mcData = await fetchCoinGeckoGlobalCached();
+        const marketCap = mcData.data.total_market_cap.usd;
+        const change24h = mcData.data.market_cap_change_percentage_24h_usd;
+        window.__lastMarketCap = marketCap;
+        const converted = convertFromUSD(marketCap);
+        const symbol = currentCurrency === 'USD' ? '$' : getCurrencyInfo().symbol + ' ';
+        document.getElementById('miMarketCap').textContent = symbol + formatLargeNumber(converted);
+        const changeEl = document.getElementById('miMarketCapChange');
+        changeEl.textContent = (change24h >= 0 ? '+' : '') + change24h.toFixed(2) + '%';
+        changeEl.className = 'mi-change ' + (change24h >= 0 ? 'up' : 'down');
+        drawSparkline();
+        try {
+            const fngTargetUrl = 'https://api.alternative.me/fng/?limit=1';
+            const fngFetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(fngTargetUrl);
+            const fngResponse = await fetch(fngFetchUrl);
+            if (fngResponse.ok) {
+                const fngData = await fngResponse.json();
+                const value = parseInt(fngData.data[0].value);
+                const classification = fngData.data[0].value_classification;
+                document.getElementById('miFngValue').textContent = value;
+                document.getElementById('miFngLabel').textContent = translateFngLabel(classification);
+                drawFngGauge(value);
+            }
+        } catch (e) {}
+        const btcDominance = mcData.data.market_cap_percentage.btc;
+        const altcoinValue = Math.max(0, Math.min(100, Math.round((65 - btcDominance) / 25 * 100)));
         document.getElementById('miAltcoinValue').textContent = altcoinValue + '/100';
         document.getElementById('miAltcoinThumb').style.right = altcoinValue + '%';
         const statusText = altcoinValue >= 75 ? (currentLang === 'en' ? '🪙 Altcoin Season' : '🪙 موسم العملات البديلة') : altcoinValue >= 50 ? (currentLang === 'en' ? '🔄 Transitional' : '🔄 مرحلة انتقالية') : altcoinValue >= 25 ? (currentLang === 'en' ? '🟡 Bitcoin Leaning' : '🟡 ميل لبيتكوين') : (currentLang === 'en' ? '₿ Bitcoin Dominance' : '₿ هيمنة بيتكوين');
         document.getElementById('miAltcoinStatus').textContent = statusText;
-    } catch (e) {}
+    } catch (e) {
+        console.warn('⚠️ initMarketInsights (rate limited or failed):', e.message);
+    }
 }
 async function calculateAltcoinSeasonIndex() {
     try {
-        const targetUrl = 'https://api.coingecko.com/api/v3/global';
-        const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(targetUrl);
-        const response = await fetch(fetchUrl);
-        if (response.ok) { const data = await response.json(); const btcDominance = data.data.market_cap_percentage.btc; const altIndex = Math.max(0, Math.min(100, Math.round((65 - btcDominance) / 25 * 100))); return altIndex; }
-    } catch (e) {}
-    return 50;
+        const data = await fetchCoinGeckoGlobalCached();
+        const btcDominance = data.data.market_cap_percentage.btc;
+        return Math.max(0, Math.min(100, Math.round((65 - btcDominance) / 25 * 100)));
+    } catch (e) { return 50; }
 }
+
 function formatLargeNumber(num) {
     if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
     if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
@@ -8064,15 +8488,27 @@ async function validateNewAsset(symbol, assetType) {
     } catch (e) { return { valid: false, error: (currentLang === 'en' ? 'Validation error: ' : 'خطأ في التحقق: ') + e.message }; }
 }
 async function fetchCryptoPriceDirect(symbol) {
-    const binanceDomains = ['https://api.binance.com', 'https://data-api.binance.vision'];
+    // تجاوز Binance للعملتين KASUSDT وXDBUSDT؛ وبقية العملات تستمر بالطريقة المعتادة
+    const binanceDomains = ['KASUSDT', 'XDBUSDT'].includes(String(symbol).toUpperCase())
+        ? []
+        : ['https://api.binance.com'];
     for (const domain of binanceDomains) {
+        let timeoutId;
         try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 5000);
-            const response = await fetch(domain + '/api/v3/ticker/price?symbol=' + symbol, { signal: controller.signal });
-            clearTimeout(timeoutId);
-            if (response.ok) { const data = await response.json(); if (data && data.price && !isNaN(parseFloat(data.price))) return { price: parseFloat(data.price), source: 'Binance' }; }
-        } catch (e) {}
+            timeoutId = setTimeout(() => controller.abort(), 5000);
+            const response = await fetch(domain + '/api/v3/ticker/price?symbol=' + encodeURIComponent(symbol), { signal: controller.signal });
+            if (response.ok) {
+                const data = await response.json();
+                if (data && data.price && Number.isFinite(Number(data.price))) {
+                    return { price: Number(data.price), source: 'Binance' };
+                }
+            }
+        } catch (e) {
+            // تابع إلى المصادر البديلة
+        } finally {
+            if (timeoutId) clearTimeout(timeoutId);
+        }
     }
     const altExchanges = [
         { name: 'MEXC', url: 'https://api.mexc.com/api/v3/ticker/price?symbol=' + symbol, extract: (d) => d.price },
@@ -8141,7 +8577,7 @@ function exportToExcel() {
         for (let i = 1; i < COLS; i++) titleRow.push(makeXlsxCell('', { bg: XLSX_THEME.darkBg, border: false }));
         wsData.push(titleRow);
         merges.push({ s: { r: 0, c: 0 }, e: { r: 0, c: COLS - 1 } });
-        const infoRow = [makeXlsxCell('Pro Edition 2.1.0  |  تاريخ التقرير: ' + dateStr + '  |  العملة: ' + currentCurrency, { color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, fontSize: 10, align: 'center', border: false })];
+        const infoRow = [makeXlsxCell('Pro Edition 2.1.2  |  تاريخ التقرير: ' + dateStr + '  |  العملة: ' + currentCurrency, { color: XLSX_THEME.white, bg: XLSX_THEME.headerBg, fontSize: 10, align: 'center', border: false })];
         for (let i = 1; i < COLS; i++) infoRow.push(makeXlsxCell('', { bg: XLSX_THEME.headerBg, border: false }));
         wsData.push(infoRow);
         merges.push({ s: { r: 1, c: 0 }, e: { r: 1, c: COLS - 1 } });
@@ -8467,7 +8903,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     setTimeout(() => {
-        addNotification(currentLang === 'en' ? 'Welcome!' : 'مرحباً بك!', currentLang === 'en' ? 'Pro Edition 2.1 is ready with Stocks support 📈₿' : 'نسخة Pro 2.1 جاهزة مع دعم الأسهم 📈₿', 'success');
+        addNotification(currentLang === 'en' ? 'Welcome!' : 'مرحباً بك!', currentLang === 'en' ? 'Pro Edition 2.1.2 is ready with Stocks + Bahrain 🇧🇭📈' : 'نسخة Pro 2.1.2 جاهزة مع دعم الأسهم والبحرين 🇧🇭📈', 'success');
     }, 2000);
 });
 </script>
