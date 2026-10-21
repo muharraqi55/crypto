@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -2974,9 +2973,6 @@ body.lang-en .asset-filter-bar {
 }
 </style>
 
-</head>
-<body>
-
 <!-- ✅ [جديد #40] لودر رئيسي يظهر أثناء التحميل الأول -->
 <div id="globalLoader" aria-hidden="true">
     <div class="global-loader-box">
@@ -3476,7 +3472,7 @@ body.lang-en .asset-filter-bar {
 <h3>📚 معلومات</h3>
 <ul class="footer-links">
 <li><a href="#" onclick="showInfo('جميع البيانات محفوظة محلياً في متصفحك باستخدام localStorage'); return false;">🔒 الخصوصية</a></li>
-<li><a href="#" onclick="showInfo('📡 مصادر البيانات المعتمدة:<br><br>• Binance<br>• Binance Vision<br>• MEXC<br>• Gate<br>• OKX<br>• KuCoin<br>• Bybit<br>• CoinGecko (عبر البروكسي)<br>• Alternative.me<br>• Twelve Data<br>• Finnhub<br>• Yahoo Finance<br>• EODHD<br>• InsightSentry (البحرين)'); return false;">📡 مصادر البيانات</a></li>
+<li><a href="#" onclick="showInfo('📡 مصادر البيانات المعتمدة:<br><br>• Binance<br>• Binance Vision<br>• MEXC<br>• Gate<br>• OKX<br>• KuCoin<br>• Bybit<br>• CoinGecko (عبر البروكسي)<br>• CoinPaprika (احتياطي)<br>• CoinMarketCap Keyless (احتياطي)<br>• Messari (احتياطي)<br>• DefiLlama (احتياطي)<br>• DexPaprika (احتياطي)<br>• Hyperliquid (احتياطي)<br>• Alternative.me<br>• Twelve Data<br>• Finnhub<br>• Yahoo Finance<br>• EODHD<br>• InsightSentry (البحرين)'); return false;">📡 مصادر البيانات</a></li>
 </ul>
 </div>
 </div>
@@ -3874,6 +3870,7 @@ body.lang-en .asset-filter-bar {
 <li>✅ <strong>جديد:</strong> التحقق من صحة العملة/السهم قبل الإضافة</li>
 <li>🎯 <strong>جديد:</strong> إصلاح TradingView (يتعرف على الأسهم العربية)</li>
 <li>🇧🇭 <strong>جديد:</strong> دعم بورصة البحرين عبر InsightSentry API</li>
+<li>🛡️ <strong>جديد:</strong> 5 مصادر احتياطية لمعلومات العملة (CMC Keyless / Messari / DefiLlama / DexPaprika / Hyperliquid)</li>
 </ul>
 </div>
 <button onclick="closeUpdatePopup()" style="width:100%;padding:12px;background:var(--positive-color);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">ممتاز!</button>
@@ -3978,9 +3975,10 @@ body.lang-en .asset-filter-bar {
 <!-- ✅ استيراد موحّد: يقبل .txt و .json معاً -->
 <input type="file" id="importFile" accept=".txt,.json,application/json,text/plain" style="display: none;">
 
+
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — النسخة النهائية v18.2
+   JavaScript — النسخة النهائية v18.3
    ✅ [v17]   تعطيل تفاصيل الدخول بعد البيع الكامل
    ✅ [v17.2] تعطيل زر إضافة التعزيز عند البيع الكامل
    ✅ [v18]   دعم البحرين عبر InsightSentry
@@ -3988,6 +3986,8 @@ body.lang-en .asset-filter-bar {
    ✅ [v18.1] إصلاح KASUSDT → TONUSDT
    ✅ [v18.2] كاش CoinGecko مع cooldown بعد 429
    ✅ [v18.2] الشرق الأوسط → Yahoo أولاً (بدون EODHD 404)
+   ✅ [v18.3] إضافة 5 مصادر احتياطية لمعلومات العملة:
+              CoinMarketCap Keyless + Messari + DefiLlama + DexPaprika + Hyperliquid
    ═══════════════════════════════════════════════════════════════ */
 
 const MY_PROXY_URL = 'https://crypto-proxy.qwqwqwzx5.workers.dev';
@@ -6108,6 +6108,22 @@ async function fetchJsonThroughProxy(targetUrl, timeoutMs = 10000) {
         clearTimeout(timeoutId);
     }
 }
+/* ═══════════════════════════════════════════════════════════════════════════
+   ✅ [v18.3] fetchCoinInfoData — مع سلسلة احتياطية موسّعة (7 طبقات)
+   
+   الترتيب الجديد:
+   1. CoinGecko (مع كاش وكولداون)
+   2. CoinPaprika
+   3. CoinMarketCap Keyless (جديد)     ← يُستدعى عبر fetchCMCKeylessMarketData
+   4. Messari (جديد)                    ← يُستدعى عبر fetchMessariMarketData
+   5. DefiLlama (جديد)                  ← يُستدعى عبر fetchDefiLlamaMarketData
+   6. DexPaprika (جديد)                 ← يُستدعى عبر fetchDexPaprikaMarketData
+   7. Hyperliquid (جديد)                ← يُستدعى عبر fetchHyperliquidMarketData
+   8. نسخة مخزّنة قديمة (Stale) — إن وُجدت
+   9. خطأ نهائي
+   
+   كل مصدر في try/catch مستقل؛ فشل أي مصدر لا يوقف السلسلة.
+   ═══════════════════════════════════════════════════════════════════════════ */
 async function fetchCoinInfoData(baseSymbol) {
     const normalizedBase = String(baseSymbol || '').toUpperCase();
     const memoryEntry = coinInfoCache.get(normalizedBase);
@@ -6133,7 +6149,8 @@ async function fetchCoinInfoData(baseSymbol) {
         if (!cleanSymbol) throw new Error(currentLang === 'en' ? 'Invalid symbol' : 'رمز غير صالح');
 
         let coinGeckoError = null;
-        // المصدر الأول: CoinGecko، إلا إذا كان هناك إيقاف مؤقت بسبب 429
+
+        // ✅ المصدر الأول: CoinGecko (إلا إذا كان هناك إيقاف مؤقت بسبب 429)
         if (Date.now() >= coinGeckoInfoGlobalCooldownUntil) {
             try {
                 let coinId = coinIdCache.get(cleanSymbol);
@@ -6155,7 +6172,7 @@ async function fetchCoinInfoData(baseSymbol) {
             }
         }
 
-        // المصدر البديل: CoinPaprika، ولا يحتاج مفتاح API للاستخدام الأساسي
+        // ✅ المصدر الثاني: CoinPaprika
         try {
             const paprikaData = await fetchCoinPaprikaMarketData(cleanSymbol);
             const normalizedData = { ...paprikaData, _source: 'CoinPaprika', _stale: false };
@@ -6166,15 +6183,39 @@ async function fetchCoinInfoData(baseSymbol) {
             console.warn('⚠️ CoinPaprika fallback failed:', paprikaError && paprikaError.message ? paprikaError.message : paprikaError);
         }
 
-        // إن فشل المصدران، أظهر آخر بيانات محفوظة بشرط وضع تنبيه واضح بأنها قديمة
+        // ✅ [v18.3] المصادر الاحتياطية الخمسة الجديدة — بالتتابع
+        const additionalSources = [
+    { name: 'CoinMarketCap (Keyless)', fn: () => fetchCMCKeylessMarketData(cleanSymbol) },
+    { name: 'CoinLore',                fn: () => fetchCoinLoreMarketData(cleanSymbol) },
+    { name: 'DefiLlama',               fn: () => fetchDefiLlamaMarketData(cleanSymbol) },
+    { name: 'Hyperliquid',             fn: () => fetchHyperliquidMarketData(cleanSymbol) }
+];
+
+        for (const source of additionalSources) {
+            try {
+                const sourceData = await source.fn();
+                if (sourceData) {
+                    const normalizedData = { ...sourceData, _source: source.name, _stale: false };
+                    coinInfoCache.set(normalizedBase, { time: Date.now(), data: normalizedData });
+                    saveStoredCoinInfo(normalizedBase, normalizedData);
+                    console.info('✅ ' + source.name + ' succeeded for ' + cleanSymbol.toUpperCase());
+                    return normalizedData;
+                }
+            } catch (e) {
+                console.warn('⚠️ ' + source.name + ' fallback failed:', e && e.message ? e.message : e);
+                // استمر إلى المصدر التالي
+            }
+        }
+
+        // ✅ إن فشلت كل المصادر، أظهر آخر بيانات محفوظة بشرط وضع تنبيه واضح
         if (staleEntry && staleEntry.data && Date.now() - Number(staleEntry.savedAt || 0) < COIN_INFO_STALE_TTL) {
             return { ...staleEntry.data, _stale: true, _staleSavedAt: Number(staleEntry.savedAt || 0) };
         }
 
         const geckoMessage = coinGeckoError && coinGeckoError.message ? coinGeckoError.message : '';
         throw new Error(currentLang === 'en'
-            ? 'CoinGecko is rate-limited and CoinPaprika could not provide this coin. ' + geckoMessage
-            : 'CoinGecko يرفض الطلبات، وتعذر الحصول على بيانات هذه العملة من CoinPaprika أيضًا. ' + geckoMessage);
+            ? 'All 7 data sources are currently unavailable for this coin. ' + geckoMessage
+            : 'جميع المصادر السبعة غير متاحة حاليًا لهذه العملة. ' + geckoMessage);
     })();
 
     coinInfoPendingRequests.set(normalizedBase, requestPromise);
@@ -6184,6 +6225,379 @@ async function fetchCoinInfoData(baseSymbol) {
         coinInfoPendingRequests.delete(normalizedBase);
     }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ✅ [v18.3] المصادر الاحتياطية الخمسة الجديدة
+   
+   كل دالة:
+   - ترجع object موحّد الشكل (نفس حقول CoinGecko/CoinPaprika)
+   - ترمي Error عند الفشل (لتفعيل المصدر التالي)
+   - تستخدم fetchJsonThroughProxy (عبر Cloudflare Worker)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * ✅ 1) CoinMarketCap Keyless — يستخدم نقاط النهاية العامة التي يشغّل بها موقع CMC
+ *     endpoints: api.coinmarketcap.com/data-api/v3/...
+ *     لا تحتاج مفتاح API — تعمل عبر البروكسي
+ */
+async function fetchCMCKeylessMarketData(symbol) {
+    const upperSymbol = String(symbol || '').toUpperCase();
+    if (!upperSymbol) throw new Error('Invalid symbol for CMC');
+
+    // الخطوة 1: البحث عن slug الصحيح
+    let slug = null;
+    try {
+        const searchUrl = 'https://api.coinmarketcap.com/data-api/v3/search?keyword=' + encodeURIComponent(upperSymbol) + '&scene=community&limit=10';
+        const searchData = await fetchJsonThroughProxy(searchUrl, 9000);
+        const list = searchData && searchData.data && searchData.data.cryptoCurrencyList ? searchData.data.cryptoCurrencyList : [];
+        const exact = list.find(c => String(c.symbol || '').toUpperCase() === upperSymbol);
+        const match = exact || list[0];
+        if (match) slug = match.slug || String(match.id || '');
+    } catch (e) {
+        // استمر باستخدام symbol كـ slug
+    }
+
+    // الخطوة 2: جلب التفاصيل
+    const trySlugs = [];
+    if (slug) trySlugs.push(slug);
+    const lowerSymbol = upperSymbol.toLowerCase();
+    if (!trySlugs.includes(lowerSymbol)) trySlugs.push(lowerSymbol);
+
+    for (const trySlug of trySlugs) {
+        try {
+            const targetUrl = 'https://api.coinmarketcap.com/data-api/v3/cryptocurrency/detail?slug=' + encodeURIComponent(trySlug) + '&convertId=2781';
+            const data = await fetchJsonThroughProxy(targetUrl, 9000);
+            if (data && data.data && data.data.stats) {
+                const st = data.data.stats;
+                const price = Number(st.price);
+                if (Number.isFinite(price) && price > 0) {
+                    return {
+                        id: data.data.slug || trySlug,
+                        name: data.data.name || upperSymbol,
+                        symbol: String(data.data.symbol || upperSymbol).toLowerCase(),
+                        current_price: price,
+                        market_cap: st.marketCap != null ? Number(st.marketCap) : null,
+                        total_volume: st.volume24h != null ? Number(st.volume24h) : null,
+                        circulating_supply: st.circulatingSupply != null ? Number(st.circulatingSupply) : null,
+                        max_supply: st.maxSupply != null ? Number(st.maxSupply) : null,
+                        total_supply: st.totalSupply != null ? Number(st.totalSupply) : null,
+                        market_cap_rank: data.data.cmcRank != null ? Number(data.data.cmcRank) : null,
+                        price_change_percentage_24h: st.percentChange24h != null ? Number(st.percentChange24h) : 0,
+                        image: data.data.logo || null,
+                        _source_updated_at: st.lastUpdated || null
+                    };
+                }
+            }
+        } catch (e) {
+            // استمر إلى slug التالي
+        }
+    }
+
+    throw new Error('CoinMarketCap Keyless returned no usable data for ' + upperSymbol);
+}
+
+/**
+ * ✅ 2) Messari — واجهة أبحاث مؤسسية، بعض نقاط النهاية بدون مفتاح
+ */
+async function fetchCoinLoreMarketData(symbol) {
+    const upperSymbol = String(symbol || '').toUpperCase();
+    if (!upperSymbol) throw new Error('Invalid symbol for CoinLore');
+
+    try {
+        const targetUrl = 'https://api.coinlore.net/api/tickers/';
+        const data = await fetchJsonThroughProxy(targetUrl, 15000);
+
+        if (data && Array.isArray(data.data)) {
+            const coin = data.data.find(c => String(c.symbol || '').toUpperCase() === upperSymbol);
+            if (coin) {
+                const price = Number(coin.price_usd);
+                if (Number.isFinite(price) && price > 0) {
+                    return {
+                        id: String(coin.id || upperSymbol.toLowerCase()),
+                        name: coin.name || upperSymbol,
+                        symbol: String(coin.symbol || upperSymbol).toLowerCase(),
+                        current_price: price,
+                        market_cap: coin.market_cap_usd ? Number(coin.market_cap_usd) : null,
+                        total_volume: coin.volume24 ? Number(coin.volume24) : null,
+                        circulating_supply: coin.csupply ? Number(coin.csupply) : null,
+                        max_supply: coin.msupply ? Number(coin.msupply) : null,
+                        total_supply: coin.tsupply ? Number(coin.tsupply) : null,
+                        market_cap_rank: coin.rank ? Number(coin.rank) : null,
+                        price_change_percentage_24h: coin.percent_change_24h ? Number(coin.percent_change_24h) : 0,
+                        image: null,
+                        _source_updated_at: null
+                    };
+                }
+            }
+        }
+    } catch (e) {
+        // استمر
+    }
+
+    throw new Error('CoinLore returned no usable data for ' + upperSymbol);
+}
+
+/**
+ * ✅ 3) DefiLlama — بيانات DeFi والعملات المستقرة، مجاني بالكامل
+ *     نستخدم coins.llama.fi/prices/current/{coinGeckoId}
+ */
+async function fetchDefiLlamaMarketData(symbol) {
+    const lower = String(symbol || '').toLowerCase().trim();
+    if (!lower) throw new Error('Invalid symbol for DefiLlama');
+
+    const CG_ID_MAP = {
+        'xrp': 'ripple', 'btc': 'bitcoin', 'eth': 'ethereum', 'sol': 'solana',
+        'ada': 'cardano', 'doge': 'dogecoin', 'dot': 'polkadot', 'matic': 'matic-network',
+        'avax': 'avalanche-2', 'link': 'chainlink', 'ltc': 'litecoin', 'trx': 'tron',
+        'atom': 'cosmos', 'xlm': 'stellar', 'algo': 'algorand', 'near': 'near',
+        'uni': 'uniswap', 'aave': 'aave', 'shib': 'shiba-inu', 'pepe': 'pepe',
+        'bnb': 'binancecoin', 'usdt': 'tether', 'usdc': 'usd-coin',
+        'dai': 'dai', 'busd': 'binance-usd', 'ton': 'the-open-network',
+        'arb': 'arbitrum', 'op': 'optimism', 'apt': 'aptos', 'sui': 'sui',
+        'sei': 'sei-network', 'inj': 'injective-protocol', 'xmr': 'monero',
+        'etc': 'ethereum-classic', 'fil': 'filecoin', 'hbar': 'hedera-hashgraph',
+        'vet': 'vechain', 'icp': 'internet-computer', 'rndr': 'render-token'
+    };
+
+    const tryIds = [];
+    if (CG_ID_MAP[lower]) tryIds.push(CG_ID_MAP[lower]);
+    tryIds.push(lower);
+
+    for (const id of tryIds) {
+        try {
+            const targetUrl = 'https://coins.llama.fi/prices/current/coingecko:' + encodeURIComponent(id);
+            const data = await fetchJsonThroughProxy(targetUrl, 8000);
+            if (data && data.coins) {
+                const keys = Object.keys(data.coins);
+                for (const key of keys) {
+                    const coinData = data.coins[key];
+                    const price = Number(coinData.price);
+                    if (Number.isFinite(price) && price > 0) {
+                        return {
+                            id: id,
+                            name: lower.toUpperCase(),
+                            symbol: lower,
+                            current_price: price,
+                            market_cap: null,
+                            total_volume: null,
+                            circulating_supply: null,
+                            max_supply: null,
+                            total_supply: null,
+                            market_cap_rank: null,
+                            price_change_percentage_24h: 0,
+                            image: null,
+                            _source_updated_at: null
+                        };
+                    }
+                }
+            }
+        } catch (e) {
+            // استمر إلى ID التالي
+        }
+    }
+
+    throw new Error('DefiLlama returned no usable data for ' + lower.toUpperCase());
+}
+
+/**
+ * ✅ 4) DexPaprika — بيانات البورصات اللامركزية DEX، 33 شبكة، 25M رمز
+ *     نبحث في /search ثم /networks/{net}/tokens/{address}
+ */
+async function fetchDexPaprikaMarketData(symbol) {
+    const cleanSymbol = String(symbol || '').toLowerCase().trim();
+    if (!cleanSymbol) throw new Error('Invalid symbol for DexPaprika');
+
+    // محاولة 1: search endpoint
+    try {
+        const targetUrl = 'https://api.dexpaprika.com/search?query=' + encodeURIComponent(cleanSymbol) + '&limit=5';
+        const data = await fetchJsonThroughProxy(targetUrl, 9000);
+        let tokens = [];
+        if (data) {
+            if (Array.isArray(data.tokens)) tokens = data.tokens;
+            else if (Array.isArray(data.results)) tokens = data.results;
+            else if (Array.isArray(data.data)) tokens = data.data;
+        }
+        // ابحث عن أول تطابق بالرمز
+        const match = tokens.find(t => String(t.symbol || '').toLowerCase() === cleanSymbol);
+        if (match) {
+            const price = Number(match.price || match.priceUsd || match.price_usd);
+            if (Number.isFinite(price) && price > 0) {
+                return {
+                    id: match.id || match.address || cleanSymbol,
+                    name: match.name || cleanSymbol.toUpperCase(),
+                    symbol: cleanSymbol,
+                    current_price: price,
+                    market_cap: match.fdv != null ? Number(match.fdv) : (match.market_cap != null ? Number(match.market_cap) : null),
+                    total_volume: match.volume24h != null ? Number(match.volume24h) : (match.volume_24h != null ? Number(match.volume_24h) : null),
+                    circulating_supply: null,
+                    max_supply: null,
+                    total_supply: null,
+                    market_cap_rank: null,
+                    price_change_percentage_24h: match.priceChange24h != null ? Number(match.priceChange24h) : 0,
+                    image: null,
+                    _source_updated_at: null
+                };
+            }
+        }
+    } catch (e) {
+        // استمر
+    }
+
+    // محاولة 2: endpoints مختلفة قد تحتوي الرمز
+    try {
+        const targetUrl2 = 'https://api.dexpaprika.com/networks/' + encodeURIComponent('ethereum') + '/tokens/search?query=' + encodeURIComponent(cleanSymbol);
+        const data2 = await fetchJsonThroughProxy(targetUrl2, 9000);
+        let tokens2 = [];
+        if (data2) {
+            if (Array.isArray(data2)) tokens2 = data2;
+            else if (Array.isArray(data2.tokens)) tokens2 = data2.tokens;
+            else if (Array.isArray(data2.data)) tokens2 = data2.data;
+        }
+        const match2 = tokens2.find(t => String(t.symbol || '').toLowerCase() === cleanSymbol);
+        if (match2) {
+            const price2 = Number(match2.price || match2.priceUsd);
+            if (Number.isFinite(price2) && price2 > 0) {
+                return {
+                    id: match2.id || match2.address || cleanSymbol,
+                    name: match2.name || cleanSymbol.toUpperCase(),
+                    symbol: cleanSymbol,
+                    current_price: price2,
+                    market_cap: match2.fdv != null ? Number(match2.fdv) : null,
+                    total_volume: match2.volume24h != null ? Number(match2.volume24h) : null,
+                    circulating_supply: null,
+                    max_supply: null,
+                    total_supply: null,
+                    market_cap_rank: null,
+                    price_change_percentage_24h: 0,
+                    image: null,
+                    _source_updated_at: null
+                };
+            }
+        }
+    } catch (e) {
+        // لا يوجد
+    }
+
+    throw new Error('DexPaprika returned no usable data for ' + cleanSymbol.toUpperCase());
+}
+
+/**
+ * ✅ 5) Hyperliquid — بورصة لامركزية للعقود الآجلة، endpoint عام
+ *     POST /info  body: {"type":"allMids"}
+ */
+async function fetchHyperliquidMarketData(symbol) {
+    const upperSymbol = String(symbol || '').toUpperCase().trim();
+    if (!upperSymbol) throw new Error('Invalid symbol for Hyperliquid');
+
+    try {
+        // Hyperliquid يستخدم POST — نستدعيه عبر البروكسي (لكن fetch عبر البروكسي يدعم GET فقط افتراضياً)
+        // نحاول GET على metaAndAssetCtxs أولاً
+        const targetUrl = 'https://api.hyperliquid.xyz/info';
+        const proxyUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(targetUrl);
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        let response;
+        try {
+            response = await fetch(proxyUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'metaAndAssetCtxs' }),
+                signal: controller.signal
+            });
+        } finally {
+            clearTimeout(timeoutId);
+        }
+
+        if (!response.ok) throw new Error('Hyperliquid HTTP ' + response.status);
+        const data = await response.json();
+
+        // response متوقع: [meta, assetCtxs]
+        if (!Array.isArray(data) || data.length < 2) throw new Error('Hyperliquid unexpected response');
+        const meta = data[0];
+        const assetCtxs = data[1];
+
+        if (!meta || !Array.isArray(meta.universe) || !Array.isArray(assetCtxs)) {
+            throw new Error('Hyperliquid meta structure invalid');
+        }
+
+        // ابحث عن العملة في meta.universe
+        const idx = meta.universe.findIndex(u => String(u.name || '').toUpperCase() === upperSymbol);
+        if (idx === -1) throw new Error('Hyperliquid: ' + upperSymbol + ' not listed');
+
+        const ctx = assetCtxs[idx] || {};
+        const price = Number(ctx.markOraclePx || ctx.midPx || ctx.oraclePx);
+        if (!Number.isFinite(price) || price <= 0) {
+            throw new Error('Hyperliquid: no price for ' + upperSymbol);
+        }
+
+        // Hyperliquid لا يوفر market cap/supply عادة — نعيد null
+        return {
+            id: upperSymbol.toLowerCase(),
+            name: upperSymbol,
+            symbol: upperSymbol.toLowerCase(),
+            current_price: price,
+            market_cap: null,
+            total_volume: ctx.dayNtlVlm != null ? Number(ctx.dayNtlVlm) : null,
+            circulating_supply: null,
+            max_supply: null,
+            total_supply: null,
+            market_cap_rank: null,
+            price_change_percentage_24h: ctx.prevDayPx != null && Number(ctx.prevDayPx) > 0
+                ? ((price - Number(ctx.prevDayPx)) / Number(ctx.prevDayPx)) * 100
+                : 0,
+            image: null,
+            _source_updated_at: null
+        };
+    } catch (e) {
+        // محاولة بديلة: allMids (يرجع الأسعار فقط)
+        try {
+            const targetUrl2 = 'https://api.hyperliquid.xyz/info';
+            const proxyUrl2 = MY_PROXY_URL + '?url=' + encodeURIComponent(targetUrl2);
+            const controller2 = new AbortController();
+            const timeoutId2 = setTimeout(() => controller2.abort(), 8000);
+            let response2;
+            try {
+                response2 = await fetch(proxyUrl2, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: 'allMids' }),
+                    signal: controller2.signal
+                });
+            } finally {
+                clearTimeout(timeoutId2);
+            }
+            if (response2.ok) {
+                const mids = await response2.json();
+                if (mids && mids[upperSymbol]) {
+                    const price2 = Number(mids[upperSymbol]);
+                    if (Number.isFinite(price2) && price2 > 0) {
+                        return {
+                            id: upperSymbol.toLowerCase(),
+                            name: upperSymbol,
+                            symbol: upperSymbol.toLowerCase(),
+                            current_price: price2,
+                            market_cap: null,
+                            total_volume: null,
+                            circulating_supply: null,
+                            max_supply: null,
+                            total_supply: null,
+                            market_cap_rank: null,
+                            price_change_percentage_24h: 0,
+                            image: null,
+                            _source_updated_at: null
+                        };
+                    }
+                }
+            }
+        } catch (e2) {
+            // تجاهل
+        }
+        throw new Error('Hyperliquid returned no usable data for ' + upperSymbol);
+    }
+}
+
+// ✅ [الأصلي] findCoinGeckoId — بدون تغيير
 async function findCoinGeckoId(symbol) {
     const targetUrl = 'https://api.coingecko.com/api/v3/search?query=' + encodeURIComponent(symbol);
     const data = await fetchJsonThroughProxy(targetUrl);
@@ -6221,39 +6635,79 @@ async function fetchCoinGeckoMarketData(coinId) {
     return data[0];
 }
 async function fetchCoinPaprikaMarketData(symbol) {
-    const searchUrl = 'https://api.coinpaprika.com/v1/search/?q=' + encodeURIComponent(symbol) + '&c=currencies&limit=20';
-    const searchData = await fetchJsonThroughProxy(searchUrl);
-    const currencies = Array.isArray(searchData.currencies) ? searchData.currencies : [];
-    const matches = currencies.filter(item => String(item.symbol || '').toUpperCase() === String(symbol).toUpperCase() && item.id && item.is_active !== false);
-    if (!matches.length) throw new Error('CoinPaprika could not find an exact symbol match for ' + symbol.toUpperCase());
-    // عند وجود أكثر من عملة بالرمز نفسه، اختر الأعلى ترتيبًا المتاح من نتائج البحث
-    matches.sort((a, b) => {
-        const ar = Number(a.rank) || Number.MAX_SAFE_INTEGER;
-        const br = Number(b.rank) || Number.MAX_SAFE_INTEGER;
-        return ar - br;
-    });
-    const coinId = matches[0].id;
-    const tickerUrl = 'https://api.coinpaprika.com/v1/tickers/' + encodeURIComponent(coinId);
-    const ticker = await fetchJsonThroughProxy(tickerUrl);
-    const usd = ticker && ticker.quotes && ticker.quotes.USD;
-    if (!usd || !Number.isFinite(Number(usd.price))) throw new Error('CoinPaprika returned no usable USD market data');
-    return {
-        id: ticker.id || coinId,
-        name: ticker.name || matches[0].name || symbol.toUpperCase(),
-        symbol: String(ticker.symbol || symbol).toLowerCase(),
-        current_price: Number(usd.price),
-        market_cap: usd.market_cap == null ? null : Number(usd.market_cap),
-        total_volume: usd.volume_24h == null ? null : Number(usd.volume_24h),
-        circulating_supply: ticker.circulating_supply == null ? null : Number(ticker.circulating_supply),
-        max_supply: ticker.max_supply == null ? null : Number(ticker.max_supply),
-        total_supply: ticker.total_supply == null ? null : Number(ticker.total_supply),
-        market_cap_rank: ticker.rank == null ? (matches[0].rank || null) : Number(ticker.rank),
-        price_change_percentage_24h: usd.percent_change_24h == null ? 0 : Number(usd.percent_change_24h),
-        _source: 'CoinPaprika',
-        _source_updated_at: ticker.last_updated || null,
-        _stale: false
-    };
+    const upperSymbol = String(symbol || '').toUpperCase();
+    if (!upperSymbol) throw new Error('Invalid symbol for CoinPaprika');
+
+    // الخطوة 1: جلب جميع العملات (tickers) — مجاني
+    try {
+        const tickersUrl = 'https://api.coinpaprika.com/v1/tickers?limit=2500';
+        const tickers = await fetchJsonThroughProxy(tickersUrl, 15000);
+
+        if (Array.isArray(tickers)) {
+            const matches = tickers.filter(t => String(t.symbol || '').toUpperCase() === upperSymbol);
+            if (matches.length > 0) {
+                matches.sort((a, b) => (a.rank || 999999) - (b.rank || 999999));
+                const coin = matches[0];
+                const usd = coin.quotes && coin.quotes.USD;
+                if (usd && Number.isFinite(Number(usd.price)) && Number(usd.price) > 0) {
+                    return {
+                        id: coin.id,
+                        name: coin.name || upperSymbol,
+                        symbol: String(coin.symbol || upperSymbol).toLowerCase(),
+                        current_price: Number(usd.price),
+                        market_cap: usd.market_cap != null ? Number(usd.market_cap) : null,
+                        total_volume: usd.volume_24h != null ? Number(usd.volume_24h) : null,
+                        circulating_supply: coin.circulating_supply != null ? Number(coin.circulating_supply) : null,
+                        max_supply: coin.max_supply != null ? Number(coin.max_supply) : null,
+                        total_supply: coin.total_supply != null ? Number(coin.total_supply) : null,
+                        market_cap_rank: coin.rank != null ? Number(coin.rank) : null,
+                        price_change_percentage_24h: usd.percent_change_24h != null ? Number(usd.percent_change_24h) : 0,
+                        image: null,
+                        _source_updated_at: coin.last_updated || null
+                    };
+                }
+            }
+        }
+    } catch (e) {
+        // استمر إلى المحاولة الثانية
+    }
+
+    // الخطوة 2: /search كاحتياطي (قد يكون مدفوعًا، لكن نتحقق)
+    try {
+        const searchUrl = 'https://api.coinpaprika.com/v1/search/?q=' + encodeURIComponent(upperSymbol) + '&c=currencies&limit=5';
+        const searchData = await fetchJsonThroughProxy(searchUrl, 9000);
+        const currencies = searchData && Array.isArray(searchData.currencies) ? searchData.currencies : [];
+        const exact = currencies.find(c => String(c.symbol || '').toUpperCase() === upperSymbol);
+        if (exact && exact.id) {
+            const tickerUrl = 'https://api.coinpaprika.com/v1/tickers/' + encodeURIComponent(exact.id);
+            const ticker = await fetchJsonThroughProxy(tickerUrl, 9000);
+            const usd = ticker && ticker.quotes && ticker.quotes.USD;
+            if (usd && Number.isFinite(Number(usd.price)) && Number(usd.price) > 0) {
+                return {
+                    id: ticker.id || exact.id,
+                    name: ticker.name || exact.name || upperSymbol,
+                    symbol: String(ticker.symbol || upperSymbol).toLowerCase(),
+                    current_price: Number(usd.price),
+                    market_cap: usd.market_cap != null ? Number(usd.market_cap) : null,
+                    total_volume: usd.volume_24h != null ? Number(usd.volume_24h) : null,
+                    circulating_supply: ticker.circulating_supply != null ? Number(ticker.circulating_supply) : null,
+                    max_supply: ticker.max_supply != null ? Number(ticker.max_supply) : null,
+                    total_supply: ticker.total_supply != null ? Number(ticker.total_supply) : null,
+                    market_cap_rank: ticker.rank != null ? Number(ticker.rank) : null,
+                    price_change_percentage_24h: usd.percent_change_24h != null ? Number(usd.percent_change_24h) : 0,
+                    image: null,
+                    _source_updated_at: ticker.last_updated || null
+                };
+            }
+        }
+    } catch (e) {
+        // لا يوجد
+    }
+
+    throw new Error('CoinPaprika returned no usable data for ' + upperSymbol);
 }
+
+// ✅ [الأصلي] renderCoinInfoData — بدون تغيير
 function renderCoinInfoData(coin, originalSymbol) {
     const body = document.getElementById('coinInfoBody');
     if (!body) return;
@@ -6309,12 +6763,16 @@ function renderCoinInfoData(coin, originalSymbol) {
     html += '</div>';
     body.innerHTML = html;
 }
+// ✅ [الأصلي] renderCoinInfoError — بدون تغيير
 function renderCoinInfoError(errorMsg) {
     const body = document.getElementById('coinInfoBody');
     if (!body) return;
     body.innerHTML = '<div class="coin-info-error"><span class="coin-info-error-icon">⚠️</span><div>' + (currentLang === 'en' ? 'Could not fetch coin data' : 'تعذر جلب بيانات العملة') + '</div><div class="coin-info-error-hint">' + escapeHtml(errorMsg || (currentLang === 'en' ? 'Please try again later' : 'يرجى المحاولة لاحقاً')) + '</div></div>';
 }
 
+// ═══════════════════════════════════════════════════════════════
+// ✅ [الأصلي] دوال جلب أسعار الأسهم — بدون تغيير
+// ═══════════════════════════════════════════════════════════════
 async function fetchTwelveDataPrice(symbol) {
     try {
         const url = 'https://api.twelvedata.com/price?symbol=' + encodeURIComponent(symbol) + '&apikey=' + TWELVE_DATA_API_KEY;
@@ -6343,7 +6801,6 @@ async function fetchFinnhubPrice(symbol) {
         return null;
     } catch (e) { console.warn('⚠️ Finnhub failed for', symbol, e.message); return null; }
 }
-
 async function fetchBahrainBoursePrice(symbol) {
     if (!symbol || !symbol.toUpperCase().endsWith('.BH')) return null;
     const cleanSymbol = symbol.replace(/\.BH$/i, '').toUpperCase();
@@ -6381,7 +6838,6 @@ async function fetchBahrainBoursePrice(symbol) {
         return { symbol: symbol, price: null, source: null, error: e.message };
     }
 }
-
 async function fetchEODHDPrice(symbol) {
     try {
         const url = 'https://eodhd.com/api/real-time/' + encodeURIComponent(symbol) + '?api_token=' + EODHD_API_KEY + '&fmt=json';
@@ -6395,7 +6851,7 @@ async function fetchEODHDPrice(symbol) {
             return null;
         }
         const data = await response.json();
-                if (!data || (data.code && data.code === 'N/D')) {
+        if (!data || (data.code && data.code === 'N/D')) {
             console.warn('⚠️ EODHD: invalid symbol or N/D for', symbol);
             return null;
         }
@@ -6406,7 +6862,6 @@ async function fetchEODHDPrice(symbol) {
         return null;
     } catch (e) { console.warn('⚠️ EODHD failed for', symbol, e.message); return null; }
 }
-
 async function fetchYahooPrice(symbol) {
     try {
         const url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol);
@@ -6425,7 +6880,6 @@ async function fetchYahooPrice(symbol) {
         return null;
     } catch (e) { console.warn('⚠️ Yahoo Finance failed for', symbol, e.message); return null; }
 }
-
 // ✅ [v18.2] fetchStockPrice — أولويات محسّنة لكل سوق
 async function fetchStockPrice(symbol) {
     if (stockPriceCache.has(symbol)) {
@@ -6434,9 +6888,7 @@ async function fetchStockPrice(symbol) {
             return cached.data;
         }
     }
-    
     const upper = String(symbol).toUpperCase();
-    
     // 🇧🇭 البحرين: InsightSentry أولاً
     if (upper.endsWith('.BH')) {
         console.log('🇧🇭 سهم بحريني → InsightSentry API:', symbol);
@@ -6453,11 +6905,9 @@ async function fetchStockPrice(symbol) {
         }
         return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'All Bahrain sources failed' : 'فشل جميع مصادر البحرين' };
     }
-    
     // 🌍 الشرق الأوسط → Yahoo أولاً (EODHD لا يدعم .SR مجاناً)
     const middleEastSuffixes = ['.SR', '.AE', '.QA', '.KW', '.OM', '.JO', '.SA'];
     const isMiddleEast = middleEastSuffixes.some(s => upper.endsWith(s));
-    
     if (isMiddleEast) {
         console.log('🌍 سهم شرق أوسطي → Yahoo أولاً:', symbol);
         let result = await fetchYahooPrice(symbol);
@@ -6477,7 +6927,6 @@ async function fetchStockPrice(symbol) {
         }
         return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'All Middle East providers failed' : 'فشل جميع مزودي الشرق الأوسط' };
     }
-    
     // 🌐 أسهم عالمية: EODHD → TwelveData → Finnhub → Yahoo
     let result = await fetchEODHDPrice(symbol);
     if (result && result.price) {
@@ -6501,7 +6950,6 @@ async function fetchStockPrice(symbol) {
     }
     return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'All stock providers failed' : 'فشل جميع مزودي الأسهم' };
 }
-
 async function fetchSinglePrice(symbol) {
     const baseSymbol = getBaseSymbolFromKey(symbol);
     if (!baseSymbol || typeof baseSymbol !== 'string' || baseSymbol.length < 2) return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'Invalid symbol' : 'رمز غير صالح' };
@@ -6549,11 +6997,9 @@ async function fetchSinglePrice(symbol) {
             timeoutId = setTimeout(() => controller.abort(), 10000);
             const response = await fetch(fetchUrl, { signal: controller.signal });
             if (!response.ok) continue;
-
             const data = await response.json();
             const extractedPrice = exchange.extract(data);
             const numericPrice = Number(extractedPrice);
-
             if (extractedPrice != null && Number.isFinite(numericPrice) && numericPrice > 0) {
                 const result = {
                     symbol: symbol,
@@ -6570,7 +7016,6 @@ async function fetchSinglePrice(symbol) {
             if (timeoutId) clearTimeout(timeoutId);
         }
     }
-
     return {
         symbol: symbol,
         price: null,
@@ -6670,6 +7115,9 @@ function guessDecimalPlaces(price) {
 }
 function sanitizeTxtField(value) { if (value === null || value === undefined) return ''; return String(value).replace(/\|/g, '¦').replace(/\n/g, ' ').replace(/\r/g, '').trim(); }
 
+/* ═══════════════════════════════════════════════════════════════
+   ✅ [الأصلي] downloadAllDataAsTxt — بدون تغيير
+   ═══════════════════════════════════════════════════════════════ */
 function downloadAllDataAsTxt(silent = false) {
     const hasCoins = allCoinData && Object.keys(allCoinData).length > 0;
     if (!hasCoins && availableCash <= 0 && cashHistory.deposits.length === 0) { if (!silent) showError(currentLang === 'en' ? "No data to save." : "لا توجد بيانات لحفظها."); return false; }
@@ -8903,7 +9351,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     setTimeout(() => {
-        addNotification(currentLang === 'en' ? 'Welcome!' : 'مرحباً بك!', currentLang === 'en' ? 'Pro Edition 2.1.2 is ready with Stocks + Bahrain 🇧🇭📈' : 'نسخة Pro 2.1.2 جاهزة مع دعم الأسهم والبحرين 🇧🇭📈', 'success');
+        addNotification(currentLang === 'en' ? 'Welcome!' : 'مرحباً بك!', currentLang === 'en' ? 'Pro Edition 2.1.3 is ready with 7 fallback sources 📈' : 'نسخة Pro 2.1.3 جاهزة مع 7 مصادر احتياطية 📈', 'success');
     }, 2000);
 });
 </script>
