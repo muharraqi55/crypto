@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -7,10 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>متابعة الصفقات الشاملة - Muharraqi | Pro Edition</title>
 
+<!-- ✅ مكتبة Chart.js للرسوم البيانية -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<!-- ✅ مكتبة XLSX لتصدير الإكسل -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<!-- ✅ [جديد] مكتبة CryptoJS لفك تشفير ملفات JSON -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
-
+<!-- ✅ [ملاحظة] هنا يبدأ كود الـ CSS (القسم الثاني) -->
 <style>
 /* ═══════════════════════════════════════════════════════════
    🌗 المتغيرات (Variables) — الوضع الفاتح والداكن
@@ -768,7 +770,6 @@ background: linear-gradient(90deg, var(--primary-color), var(--secondary-color))
 .notif-time { font-size: 0.7em; color: var(--text-muted); }
 .notif-empty { text-align: center; padding: 40px 20px; color: var(--text-muted); font-style: italic; }
 
-/* ✅ [إصلاح #37] دعم اللغة الإنجليزية للتنبيهات غير المقروءة */
 body.lang-en .notif-item.unread {
     border-right: none;
     border-left: 3px solid var(--primary-color);
@@ -1203,7 +1204,6 @@ body.lang-en .quick-action-btn:focus-visible .quick-action-tooltip {
 .popup-btn-secondary { background-color: var(--text-muted); color: white; }
 .popup-btn-secondary:hover { background-color: var(--border-color); transform: translateY(-2px); }
 
-/* ✅ [إصلاح #21] إخفاء زر "إلغاء" إذا كان فارغاً (في نوافذ النجاح/الخطأ) */
 .popup-btn-secondary:empty {
     display: none !important;
 }
@@ -1336,7 +1336,6 @@ h3 { font-size: 1.2em; color: var(--primary-color); margin-bottom: 15px; margin-
 .expand-btn { background: none; border: none; cursor: pointer; font-size: 1.2em; margin-left: 5px; color: var(--primary-color); transition: transform 0.3s ease; padding: 0 5px; }
 .expand-btn.expanded { transform: rotate(45deg); }
 .coin-details { background-color: var(--expand-bg); border: 1px solid var(--expand-border); border-radius: 6px; margin: 5px 0; padding: 15px; display: none; width: 100%; box-sizing: border-box; 
-/* ✅ [إصلاح #22] منع فيض الجدول على الجوال */
 overflow-x: auto;
 -webkit-overflow-scrolling: touch;
 }
@@ -1399,7 +1398,6 @@ overflow-x: auto;
 .add-dca-btn { background-color: var(--positive-color); color: white; border: none; border-radius: 6px; padding: 6px 15px; font-size: 0.9em; font-weight: var(--font-weight-semibold); cursor: pointer; transition: background-color 0.2s ease; margin-top: 10px; }
 .add-dca-btn:hover { background-color: #146c43; }
 
-/* ✅ دعم اللغة الإنجليزية في جدول DCA */
 body.lang-en .dca-table th,
 body.lang-en .dca-table td {
     text-align: center;
@@ -2067,7 +2065,6 @@ body.lang-en .sell-partial-preview-row .value { text-align: left; }
     color: #121212;
 }
 
-/* وضع الخصوصية: إخفاء زر المعلومات */
 body.financial-privacy .coin-info-btn {
     filter: blur(4px);
     pointer-events: none;
@@ -2978,7 +2975,7 @@ body.lang-en .asset-filter-bar {
 </head>
 <body>
 
-<!-- ✅ [جديد #40] لودر رئيسي يظهر أثناء التحميل الأول -->
+<!-- ✅ [جديد] لودر رئيسي يظهر أثناء التحميل الأول -->
 <div id="globalLoader" aria-hidden="true">
     <div class="global-loader-box">
         <div class="global-loader-spinner"></div>
@@ -3039,17 +3036,16 @@ body.lang-en .asset-filter-bar {
 <span class="notification-badge" id="notifBadge" style="display:none;">0</span>
 </button>
 
+<!-- ✅ [جديد] زر فك التشفير -->
+<button class="settings-btn" onclick="openDecryptModal()" title="فك تشفير واستيراد ملفات JSON" style="background-color: #d97706;">🔓 فك التشفير</button>
+
 <button class="settings-btn" onclick="openColorSettings()" title="إعدادات الألوان والثيم">⚙️ الإعدادات</button>
 <button class="theme-btn" id="topThemeBtn" onclick="toggleThemeFromTop()" title="تبديل الوضع">🌙</button>
 <button class="print-btn" onclick="printReport()" title="طباعة التقرير">🖨️ طباعة</button>
 <button class="tb-btn xlsx-export" onclick="exportToExcel()" title="تصدير البيانات إلى Excel">📊 Excel</button>
 
-<!-- ✅ استيراد موحّد: يقبل .txt و .json تلقائياً -->
 <button class="import-btn" onclick="document.getElementById('importFile').click()" title="استيراد TXT أو JSON">📂 استيراد</button>
-
-<!-- ✅ زر حفظ موحّد: يحفظ الملفين معاً (TXT + JSON) -->
 <button class="txt-btn" onclick="saveAllDataBothFormats()" title="حفظ البيانات بصيغتي TXT و JSON">💾 حفظ (TXT + JSON)</button>
-
 <button class="reset-btn" onclick="resetAllData()" title="ضبط افتراضي - مسح كل البيانات">🔄 ضبط افتراضي</button>
 </div>
 </div>
@@ -3235,32 +3231,26 @@ body.lang-en .asset-filter-bar {
 <label for="newCoinName">إضافة/بحث:</label>
 <input type="text" id="newCoinName" placeholder="BTCUSDT أو AAPL" onkeypress="handleNewCoinEnter(event)">
 
-<!-- ✅ [جديد] قائمة اختيار نوع الأصل -->
 <select id="newAssetType" class="asset-type-select" title="نوع الأصل — تلقائي: يكتشف النوع من الرمز">
     <option value="auto">🔍 تلقائي</option>
     <option value="crypto">₿ كريبتو</option>
     <option value="stock">📈 سهم</option>
 </select>
-<!-- ✅ نهاية الإضافة -->
 
 <button onclick="addOrSwitchCoin()" class="btn-pulse">➕ إضافة/تبديل</button>
 <div id="apiStatus">اختر عملة لجلب السعر</div>
 <div id="coinStatus">العملات: 0</div>
 <button id="refreshPriceBtn" title="تحديث الأسعار" onclick="fetchAllPrices()" class="btn-pulse">🔄 تحديث</button>
-<!-- ✅ [جديد] زر سجل جلب الأسعار -->
 <button id="fetchLogBtn" title="عرض سجل آخر جلب للأسعار" onclick="showFetchLog()" class="btn-pulse">📋 سجل الجلب</button>
-<!-- ✅ نهاية الإضافة -->
 <button id="deleteCoinBtn" onclick="deleteCurrentCoin()" disabled title="حذف العملة المحددة">🗑️ حذف</button>
 <button id="tradingViewBtn" onclick="openTradingView()" title="فتح TradingView" class="btn-pulse">📈 TradingView</button>
 </div>
 
-<!-- ✅ [جديد] نصيحة توضيحية -->
 <div class="asset-type-hint">
     💡 <strong>تلميح:</strong> اترك النوع على <strong>"تلقائي"</strong> ليكتشف النظام نوع الأصل تلقائياً.
     الرموز المنتهية بـ <code>USDT / BUSD / USDC</code> = كريبتو.
     بقية الرموز (مثل <code>AAPL</code>, <code>2222.SR</code>, <code>ARAMCO.SR</code>) = أسهم.
 </div>
-<!-- ✅ نهاية الإضافة -->
 
 </div>
 </section>
@@ -3361,14 +3351,12 @@ body.lang-en .asset-filter-bar {
     <span class="date-mode-hint" id="dcaDateHint" style="display:none;">💡 سيتم تسجيل كل تعزيز جديد بالتاريخ المختار.</span>
 </div>
 
-<!-- ✅ [جديد] فلتر نوع الأصل في جدول الملخص -->
 <div class="asset-filter-bar">
     <span class="asset-filter-label">🔎 فلتر:</span>
     <button class="asset-filter-btn active" data-filter="all" onclick="setSummaryAssetFilter('all', this)">🌍 الكل</button>
     <button class="asset-filter-btn" data-filter="crypto" onclick="setSummaryAssetFilter('crypto', this)">₿ كريبتو</button>
     <button class="asset-filter-btn" data-filter="stock" onclick="setSummaryAssetFilter('stock', this)">📈 أسهم</button>
 </div>
-<!-- ✅ نهاية الإضافة -->
 
 <div class="summary-table-container">
 <table class="summary-table table-hover-effect">
@@ -3545,7 +3533,7 @@ body.lang-en .asset-filter-bar {
 
 <button class="donate-fab" onclick="openDonateModal()" title="ادعم المشروع">💖</button>
 
-<!-- نافذة البيع الجزئي -->
+<!-- ✅ نافذة البيع الجزئي -->
 <div class="sell-partial-modal-overlay" id="sellPartialModalOverlay">
     <div class="sell-partial-modal" onclick="event.stopPropagation();">
 
@@ -3841,6 +3829,64 @@ body.lang-en .asset-filter-bar {
 </div>
 </div>
 
+<!-- ✅ [جديد] نافذة فك التشفير واستيراد الملفات (مع خيارات الاستيراد) -->
+<div class="popup-overlay" id="decryptPopup">
+    <div class="popup-content" style="max-width: 700px;">
+        <div class="popup-header">
+            <h3 class="popup-title">🔓 فك تشفير واستيراد الملفات</h3>
+            <button class="popup-close" onclick="closeDecryptModal()">&times;</button>
+        </div>
+        <div class="popup-body">
+            <!-- خيارات وضع الاستيراد -->
+            <div style="margin-bottom: 15px; padding: 10px; background: var(--bg-color); border-radius: 8px; border: 1px solid var(--border-color);">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin-bottom: 8px;">
+                    <input type="radio" name="importMode" value="local" checked onchange="toggleImportMode()">
+                    <span>📱 استيراد من الهاتف (رفع ملفات)</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="radio" name="importMode" value="github" onchange="toggleImportMode()">
+                    <span>🌐 استيراد مباشر من GitHub</span>
+                </label>
+            </div>
+
+            <div class="bug-form-group">
+                <label>🔑 كلمة المرور:</label>
+                <input type="password" id="decryptPassword" placeholder="أدخل كلمة المرور هنا...">
+            </div>
+            
+            <!-- الوضع المحلي (رفع الملفات) -->
+            <div id="localModeInputs">
+                <div class="bug-form-group">
+                    <label>📁 ملف pop1.json (بيانات الموقع):</label>
+                    <input type="file" id="pop1File" accept=".json">
+                </div>
+                <div class="bug-form-group">
+                    <label>📁 ملف pop2.json (مفاتيح API):</label>
+                    <input type="file" id="pop2File" accept=".json">
+                </div>
+            </div>
+
+            <!-- وضع GitHub (روابط مباشرة) -->
+            <div id="githubModeInputs" style="display: none;">
+                <div class="bug-form-group">
+                    <label>🔗 رابط ملف pop1.json (بيانات الموقع):</label>
+                    <input type="text" id="pop1Url" placeholder="https://raw.githubusercontent.com/..." value="https://raw.githubusercontent.com/muharraqi55/crypto/main/pop1.json">
+                </div>
+                <div class="bug-form-group">
+                    <label>🔗 رابط ملف pop2.json (مفاتيح API):</label>
+                    <input type="text" id="pop2Url" placeholder="https://raw.githubusercontent.com/..." value="https://raw.githubusercontent.com/muharraqi55/crypto/main/pop2.json">
+                </div>
+            </div>
+            
+            <div id="decryptStatus" style="margin-top: 15px; font-weight: bold; text-align: center;"></div>
+        </div>
+        <div class="popup-footer">
+            <button class="popup-btn popup-btn-secondary" onclick="closeDecryptModal()">إلغاء</button>
+            <button class="popup-btn popup-btn-primary" onclick="processDecryption()">🔓 فك التشفير واستيراد</button>
+        </div>
+    </div>
+</div>
+
 <!-- ✅ نافذة التحديثات (مخفية افتراضياً - تُفتح عبر showUpdatePopup) -->
 <div class="update-popup" id="updatePopup">
 <div class="update-popup-icon">✓</div>
@@ -3919,7 +3965,6 @@ body.lang-en .asset-filter-bar {
 </div>
 </div>
 
-<!-- ✅ نافذة معلومات العملة -->
 <div class="popup-overlay" id="coinInfoPopup">
     <div class="coin-info-modal" onclick="event.stopPropagation();">
         <div class="coin-info-header">
@@ -3942,7 +3987,6 @@ body.lang-en .asset-filter-bar {
     </div>
 </div>
 
-<!-- ✅ [جديد] نافذة سجل جلب الأسعار -->
 <div class="popup-overlay" id="fetchLogPopup">
     <div class="popup-content" style="max-width: 700px;">
         <div class="popup-header">
@@ -3960,7 +4004,6 @@ body.lang-en .asset-filter-bar {
     </div>
 </div>
 
-<!-- ✅ [جديد] نافذة التحقق من الأصل قبل الإضافة -->
 <div class="popup-overlay" id="validateAssetPopup">
     <div class="popup-content" style="max-width: 500px;">
         <div class="popup-header">
@@ -3976,57 +4019,53 @@ body.lang-en .asset-filter-bar {
 
 <div id="printReport" style="display: none;"></div>
 
-<!-- ✅ استيراد موحّد: يقبل .txt و .json معاً -->
 <input type="file" id="importFile" accept=".txt,.json,application/json,text/plain" style="display: none;">
 
+<!-- ✅ [ملاحظة] هنا يبدأ كود الـ JavaScript (القسم الثالث) -->
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JavaScript — النسخة النهائية v18.2
-   ✅ [v17]   تعطيل تفاصيل الدخول بعد البيع الكامل
-   ✅ [v17.2] تعطيل زر إضافة التعزيز عند البيع الكامل
-   ✅ [v18]   دعم البحرين عبر InsightSentry
-   ✅ [v18]   دعم EODHD للأسهم العالمية
-   ✅ [v18.1] إصلاح KASUSDT → TONUSDT
-   ✅ [v18.2] كاش CoinGecko مع cooldown بعد 429
-   ✅ [v18.2] الشرق الأوسط → Yahoo أولاً (بدون EODHD 404)
+   JavaScript — القسم الثالث (الجزء 1 من 3)
+   ✅ تمت إزالة مفاتيح الـ API الثابتة وإضافة نظام فك التشفير
    ═══════════════════════════════════════════════════════════════ */
 
 const MY_PROXY_URL = 'https://crypto-proxy.qwqwqwzx5.workers.dev';
 const FINNHUB_API_KEY = 'db5rvuhr01qmd5lf9cl0db5rvuhr01qmd5lf9clg';
 const TWELVE_DATA_API_KEY = 'a0c201956c7540ceb8b1df362830b1c7';
 
-const EODHD_API_KEY = '6ad7b1c99d8a22.75564773';
-const INSIGHTSENTRY_API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3cXdxd3p4NUBnbWFpbC5jb20iLCJjcmVhdGVkX2F0IjoxNzkyNTcwMDc2ODI4fQ.wSxnmAGTNb-GEcQM3g1ZJtS-i7CChA7lenyNzRX3Duw';
+// ✅ [جديد] متغيرات فارغة لمفاتيح API، سيتم تعبئتها عند فك تشفير pop2.json
+let EODHD_API_KEY = '';
+let INSIGHTSENTRY_API_KEY = '';
+
+// ✅ [جديد] استرجاع مفاتيح API من الجلسة إذا كانت محفوظة (لتجنب إعادة الرفع كل مرة)
+if (sessionStorage.getItem('decrypted_EODHD_KEY')) {
+    EODHD_API_KEY = sessionStorage.getItem('decrypted_EODHD_KEY');
+}
+if (sessionStorage.getItem('decrypted_INSIGHT_KEY')) {
+    INSIGHTSENTRY_API_KEY = sessionStorage.getItem('decrypted_INSIGHT_KEY');
+}
+
 const INSIGHTSENTRY_BASE = 'https://api.insightsentry.com';
 const insightSentryCache = new Map();
 const INSIGHTSENTRY_CACHE_TTL = 15 * 60 * 1000;
 
-// ✅ [v18.3] كاش CoinGecko مع منع الطلبات المتوازية + كولداون أطول
 const coinGeckoGlobalCache = { data: null, time: 0, cooldownUntil: 0, lastError: null };
-let coinGeckoGlobalPendingPromise = null;  // ← يمنع الطلبات المتوازية
-const COINGECKO_GLOBAL_TTL = 5 * 60 * 1000;         // 5 دقائق للكاش العادي
-const COINGECKO_COOLDOWN_429 = 15 * 60 * 1000;       // 15 دقيقة بعد 429 (بدل 3)
-const COINGECKO_COOLDOWN_OTHER = 60 * 1000;          // 1 دقيقة لأي فشل آخر
+let coinGeckoGlobalPendingPromise = null;
+const COINGECKO_GLOBAL_TTL = 5 * 60 * 1000;
+const COINGECKO_COOLDOWN_429 = 15 * 60 * 1000;
+const COINGECKO_COOLDOWN_OTHER = 60 * 1000;
 
 async function fetchCoinGeckoGlobalCached() {
-    // 1️⃣ منع الطلبات المتوازية: إذا كان هناك طلب قيد التنفيذ، أعِد نفس الـ Promise
     if (coinGeckoGlobalPendingPromise) {
         return coinGeckoGlobalPendingPromise;
     }
-
-    // 2️⃣ هل الكولداون نشط؟ (بعد 429 سابق)
     if (coinGeckoGlobalCache.cooldownUntil && Date.now() < coinGeckoGlobalCache.cooldownUntil) {
         if (coinGeckoGlobalCache.data) return coinGeckoGlobalCache.data;
         const wait = Math.ceil((coinGeckoGlobalCache.cooldownUntil - Date.now()) / 1000);
         throw new Error('CoinGecko cooldown active (' + wait + 's remaining)');
     }
-
-    // 3️⃣ هل الكاش لا يزال صالحاً؟
     if (coinGeckoGlobalCache.data && (Date.now() - coinGeckoGlobalCache.time) < COINGECKO_GLOBAL_TTL) {
         return coinGeckoGlobalCache.data;
     }
-
-    // 4️⃣ جلب جديد — الطلبات المتوازية ستشارك هذا الـ Promise نفسه
     coinGeckoGlobalPendingPromise = (async () => {
         try {
             const targetUrl = 'https://api.coingecko.com/api/v3/global';
@@ -4051,11 +4090,9 @@ async function fetchCoinGeckoGlobalCached() {
             coinGeckoGlobalCache.lastError = e.message;
             throw e;
         } finally {
-            // مهما حدث، امسح الـ pending بعد انتهاء الطلب
             coinGeckoGlobalPendingPromise = null;
         }
     })();
-
     return coinGeckoGlobalPendingPromise;
 }
 
@@ -4064,14 +4101,12 @@ const PRICE_CACHE_TTL = 25000;
 const stockPriceCache = new Map();
 const STOCK_PRICE_CACHE_TTL = 5 * 60 * 1000;
 
-// ✅ كاش معلومات العملات والأسعار السوقية
 const coinInfoCache = new Map();
-const COIN_INFO_CACHE_TTL = 10 * 60 * 1000; // 10 دقائق
-const COIN_INFO_STALE_TTL = 24 * 60 * 60 * 1000; // يمكن عرض النسخة القديمة مع تنبيه لمدة أقصاها 24 ساعة
+const COIN_INFO_CACHE_TTL = 10 * 60 * 1000;
+const COIN_INFO_STALE_TTL = 24 * 60 * 60 * 1000;
 const COIN_INFO_STORAGE_PREFIX = 'muharraqi_coin_info_cache_v2_';
 const coinInfoPendingRequests = new Map();
 
-// ✅ إيقاف مؤقت لـ CoinGecko بعد 429 + كولداون خاص بكل عملة
 const coinGeckoInfoCooldown = new Map();
 let coinGeckoInfoGlobalCooldownUntil = 0;
 let currentCoinInfoSymbol = null;
@@ -4573,6 +4608,144 @@ function showSuccess(message) { showPopup(currentLang === 'en' ? 'Success' : 'ن
 function showError(message) { showPopup(currentLang === 'en' ? 'Error' : 'خطأ', message, currentLang === 'en' ? 'OK' : 'موافق', '', () => {}, null); }
 function showInfo(message) { showPopup(currentLang === 'en' ? 'Info' : 'معلومات', message, currentLang === 'en' ? 'OK' : 'موافق', '', () => {}, null); }
 
+// ✅ [جديد] دوال فك التشفير واستيراد ملفات pop1 و pop2
+function openDecryptModal() {
+    document.getElementById('decryptPopup').classList.add('active');
+    document.getElementById('decryptPassword').value = '';
+    document.getElementById('pop1File').value = '';
+    document.getElementById('pop2File').value = '';
+    document.getElementById('decryptStatus').innerHTML = '';
+    toggleImportMode(); // لتحديث الواجهة
+}
+
+function closeDecryptModal() {
+    document.getElementById('decryptPopup').classList.remove('active');
+}
+
+function toggleImportMode() {
+    const mode = document.querySelector('input[name="importMode"]:checked').value;
+    if (mode === 'local') {
+        document.getElementById('localModeInputs').style.display = 'block';
+        document.getElementById('githubModeInputs').style.display = 'none';
+    } else {
+        document.getElementById('localModeInputs').style.display = 'none';
+        document.getElementById('githubModeInputs').style.display = 'block';
+    }
+}
+
+async function processDecryption() {
+    const password = document.getElementById('decryptPassword').value;
+    const mode = document.querySelector('input[name="importMode"]:checked').value;
+    const statusDiv = document.getElementById('decryptStatus');
+
+    if (!password) {
+        statusDiv.innerHTML = '<span style="color: var(--negative-color);">⚠️ الرجاء إدخال كلمة المرور.</span>';
+        return;
+    }
+
+    statusDiv.innerHTML = '<span style="color: var(--primary-color);">⏳ جاري فك التشفير...</span>';
+
+    const decryptText = (encryptedText, pass) => {
+        try {
+            const bytes = CryptoJS.AES.decrypt(encryptedText, pass);
+            const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
+            if (!decryptedString) throw new Error("كلمة المرور غير صحيحة أو الملف تالف.");
+            return JSON.parse(decryptedString);
+        } catch (e) {
+            throw new Error("فشل فك التشفير: تأكد من كلمة المرور والملف.");
+        }
+    };
+
+    let messages = [];
+    let hasError = false;
+
+    // 1. معالجة ملف pop1 (بيانات الموقع)
+    try {
+        let content = '';
+        if (mode === 'local') {
+            const file = document.getElementById('pop1File').files[0];
+            if (file) {
+                content = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = reject;
+                    reader.readAsText(file);
+                });
+            }
+        } else {
+            const url = document.getElementById('pop1Url').value.trim();
+            if (url) {
+                const res = await fetch(url);
+                if (res.ok) content = await res.text();
+                else throw new Error('فشل جلب الملف من الرابط.');
+            }
+        }
+
+        if (content) {
+            const decryptedData = decryptText(content, password);
+            if (typeof importFromJSONContent === 'function') {
+                importFromJSONContent(JSON.stringify(decryptedData));
+                messages.push('✅ تم استيراد بيانات الموقع (pop1) بنجاح.');
+            }
+        }
+    } catch (e) {
+        hasError = true;
+        messages.push('❌ خطأ في ملف pop1: ' + e.message);
+    }
+
+    // 2. معالجة ملف pop2 (مفاتيح API)
+    try {
+        let content = '';
+        if (mode === 'local') {
+            const file = document.getElementById('pop2File').files[0];
+            if (file) {
+                content = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = reject;
+                    reader.readAsText(file);
+                });
+            }
+        } else {
+            const url = document.getElementById('pop2Url').value.trim();
+            if (url) {
+                const res = await fetch(url);
+                if (res.ok) content = await res.text();
+                else throw new Error('فشل جلب الملف من الرابط.');
+            }
+        }
+
+        if (content) {
+            const decryptedKeys = decryptText(content, password);
+            if (decryptedKeys.EODHD_API_KEY) {
+                EODHD_API_KEY = decryptedKeys.EODHD_API_KEY;
+                sessionStorage.setItem('decrypted_EODHD_KEY', EODHD_API_KEY);
+            }
+            if (decryptedKeys.INSIGHTSENTRY_API_KEY) {
+                INSIGHTSENTRY_API_KEY = decryptedKeys.INSIGHTSENTRY_API_KEY;
+                sessionStorage.setItem('decrypted_INSIGHT_KEY', INSIGHTSENTRY_API_KEY);
+            }
+            messages.push('✅ تم استيراد مفاتيح API (pop2) بنجاح.');
+        }
+    } catch (e) {
+        hasError = true;
+        messages.push('❌ خطأ في ملف pop2: ' + e.message);
+    }
+
+    if (messages.length === 0) {
+        statusDiv.innerHTML = '<span style="color: var(--negative-color);">⚠️ لم يتم اختيار أي ملف أو إدخال رابط.</span>';
+        return;
+    }
+
+    statusDiv.innerHTML = messages.join('<br>');
+
+    if (!hasError && messages.length > 0) {
+        setTimeout(() => {
+            closeDecryptModal();
+            location.reload(); // إعادة التحميل لتطبيق التغييرات
+        }, 2000);
+    }
+}
 const marketPriceDisplay = document.getElementById('marketPriceDisplay');
 const apiStatusDiv = document.getElementById('apiStatus');
 const autoRefreshCheckbox = document.getElementById('autoRefreshCheckbox');
@@ -6063,17 +6236,7 @@ async function openCoinInfoModal(symbol) {
         renderCoinInfoError(err.message || 'Unknown error');
     } finally { if (myToken === __coinInfoSessionToken && refreshBtn) refreshBtn.disabled = false; }
 }
-function closeCoinInfoModal() { __coinInfoSessionToken++; const modal = document.getElementById('coinInfoPopup'); if (modal) modal.classList.remove('active'); currentCoinInfoSymbol = null; }
-async function refreshCoinInfo() {
-    if (!currentCoinInfoSymbol) return;
-    const baseSymbol = getBaseSymbolFromKey(currentCoinInfoSymbol);
-    const normalizedBase = String(baseSymbol || '').toUpperCase();
-    coinInfoCache.delete(normalizedBase);
-    const cleanSymbol = normalizedBase.replace(/USDT$/i, '').replace(/BUSD$/i, '').replace(/USDC$/i, '').replace(/TUSD$/i, '').replace(/USDP$/i, '').trim().toLowerCase();
-    coinIdCache.delete(cleanSymbol);
-    try { localStorage.removeItem(getCoinInfoStorageKey(normalizedBase)); } catch (e) {}
-    await openCoinInfoModal(currentCoinInfoSymbol);
-}
+
 function getCoinInfoStorageKey(baseSymbol) {
     return COIN_INFO_STORAGE_PREFIX + encodeURIComponent(String(baseSymbol || '').toUpperCase());
 }
@@ -6089,9 +6252,7 @@ function readStoredCoinInfo(baseSymbol) {
 function saveStoredCoinInfo(baseSymbol, data) {
     try {
         localStorage.setItem(getCoinInfoStorageKey(baseSymbol), JSON.stringify({ savedAt: Date.now(), data }));
-    } catch (e) {
-        // قد يكون التخزين ممتلئًا أو معطلًا؛ الذاكرة المؤقتة ما زالت تعمل
-    }
+    } catch (e) {}
 }
 async function fetchJsonThroughProxy(targetUrl, timeoutMs = 10000) {
     const proxyUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(targetUrl);
@@ -6120,7 +6281,6 @@ async function fetchCoinInfoData(baseSymbol) {
         return storedEntry.data;
     }
 
-    // يمنع النقر المتكرر من إطلاق عدة طلبات لنفس العملة
     if (coinInfoPendingRequests.has(normalizedBase)) return coinInfoPendingRequests.get(normalizedBase);
 
     const staleEntry = (memoryEntry && memoryEntry.data)
@@ -6134,7 +6294,6 @@ async function fetchCoinInfoData(baseSymbol) {
         if (!cleanSymbol) throw new Error(currentLang === 'en' ? 'Invalid symbol' : 'رمز غير صالح');
 
         let coinGeckoError = null;
-        // المصدر الأول: CoinGecko، إلا إذا كان هناك إيقاف مؤقت بسبب 429
         if (Date.now() >= coinGeckoInfoGlobalCooldownUntil) {
             try {
                 let coinId = coinIdCache.get(cleanSymbol);
@@ -6152,30 +6311,24 @@ async function fetchCoinInfoData(baseSymbol) {
                 if (Number(e && e.status) === 429 || /429|rate.limit|rate-limited|تجاوز حد/i.test(String(e && e.message || ''))) {
                     coinGeckoInfoGlobalCooldownUntil = Date.now() + 2 * 60 * 1000;
                 }
-                console.warn('⚠️ CoinGecko unavailable; trying CoinPaprika:', e && e.message ? e.message : e);
             }
         }
 
-        // المصدر البديل: CoinPaprika، ولا يحتاج مفتاح API للاستخدام الأساسي
         try {
             const paprikaData = await fetchCoinPaprikaMarketData(cleanSymbol);
             const normalizedData = { ...paprikaData, _source: 'CoinPaprika', _stale: false };
             coinInfoCache.set(normalizedBase, { time: Date.now(), data: normalizedData });
             saveStoredCoinInfo(normalizedBase, normalizedData);
             return normalizedData;
-        } catch (paprikaError) {
-            console.warn('⚠️ CoinPaprika fallback failed:', paprikaError && paprikaError.message ? paprikaError.message : paprikaError);
-        }
+        } catch (paprikaError) {}
 
-        // إن فشل المصدران، أظهر آخر بيانات محفوظة بشرط وضع تنبيه واضح بأنها قديمة
         if (staleEntry && staleEntry.data && Date.now() - Number(staleEntry.savedAt || 0) < COIN_INFO_STALE_TTL) {
             return { ...staleEntry.data, _stale: true, _staleSavedAt: Number(staleEntry.savedAt || 0) };
         }
 
-        const geckoMessage = coinGeckoError && coinGeckoError.message ? coinGeckoError.message : '';
         throw new Error(currentLang === 'en'
-            ? 'CoinGecko is rate-limited and CoinPaprika could not provide this coin. ' + geckoMessage
-            : 'CoinGecko يرفض الطلبات، وتعذر الحصول على بيانات هذه العملة من CoinPaprika أيضًا. ' + geckoMessage);
+            ? 'CoinGecko is rate-limited and CoinPaprika could not provide this coin.'
+            : 'CoinGecko يرفض الطلبات، وتعذر الحصول على بيانات هذه العملة من CoinPaprika أيضًا.');
     })();
 
     coinInfoPendingRequests.set(normalizedBase, requestPromise);
@@ -6227,7 +6380,6 @@ async function fetchCoinPaprikaMarketData(symbol) {
     const currencies = Array.isArray(searchData.currencies) ? searchData.currencies : [];
     const matches = currencies.filter(item => String(item.symbol || '').toUpperCase() === String(symbol).toUpperCase() && item.id && item.is_active !== false);
     if (!matches.length) throw new Error('CoinPaprika could not find an exact symbol match for ' + symbol.toUpperCase());
-    // عند وجود أكثر من عملة بالرمز نفسه، اختر الأعلى ترتيبًا المتاح من نتائج البحث
     matches.sort((a, b) => {
         const ar = Number(a.rank) || Number.MAX_SAFE_INTEGER;
         const br = Number(b.rank) || Number.MAX_SAFE_INTEGER;
@@ -6328,7 +6480,7 @@ async function fetchTwelveDataPrice(symbol) {
         const data = await response.json();
         if (data && data.price && !isNaN(parseFloat(data.price))) return { symbol: symbol, price: parseFloat(data.price), source: 'Twelve Data', error: null };
         return null;
-    } catch (e) { console.warn('⚠️ Twelve Data failed for', symbol, e.message); return null; }
+    } catch (e) { return null; }
 }
 async function fetchFinnhubPrice(symbol) {
     try {
@@ -6342,11 +6494,15 @@ async function fetchFinnhubPrice(symbol) {
         const data = await response.json();
         if (data && typeof data.c === 'number' && data.c > 0) return { symbol: symbol, price: data.c, source: 'Finnhub', error: null };
         return null;
-    } catch (e) { console.warn('⚠️ Finnhub failed for', symbol, e.message); return null; }
+    } catch (e) { return null; }
 }
 
 async function fetchBahrainBoursePrice(symbol) {
     if (!symbol || !symbol.toUpperCase().endsWith('.BH')) return null;
+    if (!INSIGHTSENTRY_API_KEY) {
+        console.warn('⚠️ InsightSentry API Key missing. Please decrypt pop2.json');
+        return { symbol: symbol, price: null, source: null, error: 'API Key missing' };
+    }
     const cleanSymbol = symbol.replace(/\.BH$/i, '').toUpperCase();
     const fullSymbol = 'BAHRAIN:' + cleanSymbol;
     if (insightSentryCache.has(fullSymbol)) {
@@ -6359,7 +6515,6 @@ async function fetchBahrainBoursePrice(symbol) {
             headers: { 'Authorization': 'Bearer ' + INSIGHTSENTRY_API_KEY, 'Accept': 'application/json' }
         });
         if (response.status === 429) {
-            console.warn('⚠️ InsightSentry: تجاوز حد الطلبات (429)');
             if (insightSentryCache.has(fullSymbol)) return insightSentryCache.get(fullSymbol).data;
             return { symbol: symbol, price: null, source: null, error: 'Rate limited (429)' };
         }
@@ -6370,7 +6525,6 @@ async function fetchBahrainBoursePrice(symbol) {
             const priceBHD = parseFloat(quote.last_price) || parseFloat(quote.regular_close_price) || parseFloat(quote.prev_close_price);
             if (priceBHD > 0 && !isNaN(priceBHD)) {
                 const priceUSD = priceBHD / 0.376;
-                console.log('✅ InsightSentry (' + fullSymbol + '): ' + priceBHD + ' BHD ≈ $' + priceUSD.toFixed(4) + ' USD');
                 const result = { symbol: symbol, price: priceUSD, priceOriginal: priceBHD, currency: 'BHD', source: 'InsightSentry', error: null };
                 insightSentryCache.set(fullSymbol, { time: Date.now(), data: result });
                 return result;
@@ -6378,12 +6532,15 @@ async function fetchBahrainBoursePrice(symbol) {
         }
         return { symbol: symbol, price: null, source: null, error: 'No price in response' };
     } catch (e) {
-        console.error('❌ InsightSentry error:', e);
         return { symbol: symbol, price: null, source: null, error: e.message };
     }
 }
 
 async function fetchEODHDPrice(symbol) {
+    if (!EODHD_API_KEY) {
+        console.warn('⚠️ EODHD API Key missing. Please decrypt pop2.json');
+        return null;
+    }
     try {
         const url = 'https://eodhd.com/api/real-time/' + encodeURIComponent(symbol) + '?api_token=' + EODHD_API_KEY + '&fmt=json';
         const fetchUrl = MY_PROXY_URL + '?url=' + encodeURIComponent(url);
@@ -6391,21 +6548,13 @@ async function fetchEODHDPrice(symbol) {
         const timeoutId = setTimeout(() => controller.abort(), 8000);
         const response = await fetch(fetchUrl, { signal: controller.signal });
         clearTimeout(timeoutId);
-        if (!response.ok) {
-            console.warn('⚠️ EODHD HTTP', response.status, 'for', symbol);
-            return null;
-        }
+        if (!response.ok) return null;
         const data = await response.json();
-                if (!data || (data.code && data.code === 'N/D')) {
-            console.warn('⚠️ EODHD: invalid symbol or N/D for', symbol);
-            return null;
-        }
+        if (!data || (data.code && data.code === 'N/D')) return null;
         const price = parseFloat(data.close || data.previousClose || data.price);
-        if (price > 0 && !isNaN(price)) {
-            return { symbol: symbol, price: price, source: 'EODHD', error: null };
-        }
+        if (price > 0 && !isNaN(price)) return { symbol: symbol, price: price, source: 'EODHD', error: null };
         return null;
-    } catch (e) { console.warn('⚠️ EODHD failed for', symbol, e.message); return null; }
+    } catch (e) { return null; }
 }
 
 async function fetchYahooPrice(symbol) {
@@ -6424,10 +6573,9 @@ async function fetchYahooPrice(symbol) {
             if (price && !isNaN(parseFloat(price))) return { symbol: symbol, price: parseFloat(price), source: 'Yahoo Finance', error: null };
         }
         return null;
-    } catch (e) { console.warn('⚠️ Yahoo Finance failed for', symbol, e.message); return null; }
+    } catch (e) { return null; }
 }
 
-// ✅ [v18.2] fetchStockPrice — أولويات محسّنة لكل سوق
 async function fetchStockPrice(symbol) {
     if (stockPriceCache.has(symbol)) {
         const cached = stockPriceCache.get(symbol);
@@ -6435,18 +6583,13 @@ async function fetchStockPrice(symbol) {
             return cached.data;
         }
     }
-    
     const upper = String(symbol).toUpperCase();
-    
-    // 🇧🇭 البحرين: InsightSentry أولاً
     if (upper.endsWith('.BH')) {
-        console.log('🇧🇭 سهم بحريني → InsightSentry API:', symbol);
         const bhbResult = await fetchBahrainBoursePrice(symbol);
         if (bhbResult && bhbResult.price) {
             stockPriceCache.set(symbol, { time: Date.now(), data: bhbResult });
             return bhbResult;
         }
-        console.log('⚠️ فشل InsightSentry، جاري تجربة Yahoo...');
         const yahooResult = await fetchYahooPrice(symbol);
         if (yahooResult && yahooResult.price) {
             stockPriceCache.set(symbol, { time: Date.now(), data: yahooResult });
@@ -6454,52 +6597,25 @@ async function fetchStockPrice(symbol) {
         }
         return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'All Bahrain sources failed' : 'فشل جميع مصادر البحرين' };
     }
-    
-    // 🌍 الشرق الأوسط → Yahoo أولاً (EODHD لا يدعم .SR مجاناً)
     const middleEastSuffixes = ['.SR', '.AE', '.QA', '.KW', '.OM', '.JO', '.SA'];
     const isMiddleEast = middleEastSuffixes.some(s => upper.endsWith(s));
-    
     if (isMiddleEast) {
-        console.log('🌍 سهم شرق أوسطي → Yahoo أولاً:', symbol);
         let result = await fetchYahooPrice(symbol);
-        if (result && result.price) {
-            stockPriceCache.set(symbol, { time: Date.now(), data: result });
-            return result;
-        }
+        if (result && result.price) { stockPriceCache.set(symbol, { time: Date.now(), data: result }); return result; }
         result = await fetchTwelveDataPrice(symbol);
-        if (result && result.price) {
-            stockPriceCache.set(symbol, { time: Date.now(), data: result });
-            return result;
-        }
+        if (result && result.price) { stockPriceCache.set(symbol, { time: Date.now(), data: result }); return result; }
         result = await fetchFinnhubPrice(symbol);
-        if (result && result.price) {
-            stockPriceCache.set(symbol, { time: Date.now(), data: result });
-            return result;
-        }
+        if (result && result.price) { stockPriceCache.set(symbol, { time: Date.now(), data: result }); return result; }
         return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'All Middle East providers failed' : 'فشل جميع مزودي الشرق الأوسط' };
     }
-    
-    // 🌐 أسهم عالمية: EODHD → TwelveData → Finnhub → Yahoo
     let result = await fetchEODHDPrice(symbol);
-    if (result && result.price) {
-        stockPriceCache.set(symbol, { time: Date.now(), data: result });
-        return result;
-    }
+    if (result && result.price) { stockPriceCache.set(symbol, { time: Date.now(), data: result }); return result; }
     result = await fetchTwelveDataPrice(symbol);
-    if (result && result.price) {
-        stockPriceCache.set(symbol, { time: Date.now(), data: result });
-        return result;
-    }
+    if (result && result.price) { stockPriceCache.set(symbol, { time: Date.now(), data: result }); return result; }
     result = await fetchFinnhubPrice(symbol);
-    if (result && result.price) {
-        stockPriceCache.set(symbol, { time: Date.now(), data: result });
-        return result;
-    }
+    if (result && result.price) { stockPriceCache.set(symbol, { time: Date.now(), data: result }); return result; }
     result = await fetchYahooPrice(symbol);
-    if (result && result.price) {
-        stockPriceCache.set(symbol, { time: Date.now(), data: result });
-        return result;
-    }
+    if (result && result.price) { stockPriceCache.set(symbol, { time: Date.now(), data: result }); return result; }
     return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'All stock providers failed' : 'فشل جميع مزودي الأسهم' };
 }
 
@@ -6510,10 +6626,7 @@ async function fetchSinglePrice(symbol) {
     const assetType = (data && data.assetType) ? data.assetType : detectAssetType(baseSymbol, 'auto');
     if (assetType === 'stock') return await fetchStockPrice(baseSymbol);
     if (priceCache.has(symbol)) { const cached = priceCache.get(symbol); if (Date.now() - cached.time < PRICE_CACHE_TTL && cached.data && cached.data.price) return cached.data; }
-    // تجاوز Binance للعملات التي قد يرفض أزواجها، وتجربة المصادر البديلة
-    const binanceDomains = ['KASUSDT', 'XDBUSDT'].includes(baseSymbol.toUpperCase())
-        ? []
-        : ['https://api.binance.com'];
+    const binanceDomains = ['KASUSDT', 'XDBUSDT'].includes(baseSymbol.toUpperCase()) ? [] : ['https://api.binance.com'];
     for (const domain of binanceDomains) {
         let timeoutId;
         try {
@@ -6528,11 +6641,7 @@ async function fetchSinglePrice(symbol) {
                     return result;
                 }
             }
-        } catch (e) {
-            // تابع إلى المصدر البديل عند فشل Binance
-        } finally {
-            if (timeoutId) clearTimeout(timeoutId);
-        }
+        } catch (e) {} finally { if (timeoutId) clearTimeout(timeoutId); }
     }
     const altExchanges = [
         { name: 'MEXC',    url: 'https://api.mexc.com/api/v3/ticker/price?symbol=' + baseSymbol, extract: (d) => d.price },
@@ -6541,7 +6650,6 @@ async function fetchSinglePrice(symbol) {
         { name: 'KuCoin',  url: 'https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=' + baseSymbol.replace('USDT', '-USDT'), extract: (d) => d.code === '200000' && d.data ? d.data.price : null },
         { name: 'Bybit',   url: 'https://api.bybit.com/v5/market/tickers?category=spot&symbol=' + baseSymbol, extract: (d) => d.result && d.result.list && d.result.list[0] ? d.result.list[0].lastPrice : null }
     ];
-    // جرب المصادر البديلة بالتتابع لتقليل الطلبات المتزامنة على البروكسي
     for (const exchange of altExchanges) {
         let timeoutId;
         try {
@@ -6550,34 +6658,17 @@ async function fetchSinglePrice(symbol) {
             timeoutId = setTimeout(() => controller.abort(), 10000);
             const response = await fetch(fetchUrl, { signal: controller.signal });
             if (!response.ok) continue;
-
             const data = await response.json();
             const extractedPrice = exchange.extract(data);
             const numericPrice = Number(extractedPrice);
-
             if (extractedPrice != null && Number.isFinite(numericPrice) && numericPrice > 0) {
-                const result = {
-                    symbol: symbol,
-                    price: numericPrice,
-                    source: exchange.name,
-                    error: null
-                };
+                const result = { symbol: symbol, price: numericPrice, source: exchange.name, error: null };
                 priceCache.set(symbol, { time: Date.now(), data: result });
                 return result;
             }
-        } catch (e) {
-            // انتقل إلى المنصة التالية عند timeout أو خطأ في الشبكة
-        } finally {
-            if (timeoutId) clearTimeout(timeoutId);
-        }
+        } catch (e) {} finally { if (timeoutId) clearTimeout(timeoutId); }
     }
-
-    return {
-        symbol: symbol,
-        price: null,
-        source: null,
-        error: currentLang === 'en' ? 'Failed on all sources' : 'فشل من جميع المصادر'
-    };
+    return { symbol: symbol, price: null, source: null, error: currentLang === 'en' ? 'Failed on all sources' : 'فشل من جميع المصادر' };
 }
 async function fetchAllPrices(isAutoRefresh = false) {
     const trackedSymbols = Object.keys(allCoinData);
@@ -7041,7 +7132,6 @@ function finalizeImport() {
     if (typeof updateAdvancedCharts === 'function') { try { updateAdvancedCharts(); } catch (e) {} }
     if (typeof updateEntrySectionState === 'function') updateEntrySectionState();
 }
-function handleImportTxtFile(event) { handleImportFile(event); }
 function openTradingView() {
     if (!activeCoinSymbol) { showError(currentLang === 'en' ? "Please select a coin first" : "يرجى اختيار عملة أولاً"); return; }
     let symbol = getBaseSymbolFromKey(activeCoinSymbol);
@@ -7806,7 +7896,6 @@ function handleFloatingRefreshClick() {
     });
 }
 
-// ✅ [v18.1] KASUSDT → TONUSDT
 const TOP_COINS_TICKER = ['BTCUSDT','ETHUSDT','BNBUSDT','SOLUSDT','XRPUSDT','ADAUSDT','DOGEUSDT','AVAXUSDT','DOTUSDT','MATICUSDT','LINKUSDT','LTCUSDT','TONUSDT','PEPEUSDT','QNTUSDT','SUIUSDT','XLMUSDT','HBARUSDT','WLDUSDT','APTUSDT','CHZUSDT','GRTUSDT','ENJUSDT','CHRUSDT'];
 let tickerData = {};
 function getCoinIconUrl(binanceSymbol) { const shortSymbol = binanceSymbol.replace('USDT', '').toLowerCase(); return 'https://assets.coincap.io/assets/icons/' + shortSymbol + '@2x.png'; }
@@ -8489,7 +8578,6 @@ async function validateNewAsset(symbol, assetType) {
     } catch (e) { return { valid: false, error: (currentLang === 'en' ? 'Validation error: ' : 'خطأ في التحقق: ') + e.message }; }
 }
 async function fetchCryptoPriceDirect(symbol) {
-    // تجاوز Binance للعملتين KASUSDT وXDBUSDT؛ وبقية العملات تستمر بالطريقة المعتادة
     const binanceDomains = ['KASUSDT', 'XDBUSDT'].includes(String(symbol).toUpperCase())
         ? []
         : ['https://api.binance.com'];
@@ -8505,11 +8593,7 @@ async function fetchCryptoPriceDirect(symbol) {
                     return { price: Number(data.price), source: 'Binance' };
                 }
             }
-        } catch (e) {
-            // تابع إلى المصادر البديلة
-        } finally {
-            if (timeoutId) clearTimeout(timeoutId);
-        }
+        } catch (e) {} finally { if (timeoutId) clearTimeout(timeoutId); }
     }
     const altExchanges = [
         { name: 'MEXC', url: 'https://api.mexc.com/api/v3/ticker/price?symbol=' + symbol, extract: (d) => d.price },
